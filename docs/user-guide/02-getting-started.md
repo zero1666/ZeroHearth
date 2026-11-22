@@ -1,59 +1,72 @@
-# 2. Installing Hearth and your first run
+# 2. Installing ZeroHearth and your first run
 
-This chapter covers getting the Hearth plugin into an Obsidian vault, what
+This chapter covers getting the ZeroHearth plugin into an Obsidian vault, what
 happens the first time it loads, and how to use the setup wizard that builds
 your first dashboard.
 
-## Installing Hearth
+## Installing ZeroHearth
 
-### From Obsidian's community plugin browser (recommended)
+ZeroHearth requires Obsidian **1.8.7** or newer. The plugin can run on desktop
+and on Obsidian for iOS and Android.
 
-1. In Obsidian, open **Settings → Community plugins**.
-2. If restricted mode is on, turn it off.
-3. Choose **Browse**, search for **Hearth**, and install it.
-4. Enable it.
+### From GitHub Releases
 
-Hearth requires Obsidian **1.8.7** or newer. It is not desktop-only: it runs on
-Obsidian for iOS and Android as well.
+Download the three plugin assets (`main.js`, `manifest.json` and `styles.css`)
+from a [ZeroHearth release](https://github.com/zero1666/ZeroHearth/releases)
+that has them. Place them in `<vault>/.obsidian/plugins/zerohearth/`, reload
+the vault, and enable **ZeroHearth** under **Settings → Community plugins**.
 
-### Manually
+### Build from source
 
-Download `main.js`, `manifest.json` and `styles.css` from a release, place all
-three in the folder `<your vault>/.obsidian/plugins/hearth/`, then enable
-**Hearth** under **Settings → Community plugins**. If Obsidian is already
-running, use the reload-plugins button or restart the app.
+Clone `https://github.com/zero1666/ZeroHearth.git` and use Node.js 24:
 
-### Beta releases
+```sh
+npm ci
+npm run build
+```
 
-Hearth publishes beta builds alongside stable ones. Betas can be installed with
-the BRAT community plugin, pointed at the `ondreu/Hearth` repository. Betas are
-tested in a real vault by a human before release but are, by definition, ahead
-of the stable line.
+Copy `main.js`, `styles.css`, and `manifest.json` into the plugin directory
+above. For a beta build, copy `manifest-beta.json` to that directory as
+`manifest.json` so Obsidian displays the beta version.
 
-## What happens the first time Hearth loads
+### BRAT
 
-On a fresh install Hearth does three things:
+If a ZeroHearth GitHub Release includes the three plugin assets, add
+`zero1666/ZeroHearth` in BRAT and choose the release. A Git tag alone
+does not provide the assets BRAT needs.
 
-1. It registers the **Home** view, a ribbon icon (the Hearth crystal by
+### Moving from Hearth
+
+Export settings from **Settings → Hearth → Backup**. After installing
+ZeroHearth, import the backup under **Settings → ZeroHearth → Backup**.
+The two plugins have separate settings directories. If you switch your
+home page to ZeroHearth, disable Hearth and assign its hotkeys to the
+corresponding ZeroHearth commands.
+
+## What happens the first time ZeroHearth loads
+
+On a fresh install ZeroHearth does three things:
+
+1. It registers the **Home** view, a ribbon icon (the ZeroHearth crystal by
    default), and a set of commands including *Open home dashboard*.
 2. It sets itself to open on startup and to replace empty new tabs. Both are
    ordinary settings you can turn off — see [chapter 15](15-settings-reference.md).
 3. It offers to run the **setup wizard**, which builds your first dashboard
    from a handful of questions.
 
-Vaults that had Hearth installed before the wizard existed are marked as already
+Vaults that had ZeroHearth installed before the wizard existed are marked as already
 set up, so upgrading never offers to rebuild a dashboard you already have.
 
-## Opening Hearth
+## Opening ZeroHearth
 
 There are four ways to open the Home view:
 
-- Click the **Hearth crystal** icon in the left ribbon.
+- Click the **ZeroHearth crystal** icon in the left ribbon.
 - Run the command **Open home dashboard** from the command palette.
 - Open a new empty tab, if *Replace new tabs* is on (it is, by default).
 - Start Obsidian, if *Open on startup* is on (it is, by default).
 
-You can bind a hotkey to *Open home dashboard*, and to several other Hearth
+You can bind a hotkey to *Open home dashboard*, and to several other ZeroHearth
 commands, under **Settings → Hotkeys**. The full list of bindable commands is in
 [chapter 15](15-settings-reference.md).
 
@@ -62,8 +75,8 @@ commands, under **Settings → Hotkeys**. The full list of bindable commands is 
 The wizard exists so that you are not dropped onto a blank grid. It asks about
 you and about your vault, then lays out a board from the answers.
 
-You can run it at any later time from **Settings → Hearth → About → Build a
-dashboard**, or with the command **Set up Hearth**.
+You can run it at any later time from **Settings → ZeroHearth → About → Build a
+dashboard**, or with the command **Set up ZeroHearth**.
 
 ### The three steps
 
@@ -86,10 +99,10 @@ of life* for a place; each card joins the board once it has its answer. A place
 already set on a weather card elsewhere in the vault, or picked for a *Live
 sky* background in step 2, is used without asking again.
 
-Under the purposes, Hearth lists the supported plugins it found installed and
+Under the purposes, ZeroHearth lists the supported plugins it found installed and
 enabled, each with the single thing accepting it will do:
 
-| Plugin found | What Hearth does with it |
+| Plugin found | What ZeroHearth does with it |
 | --- | --- |
 | TaskNotes | Adds a Tasks card on the TaskNotes source, using TaskNotes' own field names and completed statuses |
 | Kanban | Adds a Tasks card showing your board as draggable columns |
@@ -97,14 +110,14 @@ enabled, each with the single thing accepting it will do:
 | Datacore | Adds a Datacore card ready for a query |
 | Templater | Adds a launchpad with one button per template you already have |
 | Git | Adds a Git card with status, commit and sync |
-| Operon | Adds an Operon tasks card (desktop only; Operon still has to approve Hearth separately) |
+| Operon | Adds an Operon tasks card (desktop only; Operon still has to approve ZeroHearth separately) |
 | Bases | Embeds a `.base` file from your vault |
 | Daily notes | Adds a card showing today's daily note, editable in place |
 | Bookmarks | Adds a card listing your bookmarks |
 
 The TaskNotes case is worth understanding. TaskNotes lets its users rename its
 frontmatter fields and define their own statuses, so there is no fixed set of
-names Hearth could assume. The wizard reads the names TaskNotes is actually
+names ZeroHearth could assume. The wizard reads the names TaskNotes is actually
 configured with — the status field, the due field, the priority field, and which
 statuses count as done — and writes them onto the Tasks card it creates. A vault
 that renamed `due` to `deadline` therefore gets a Tasks card that works on its
@@ -121,10 +134,10 @@ looking rather than by reading a description.
 
 The design is *Classic* or *Expressive* (Material 3 Expressive, in tones of your
 accent colour), and the wizard redraws itself in the one you pick. On the first
-setup it becomes the vault's design — the cards, every Hearth dialog and menu,
+setup it becomes the vault's design — the cards, every ZeroHearth dialog and menu,
 the board's buttons and the settings pane — and the design of the drawn
 backgrounds with it; running setup again later puts it on the new board only.
-You can change it any time in *Settings → Hearth → Appearance → Design*.
+You can change it any time in *Settings → ZeroHearth → Appearance → Design*.
 
 The third choice, *Terminal*, is marked experimental. It turns on terminal mode
 (see [chapter 11](11-appearance.md)), which draws every board of the vault as
@@ -134,7 +147,7 @@ again. Terminal mode draws no wallpaper and no card surfaces, so with it chosen
 the rest of the step is not shown, and the finish step's preview is drawn as
 plain boxes.
 
-The five backgrounds are *Hearth's wallpaper* (hills drawn by the plugin, a
+The five backgrounds are *ZeroHearth's wallpaper* (hills drawn by the plugin, a
 morning or a moonlit night with your theme — or, in the Expressive design, soft
 shapes in your accent colour), *A harbour town* (a lighthouse, boats and houses
 on a hill, in Expressive shapes), *Live sky* (a painted sky drawn from real weather over a place you
@@ -159,7 +172,7 @@ the board has a *Clock* (a small card at the top of the side column), and
 whether the search bar is shown. *Title and header* folds away the rest: whether
 the title is shown at all, the *Title icon* beside it (an emoji, a couple of
 characters, a Lucide icon id, a vault image path, or an image URL — leave it
-empty for the Hearth crystal), and whether the title and/or icon follow your
+empty for the ZeroHearth crystal), and whether the title and/or icon follow your
 theme's accent colour. You name the dashboard and choose whether it replaces the
 board you are on or is added as a new one; *Why these cards* lists every card
 with the reason it is there ("Daily notes is enabled", "Reading & feeds",
@@ -169,7 +182,7 @@ Nothing is written to your vault until you press **Build my dashboard**.
 
 ### What the wizard writes, and what it never touches
 
-This distinction matters if you already have Hearth set up the way you like it.
+This distinction matters if you already have ZeroHearth set up the way you like it.
 
 Everything the wizard sets lands as a **per-board override on the one dashboard
 it builds**: the title, the title icon, the accent colour target, the card
@@ -178,24 +191,24 @@ the Tasks card itself. Your vault-wide settings, and every other dashboard you
 have, come out of a setup run exactly as they went in.
 
 That is also why the wizard no longer asks about things that can only be
-vault-wide — whether Hearth opens on startup, where notes open, which search
-engine to use, whose file icons to show. Those live in **Settings → Hearth**,
+vault-wide — whether ZeroHearth opens on startup, where notes open, which search
+engine to use, whose file icons to show. Those live in **Settings → ZeroHearth**,
 one toggle each, and apply everywhere by design.
 
-When you run the wizard again later from *Settings → Hearth → About*, it
+When you run the wizard again later from *Settings → ZeroHearth → About*, it
 **always** adds a new dashboard. Every board you already have is left alone;
 nothing is replaced or removed.
 
 ### If you skip the wizard
 
-Skipping is a supported choice. You get Hearth's starter dashboard, and you add
+Skipping is a supported choice. You get ZeroHearth's starter dashboard, and you add
 cards yourself with **Arrange → Add card**. See
 [chapter 6](06-arranging-cards.md).
 
 ## What to do immediately after setup
 
 The wizard's own closing advice is worth repeating, because it is accurate:
-the board it built is a starting point, not a preset. Hearth is built above all
+the board it built is a starting point, not a preset. ZeroHearth is built above all
 to be customised, and the wizard touches only a fraction of it.
 
 Three things to try first:
@@ -205,5 +218,5 @@ Three things to try first:
    ask the wizard for.
 2. **Open the dashboard switcher** (top-left) and press **+** to make a second
    board. Give it an icon. Bind *Switch to dashboard 2* to a hotkey.
-3. **Open Settings → Hearth** and read down the eight categories. There is a
+3. **Open Settings → ZeroHearth** and read down the eight categories. There is a
    great deal in there that the wizard never asked about.

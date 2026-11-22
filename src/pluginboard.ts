@@ -27,7 +27,7 @@ import type { HomeView } from "./view";
 
 /**
  * How many hosted views may stay alive at once across every plugin board in one
- * Hearth view.
+ * ZeroHearth view.
  *
  * Keeping a view mounted is what makes switching back to a board instant, and
  * is the whole reason a plugin board beats a tab of its own. But a mounted view
@@ -64,7 +64,7 @@ interface HostedBoard {
 }
 
 /**
- * The live hosted views, per Hearth view.
+ * The live hosted views, per ZeroHearth view.
  *
  * Deliberately *not* tied to the per-render `Component` every other part of the
  * board hangs off: that component is destroyed on every re-render, and a live
@@ -107,7 +107,7 @@ function currentKey(dash: Dashboard): string {
 }
 
 /**
- * Give the active leaf back to Hearth if the hosted view still holds it, so a
+ * Give the active leaf back to ZeroHearth if the hosted view still holds it, so a
  * board's `focusable` opt-in can never outlive the board. Without this, closing
  * or switching away from a focused plugin board would leave Obsidian pointing
  * at a leaf that no longer exists — and the next file opened would go nowhere.
@@ -133,7 +133,7 @@ function drop(view: HomeView, map: Map<string, HostedBoard>, entry: HostedBoard)
 }
 
 /**
- * Unmount every hosted view this Hearth view is keeping alive. Called when the
+ * Unmount every hosted view this ZeroHearth view is keeping alive. Called when the
  * view closes (and so when the plugin unloads, which closes its views), which
  * is the only point at which a kept-alive board is guaranteed to have no reason
  * left to exist.
@@ -208,7 +208,7 @@ function acquire(
 		return existing;
 	}
 
-	const host = createDiv("hearth-leaf-host hearth-plugin-board-host");
+	const host = createDiv("zerohearth-leaf-host zerohearth-plugin-board-host");
 	const leaf = createHostedLeaf(view.app, type, host, file || undefined);
 	if (!leaf) {
 		host.empty();
@@ -282,13 +282,13 @@ function trackFocus(view: HomeView, entry: HostedBoard, component: Component): v
  * on hover in the same way as the control it stands in for.
  */
 export function renderPluginBoardActions(view: HomeView, switcherZone: HTMLElement): void {
-	const zone = switcherZone.createDiv("hearth-arrange-zone hearth-plugin-actions");
+	const zone = switcherZone.createDiv("zerohearth-arrange-zone zerohearth-plugin-actions");
 	zone.toggleClass(
 		"is-auto-hide",
 		effectiveArrangeButtonVisibility(view.plugin.settings) === "hover",
 	);
-	const btn = zone.createEl("button", { cls: "hearth-tool-btn is-icon" });
-	setIcon(btn.createSpan("hearth-tool-icon"), "settings-2");
+	const btn = zone.createEl("button", { cls: "zerohearth-tool-btn is-icon" });
+	setIcon(btn.createSpan("zerohearth-tool-icon"), "settings-2");
 	btn.setAttribute("aria-label", t().dashboard.dashboardSettingsAria);
 	btn.addEventListener("click", () =>
 		openDashboardSettings(view, activeDashboard(view.plugin.settings)),
@@ -314,7 +314,7 @@ export function renderPluginBoard(
 ): void {
 	const s = view.plugin.settings;
 	const dash = activeDashboard(s);
-	const stage = container.createDiv("hearth-plugin-board");
+	const stage = container.createDiv("zerohearth-plugin-board");
 	// The hosted view sits on one big card surface rather than a grid of small
 	// ones, so it reads as part of the board and the wallpaper still shows
 	// around and (at less than full opacity) through it. Same four values the
@@ -328,15 +328,15 @@ export function renderPluginBoard(
 	// for cards.
 	//
 	// In the Expressive design the surface is Material's opaque tonal frame
-	// instead, which none of the four shape (see .hearth-plugin-board.is-x-frame).
+	// instead, which none of the four shape (see .zerohearth-plugin-board.is-x-frame).
 	const expressive = effectiveCardDesign(s, undefined) === "expressive";
 	stage.toggleClass("is-x-frame", expressive);
 	stage.style.setProperty("--card-opacity", String(effectiveCardOpacity(s)));
-	stage.style.setProperty("--hearth-card-radius", `${effectiveCardRadius(s)}px`);
+	stage.style.setProperty("--zerohearth-card-radius", `${effectiveCardRadius(s)}px`);
 	stage.style.setProperty("--card-border-width", `${effectiveCardBorderWidth(s)}px`);
 	const blur = expressive ? 0 : effectiveCardBlur(s);
 	stage.toggleClass("has-blur", blur > 0);
-	if (blur > 0) stage.style.setProperty("--hearth-plugin-blur", `${blur}px`);
+	if (blur > 0) stage.style.setProperty("--zerohearth-plugin-blur", `${blur}px`);
 	const fail = (text: string) => {
 		emptyState(stage, "layout-panel-left", text);
 		prunePluginBoards(view, null);
@@ -356,7 +356,7 @@ export function renderPluginBoard(
 	const entry = acquire(view, dash, type, file);
 	if (!entry) return fail(t().cards.empty.leafViewMissing);
 
-	entry.host.toggleClass("hearth-leaf-hide-header", !!dash.pluginView?.hideHeader);
+	entry.host.toggleClass("zerohearth-leaf-hide-header", !!dash.pluginView?.hideHeader);
 	stage.appendChild(entry.host);
 	if (dash.pluginView?.focusable) trackFocus(view, entry, component);
 	// A view re-parented from the previous render (or from nowhere, while it was

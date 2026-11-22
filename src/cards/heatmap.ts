@@ -56,7 +56,7 @@ export function renderHeatmap(view: CardHost, card: DashboardCard, body: HTMLEle
 	const unit = advanced ? heatUnit(cfg) : metric;
 	const options = dailyNotesOptions(view);
 
-	const wrap = body.createDiv("hearth-heatmap");
+	const wrap = body.createDiv("zerohearth-heatmap");
 	// A card may tint its own squares (#430); the colour rides on a variable the
 	// tint rules in styles.css read, so the theme's accent stays the default and
 	// the legend squares below follow the same colour.
@@ -80,14 +80,14 @@ export function renderHeatmap(view: CardHost, card: DashboardCard, body: HTMLEle
 		if (key <= todayKey) peak = Math.max(peak, activity.get(key) ?? 0);
 	}
 
-	const grid = wrap.createDiv("hearth-heatmap-grid");
+	const grid = wrap.createDiv("zerohearth-heatmap-grid");
 	grid.style.gridTemplateColumns = `repeat(${weeks}, 1fr)`;
 	// Column-major fill (top-to-bottom, then next week): 7 rows, auto-flow column.
 	for (let w = 0; w < weeks; w++) {
 		for (let r = 0; r < 7; r++) {
 			const day = start.clone().add(w * 7 + r, "days");
 			const key: string = day.format("YYYY-MM-DD");
-			const cellEl = grid.createDiv("hearth-heatmap-cell");
+			const cellEl = grid.createDiv("zerohearth-heatmap-cell");
 			if (key > todayKey) {
 				cellEl.addClass("is-empty");
 				continue;
@@ -116,14 +116,14 @@ export function renderHeatmap(view: CardHost, card: DashboardCard, body: HTMLEle
 	}
 
 	// A small Less→More legend.
-	const legend = wrap.createDiv("hearth-heatmap-legend");
-	legend.createSpan({ cls: "hearth-heatmap-legend-label", text: t().cards.heatmap.less });
+	const legend = wrap.createDiv("zerohearth-heatmap-legend");
+	legend.createSpan({ cls: "zerohearth-heatmap-legend-label", text: t().cards.heatmap.less });
 	for (let l = 0; l <= 4; l++) {
-		const sq = legend.createDiv("hearth-heatmap-cell");
+		const sq = legend.createDiv("zerohearth-heatmap-cell");
 		sq.style.setProperty("--heat", String(l));
 		if (l > 0) sq.addClass("has-heat");
 	}
-	legend.createSpan({ cls: "hearth-heatmap-legend-label", text: t().cards.heatmap.more });
+	legend.createSpan({ cls: "zerohearth-heatmap-legend-label", text: t().cards.heatmap.more });
 }
 
 /**
@@ -174,7 +174,7 @@ export function heatmapEditor(ctx: CardEditorContext, containerEl: HTMLElement):
 	gridSection(ctx, containerEl, cfg);
 }
 
-/** The colour a freshly opened picker starts on — Hearth's own accent, the same
+/** The colour a freshly opened picker starts on — ZeroHearth's own accent, the same
  * stand-in the card's accent picker uses, so an unset grid never opens on black. */
 const STANDIN_HEAT_TINT = "#7c5cff";
 
@@ -339,7 +339,7 @@ function rulesSection(ctx: CardEditorContext, containerEl: HTMLElement, cfg: Hea
 	rules.forEach((rule, index) => {
 		const field: HeatmapRuleField = rule.field ?? "property";
 		const op: HeatmapRuleOp = rule.op ?? "is";
-		const row = new Setting(containerEl).setClass("hearth-link-setting");
+		const row = new Setting(containerEl).setClass("zerohearth-link-setting");
 		row.addDropdown((d) => {
 			for (const id of HEATMAP_RULE_FIELDS) d.addOption(id, strings.fieldOptions[id]);
 			d.setValue(field).onChange((v) => {

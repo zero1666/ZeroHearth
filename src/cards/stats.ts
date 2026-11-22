@@ -111,15 +111,15 @@ export function statTiles(view: CardHost, card: DashboardCard): StatTile[] {
 }
 
 export function renderStats(view: CardHost, card: DashboardCard, body: HTMLElement): void {
-	const grid = body.createDiv("hearth-stats");
+	const grid = body.createDiv("zerohearth-stats");
 	for (const tile of statTiles(view, card)) addStat(grid, tile.icon, tile.value, tile.label);
 }
 
 function addStat(grid: HTMLElement, icon: string, value: number, label: string): void {
-	const cell = grid.createDiv("hearth-stat");
-	setIcon(cell.createDiv("hearth-stat-icon"), icon);
-	cell.createDiv({ cls: "hearth-stat-value", text: String(value) });
-	cell.createDiv({ cls: "hearth-stat-label", text: label });
+	const cell = grid.createDiv("zerohearth-stat");
+	setIcon(cell.createDiv("zerohearth-stat-icon"), icon);
+	cell.createDiv({ cls: "zerohearth-stat-value", text: String(value) });
+	cell.createDiv({ cls: "zerohearth-stat-label", text: label });
 }
 
 /** Consecutive days with an existing daily note, counting back from today —
@@ -176,13 +176,13 @@ export function statsEditor(ctx: CardEditorContext, containerEl: HTMLElement): v
 		cfg.builtins = undefined;
 	});
 	const selectedBuiltins = new Set<StatId>(cfg.builtins ?? DEFAULT_STATS);
-	const builtinRow = containerEl.createDiv("hearth-type-filter");
+	const builtinRow = containerEl.createDiv("zerohearth-type-filter");
 	for (const id of ALL_STATS) {
-		const chip = builtinRow.createDiv("hearth-type-filter-chip");
+		const chip = builtinRow.createDiv("zerohearth-type-filter-chip");
 		const on = selectedBuiltins.has(id);
 		chip.toggleClass("is-active", on);
-		setIcon(chip.createDiv("hearth-type-filter-icon"), STAT_ICONS[id]);
-		chip.createDiv({ cls: "hearth-type-filter-label", text: t().cards.stats[id] });
+		setIcon(chip.createDiv("zerohearth-type-filter-icon"), STAT_ICONS[id]);
+		chip.createDiv({ cls: "zerohearth-type-filter-label", text: t().cards.stats[id] });
 		chip.setAttribute("role", "button");
 		chip.setAttribute("tabindex", "0");
 		chip.setAttribute("aria-pressed", String(on));
@@ -220,18 +220,18 @@ export function statsEditor(ctx: CardEditorContext, containerEl: HTMLElement): v
 		cfg.attachmentTypes = undefined;
 	});
 	const selectedTypes = new Set(cfg.attachmentTypes ?? []);
-	const typeRow = containerEl.createDiv("hearth-type-filter");
+	const typeRow = containerEl.createDiv("zerohearth-type-filter");
 	// Attachments are non-note files, so offer every file-type group except
 	// folders and markdown notes.
 	const groups = FILE_TYPE_GROUPS.filter(
 		(g) => g.id !== FOLDERS_GROUP_ID && g.id !== "markdown",
 	);
 	for (const group of groups) {
-		const chip = typeRow.createDiv("hearth-type-filter-chip");
+		const chip = typeRow.createDiv("zerohearth-type-filter-chip");
 		const on = selectedTypes.has(group.id);
 		chip.toggleClass("is-active", on);
-		setIcon(chip.createDiv("hearth-type-filter-icon"), group.icon);
-		chip.createDiv({ cls: "hearth-type-filter-label", text: fileTypeLabel(group) });
+		setIcon(chip.createDiv("zerohearth-type-filter-icon"), group.icon);
+		chip.createDiv({ cls: "zerohearth-type-filter-label", text: fileTypeLabel(group) });
 		chip.setAttribute("role", "button");
 		chip.setAttribute("tabindex", "0");
 		chip.setAttribute("aria-pressed", String(on));
@@ -259,7 +259,7 @@ export function statsEditor(ctx: CardEditorContext, containerEl: HTMLElement): v
 	new Setting(containerEl).setDesc(t().editors.stats.customCountsDesc);
 	const queries = (cfg.queries ??= []);
 	queries.forEach((q, index) => {
-		const row = new Setting(containerEl).setClass("hearth-link-setting");
+		const row = new Setting(containerEl).setClass("zerohearth-link-setting");
 		row.addText((txt) =>
 			txt
 				.setPlaceholder(t().editors.stats.labelPlaceholder)

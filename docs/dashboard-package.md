@@ -1,7 +1,11 @@
-# The Hearth dashboard package format
+# The ZeroHearth dashboard package format
+
+ZeroHearth uses the upstream Hearth format for compatibility with existing
+exports, signatures and gallery entries. The `hearth`, `hearthLayout` and
+`hearthSettings` fields are format identifiers.
 
 A **package** is a JSON file describing one dashboard, one whole layout, or one
-vault's settings. It is what Hearth's Import / export produces, and it is the
+vault's settings. It is what ZeroHearth's Import / export produces, and it is the
 unit a dashboard gallery would store, list and serve.
 
 This document is the contract. The implementation is `src/portable/`, and
@@ -17,7 +21,7 @@ A dashboard never described itself completely. Half its appearance lived on the
 board and half in the vault's global settings, which the board fell back to for
 anything it had not overridden — so a board handed to another vault arrived
 wearing *that* vault's grid, card opacity, wallpaper and search placeholder. And
-the two exports Hearth had before this both described a whole vault and replaced
+the two exports ZeroHearth had before this both described a whole vault and replaced
 one wholesale, which is not a thing you can safely do with a stranger's file.
 
 A `dashboard` package fixes both: it states its own look, and importing it adds
@@ -30,7 +34,7 @@ a board without touching a single global setting.
   "hearth": {
     "format": 3,              // PACKAGE_FORMAT
     "kind": "dashboard",      // "dashboard" | "layout" | "settings"
-    "plugin": "3.1.0",        // Hearth version that wrote it (optional)
+    "plugin": "3.1.0",        // ZeroHearth version that wrote it (optional)
     "createdAt": "2026-09-02T18:00:00.000Z"
   },
   "meta": {                   // all optional; a gallery listing's fields
@@ -99,7 +103,7 @@ the way in (`adoptLegacyExtras`).
 
 ### `kind: "layout"` and `kind: "settings"`
 
-The payload is exactly what Hearth's pre-v3 layout (`hearthLayout: 2`) and
+The payload is exactly what ZeroHearth's pre-v3 layout (`hearthLayout: 2`) and
 settings (`hearthSettings: 1`) exports wrote, unchanged, so both apply through
 the same sanitizers they always did.
 
@@ -110,7 +114,7 @@ envelope, so a consumer only ever handles one format:
 
 | File | Recognised by |
 | --- | --- |
-| v3 package | a `hearth` object |
+| v3 package | a `zerohearth` object |
 | settings export | `hearthSettings: 1` |
 | layout export | `hearthLayout: 2`, or a `dashboards` array |
 | v1 layout export | a bare `cards` array (it had no marker) |
@@ -125,12 +129,12 @@ stacking and the two chrome visibilities.
 
 Two properties of how that is done matter to anyone building on this:
 
-- **It goes through Hearth's own `effective*()` readers**, against a snapshot
+- **It goes through ZeroHearth's own `effective*()` readers**, against a snapshot
   whose active board is the one being exported — not through a second copy of
   the fallback rules. The plugin-board special cases (a hosted view hides its
   title and fills the pane unless told otherwise) therefore come across
   correctly, and there is no parallel truth to drift.
-- **The snapshot is tier-neutralised.** Hearth's performance tier overrides the
+- **The snapshot is tier-neutralised.** ZeroHearth's performance tier overrides the
   frosted glass and the wallpaper *at read time* without changing what is
   stored, so capturing what the readers say on a phone at `balanced` would bake
   "no blur, flat grey backdrop" into the file permanently. Capture pins the tier
@@ -197,7 +201,7 @@ been offered as an update to the original.
 
 Where the value comes from:
 
-- **Hearth mints one when a board is first exported**, and records it on the
+- **ZeroHearth mints one when a board is first exported**, and records it on the
   board, so the author's next export of that board carries the same value.
 - **On import** it is recorded on the board that is created, as `sourceId`.
 - **A duplicated board does not inherit it** — a copy is a new board, not
@@ -235,7 +239,7 @@ None of them stops an import: a downloaded board routinely mentions notes the
 importer hasn't got, and that is worth *saying* rather than showing as a card
 that renders nothing.
 
-The one thing a board cannot carry is Hearth's `taskFieldsEnabled` master
+The one thing a board cannot carry is ZeroHearth's `taskFieldsEnabled` master
 switch, which gates every tasks card's custom field list. Capture folds the
 resolved field list onto each card and records the requirement in
 `requires.settings`; the importer is told to turn the switch on, and no global is
@@ -244,7 +248,7 @@ flipped on their behalf.
 ## Who made it
 
 `meta.author` is **not** a name somebody typed, and a reader must not treat it
-as one. Hearth mints one secret per vault — a **recovery key**, which never
+as one. ZeroHearth mints one secret per vault — a **recovery key**, which never
 leaves it — and everything else follows from it (`src/identity.ts`):
 
 ```
@@ -298,7 +302,7 @@ Everything except two fields: `meta.signature`, which cannot sign itself, and
 `meta.author`, which a reader derives rather than reads. The subject is built
 field by field in `signedBytes()` rather than by copying the package, so it
 matches exactly what `readPackage()` reconstructs — otherwise a package from a
-newer Hearth carrying an envelope field this build discards would fail
+newer ZeroHearth carrying an envelope field this build discards would fail
 verification and be reported as a forgery. **Add a field to the format, add it
 there too, or it travels unsigned.**
 
@@ -317,7 +321,7 @@ of that handle?" through an ordinary challenge-response.
 
 ```ts
 // Gallery → client: a random nonce, once per sign-in.
-// Client (inside Hearth):
+// Client (inside ZeroHearth):
 import { signMessage } from "src/identity";
 const proof = signMessage(settings.authorKey, nonce);
 // Gallery: verifyMessage(storedPublicKey, nonce, proof)
@@ -332,7 +336,7 @@ a challenge. There is no registration step to build.
 Three constraints that come with it, all of them cheaper to honour now than to
 retrofit:
 
-- **Never ask for the key.** Signing happens inside Hearth and only the
+- **Never ask for the key.** Signing happens inside ZeroHearth and only the
   signature crosses the wire. A gallery that accepts a pasted key in a web form
   teaches users to hand their signing key to whatever page asks — and one
   phishing page then publishes as anyone, permanently. The key has no reason to
@@ -439,7 +443,7 @@ what stops that is the reader's own **Disable external calls** setting: since
 live-content cards and the currency fetch, so a beacon wallpaper on an imported
 board is not fetched by a vault that has the switch on. With the switch off — the
 default — every `publicUrl` on the board is still fetched the moment it opens.
-Hearth's import dialog says how many remote things a package loads; a gallery
+ZeroHearth's import dialog says how many remote things a package loads; a gallery
 should surface the same, and may want to strip or proxy `publicUrl` itself.
 
 ### The upload pipeline
@@ -457,7 +461,7 @@ is the implementation:
 3. Reject `hearth.kind !== "dashboard"`: a gallery entry is one board.
 4. **Check the strip; do not perform one.** `describeReferences(pkg)` must find
    nothing under `vaultPath`, `asset`, `privateUrl`, `privateHost` or `place`.
-   Hearth's publish path strips before it signs, so a well-behaved client never
+   ZeroHearth's publish path strips before it signs, so a well-behaved client never
    trips this.
 5. Hold for review if `residualPaths(pkg)` is non-empty — store the entry, keep
    it out of the listing. It is a heuristic backstop, and a false positive costs

@@ -23,7 +23,7 @@ import type { CardSettingsOptions } from "../editors";
  * This used to be a plain `available()` predicate that *hid* the template until
  * the dependency was there, which made a third of the catalogue invisible: a
  * user with no Dataview never learned the Dataview card exists, and "why does
- * my friend have a Git card?" was unanswerable from inside Hearth. Every card
+ * my friend have a Git card?" was unanswerable from inside ZeroHearth. Every card
  * with a requirement already renders its own "install X" prompt when the
  * dependency is missing, so the picker now offers all of them and marks the
  * unmet ones instead.
@@ -138,7 +138,7 @@ export interface CardDefinition<K extends CardKind = CardKind> {
 	 * space-separated classes. Read through `cardClasses()`. */
 	cardClass?: string | ((card: DashboardCard) => string | undefined);
 	/** The kind has a Material 3 Expressive design, drawn by styles.css under
-	 * `.hearth-card.is-expressive` and switched by the card's `design` (else the
+	 * `.zerohearth-card.is-expressive` and switched by the card's `design` (else the
 	 * vault's `cardDesign`). Every kind takes the design's frame, so the
 	 * editor's Style tab offers the choice to all but weather and market,
 	 * which leave this unset: their design lives in their own config and

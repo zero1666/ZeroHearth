@@ -98,7 +98,7 @@ describe("clampNarrowWidth", () => {
 		// and clamping `undefined` to a bound would pick an extreme nobody asked
 		// for. The default such a vault lands on is the current one, not the
 		// width the threshold was once hard-coded to (see the phone-width case
-		// below) — a vault that never chose a threshold follows Hearth's answer.
+		// below) — a vault that never chose a threshold follows ZeroHearth's answer.
 		expect(clampNarrowWidth(undefined)).toBe(NARROW_WIDTH_DEFAULT);
 		expect(clampNarrowWidth("600")).toBe(NARROW_WIDTH_DEFAULT);
 		expect(clampNarrowWidth(Number.NaN)).toBe(NARROW_WIDTH_DEFAULT);

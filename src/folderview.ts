@@ -10,7 +10,7 @@ import {
 	type BrowserHost,
 	type FolderBrowseState,
 } from "./cards/folder";
-import type HearthPlugin from "./main";
+import type ZeroHearthPlugin from "./main";
 import { applyPageDesign, vaultUiDesign } from "./uidesign";
 
 /**
@@ -30,7 +30,7 @@ export class FolderView extends ItemView {
 	private state: FolderBrowseState = defaultBrowseState(ROOT);
 	private browser: FolderBrowser | null = null;
 
-	constructor(leaf: WorkspaceLeaf, private readonly plugin: HearthPlugin) {
+	constructor(leaf: WorkspaceLeaf, private readonly plugin: ZeroHearthPlugin) {
 		super(leaf);
 		this.navigation = true;
 	}
@@ -68,7 +68,7 @@ export class FolderView extends ItemView {
 	}
 
 	async onOpen(): Promise<void> {
-		this.contentEl.addClass("hearth-folder-view");
+		this.contentEl.addClass("zerohearth-folder-view");
 		const host: BrowserHost = {
 			app: this.app,
 			settings: this.plugin.settings,

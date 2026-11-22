@@ -6,7 +6,14 @@ import {
 	cardCommandName,
 	cardsWithCommands,
 	planCardCommands,
+	zerohearthCommandId,
 } from "../src/cardcommandstate";
+
+it("resolves imported Hearth command links without rewriting other plugin ids", () => {
+	expect(zerohearthCommandId("hearth:open-home")).toBe("zerohearth:open-home");
+	expect(zerohearthCommandId("zerohearth:open-card-a")).toBe("zerohearth:open-card-a");
+	expect(zerohearthCommandId("dataview:force-refresh-views")).toBe("dataview:force-refresh-views");
+});
 
 /**
  * A card's own command (#491): which cards get one, and what it is called.
@@ -53,13 +60,13 @@ describe("cardsWithCommands", () => {
 describe("cardCommandName", () => {
 	it("leads with the card's title, because that is what gets typed", () => {
 		expect(cardCommandName(card("a", { title: " Weather " }))).toContain("Weather");
-		expect(cardCommandName(card("a", { title: "Weather" }))).toBe("Hearth: Open Weather");
+		expect(cardCommandName(card("a", { title: "Weather" }))).toBe("ZeroHearth: Open Weather");
 	});
 
 	it("falls back to the card's kind when it has no title", () => {
 		const name = cardCommandName(card("b"));
-		expect(name.startsWith("Hearth: Open ")).toBe(true);
-		expect(name.length).toBeGreaterThan("Hearth: Open ".length);
+		expect(name.startsWith("ZeroHearth: Open ")).toBe(true);
+		expect(name.length).toBeGreaterThan("ZeroHearth: Open ".length);
 	});
 
 	it("moves with a rename, because it is derived and not stored", () => {
@@ -106,7 +113,7 @@ describe("planCardCommands", () => {
 		s.dashboards[0].cards[0].title = "Forecast";
 		const plan = planCardCommands(before, s);
 		expect(plan.remove).toEqual(["open-card-a"]);
-		expect(plan.add.map((a) => a.name)).toEqual(["Hearth: Open Forecast"]);
+		expect(plan.add.map((a) => a.name)).toEqual(["ZeroHearth: Open Forecast"]);
 	});
 
 	it("unregisters a card that was switched off or deleted", () => {

@@ -57,7 +57,7 @@ import { effectiveAutoRefreshMinutes, type MarketConfig, type MarketRange } from
 import { bigLines, bigWidth, BIG_ROWS, hasBigGlyphs } from "../bigtext";
 import type { TuiContext, TuiItem, TuiMount, TuiOutput, TuiRenderer } from "../card";
 import { areaChart, asciify, blockRow, chartRow, fit, padEnd, padStart, sparkline, spread, strWidth, truncate, type Line, type Seg, type TuiStyle } from "../text";
-import { hearthMenu } from "../../uidesign";
+import { zerohearthMenu } from "../../uidesign";
 import { button, heading, message, rule, showMenuFor, tableHeader, tag } from "./common";
 
 // ---- Colour and small pieces ---------------------------------------------------
@@ -729,10 +729,10 @@ function lookupOutput(p: Paint): TuiOutput {
 			line: 0,
 			rows: 1,
 			mount: (host) => {
-				const prompt = host.createDiv("hearth-tui-line hearth-tui-calc-prompt");
-				prompt.createSpan({ cls: "hearth-tui-accent hearth-tui-bold", text: "/ " });
+				const prompt = host.createDiv("zerohearth-tui-line zerohearth-tui-calc-prompt");
+				prompt.createSpan({ cls: "zerohearth-tui-accent zerohearth-tui-bold", text: "/ " });
 				const input = prompt.createEl("input", {
-					cls: "hearth-tui-calc-input",
+					cls: "zerohearth-tui-calc-input",
 					attr: {
 						type: "text",
 						spellcheck: "false",
@@ -853,7 +853,7 @@ function lookupOutput(p: Paint): TuiOutput {
 /** An instrument's menu: open it large, or on its source's page. */
 function rowMenu(ctx: TuiContext, row: Row, evt: MouseEvent | KeyboardEvent): void {
 	const quote = cachedQuote(row.targets);
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	menu.addItem((i) => i.setTitle(t().tui.cards.mkOpen).setIcon("maximize-2").onClick(() => openRow(ctx, row)));
 	if (quote) {
 		menu.addItem((i) =>
@@ -954,7 +954,7 @@ export const marketTui: TuiRenderer = {
 			return true;
 		}
 		if (evt.key === "/" && r.style === "lookup") {
-			const input = ctx.view.contentEl.querySelector<HTMLInputElement>(`.hearth-tui-body[data-card="${ctx.card.id}"] .hearth-tui-calc-input`);
+			const input = ctx.view.contentEl.querySelector<HTMLInputElement>(`.zerohearth-tui-body[data-card="${ctx.card.id}"] .zerohearth-tui-calc-input`);
 			input?.focus();
 			return !!input;
 		}

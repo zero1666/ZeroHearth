@@ -1,19 +1,19 @@
 /**
- * The design Hearth's own interface is drawn in — its dialogs, menus, settings
+ * The design ZeroHearth's own interface is drawn in — its dialogs, menus, settings
  * pane and the board's furniture — as opposed to the cards, which already had
  * one (see effectiveCardDesign).
  *
  * The rule is the cards' rule, carried outwards: a card's design, else its
  * board's, else the vault's Card design. What makes it work for a dialog is
  * knowing where the dialog was opened *from*, and a dialog is almost always
- * opened by a click or a keystroke a moment earlier. So Hearth remembers the
+ * opened by a click or a keystroke a moment earlier. So ZeroHearth remembers the
  * element the last press landed on, and a dialog or menu built shortly after
  * takes the design of the nearest thing around that element that states one:
  *
- *  - a card, which carries its own effective design (`data-hearth-design`,
+ *  - a card, which carries its own effective design (`data-zerohearth-design`,
  *    written in dashboard.ts);
  *  - the board, which carries the board's (view.ts);
- *  - another Hearth dialog or menu, which carries whatever it was given — so a
+ *  - another ZeroHearth dialog or menu, which carries whatever it was given — so a
  *    confirm opened from a dialog looks like that dialog;
  *  - the settings pane, which carries the vault's.
  *
@@ -29,20 +29,20 @@ import { glyphIconsIn } from "./glyphs";
 import type { CardDesign } from "./types";
 
 /** The attribute every design-carrying element states its design in. Read and
- * written through `dataset`, where it is `hearthDesign`. */
-export const DESIGN_ATTR = "data-hearth-design";
+ * written through `dataset`, where it is `zerohearthDesign`. */
+export const DESIGN_ATTR = "data-zerohearth-design";
 
 /** The class a dialog wears in the Expressive design. styles.css keys the
  * dialog's frame, its controls and any card content inside it off this. */
-export const X_MODAL_CLASS = "hearth-x-modal";
+export const X_MODAL_CLASS = "zerohearth-x-modal";
 /** The class a menu wears in the Expressive design. */
-export const X_MENU_CLASS = "hearth-x-menu";
+export const X_MENU_CLASS = "zerohearth-x-menu";
 
 /** The classes a dialog and a menu wear while terminal mode is on. Terminal
  * mode is vault-wide, so it doesn't follow the press that opened them: every
- * Hearth dialog and menu is a terminal one while it's on. */
-export const T_MODAL_CLASS = "hearth-t-modal";
-export const T_MENU_CLASS = "hearth-t-menu";
+ * ZeroHearth dialog and menu is a terminal one while it's on. */
+export const T_MODAL_CLASS = "zerohearth-t-modal";
+export const T_MENU_CLASS = "zerohearth-t-menu";
 
 /** How long a press stays the likely opener of the next dialog. Long enough to
  * cover a dialog that waits on a file read or two first; short enough that a
@@ -116,7 +116,7 @@ export function vaultUiDesign(): CardDesign {
 	return vaultDesign();
 }
 
-/** Whether Hearth's interface is in terminal mode right now. */
+/** Whether ZeroHearth's interface is in terminal mode right now. */
 export function terminalUiActive(): boolean {
 	return terminalUi() !== null;
 }
@@ -125,7 +125,7 @@ export function terminalUiActive(): boolean {
  * menus live outside the view, so they carry the scheme themselves. */
 export function terminalSchemeClass(): string | null {
 	const scheme = terminalUi();
-	return scheme ? `hearth-tui-scheme-${scheme}` : null;
+	return scheme ? `zerohearth-tui-scheme-${scheme}` : null;
 }
 
 /** Put `el` in terminal mode's dress when it is on: `cls`, and the scheme. */
@@ -157,7 +157,7 @@ export function applyModalDesign(modal: Modal, design: CardDesign): void {
 }
 
 /**
- * Put a page Hearth draws in a tab of its own — the folder browser's (#375) —
+ * Put a page ZeroHearth draws in a tab of its own — the folder browser's (#375) —
  * in `design`, dressed exactly as a dialog would be: the same classes, so the
  * same rules reach everything inside it. A page outlives the settings it was
  * drawn under, so unlike a dialog this is re-run on every redraw, and it takes
@@ -165,23 +165,23 @@ export function applyModalDesign(modal: Modal, design: CardDesign): void {
  */
 export function applyPageDesign(el: HTMLElement, design: CardDesign): void {
 	for (const cls of Array.from(el.classList)) {
-		if (cls.startsWith("hearth-tui-scheme-")) el.removeClass(cls);
+		if (cls.startsWith("zerohearth-tui-scheme-")) el.removeClass(cls);
 	}
 	const terminal = dressTerminal(el, T_MODAL_CLASS);
 	el.toggleClass(X_MODAL_CLASS, design === "expressive" && !terminal);
 	stateDesign(el, design);
 }
 
-/** Every Hearth dialog: born in the design of wherever it was opened from. */
-export class HearthModal extends Modal {
+/** Every ZeroHearth dialog: born in the design of wherever it was opened from. */
+export class ZeroHearthModal extends Modal {
 	constructor(app: App) {
 		super(app);
 		applyModalDesign(this, currentUiDesign());
 	}
 }
 
-/** Every Hearth picker (file, folder, command, icon): as {@link HearthModal}. */
-export abstract class HearthFuzzySuggestModal<T> extends FuzzySuggestModal<T> {
+/** Every ZeroHearth picker (file, folder, command, icon): as {@link ZeroHearthModal}. */
+export abstract class ZeroHearthFuzzySuggestModal<T> extends FuzzySuggestModal<T> {
 	constructor(app: App) {
 		super(app);
 		applyModalDesign(this, currentUiDesign());
@@ -196,7 +196,7 @@ export abstract class HearthFuzzySuggestModal<T> extends FuzzySuggestModal<T> {
  * native menu (the desktop "Native menus" option) is drawn by the OS, so it
  * has no element to dress and simply stays native.
  */
-export function hearthMenu(): Menu {
+export function zerohearthMenu(): Menu {
 	const menu = new Menu();
 	const dom = menu.dom;
 	if (dom instanceof HTMLElement) {
@@ -214,7 +214,7 @@ export function hearthMenu(): Menu {
  * entries are split by separators, `is-group-end` on the entry closing each
  * group. CSS could ask with `:has()`, but that selector is re-evaluated on
  * every change anywhere in the menu. The entries are added after
- * {@link hearthMenu} returns (and may be rebuilt on show), so the marks follow
+ * {@link zerohearthMenu} returns (and may be rebuilt on show), so the marks follow
  * the element's children rather than being set once.
  */
 function markMenuGroups(menu: Menu, dom: HTMLElement): void {
@@ -234,12 +234,12 @@ function markMenuGroups(menu: Menu, dom: HTMLElement): void {
 
 /** A group of settings rows in an Expressive dialog: its heading row, if it
  * has one, above a tonal container holding the rows. */
-export const X_GROUP_CLASS = "hearth-x-group";
-const X_GROUP_BODY_CLASS = "hearth-x-group-body";
-const X_GROUP_HEAD_CLASS = "hearth-x-group-head";
+export const X_GROUP_CLASS = "zerohearth-x-group";
+const X_GROUP_BODY_CLASS = "zerohearth-x-group-body";
+const X_GROUP_HEAD_CLASS = "zerohearth-x-group-head";
 /** Left between two runs of rows that belong in separate groups but have no
  * heading between them. Consumed by {@link groupSettingRows}. */
-export const X_GROUP_BREAK_CLASS = "hearth-x-group-break";
+export const X_GROUP_BREAK_CLASS = "zerohearth-x-group-break";
 
 /**
  * Gather the loose children of a dialog's body into groups, the way Material

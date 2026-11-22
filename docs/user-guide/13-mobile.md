@@ -1,16 +1,16 @@
-# 13. Hearth on a phone or a narrow pane
+# 13. ZeroHearth on a phone or a narrow pane
 
-Hearth runs on Obsidian for iOS and Android as a first-class board, not as a
+ZeroHearth runs on Obsidian for iOS and Android as a first-class board, not as a
 reduced version of the desktop one. It also applies the same treatment to a
 narrow pane on the desktop, because the problem is the same: a free-form layout
 stops meaning anything below a certain width.
 
 Everything in this chapter except the per-card options lives under **Settings →
-Hearth → Mobile**.
+ZeroHearth → Mobile**.
 
 ## The threshold is width, not platform
 
-A Hearth board is laid out freely: cards sit where you drop them, at a fraction
+A ZeroHearth board is laid out freely: cards sit where you drop them, at a fraction
 of the board's width. At or below **700 pixels** of measured board width that
 stops working, so the board **reflows into a single full-width column**, top to
 bottom, in the order the desktop board reads in.
@@ -28,7 +28,7 @@ your monitor.
 
 ## The stacked column
 
-*Stack cards on narrow screens* under **Settings → Hearth → Mobile → Layout** is
+*Stack cards on narrow screens* under **Settings → ZeroHearth → Mobile → Layout** is
 on by default. Turning it off keeps the free-form layout at any width, scaled
 down.
 
@@ -71,7 +71,7 @@ In arrange mode, a card's header also carries a **Hide on a narrow board** /
 
 ## Previewing the phone layout without a phone
 
-Press **Arrange → Preview at phone width**. Hearth builds and shows the stacked
+Press **Arrange → Preview at phone width**. ZeroHearth builds and shows the stacked
 board inside a drawn phone, so the proportions read properly rather than being a
 narrow strip in a wide window.
 
@@ -95,7 +95,7 @@ Leave the preview with **Leave phone preview**.
 ## A separate performance tier
 
 Phones draw the animated sky and the frosted glass on the smallest screen and
-pay for it out of a battery, so Hearth keeps a separate tier for them.
+pay for it out of a battery, so ZeroHearth keeps a separate tier for them.
 
 *Performance tier on mobile* defaults to **Balanced** and can also be set to
 *Match desktop*. Your desktop tier is stored separately and is never changed by
@@ -103,7 +103,7 @@ this one. See [chapter 12](12-performance.md).
 
 ## Choosing which board opens on a phone
 
-A dashboard's *Default on mobile* setting (on its **General** tab) makes Hearth
+A dashboard's *Default on mobile* setting (on its **General** tab) makes ZeroHearth
 open that board when it loads on a phone or tablet. Only one board can hold this;
 turning it on clears it on the others.
 
@@ -112,9 +112,9 @@ vault without switching by hand each time.
 
 ## Mobile mode: search only
 
-*Mobile mode (search only)* under **Settings → Hearth → Mobile → Layout** is a
+*Mobile mode (search only)* under **Settings → ZeroHearth → Mobile → Layout** is a
 different proposition from the stacked column. It hides the dashboard entirely
-on phones and tablets and shows **only the search field**, turning Hearth into a
+on phones and tablets and shows **only the search field**, turning ZeroHearth into a
 pure launcher on a phone. It has no effect on desktop.
 
 It is off by default and marked *Legacy* in settings: the stacked column is now
@@ -139,20 +139,20 @@ Three of the defaults depend on other plugins:
 - *Record voice* starts and stops Obsidian's core Audio recorder.
 - *Open daily note* uses Obsidian's core Daily notes plugin.
 
-If one of those is not enabled, Hearth says which plugin to enable rather than
+If one of those is not enabled, ZeroHearth says which plugin to enable rather than
 failing silently.
 
 ## Its own settings category
 
-All of the above lives under **Settings → Hearth → Mobile**, which is a category
-of its own rather than two sections buried in Behaviour. Hearth runs on a phone
+All of the above lives under **Settings → ZeroHearth → Mobile**, which is a category
+of its own rather than two sections buried in Behaviour. ZeroHearth runs on a phone
 as a first-class board, and the settings pane says so.
 
 ## Exporting on mobile
 
 One mobile-specific detail worth knowing: on mobile, an export file is saved to
 your vault's root folder rather than downloaded, because mobile Obsidian has no
-download folder. Hearth tells you the filename it saved. See
+download folder. ZeroHearth tells you the filename it saved. See
 [chapter 16](16-sharing-and-gallery.md).
 
 Publishing to the dashboard gallery needs a screenshot of the board, and

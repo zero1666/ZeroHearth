@@ -12,7 +12,7 @@
  * measurement goes through {@link cellWidth}.
  */
 
-/** The look a run of text takes. Each maps to one `hearth-tui-*` class in
+/** The look a run of text takes. Each maps to one `zerohearth-tui-*` class in
  * styles.css, and every colour behind them comes from the active scheme. */
 export type TuiStyle =
 	| "dim"

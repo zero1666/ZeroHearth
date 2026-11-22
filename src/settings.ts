@@ -1,6 +1,6 @@
 import { type App, type ButtonComponent, debounce, Notice, Platform, PluginSettingTab, Setting, type SettingDefinitionItem, type SliderComponent, type TextComponent, TFile } from "obsidian";
 import { glyphIconsIn, setIcon } from "./glyphs";
-import type HearthPlugin from "./main";
+import type ZeroHearthPlugin from "./main";
 import { TaskFieldsModal } from "./cards/tasks";
 import { classicCardsInUse } from "./cards";
 import { hasFileIconPlugin } from "./fileicons";
@@ -50,6 +50,7 @@ import {
 import { CHANGELOG, WhatsNewModal } from "./whatsnew";
 import { openSetupWizard } from "./onboarding";
 import { t } from "./i18n";
+import { zerohearthCommandId } from "./cardcommandstate";
 import { stateDesign, terminalSchemeClass } from "./uidesign";
 import { isWebSearchEngineId, WEB_SEARCH_ENGINES, webSearchEngine } from "./websearch";
 import { INSTANT_FEATURES } from "./instant";
@@ -105,8 +106,8 @@ function tierLabels(): Record<PerformanceTier, string> {
 
 /** The GitHub links surfaced in the About tab. (The Ko-fi URL lives in
  * `kofi.ts` — the tip button is shown in three places now.) */
-const GITHUB_URL = "https://github.com/ondreu/hearth";
-const GITHUB_ISSUES_URL = "https://github.com/ondreu/hearth/issues/new";
+const GITHUB_URL = "https://github.com/zero1666/ZeroHearth";
+const GITHUB_ISSUES_URL = "https://github.com/zero1666/ZeroHearth/issues/new";
 
 /** Download filenames for the JSON exports. */
 
@@ -142,7 +143,7 @@ const SETTINGS_INDEX: { id: "lookFeel" | "howItWorks" | "data" | "etc"; tabs: Se
 ];
 
 /** localStorage key for where the pane was last left — a tab id, or "index". */
-const ACTIVE_TAB_KEY = "hearth-settings-tab";
+const ACTIVE_TAB_KEY = "zerohearth-settings-tab";
 
 /**
  * ⚠️ Naming hazard: members of this class live on the same prototype chain as
@@ -153,11 +154,11 @@ const ACTIVE_TAB_KEY = "hearth-settings-tab";
  * that Obsidian 1.13's settings window calls to open a tab. Obsidian invoked
  * it with no arguments, the `switch (undefined)` matched nothing, and the pane
  * came up completely blank — no error, on every reopen. Keep member names
- * unmistakably Hearth-specific; the constructor tripwire below turns any
+ * unmistakably ZeroHearth-specific; the constructor tripwire below turns any
  * future collision into a loud console error instead of a silent blank pane.
  */
 export class HomeSettingTab extends PluginSettingTab {
-	plugin: HearthPlugin;
+	plugin: ZeroHearthPlugin;
 
 	/** Scratch space for the background place picker (its query and the last
 	 * search's results). Kept on the tab so it survives the in-place rerenders
@@ -176,7 +177,7 @@ export class HomeSettingTab extends PluginSettingTab {
 		"setControlValue",
 	]);
 
-	constructor(app: App, plugin: HearthPlugin) {
+	constructor(app: App, plugin: ZeroHearthPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 		this.warnOnBaseMemberShadowing();
@@ -191,7 +192,7 @@ export class HomeSettingTab extends PluginSettingTab {
 		for (const name of Object.getOwnPropertyNames(HomeSettingTab.prototype)) {
 			if (!HomeSettingTab.INTENDED_OVERRIDES.has(name) && name in base) {
 				console.error(
-					`Hearth: HomeSettingTab.${name} shadows an internal Obsidian SettingTab member and will break settings rendering — rename it (see issue #52)`,
+					`ZeroHearth: HomeSettingTab.${name} shadows an internal Obsidian SettingTab member and will break settings rendering — rename it (see issue #52)`,
 				);
 			}
 		}
@@ -287,7 +288,7 @@ export class HomeSettingTab extends PluginSettingTab {
 					// Drop the empty name/desc/control skeleton and the
 					// setting-row flex layout; the pane is a plain block.
 					host.empty();
-					host.addClass("hearth-settings-host");
+					host.addClass("zerohearth-settings-host");
 					this.renderTarget = host;
 					this.renderInto(host);
 					return () => {
@@ -308,18 +309,18 @@ export class HomeSettingTab extends PluginSettingTab {
 	 * dialog opened from the pane takes it too (src/uidesign.ts). */
 	private applyPaneDesign(containerEl: HTMLElement): void {
 		const design = this.plugin.settings.cardDesign ?? "classic";
-		// Terminal mode dresses the pane too — everything of Hearth's is in it
+		// Terminal mode dresses the pane too — everything of ZeroHearth's is in it
 		// while it's on — and takes precedence over the card design's look.
 		const scheme = terminalSchemeClass();
 		for (const cls of Array.from(containerEl.classList)) {
-			if (cls.startsWith("hearth-tui-scheme-")) containerEl.removeClass(cls);
+			if (cls.startsWith("zerohearth-tui-scheme-")) containerEl.removeClass(cls);
 		}
-		containerEl.toggleClass("hearth-t-settings", scheme !== null);
+		containerEl.toggleClass("zerohearth-t-settings", scheme !== null);
 		if (scheme) {
 			containerEl.addClass(scheme);
 			glyphIconsIn(containerEl);
 		}
-		containerEl.toggleClass("hearth-x-settings", design === "expressive" && scheme === null);
+		containerEl.toggleClass("zerohearth-x-settings", design === "expressive" && scheme === null);
 		stateDesign(containerEl, design);
 	}
 
@@ -347,7 +348,7 @@ export class HomeSettingTab extends PluginSettingTab {
 	private renderInto(containerEl: HTMLElement): void {
 		containerEl.empty();
 		this.sectionEls.clear();
-		containerEl.addClass("hearth-settings");
+		containerEl.addClass("zerohearth-settings");
 		this.applyPaneDesign(containerEl);
 		this.bindBackGestures(containerEl);
 
@@ -374,7 +375,7 @@ export class HomeSettingTab extends PluginSettingTab {
 			this.fileDatalist(containerEl);
 			this.renderCategoryHead(containerEl, route);
 
-			const body = containerEl.createDiv("hearth-settings-tabbody");
+			const body = containerEl.createDiv("zerohearth-settings-tabbody");
 			// A page-level backstop nested inside: individual sections already
 			// isolate their own failures (see `section`), but the About page and a
 			// couple of bare rows render straight into the body. Guard here too so
@@ -390,7 +391,7 @@ export class HomeSettingTab extends PluginSettingTab {
 			// The datalist or the navigation itself failed to build. Append the
 			// error rather than empty()-ing, so anything that survived still lets
 			// the user navigate.
-			this.renderError(containerEl, "Hearth", err);
+			this.renderError(containerEl, "ZeroHearth", err);
 		}
 	}
 
@@ -398,15 +399,15 @@ export class HomeSettingTab extends PluginSettingTab {
 	 * and log the real stack to the console so it can be reported. Keeps one
 	 * broken section from blanking the entire settings pane. */
 	private renderError(containerEl: HTMLElement, name: string, err: unknown): void {
-		console.error(`Hearth: the "${name}" settings section failed to render`, err);
-		const box = containerEl.createDiv("hearth-settings-error");
-		setIcon(box.createSpan("hearth-settings-error-icon"), "alert-triangle");
-		const text = box.createDiv("hearth-settings-error-text");
+		console.error(`ZeroHearth: the "${name}" settings section failed to render`, err);
+		const box = containerEl.createDiv("zerohearth-settings-error");
+		setIcon(box.createSpan("zerohearth-settings-error-icon"), "alert-triangle");
+		const text = box.createDiv("zerohearth-settings-error-text");
 		text.createDiv({
-			cls: "hearth-settings-error-title",
+			cls: "zerohearth-settings-error-title",
 			text: t().settings.sectionError(name),
 		});
-		text.createDiv({ cls: "hearth-settings-error-hint", text: t().settings.sectionErrorHint });
+		text.createDiv({ cls: "zerohearth-settings-error-hint", text: t().settings.sectionErrorHint });
 	}
 
 	/** Where the pane was last left. Anything unrecognised — including the absent
@@ -500,16 +501,16 @@ export class HomeSettingTab extends PluginSettingTab {
 	 * are vertical, they are not pinned, and an eighth category costs nothing. */
 	private renderIndex(containerEl: HTMLElement): void {
 		const s = t().settings;
-		const head = containerEl.createDiv("hearth-settings-index-head");
-		head.createDiv({ cls: "hearth-settings-index-title", text: this.plugin.manifest.name });
-		head.createDiv({ cls: "hearth-settings-index-sub", text: s.indexSub });
+		const head = containerEl.createDiv("zerohearth-settings-index-head");
+		head.createDiv({ cls: "zerohearth-settings-index-title", text: this.plugin.manifest.name });
+		head.createDiv({ cls: "zerohearth-settings-index-sub", text: s.indexSub });
 
 		for (const group of SETTINGS_INDEX) {
 			containerEl.createDiv({
-				cls: "hearth-settings-index-grouplabel",
+				cls: "zerohearth-settings-index-grouplabel",
 				text: s.indexGroups[group.id],
 			});
-			const rows = containerEl.createDiv("hearth-settings-index-rows");
+			const rows = containerEl.createDiv("zerohearth-settings-index-rows");
 			for (const id of group.tabs) {
 				const entry = SETTINGS_TABS.find((tab) => tab.id === id);
 				if (!entry) continue;
@@ -527,14 +528,14 @@ export class HomeSettingTab extends PluginSettingTab {
 	private indexRow(rowsEl: HTMLElement, entry: { id: SettingsTabId; icon: string }): void {
 		const s = t().settings;
 		const label = s.tabs[entry.id];
-		const row = rowsEl.createDiv("hearth-settings-index-row");
+		const row = rowsEl.createDiv("zerohearth-settings-index-row");
 		const open = () => this.navigate(entry.id);
 		makeClickable(row, open, label);
-		setIcon(row.createSpan("hearth-settings-index-glyph"), entry.icon);
-		const text = row.createDiv("hearth-settings-index-rowtext");
-		text.createDiv({ cls: "hearth-settings-index-rowname", text: label });
-		text.createDiv({ cls: "hearth-settings-index-rowdesc", text: s.tabDescs[entry.id] });
-		setIcon(row.createSpan("hearth-settings-index-go"), "chevron-right");
+		setIcon(row.createSpan("zerohearth-settings-index-glyph"), entry.icon);
+		const text = row.createDiv("zerohearth-settings-index-rowtext");
+		text.createDiv({ cls: "zerohearth-settings-index-rowname", text: label });
+		text.createDiv({ cls: "zerohearth-settings-index-rowdesc", text: s.tabDescs[entry.id] });
+		setIcon(row.createSpan("zerohearth-settings-index-go"), "chevron-right");
 		row.addEventListener("click", open);
 	}
 
@@ -544,15 +545,15 @@ export class HomeSettingTab extends PluginSettingTab {
 	private renderCategoryHead(containerEl: HTMLElement, tab: SettingsTabId): void {
 		const s = t().settings;
 		// A div, for the same reason as an index row — see `indexRow`.
-		const back = containerEl.createDiv("hearth-settings-back");
+		const back = containerEl.createDiv("zerohearth-settings-back");
 		const leave = () => this.navigate("index");
 		makeClickable(back, leave, s.backToIndex);
-		setIcon(back.createSpan("hearth-settings-back-icon"), "chevron-left");
+		setIcon(back.createSpan("zerohearth-settings-back-icon"), "chevron-left");
 		back.createSpan({ text: this.plugin.manifest.name });
 		back.addEventListener("click", leave);
 
-		containerEl.createDiv({ cls: "hearth-settings-page-title", text: s.tabs[tab] });
-		containerEl.createDiv({ cls: "hearth-settings-page-desc", text: s.tabDescs[tab] });
+		containerEl.createDiv({ cls: "zerohearth-settings-page-title", text: s.tabs[tab] });
+		containerEl.createDiv({ cls: "zerohearth-settings-page-desc", text: s.tabDescs[tab] });
 	}
 
 	/** Render the sections that belong to a given ribbon tab. (Named
@@ -612,7 +613,7 @@ export class HomeSettingTab extends PluginSettingTab {
 				);
 				break;
 			// Mobile is a category of its own rather than two sections inside
-			// Behaviour. Hearth runs on a phone as a first-class board now, not as
+			// Behaviour. ZeroHearth runs on a phone as a first-class board now, not as
 			// a reduced mode of the desktop one, and the settings pane is where
 			// that is either stated or quietly contradicted.
 			case "mobile":
@@ -627,7 +628,7 @@ export class HomeSettingTab extends PluginSettingTab {
 				}
 				break;
 			case "integrations":
-				// The catalogue first: every integration Hearth has, listed whether
+				// The catalogue first: every integration ZeroHearth has, listed whether
 				// or not it is installed and whether or not it has a setting. The two
 				// sections below are the only ones that *do* have settings, and rows
 				// in the catalogue link down to them.
@@ -657,7 +658,7 @@ export class HomeSettingTab extends PluginSettingTab {
 	/** A shared <datalist> of vault files used by file-path inputs. */
 	private fileDatalist(containerEl: HTMLElement): void {
 		const datalist = containerEl.createEl("datalist", {
-			attr: { id: "hearth-file-list" },
+			attr: { id: "zerohearth-file-list" },
 		});
 		for (const file of this.app.vault.getFiles()) {
 			datalist.createEl("option", { attr: { value: file.path } });
@@ -694,13 +695,13 @@ export class HomeSettingTab extends PluginSettingTab {
 		const desc = typeof descOrRender === "string" ? descOrRender : undefined;
 		const render = typeof descOrRender === "function" ? descOrRender : maybeRender!;
 
-		const wrap = containerEl.createDiv("hearth-section");
+		const wrap = containerEl.createDiv("zerohearth-section");
 		this.sectionEls.set(title, wrap);
-		const head = wrap.createDiv("hearth-section-head");
-		head.createDiv({ cls: "hearth-section-title", text: title });
-		if (desc) head.createDiv({ cls: "hearth-section-desc", text: desc });
+		const head = wrap.createDiv("zerohearth-section-head");
+		head.createDiv({ cls: "zerohearth-section-title", text: title });
+		if (desc) head.createDiv({ cls: "zerohearth-section-desc", text: desc });
 
-		const body = wrap.createDiv("hearth-section-body");
+		const body = wrap.createDiv("zerohearth-section-body");
 		// Isolate each section: a throw while rendering one section shows an inline
 		// error there instead of blanking the whole page, so its siblings still
 		// render.
@@ -925,7 +926,7 @@ export class HomeSettingTab extends PluginSettingTab {
 			for (const id of INSTANT_FEATURES) {
 				new Setting(containerEl)
 					.setName(t().search.tips.features[id].title)
-					.setClass("hearth-setting-sub")
+					.setClass("zerohearth-setting-sub")
 					.addToggle((tg) =>
 						tg.setValue(!hidden.has(id)).onChange(async (v) => {
 							if (v) hidden.delete(id);
@@ -1033,7 +1034,7 @@ export class HomeSettingTab extends PluginSettingTab {
 	 * template, the folder the note lands in and the name it gets.
 	 *
 	 * Shown whatever the search-bar button is set to, because these settings
-	 * also drive the search-bar card's button and Hearth's own "Create new note"
+	 * also drive the search-bar card's button and ZeroHearth's own "Create new note"
 	 * command — a user who has switched the header button to "Search online"
 	 * still has both of those.
 	 */
@@ -1146,7 +1147,7 @@ export class HomeSettingTab extends PluginSettingTab {
 		// The one thing the rows above can't show between them: where a click
 		// actually puts the note.
 		const destination = new Setting(containerEl).setDesc(this.newNoteDestination());
-		destination.settingEl.addClass("hearth-setting-note");
+		destination.settingEl.addClass("zerohearth-setting-note");
 	}
 
 	/** One line spelling out the path the New-note button will write to. */
@@ -1205,7 +1206,7 @@ export class HomeSettingTab extends PluginSettingTab {
 				minimal: strings.tierMinimalDesc,
 			}[tier],
 		);
-		chosen.settingEl.addClass("hearth-setting-note");
+		chosen.settingEl.addClass("zerohearth-setting-note");
 
 		// Independent of the tier: this one is about *when* the board is worth
 		// animating at all, not how much of it there is to animate.
@@ -1250,8 +1251,8 @@ export class HomeSettingTab extends PluginSettingTab {
 		if (lines.length === 0) return;
 
 		const effects = new Setting(containerEl).setName(strings.effects);
-		effects.settingEl.addClass("hearth-setting-note");
-		const list = effects.descEl.createEl("ul", { cls: "hearth-setting-note-list" });
+		effects.settingEl.addClass("zerohearth-setting-note");
+		const list = effects.descEl.createEl("ul", { cls: "zerohearth-setting-note-list" });
 		for (const line of lines) list.createEl("li", { text: line });
 	}
 
@@ -1262,10 +1263,10 @@ export class HomeSettingTab extends PluginSettingTab {
 	 * override different sections at different rungs. */
 	private tierOverrideNote(containerEl: HTMLElement, active: boolean): void {
 		if (!active) return;
-		containerEl.addClass("hearth-settings-overridden");
+		containerEl.addClass("zerohearth-settings-overridden");
 		const note = new Setting(containerEl).setDesc(t().settings.performance.overridden);
-		note.settingEl.addClass("hearth-setting-note");
-		const icon = createSpan("hearth-setting-note-icon");
+		note.settingEl.addClass("zerohearth-setting-note");
+		const icon = createSpan("zerohearth-setting-note-icon");
 		setIcon(icon, "gauge");
 		note.descEl.prepend(icon);
 	}
@@ -1274,8 +1275,8 @@ export class HomeSettingTab extends PluginSettingTab {
 	 * Expressive, whose frame none of them shape. */
 	private expressiveSurfaceNote(containerEl: HTMLElement): void {
 		const note = new Setting(containerEl).setDesc(t().settings.dashboard.cardSurfaceExpressive);
-		note.settingEl.addClass("hearth-setting-note");
-		const icon = createSpan("hearth-setting-note-icon");
+		note.settingEl.addClass("zerohearth-setting-note");
+		const icon = createSpan("zerohearth-setting-note-icon");
 		setIcon(icon, "shapes");
 		note.descEl.prepend(icon);
 	}
@@ -1286,8 +1287,8 @@ export class HomeSettingTab extends PluginSettingTab {
 	private vibrancyFrostNote(containerEl: HTMLElement): void {
 		if (!frostSuppressedByVibrancy(this.plugin.settings)) return;
 		const note = new Setting(containerEl).setDesc(t().settings.performance.vibrancyFrost);
-		note.settingEl.addClass("hearth-setting-note");
-		const icon = createSpan("hearth-setting-note-icon");
+		note.settingEl.addClass("zerohearth-setting-note");
+		const icon = createSpan("zerohearth-setting-note-icon");
 		setIcon(icon, "layers");
 		note.descEl.prepend(icon);
 	}
@@ -1301,21 +1302,21 @@ export class HomeSettingTab extends PluginSettingTab {
 		const note = new Setting(containerEl).setDesc(
 			t().settings.background.externalCallsDisabled,
 		);
-		note.settingEl.addClass("hearth-setting-note");
-		const icon = createSpan("hearth-setting-note-icon");
+		note.settingEl.addClass("zerohearth-setting-note");
+		const icon = createSpan("zerohearth-setting-note-icon");
 		setIcon(icon, "wifi-off");
 		note.descEl.prepend(icon);
 	}
 
-	/** The note that says a video backdrop is the most expensive thing Hearth
+	/** The note that says a video backdrop is the most expensive thing ZeroHearth
 	 * paints, and that only the top performance tier lets it move. Shown next to
 	 * the dropdown that chose it, the same way a blocked web wallpaper says why
 	 * it is missing. */
 	private videoBackgroundNote(containerEl: HTMLElement, kind: BackgroundKind): void {
 		if (kind !== "video") return;
 		const note = new Setting(containerEl).setDesc(t().settings.background.videoNote);
-		note.settingEl.addClass("hearth-setting-note");
-		const icon = createSpan("hearth-setting-note-icon");
+		note.settingEl.addClass("zerohearth-setting-note");
+		const icon = createSpan("zerohearth-setting-note-icon");
 		setIcon(icon, "gauge");
 		note.descEl.prepend(icon);
 	}
@@ -1361,7 +1362,7 @@ export class HomeSettingTab extends PluginSettingTab {
 			this.weatherBackgroundSection(containerEl);
 		}
 
-		// Hearth's own wallpaper is drawn in the same two designs as the sky.
+		// ZeroHearth's own wallpaper is drawn in the same two designs as the sky.
 		if (s.backgroundKind === "default") {
 			this.backgroundDesignSetting(containerEl);
 		}
@@ -1396,7 +1397,7 @@ export class HomeSettingTab extends PluginSettingTab {
 			if (s.backgroundKind === "image" || s.backgroundKind === "video") {
 				setting.controlEl
 					.querySelector("input")
-					?.setAttribute("list", "hearth-file-list");
+					?.setAttribute("list", "zerohearth-file-list");
 			}
 		}
 
@@ -1511,7 +1512,7 @@ export class HomeSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl).setName(strings.weatherHeading).setHeading();
 		containerEl.createDiv({
-			cls: "setting-item-description hearth-setting-note",
+			cls: "setting-item-description zerohearth-setting-note",
 			text: sky ? strings.weatherDesc : `${strings.weatherNoPlace} ${strings.weatherDesc}`,
 		});
 
@@ -1540,7 +1541,7 @@ export class HomeSettingTab extends PluginSettingTab {
 		this.backgroundDesignSetting(containerEl);
 	}
 
-	/** Classic or Expressive, for the backgrounds Hearth draws itself: the
+	/** Classic or Expressive, for the backgrounds ZeroHearth draws itself: the
 	 * weather sky and its own wallpaper. One setting serves both, since a vault
 	 * that wants the flat look wants it whichever it is showing. */
 	private backgroundDesignSetting(containerEl: HTMLElement): void {
@@ -1630,7 +1631,7 @@ export class HomeSettingTab extends PluginSettingTab {
 	// ---- Opening notes ---------------------------------------------------
 
 	/**
-	 * Where notes Hearth opens end up (#106). One dropdown decides it for
+	 * Where notes ZeroHearth opens end up (#106). One dropdown decides it for
 	 * everything; the per-source rows below it start on "Same as above", so the
 	 * detail is there for anyone who wants a link to behave differently from a
 	 * search hit without getting in the way of anyone who doesn't.
@@ -1670,10 +1671,10 @@ export class HomeSettingTab extends PluginSettingTab {
 				});
 		}
 
-		// Not one of the four sources above: Obsidian, not Hearth, decides where
-		// these land, and the only say Hearth has is whether its tab may be taken
+		// Not one of the four sources above: Obsidian, not ZeroHearth, decides where
+		// these land, and the only say ZeroHearth has is whether its tab may be taken
 		// over — so the choice is two-way, and it defaults to being taken over
-		// (what Hearth has done since #84) rather than following the global
+		// (what ZeroHearth has done since #84) rather than following the global
 		// dropdown, which would change that for everyone on upgrade.
 		const outside = t().settings.behaviour.openFromOutsideModes;
 		new Setting(containerEl)
@@ -1722,8 +1723,8 @@ export class HomeSettingTab extends PluginSettingTab {
 			);
 		// Still honoured, but a phone now gets the stacked board below; the tag
 		// says this is the old way rather than the one to reach for.
-		searchOnly.settingEl.addClass("hearth-setting-tagged");
-		searchOnly.nameEl.createSpan({ cls: "hearth-setting-tag", text: t().settings.behaviour.legacyTag });
+		searchOnly.settingEl.addClass("zerohearth-setting-tagged");
+		searchOnly.nameEl.createSpan({ cls: "zerohearth-setting-tag", text: t().settings.behaviour.legacyTag });
 
 		new Setting(containerEl)
 			.setName(t().settings.behaviour.stackOnNarrow)
@@ -1785,7 +1786,7 @@ export class HomeSettingTab extends PluginSettingTab {
 
 		const buttons = s.mobileActionButtons;
 		buttons.forEach((btn, index) => {
-			const row = new Setting(containerEl).setClass("hearth-link-setting");
+			const row = new Setting(containerEl).setClass("zerohearth-link-setting");
 			row.addText((txt) =>
 				txt.setPlaceholder(t().settings.mobileActions.labelPlaceholder).setValue(btn.label).onChange(async (v) => {
 					btn.label = v;
@@ -1821,7 +1822,7 @@ export class HomeSettingTab extends PluginSettingTab {
 				// command a button runs — and how to change it — is always visible.
 				row.addButton((b) => {
 					const current = currentTarget
-						? this.app.commands.listCommands().find((c) => c.id === currentTarget)
+						? this.app.commands.listCommands().find((c) => c.id === zerohearthCommandId(currentTarget))
 						: undefined;
 					b.setButtonText(current ? current.name : t().settings.mobileActions.pickCommand);
 					b.setTooltip(currentTarget ? t().settings.mobileActions.commandTooltip(currentTarget) : t().settings.mobileActions.pickCommand);
@@ -1915,10 +1916,10 @@ export class HomeSettingTab extends PluginSettingTab {
 	// ---- Integrations catalogue -------------------------------------------
 
 	/**
-	 * The full list of everything Hearth works with.
+	 * The full list of everything ZeroHearth works with.
 	 *
 	 * Deliberately not filtered by what's installed: the point of the list is to
-	 * answer "what does Hearth work with?" as much as "is it working?", so every
+	 * answer "what does ZeroHearth work with?" as much as "is it working?", so every
 	 * entry in {@link INTEGRATIONS} renders, with a live status pill and a line
 	 * saying where its settings are — including when the honest answer is "there
 	 * aren't any" or "on the card". Integrations whose settings sit elsewhere
@@ -1934,7 +1935,7 @@ export class HomeSettingTab extends PluginSettingTab {
 				.setName(strings.groups[group])
 				.setDesc(strings.groups[groupDescKey[group]])
 				.setHeading();
-			head.settingEl.addClass("hearth-integration-group");
+			head.settingEl.addClass("zerohearth-integration-group");
 			for (const entry of integrationsInGroup(group)) {
 				this.integrationRow(containerEl, entry);
 			}
@@ -1949,20 +1950,20 @@ export class HomeSettingTab extends PluginSettingTab {
 		const status = integrationStatus(this.plugin.app, entry);
 
 		const row = new Setting(containerEl).setName(item.name).setDesc(item.desc);
-		row.settingEl.addClass("hearth-integration-row");
+		row.settingEl.addClass("zerohearth-integration-row");
 
 		// The pill sits with the name rather than in the control column, so the
 		// row still reads as a sentence at narrow widths (and on mobile, where
 		// Obsidian stacks name and control).
 		const pill = row.nameEl.createSpan({
-			cls: `hearth-integration-status is-${status}`,
+			cls: `zerohearth-integration-status is-${status}`,
 			text: strings.status[status],
 		});
 		pill.setAttribute("aria-label", strings.statusTooltip[status]);
 		pill.setAttribute("title", strings.statusTooltip[status]);
 
 		row.descEl.createDiv({
-			cls: "hearth-integration-where",
+			cls: "zerohearth-integration-where",
 			text: this.integrationWhereText(entry),
 		});
 
@@ -2164,7 +2165,7 @@ export class HomeSettingTab extends PluginSettingTab {
 				tog.setValue(settings.operonIntegration).onChange((v) => {
 					settings.operonIntegration = v;
 					// Drop any live session immediately, so turning the switch off
-					// stops Hearth holding a handle to Operon rather than merely
+					// stops ZeroHearth holding a handle to Operon rather than merely
 					// hiding the cards.
 					if (!v) this.plugin.operon.invalidate();
 					this.save();
@@ -2173,7 +2174,7 @@ export class HomeSettingTab extends PluginSettingTab {
 			);
 
 		// Writes are their own decision. Operon grants all-or-nothing, so turning
-		// this on widens what Hearth requests and needs a fresh approval in
+		// this on widens what ZeroHearth requests and needs a fresh approval in
 		// Operon's settings — which is why it is never on by default and why the
 		// session is dropped either way, so the next read renegotiates for the
 		// new set instead of reusing a session with the old one.
@@ -2216,7 +2217,7 @@ export class HomeSettingTab extends PluginSettingTab {
 		// problem reportable rather than guessable.
 		if (connected?.error) {
 			statusRow.descEl.createDiv({
-				cls: "hearth-operon-caps-missing",
+				cls: "zerohearth-operon-caps-missing",
 				text: `${s.detail}: ${connected.error.reasonCode ?? connected.error.code}${connected.error.reason ? ` — ${connected.error.reason}` : ""}`,
 			});
 		}
@@ -2225,7 +2226,7 @@ export class HomeSettingTab extends PluginSettingTab {
 			.setName(s.capabilities)
 			.setDesc(s.capabilitiesDesc);
 		capabilities.controlEl.createDiv({
-			cls: "hearth-operon-caps",
+			cls: "zerohearth-operon-caps",
 			// What Operon was actually sent, which widens with the writes
 			// toggle — a list that always showed the reads would understate the
 			// grant the user is being asked to approve.
@@ -2236,7 +2237,7 @@ export class HomeSettingTab extends PluginSettingTab {
 		// confusing without saying why.
 		if (settings.operonWrites && connected?.state === "ready" && !connected.canWrite) {
 			capabilities.descEl.createDiv({
-				cls: "hearth-operon-caps-missing",
+				cls: "zerohearth-operon-caps-missing",
 				text: s.writesPending,
 			});
 		}
@@ -2244,7 +2245,7 @@ export class HomeSettingTab extends PluginSettingTab {
 		// back short of what was asked for.
 		if (connected && connected.state !== "ready" && connected.missing.length > 0) {
 			capabilities.descEl.createDiv({
-				cls: "hearth-operon-caps-missing",
+				cls: "zerohearth-operon-caps-missing",
 				text: s.missing(connected.missing.join(", ")),
 			});
 		}
@@ -2262,7 +2263,7 @@ export class HomeSettingTab extends PluginSettingTab {
 
 		if (!available) {
 			const link = containerEl.createEl("a", {
-				cls: "hearth-operon-install",
+				cls: "zerohearth-operon-install",
 				text: s.install,
 				href: `obsidian://show-plugin?id=${OPERON_PLUGIN_ID}`,
 			});
@@ -2510,7 +2511,7 @@ export class HomeSettingTab extends PluginSettingTab {
 	 * page.
 	 *
 	 * Not a dropdown among the card-surface sliders any more: it decides how all
-	 * of Hearth looks — every card, dialog, menu and this pane — so it is the
+	 * of ZeroHearth looks — every card, dialog, menu and this pane — so it is the
 	 * first thing on the page that is about looks, and it shows rather than
 	 * names its two choices: a small card drawn each way, the one in use marked.
 	 * Its own ornaments are Expressive shapes in the accent, so the switch is
@@ -2524,9 +2525,9 @@ export class HomeSettingTab extends PluginSettingTab {
 		// switching back lands on whichever of the other two was in use.
 		const current = s.terminalMode ? "terminal" : (s.cardDesign ?? "classic");
 
-		const hero = containerEl.createDiv("hearth-design-hero");
+		const hero = containerEl.createDiv("zerohearth-design-hero");
 		const art = hero.createSvg("svg", {
-			cls: "hearth-design-hero-art",
+			cls: "zerohearth-design-hero-art",
 			attr: { viewBox: "0 0 240 140", "aria-hidden": "true" },
 		});
 		art.createSvg("path", { cls: "is-cookie", attr: { d: shapePath(196, 34, 46, 9, 0.07, 16) } });
@@ -2534,15 +2535,15 @@ export class HomeSettingTab extends PluginSettingTab {
 		art.createSvg("path", { cls: "is-sparkle", attr: { d: sparklePath(222, 112, 13) } });
 		art.createSvg("path", { cls: "is-sparkle", attr: { d: sparklePath(150, 62, 8) } });
 
-		const head = hero.createDiv("hearth-design-hero-head");
-		head.createDiv({ cls: "hearth-design-hero-title", text: strings.cardDesign });
-		head.createDiv({ cls: "hearth-design-hero-desc", text: strings.cardDesignDesc });
+		const head = hero.createDiv("zerohearth-design-hero-head");
+		head.createDiv({ cls: "zerohearth-design-hero-title", text: strings.cardDesign });
+		head.createDiv({ cls: "zerohearth-design-hero-desc", text: strings.cardDesignDesc });
 
-		const choices = hero.createDiv({ cls: "hearth-design-choices has-three", attr: { role: "radiogroup" } });
+		const choices = hero.createDiv({ cls: "zerohearth-design-choices has-three", attr: { role: "radiogroup" } });
 		for (const design of ["classic", "expressive", "terminal"] as const) {
 			const chosen = design === current;
 			const choice = choices.createDiv({
-				cls: ["hearth-design-choice", `is-${design}`],
+				cls: ["zerohearth-design-choice", `is-${design}`],
 				attr: { role: "radio", "aria-checked": String(chosen) },
 			});
 			choice.toggleClass("is-chosen", chosen);
@@ -2558,28 +2559,28 @@ export class HomeSettingTab extends PluginSettingTab {
 				this.terminalPreview(choice);
 			} else {
 			// A card in miniature, drawn the way this design draws one.
-			const preview = choice.createDiv("hearth-design-preview");
-			const card = preview.createDiv("hearth-design-preview-card");
-			card.createDiv("hearth-design-preview-badge");
-			const lines = card.createDiv("hearth-design-preview-lines");
-			lines.createDiv("hearth-design-preview-line");
-			lines.createDiv("hearth-design-preview-line is-short");
-			const rows = preview.createDiv("hearth-design-preview-rows");
-			for (let i = 0; i < 3; i++) rows.createDiv("hearth-design-preview-row");
-			preview.createDiv("hearth-design-preview-button");
+			const preview = choice.createDiv("zerohearth-design-preview");
+			const card = preview.createDiv("zerohearth-design-preview-card");
+			card.createDiv("zerohearth-design-preview-badge");
+			const lines = card.createDiv("zerohearth-design-preview-lines");
+			lines.createDiv("zerohearth-design-preview-line");
+			lines.createDiv("zerohearth-design-preview-line is-short");
+			const rows = preview.createDiv("zerohearth-design-preview-rows");
+			for (let i = 0; i < 3; i++) rows.createDiv("zerohearth-design-preview-row");
+			preview.createDiv("zerohearth-design-preview-button");
 			}
 
-			const label = choice.createDiv("hearth-design-choice-label");
-			const nameEl = label.createDiv("hearth-design-choice-name");
+			const label = choice.createDiv("zerohearth-design-choice-label");
+			const nameEl = label.createDiv("zerohearth-design-choice-name");
 			nameEl.createSpan({ text: name });
-			if (chosen) nameEl.createSpan({ cls: "hearth-design-choice-badge", text: strings.designInUse });
+			if (chosen) nameEl.createSpan({ cls: "zerohearth-design-choice-badge", text: strings.designInUse });
 			if (design === "terminal") {
 				nameEl.createSpan({
-					cls: "hearth-design-choice-badge is-experimental",
+					cls: "zerohearth-design-choice-badge is-experimental",
 					text: t().tui.settings.experimental,
 				});
 			}
-			label.createDiv({ cls: "hearth-design-choice-desc", text: desc });
+			label.createDiv({ cls: "zerohearth-design-choice-desc", text: desc });
 
 			const pick = (): void => {
 				if (design === current) return;
@@ -2604,14 +2605,14 @@ export class HomeSettingTab extends PluginSettingTab {
 	/** Terminal mode's choice in the design hero: a card in miniature, drawn
 	 * the way terminal mode draws one — as text. */
 	private terminalPreview(choice: HTMLElement): void {
-		const preview = choice.createDiv("hearth-design-preview is-terminal");
+		const preview = choice.createDiv("zerohearth-design-preview is-terminal");
 		for (const line of [
 			"┌─ Tasks ────── ≡─┐",
 			"│ [x] ship 3.4    │",
 			"│ [ ] review  tmrw│",
 			"└─────────────────┘",
 		]) {
-			preview.createDiv({ cls: "hearth-design-preview-tline", text: line });
+			preview.createDiv({ cls: "zerohearth-design-preview-tline", text: line });
 		}
 	}
 
@@ -2691,7 +2692,7 @@ export class HomeSettingTab extends PluginSettingTab {
 					if (trimmed && host === null) {
 						new Notice(strings.hostInvalid);
 						// Cleared, not left as it was: a field showing an address
-						// Hearth won't use must not sit over one it still would.
+						// ZeroHearth won't use must not sit over one it still would.
 						tx.setValue(this.plugin.settings.galleryUrl);
 						return;
 					}
@@ -2759,7 +2760,7 @@ export class HomeSettingTab extends PluginSettingTab {
 			.setDesc(strings.exportDesc)
 			.addButton((b) => this.exportButton(b, () => exportLayout(this.plugin)));
 
-		// Export every Hearth setting as a JSON file.
+		// Export every ZeroHearth setting as a JSON file.
 		new Setting(containerEl)
 			.setName(strings.exportSettings)
 			.setDesc(strings.exportSettingsDesc)
@@ -2849,8 +2850,8 @@ export class HomeSettingTab extends PluginSettingTab {
 		if (tooltip) b.setTooltip(tooltip);
 		const el = b.buttonEl;
 		el.empty();
-		el.addClass("hearth-about-btn");
-		setIcon(el.createSpan("hearth-about-btn-icon"), icon);
+		el.addClass("zerohearth-about-btn");
+		setIcon(el.createSpan("zerohearth-about-btn-icon"), icon);
 		el.createSpan({ text: label });
 	}
 

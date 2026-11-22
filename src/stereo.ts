@@ -21,7 +21,7 @@ import type { App } from "obsidian";
 /** Community plugin id, and the key of its entry in the Integrations tab. */
 export const STEREO_PLUGIN_ID = "stereo";
 
-/** Mirror of Stereo's own repeat modes, which are not Hearth's: it repeats the
+/** Mirror of Stereo's own repeat modes, which are not ZeroHearth's: it repeats the
  * queue or the track, where the vault player repeats "all" or "one". */
 export type StereoRepeatMode = "off" | "queue" | "track";
 

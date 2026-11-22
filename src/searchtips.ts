@@ -12,11 +12,11 @@ import { type App } from "obsidian";
 import { setIcon } from "./glyphs";
 import { t } from "./i18n";
 import { INSTANT_FEATURES, type InstantFeature } from "./instant";
-import { HearthModal } from "./uidesign";
+import { ZeroHearthModal } from "./uidesign";
 
 /** Local storage key (per vault, outside data.json) remembering that the
  * reader has seen the tips — once opened or dismissed, the hint stops. */
-const SEEN_KEY = "hearth-search-tips-seen";
+const SEEN_KEY = "zerohearth-search-tips-seen";
 
 export function searchTipsSeen(app: App): boolean {
 	return app.loadLocalStorage(SEEN_KEY) === true;
@@ -55,7 +55,7 @@ export interface SearchTipsOptions {
 	onTry?: (example: string) => void;
 }
 
-export class SearchTipsModal extends HearthModal {
+export class SearchTipsModal extends ZeroHearthModal {
 	private opts: SearchTipsOptions;
 
 	constructor(app: App, opts: SearchTipsOptions = {}) {
@@ -66,26 +66,26 @@ export class SearchTipsModal extends HearthModal {
 	onOpen(): void {
 		markSearchTipsSeen(this.app);
 		const strings = t().search.tips;
-		this.modalEl.addClass("hearth-tips-modal");
+		this.modalEl.addClass("zerohearth-tips-modal");
 		this.titleEl.setText(strings.title);
 		const body = this.contentEl;
-		body.createEl("p", { cls: "hearth-modal-intro", text: this.opts.onTry ? strings.introTry : strings.intro });
+		body.createEl("p", { cls: "zerohearth-modal-intro", text: this.opts.onTry ? strings.introTry : strings.intro });
 
-		body.createEl("h3", { cls: "hearth-tips-heading", text: strings.findHeading });
-		const find = body.createDiv("hearth-tips-list");
+		body.createEl("h3", { cls: "zerohearth-tips-heading", text: strings.findHeading });
+		const find = body.createDiv("zerohearth-tips-list");
 		for (const id of FIND_TIPS) {
 			const tip = strings.find[id];
 			this.row(find, FIND_ICONS[id], tip.title, tip.desc, tip.examples, true);
 		}
 
-		body.createEl("h3", { cls: "hearth-tips-heading", text: strings.answersHeading });
-		const answers = body.createDiv("hearth-tips-list");
+		body.createEl("h3", { cls: "zerohearth-tips-heading", text: strings.answersHeading });
+		const answers = body.createDiv("zerohearth-tips-list");
 		for (const id of INSTANT_FEATURES) {
 			const tip = strings.features[id];
 			const on = this.opts.enabled?.(id) ?? true;
 			this.row(answers, INSTANT_FEATURE_ICONS[id], tip.title, tip.desc, tip.examples, on);
 		}
-		body.createEl("p", { cls: "hearth-tips-footnote", text: strings.settingsHint });
+		body.createEl("p", { cls: "zerohearth-tips-footnote", text: strings.settingsHint });
 	}
 
 	onClose(): void {
@@ -100,23 +100,23 @@ export class SearchTipsModal extends HearthModal {
 		examples: readonly string[],
 		on: boolean,
 	): void {
-		const row = parent.createDiv("hearth-tips-row");
+		const row = parent.createDiv("zerohearth-tips-row");
 		row.toggleClass("is-off", !on);
-		setIcon(row.createDiv("hearth-tips-icon"), icon);
-		const text = row.createDiv("hearth-tips-text");
-		const head = text.createDiv("hearth-tips-title");
+		setIcon(row.createDiv("zerohearth-tips-icon"), icon);
+		const text = row.createDiv("zerohearth-tips-text");
+		const head = text.createDiv("zerohearth-tips-title");
 		head.createSpan({ text: title });
-		if (!on) head.createSpan({ cls: "hearth-tips-off", text: t().search.tips.off });
-		text.createDiv({ cls: "hearth-tips-desc", text: desc });
-		const chips = text.createDiv("hearth-tips-examples");
+		if (!on) head.createSpan({ cls: "zerohearth-tips-off", text: t().search.tips.off });
+		text.createDiv({ cls: "zerohearth-tips-desc", text: desc });
+		const chips = text.createDiv("zerohearth-tips-examples");
 		const onTry = on ? this.opts.onTry : undefined;
 		for (const example of examples) {
 			if (!onTry) {
-				chips.createEl("code", { cls: "hearth-tips-example", text: example });
+				chips.createEl("code", { cls: "zerohearth-tips-example", text: example });
 				continue;
 			}
 			const chip = chips.createEl("button", {
-				cls: "hearth-tips-example is-clickable",
+				cls: "zerohearth-tips-example is-clickable",
 				text: example,
 				attr: { type: "button", "aria-label": t().search.tips.tryAria(example) },
 			});

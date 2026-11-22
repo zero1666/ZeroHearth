@@ -120,11 +120,11 @@ export function updatedText(snapshot: TensionSnapshot): string {
 
 /** The five bands as a segmented scale with a marker at the score. */
 function scale(parent: HTMLElement, score: number): void {
-	const el = parent.createDiv("hearth-tension-scale");
+	const el = parent.createDiv("zerohearth-tension-scale");
 	el.setAttribute("aria-hidden", "true");
-	const track = el.createDiv("hearth-tension-scale-track");
-	for (const band of TENSION_BANDS) track.createDiv(`hearth-tension-scale-seg is-band-${band}`);
-	const marker = el.createDiv("hearth-tension-scale-marker");
+	const track = el.createDiv("zerohearth-tension-scale-track");
+	for (const band of TENSION_BANDS) track.createDiv(`zerohearth-tension-scale-seg is-band-${band}`);
+	const marker = el.createDiv("zerohearth-tension-scale-marker");
 	marker.style.left = `${Math.max(0, Math.min(100, score))}%`;
 }
 
@@ -140,22 +140,22 @@ function sparkline(parent: HTMLElement, points: readonly TensionPoint[], r: Tens
 	// as a mountain range.
 	const ys = (score: number) => pad + (1 - score / 100) * (h - pad * 2);
 	const line = points.map((p, i) => `${i === 0 ? "M" : "L"}${xs(i).toFixed(2)} ${ys(p.score).toFixed(2)}`).join(" ");
-	const box = parent.createDiv("hearth-tension-history");
+	const box = parent.createDiv("zerohearth-tension-history");
 	const svg = box.createSvg("svg", {
 		attr: { viewBox: `0 0 ${w} ${h}`, preserveAspectRatio: "none", "aria-hidden": "true" },
 	});
 	svg.createSvg("path", {
-		cls: "hearth-tension-history-area",
+		cls: "zerohearth-tension-history-area",
 		attr: { d: `${line} L${xs(points.length - 1).toFixed(2)} ${h} L${xs(0).toFixed(2)} ${h} Z` },
 	});
-	svg.createSvg("path", { cls: "hearth-tension-history-line", attr: { d: line, "vector-effect": "non-scaling-stroke" } });
+	svg.createSvg("path", { cls: "zerohearth-tension-history-line", attr: { d: line, "vector-effect": "non-scaling-stroke" } });
 	const last = points[points.length - 1];
 	box.setAttribute(
 		"title",
 		t().cards.tension.historyTip(points.length, Math.round(Math.min(...points.map((p) => p.score))), Math.round(Math.max(...points.map((p) => p.score)))),
 	);
 	if (r.expressive) {
-		const dot = box.createDiv("hearth-tension-history-dot");
+		const dot = box.createDiv("zerohearth-tension-history-dot");
 		dot.style.left = `${xs(points.length - 1)}%`;
 		dot.style.top = `${(ys(last.score) / h) * 100}%`;
 	}
@@ -163,29 +163,29 @@ function sparkline(parent: HTMLElement, points: readonly TensionPoint[], r: Tens
 
 /** The thermometer glyph; Expressive sets it on a cookie in the band's tone. */
 function glyph(parent: HTMLElement, r: TensionResolved): void {
-	const el = parent.createDiv("hearth-tension-glyph");
+	const el = parent.createDiv("zerohearth-tension-glyph");
 	if (r.expressive) {
-		const svg = el.createSvg("svg", { cls: "hearth-tension-cookie", attr: { viewBox: "0 0 48 48", "aria-hidden": "true" } });
+		const svg = el.createSvg("svg", { cls: "zerohearth-tension-cookie", attr: { viewBox: "0 0 48 48", "aria-hidden": "true" } });
 		svg.createSvg("path", { attr: { d: shapePath(24, 24, 21, 9, 0.07) } });
 	}
-	setIcon(el.createDiv("hearth-tension-glyph-icon"), "thermometer");
+	setIcon(el.createDiv("zerohearth-tension-glyph-icon"), "thermometer");
 }
 
 function summaryBlock(parent: HTMLElement, snapshot: TensionSnapshot, r: TensionResolved, cls: string): void {
 	const summary = snapshot.now?.summary ?? "";
 	if (!r.showSummary || !summary) return;
 	const box = parent.createDiv(cls);
-	box.createDiv({ cls: "hearth-tension-summary-text", text: summaryText(summary, r) });
-	box.createDiv({ cls: "hearth-tension-summary-source", text: t().cards.tension.source });
+	box.createDiv({ cls: "zerohearth-tension-summary-text", text: summaryText(summary, r) });
+	box.createDiv({ cls: "zerohearth-tension-summary-source", text: t().cards.tension.source });
 }
 
 function bandLine(parent: HTMLElement, snapshot: TensionSnapshot, band: TensionBand, r: TensionResolved, cls: string): void {
 	const delta = r.showChange ? tensionDelta(snapshot) : null;
 	if (!r.showBand && delta === null) return;
 	const row = parent.createDiv(cls);
-	if (r.showBand) row.createSpan({ cls: "hearth-tension-band", text: bandLabel(band) });
+	if (r.showBand) row.createSpan({ cls: "zerohearth-tension-band", text: bandLabel(band) });
 	if (delta !== null) {
-		const chip = row.createSpan({ cls: "hearth-tension-change", text: changeText(delta) });
+		const chip = row.createSpan({ cls: "zerohearth-tension-change", text: changeText(delta) });
 		chip.toggleClass("is-up", delta > 0);
 		chip.toggleClass("is-down", delta < 0);
 		chip.setAttribute("title", t().cards.tension.changeTip);
@@ -194,8 +194,8 @@ function bandLine(parent: HTMLElement, snapshot: TensionSnapshot, band: TensionB
 
 function scoreEl(parent: HTMLElement, score: number, cls: string): void {
 	const el = parent.createDiv(cls);
-	el.createSpan({ cls: "hearth-tension-score-value", text: String(Math.round(score)) });
-	el.createSpan({ cls: "hearth-tension-score-max", text: "/100" });
+	el.createSpan({ cls: "zerohearth-tension-score-value", text: String(Math.round(score)) });
+	el.createSpan({ cls: "zerohearth-tension-score-max", text: "/100" });
 }
 
 // ---- Styles -----------------------------------------------------------------------
@@ -204,14 +204,14 @@ function paintMinimal(wrap: HTMLElement, snapshot: TensionSnapshot, r: TensionRe
 	const now = snapshot.now;
 	if (!now) return;
 	const band = tensionBand(now.score);
-	const hero = wrap.createDiv("hearth-tension-hero");
+	const hero = wrap.createDiv("zerohearth-tension-hero");
 	glyph(hero, r);
-	scoreEl(hero, now.score, "hearth-tension-score");
-	bandLine(wrap, snapshot, band, r, "hearth-tension-meta");
+	scoreEl(hero, now.score, "zerohearth-tension-score");
+	bandLine(wrap, snapshot, band, r, "zerohearth-tension-meta");
 	if (r.showScale) scale(wrap, now.score);
 	if (r.showHistory) sparkline(wrap, snapshot.history, r);
-	summaryBlock(wrap, snapshot, r, "hearth-tension-summary");
-	if (r.showUpdated) wrap.createDiv({ cls: "hearth-tension-updated", text: updatedText(snapshot) });
+	summaryBlock(wrap, snapshot, r, "zerohearth-tension-summary");
+	if (r.showUpdated) wrap.createDiv({ cls: "zerohearth-tension-updated", text: updatedText(snapshot) });
 }
 
 let sceneSeq = 0;
@@ -220,21 +220,21 @@ function paintArtistic(wrap: HTMLElement, snapshot: TensionSnapshot, r: TensionR
 	const now = snapshot.now;
 	if (!now) return;
 	const band = tensionBand(now.score);
-	const scene = wrap.createDiv(`hearth-tension-scene is-${band}`);
+	const scene = wrap.createDiv(`zerohearth-tension-scene is-${band}`);
 	scene.toggleClass("is-expressive", r.expressive);
 	scene.toggleClass("is-animated", r.animate);
 	mountScene(scene, buildScene({ band, design: r.expressive ? "expressive" : "classic", density: r.density, uid: String(++sceneSeq) }));
 
-	const content = scene.createDiv("hearth-tension-art-content");
-	const top = content.createDiv("hearth-tension-art-top");
-	top.createDiv({ cls: "hearth-tension-art-title", text: t().cards.tension.title });
-	bandLine(top, snapshot, band, r, "hearth-tension-art-meta");
+	const content = scene.createDiv("zerohearth-tension-art-content");
+	const top = content.createDiv("zerohearth-tension-art-top");
+	top.createDiv({ cls: "zerohearth-tension-art-title", text: t().cards.tension.title });
+	bandLine(top, snapshot, band, r, "zerohearth-tension-art-meta");
 
-	const bottom = content.createDiv("hearth-tension-art-bottom");
-	scoreEl(bottom, now.score, "hearth-tension-art-score");
+	const bottom = content.createDiv("zerohearth-tension-art-bottom");
+	scoreEl(bottom, now.score, "zerohearth-tension-art-score");
 	if (r.showHistory) sparkline(bottom, snapshot.history, r);
-	summaryBlock(bottom, snapshot, r, "hearth-tension-art-summary");
-	if (r.showUpdated) bottom.createDiv({ cls: "hearth-tension-updated", text: updatedText(snapshot) });
+	summaryBlock(bottom, snapshot, r, "zerohearth-tension-art-summary");
+	if (r.showUpdated) bottom.createDiv({ cls: "zerohearth-tension-updated", text: updatedText(snapshot) });
 }
 
 /** Paint a snapshot that has a reading in the resolved style. Exported for the
@@ -259,8 +259,8 @@ export function renderTension(view: CardHost, card: DashboardCard, body: HTMLEle
 	const ttlMs = tensionTtlMs(r);
 	const disabled = settings.disableExternalCalls;
 
-	body.addClass("hearth-tension-host");
-	if (r.style === "artistic") body.addClass("hearth-tension-flush");
+	body.addClass("zerohearth-tension-host");
+	if (r.style === "artistic") body.addClass("zerohearth-tension-flush");
 
 	let destroyed = false;
 	component.register(() => {
@@ -268,7 +268,7 @@ export function renderTension(view: CardHost, card: DashboardCard, body: HTMLEle
 	});
 	let loading = false;
 
-	const wrap = body.createDiv(`hearth-tension is-${r.style}`);
+	const wrap = body.createDiv(`zerohearth-tension is-${r.style}`);
 	wrap.toggleClass("is-expressive", r.expressive);
 
 	const open = (): void => {

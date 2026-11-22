@@ -28,12 +28,12 @@ const { redact } = await import("../src/gallery/snapshot");
  * place it is read.
  */
 function board(): { root: HTMLElement; body: HTMLElement } {
-	const root = document.body.createDiv("hearth-view");
-	root.createDiv("hearth-header").createSpan({ cls: "hearth-vault", text: "My vault" });
-	const card = root.createDiv("hearth-card");
+	const root = document.body.createDiv("zerohearth-view");
+	root.createDiv("zerohearth-header").createSpan({ cls: "zerohearth-vault", text: "My vault" });
+	const card = root.createDiv("zerohearth-card");
 	card.dataset.kind = "note";
-	card.createDiv({ cls: "hearth-card-title", text: "Reading list" });
-	return { root, body: card.createDiv("hearth-card-body") };
+	card.createDiv({ cls: "zerohearth-card-title", text: "Reading list" });
+	return { root, body: card.createDiv("zerohearth-card-body") };
 }
 
 describe("redact", () => {
@@ -62,11 +62,11 @@ describe("redact", () => {
 		const redaction = redact(root);
 
 		expect(body.textContent).not.toContain("showing");
-		expect(body.querySelector(".hearth-snapshot-bar")).not.toBeNull();
+		expect(body.querySelector(".zerohearth-snapshot-bar")).not.toBeNull();
 
 		// The thing being published has to stay recognisable as itself.
-		expect(root.querySelector(".hearth-vault")!.textContent).toBe("My vault");
-		expect(root.querySelector(".hearth-card-title")!.textContent).toBe("Reading list");
+		expect(root.querySelector(".zerohearth-vault")!.textContent).toBe("My vault");
+		expect(root.querySelector(".zerohearth-card-title")!.textContent).toBe("Reading list");
 
 		redaction.restore();
 	});
@@ -81,8 +81,8 @@ describe("redact", () => {
 
 		redaction.restore();
 		expect(root.querySelector("p")!.textContent).toBe(text);
-		expect(root.querySelector(".hearth-snapshot-bar")).toBeNull();
-		expect(root.classList.contains("hearth-snapshot-redacted")).toBe(false);
+		expect(root.querySelector(".zerohearth-snapshot-bar")).toBeNull();
+		expect(root.classList.contains("zerohearth-snapshot-redacted")).toBe(false);
 	});
 
 	it("blanks an editor by style, never by writing to it", () => {
@@ -97,11 +97,11 @@ describe("redact", () => {
 		const redaction = redact(root);
 
 		const editor = root.querySelector<HTMLElement>(".cm-editor")!;
-		expect(editor.classList.contains("hearth-snapshot-blank")).toBe(true);
+		expect(editor.classList.contains("zerohearth-snapshot-blank")).toBe(true);
 		expect(editor.textContent).toBe(note);
 
 		redaction.restore();
-		expect(editor.classList.contains("hearth-snapshot-blank")).toBe(false);
+		expect(editor.classList.contains("zerohearth-snapshot-blank")).toBe(false);
 		expect(editor.textContent).toBe(note);
 	});
 
@@ -122,11 +122,11 @@ describe("redact", () => {
 		const redaction = redact(root);
 
 		const field = root.querySelector<HTMLTextAreaElement>("textarea")!;
-		expect(field.classList.contains("hearth-snapshot-blank")).toBe(true);
+		expect(field.classList.contains("zerohearth-snapshot-blank")).toBe(true);
 		expect(field.value).toBe("Tomorrow: ring the dentist");
 
 		redaction.restore();
-		expect(field.classList.contains("hearth-snapshot-blank")).toBe(false);
+		expect(field.classList.contains("zerohearth-snapshot-blank")).toBe(false);
 	});
 
 	it("covers rows that arrive after the first pass", () => {

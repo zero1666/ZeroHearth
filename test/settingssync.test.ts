@@ -21,7 +21,7 @@ import { DEFAULT_SETTINGS, HomeSettings } from "../src/types";
 
 // Deliberately not `.obsidian`: the config folder is whatever Vault#configDir
 // says, and a test that used the default could not tell a hardcoded path apart.
-const manifest = { id: "hearth", dir: ".vault/plugins/hearth" };
+const manifest = { id: "zerohearth", dir: ".vault/plugins/zerohearth" };
 
 /** Settings as they would be after loading, with one recognisable board. */
 function settings(name = "Work"): HomeSettings {
@@ -33,18 +33,18 @@ function settings(name = "Work"): HomeSettings {
 
 describe("pluginDataPath", () => {
 	it("uses the directory Obsidian actually loaded the plugin from", () => {
-		expect(pluginDataPath(".vault", manifest)).toBe(".vault/plugins/hearth/data.json");
+		expect(pluginDataPath(".vault", manifest)).toBe(".vault/plugins/zerohearth/data.json");
 	});
 
 	it("follows a vault with a renamed config folder", () => {
-		expect(pluginDataPath(".config", { id: "hearth", dir: ".config/plugins/hearth" })).toBe(
-			".config/plugins/hearth/data.json",
+		expect(pluginDataPath(".config", { id: "zerohearth", dir: ".config/plugins/zerohearth" })).toBe(
+			".config/plugins/zerohearth/data.json",
 		);
 	});
 
 	it("falls back to the conventional location when the manifest has no dir", () => {
-		expect(pluginDataPath(".vault", { id: "hearth" })).toBe(
-			".vault/plugins/hearth/data.json",
+		expect(pluginDataPath(".vault", { id: "zerohearth" })).toBe(
+			".vault/plugins/zerohearth/data.json",
 		);
 	});
 });
@@ -53,21 +53,21 @@ describe("isPluginDataPath", () => {
 	const path = pluginDataPath(".vault", manifest);
 
 	it("recognises its own data file", () => {
-		expect(isPluginDataPath(path, ".vault/plugins/hearth/data.json")).toBe(true);
+		expect(isPluginDataPath(path, ".vault/plugins/zerohearth/data.json")).toBe(true);
 	});
 
 	it("ignores every other file the vault reports", () => {
 		expect(isPluginDataPath(path, ".vault/plugins/dataview/data.json")).toBe(false);
 		expect(isPluginDataPath(path, ".vault/workspace.json")).toBe(false);
 		expect(isPluginDataPath(path, "notes/data.json")).toBe(false);
-		expect(isPluginDataPath(path, ".vault/plugins/hearth/main.js")).toBe(false);
+		expect(isPluginDataPath(path, ".vault/plugins/zerohearth/main.js")).toBe(false);
 	});
 
 	it("matches however the filesystem spelled the path", () => {
 		// Windows separators, and the case-insensitive volumes on Windows and
 		// macOS — the event carries the path as the OS reported it.
-		expect(isPluginDataPath(path, ".vault\\plugins\\hearth\\data.json")).toBe(true);
-		expect(isPluginDataPath(path, ".Vault/Plugins/Hearth/data.json")).toBe(true);
+		expect(isPluginDataPath(path, ".vault\\plugins\\zerohearth\\data.json")).toBe(true);
+		expect(isPluginDataPath(path, ".Vault/Plugins/ZeroHearth/data.json")).toBe(true);
 	});
 });
 
@@ -108,7 +108,7 @@ describe("sameSettings", () => {
 	it("ignores the order two versions happened to write their keys in", () => {
 		const a = settings();
 		// Same configuration, rebuilt with the keys in reverse — what a peer
-		// running a different Hearth version can easily send.
+		// running a different ZeroHearth version can easily send.
 		const reversed = Object.fromEntries(
 			Object.entries(a as unknown as Record<string, unknown>).reverse(),
 		) as unknown as HomeSettings;

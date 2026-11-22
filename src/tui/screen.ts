@@ -11,7 +11,7 @@
  *   F1Help F2Arrange F3Search F4Filter F5Refresh F6Sort F7Add …
  *
  * The tabs are the dashboard switcher (right-click one for its menu), the
- * search is Hearth's own search section in terminal dress, and the function
+ * search is ZeroHearth's own search section in terminal dress, and the function
  * keys are both keys and buttons — on a phone they are the only way to reach
  * them. All of it is drawn as text lines (src/tui/draw.ts) except the search
  * field, which is a real input.
@@ -39,7 +39,7 @@ import {
 	TERMINAL_SCHEMES,
 } from "../types";
 import { confirmAction } from "../ui";
-import { HearthModal, hearthMenu } from "../uidesign";
+import { ZeroHearthModal, zerohearthMenu } from "../uidesign";
 import type { HomeView } from "../view";
 import { TuiBoard } from "./board";
 import { drawLine, drawLines } from "./draw";
@@ -49,7 +49,7 @@ import { asciify, fit, lineWidth, spread, strWidth, type Line, type Seg } from "
 
 /** The root classes terminal mode puts on a view, so switching modes can take
  * every one of them off again. */
-const SCHEME_CLASS_PREFIX = "hearth-tui-scheme-";
+const SCHEME_CLASS_PREFIX = "zerohearth-tui-scheme-";
 
 /** How long a status-line message stays before the line goes back to its
  * resting text. */
@@ -68,25 +68,25 @@ interface FnKey {
  */
 export function renderTerminalView(view: HomeView, root: HTMLElement, component: Component): void {
 	const s = view.plugin.settings;
-	root.addClass("hearth-tui");
+	root.addClass("zerohearth-tui");
 	for (const scheme of TERMINAL_SCHEMES) root.removeClass(`${SCHEME_CLASS_PREFIX}${scheme}`);
 	root.addClass(`${SCHEME_CLASS_PREFIX}${effectiveTerminalScheme(s)}`);
 	root.setCssProps({ "--tui-font-size": `${effectiveTerminalFontSize(s)}px` });
 
 	const mobileOnly = Platform.isMobile && s.mobileSearchOnly;
-	const scroll = root.createDiv("hearth-scroll hearth-tui-scroll");
-	const screen = scroll.createDiv("hearth-tui-screen");
+	const scroll = root.createDiv("zerohearth-scroll zerohearth-tui-scroll");
+	const screen = scroll.createDiv("zerohearth-tui-screen");
 
-	const tabs = screen.createDiv("hearth-tui-tabs");
-	const titleRow = screen.createDiv("hearth-tui-titlerow");
+	const tabs = screen.createDiv("zerohearth-tui-tabs");
+	const titleRow = screen.createDiv("zerohearth-tui-titlerow");
 	let search: SearchSection | null = null;
 	if (effectiveShowSearch(s)) search = renderSearch(view, screen, component);
 
-	const toolbar = screen.createDiv("hearth-tui-toolbar");
-	const dash = screen.createDiv("hearth-dashboard hearth-tui-dash");
-	const bottom = scroll.createDiv("hearth-tui-bottom");
-	const status = bottom.createDiv("hearth-tui-status");
-	const fkeys = bottom.createDiv("hearth-tui-fkeys");
+	const toolbar = screen.createDiv("zerohearth-tui-toolbar");
+	const dash = screen.createDiv("zerohearth-dashboard zerohearth-tui-dash");
+	const bottom = scroll.createDiv("zerohearth-tui-bottom");
+	const status = bottom.createDiv("zerohearth-tui-status");
+	const fkeys = bottom.createDiv("zerohearth-tui-fkeys");
 
 	let board: TuiBoard | null = null;
 	if (!mobileOnly) {
@@ -133,7 +133,7 @@ export function renderTerminalView(view: HomeView, root: HTMLElement, component:
 /** Take terminal mode's marks off a view root, for a render in the graphical
  * design. */
 export function clearTerminalView(view: HomeView, root: HTMLElement): void {
-	root.removeClass("hearth-tui");
+	root.removeClass("zerohearth-tui");
 	for (const scheme of TERMINAL_SCHEMES) root.removeClass(`${SCHEME_CLASS_PREFIX}${scheme}`);
 	view.tuiBoard = null;
 }
@@ -200,7 +200,7 @@ function drawTabs(view: HomeView, el: HTMLElement): void {
  * of the tab bar is reached by pointer. */
 function showBoardList(view: HomeView, evt: MouseEvent | KeyboardEvent): void {
 	const s = view.plugin.settings;
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	s.dashboards.forEach((d, i) => {
 		menu.addItem((item) =>
 			item
@@ -275,10 +275,10 @@ function drawTitle(view: HomeView, el: HTMLElement): void {
 function renderSearch(view: HomeView, parent: HTMLElement, component: Component): SearchSection {
 	const s = view.plugin.settings;
 	const search = new SearchSection(view);
-	const wrap = parent.createDiv("hearth-search-wrap hearth-tui-searchwrap");
-	const col = wrap.createDiv("hearth-search-col");
-	const row = col.createDiv("hearth-search hearth-tui-searchrow");
-	row.createSpan({ cls: "hearth-tui-searchlabel", text: t().tui.searchLabel });
+	const wrap = parent.createDiv("zerohearth-search-wrap zerohearth-tui-searchwrap");
+	const col = wrap.createDiv("zerohearth-search-col");
+	const row = col.createDiv("zerohearth-search zerohearth-tui-searchrow");
+	row.createSpan({ cls: "zerohearth-tui-searchlabel", text: t().tui.searchLabel });
 	const bar = search.renderBar(row);
 	if (effectiveShowNewNoteButton(s)) {
 		row.append(createSearchBarButton(view, bar, effectiveNewNoteButtonMode(s)));
@@ -290,7 +290,7 @@ function renderSearch(view: HomeView, parent: HTMLElement, component: Component)
 }
 
 function focusSearch(root: HTMLElement): boolean {
-	const input = root.querySelector<HTMLInputElement>(".hearth-tui-searchwrap .hearth-search-input");
+	const input = root.querySelector<HTMLInputElement>(".zerohearth-tui-searchwrap .zerohearth-search-input");
 	if (!input) return false;
 	input.focus();
 	input.select();
@@ -356,9 +356,9 @@ function drawStatus(view: HomeView, el: HTMLElement): void {
 function drawFnKeys(el: HTMLElement, keys: FnKey[]): void {
 	el.empty();
 	for (const k of keys) {
-		const btn = el.createSpan({ cls: "hearth-tui-fkey", attr: { role: "button", tabindex: "-1" } });
-		btn.createSpan({ cls: "hearth-tui-fkey-n", text: k.key });
-		btn.createSpan({ cls: "hearth-tui-fkey-label", text: k.label() });
+		const btn = el.createSpan({ cls: "zerohearth-tui-fkey", attr: { role: "button", tabindex: "-1" } });
+		btn.createSpan({ cls: "zerohearth-tui-fkey-n", text: k.key });
+		btn.createSpan({ cls: "zerohearth-tui-fkey-label", text: k.label() });
 		btn.addEventListener("click", (evt) => {
 			evt.preventDefault();
 			k.run();
@@ -462,7 +462,7 @@ function onKey(
 		return false;
 	}
 	// A graphical card body keeps its own keys.
-	if (evt.target instanceof HTMLElement && evt.target.closest(".hearth-tui-body.is-graphical")) return false;
+	if (evt.target instanceof HTMLElement && evt.target.closest(".zerohearth-tui-body.is-graphical")) return false;
 
 	if (board?.handleKey(evt)) return true;
 	if (evt.ctrlKey || evt.metaKey || evt.altKey) return false;
@@ -505,9 +505,9 @@ function onKey(
 
 // ---- Help -----------------------------------------------------------------------
 
-class TuiHelpModal extends HearthModal {
+class TuiHelpModal extends ZeroHearthModal {
 	onOpen(): void {
-		this.modalEl.addClass("hearth-tui-help");
+		this.modalEl.addClass("zerohearth-tui-help");
 		this.titleEl.setText(t().tui.helpTitle);
 		const h = t().tui.help;
 		const rows: [string, string][] = [
@@ -541,7 +541,7 @@ class TuiHelpModal extends HearthModal {
 			{ text: d },
 		]);
 		lines.push([], [{ text: h.arrangeNote, style: "dim" }]);
-		const body = this.contentEl.createDiv("hearth-tui-helpbody");
+		const body = this.contentEl.createDiv("zerohearth-tui-helpbody");
 		drawLines(body, lines);
 	}
 
@@ -558,7 +558,7 @@ function openHelp(view: HomeView): void {
 
 /** How many terminal cells fit across `el`. */
 function cellsAcross(el: HTMLElement): number {
-	const probe = el.createSpan({ cls: "hearth-tui-probe-inline", text: "M".repeat(32) });
+	const probe = el.createSpan({ cls: "zerohearth-tui-probe-inline", text: "M".repeat(32) });
 	const w = probe.getBoundingClientRect().width / 32 || 8;
 	probe.remove();
 	return Math.max(20, Math.floor((el.clientWidth - 1) / w));

@@ -25,7 +25,7 @@ import {
  * rather than a grid of cards.
  *
  * What is worth pinning down here is everything a plugin board changes about
- * *the rest* of Hearth: which cards render, what the header defaults to, and
+ * *the rest* of ZeroHearth: which cards render, what the header defaults to, and
  * which view types the picker is allowed to offer. The hosting itself (detached
  * leaves, the keep-alive cache) is DOM and Obsidian API and is deliberately not
  * mocked, per the no-API-mocks rule.
@@ -53,7 +53,7 @@ describe("isPluginBoard", () => {
 
 	it("treats an unknown mode synced back from a future version as cards", () => {
 		const s = settings();
-		// Deliberately not a DashboardMode: a board saved by a newer Hearth must
+		// Deliberately not a DashboardMode: a board saved by a newer ZeroHearth must
 		// degrade to the board every version can render, not to a blank one.
 		s.dashboards[0].mode = "mosaic" as never;
 		expect(isPluginBoard(s.dashboards[0])).toBe(false);
@@ -174,15 +174,15 @@ function appWith(...types: string[]): App {
 }
 
 describe("view types offered to a full-view host", () => {
-	const app = appWith("rss", "markdown", "pdf", "canvas", "empty", "hearth-home-view");
+	const app = appWith("rss", "markdown", "pdf", "canvas", "empty", "zerohearth-home-view");
 
-	it("never offers the empty view or Hearth's own, at either scope", () => {
+	it("never offers the empty view or ZeroHearth's own, at either scope", () => {
 		for (const scope of [undefined, FULL_VIEW_SCOPE]) {
 			const offered = listLeafViewTypes(app, scope).map((v) => v.type);
 			expect(offered).not.toContain("empty");
-			expect(offered).not.toContain("hearth-home-view");
+			expect(offered).not.toContain("zerohearth-home-view");
 			expect(isViewTypeHostable(app, "empty", scope)).toBe(false);
-			expect(isViewTypeHostable(app, "hearth-home-view", scope)).toBe(false);
+			expect(isViewTypeHostable(app, "zerohearth-home-view", scope)).toBe(false);
 		}
 	});
 

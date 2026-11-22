@@ -19,7 +19,7 @@ import {
  */
 
 /** The registered ids Obsidian would report: the Lucide set is prefixed. */
-const REGISTERED = new Set(["lucide-flame", "lucide-home", "hearth-crystal"]);
+const REGISTERED = new Set(["lucide-flame", "lucide-home", "zerohearth-crystal"]);
 const isKnown = (id: string) => REGISTERED.has(id);
 const classify = (raw: string | undefined) => classifyTitleIcon(raw, isKnown);
 
@@ -227,7 +227,7 @@ describe("effectiveTitleIcon", () => {
 		return s;
 	}
 
-	it("is empty by default, so the Hearth crystal is drawn", () => {
+	it("is empty by default, so the ZeroHearth crystal is drawn", () => {
 		expect(effectiveTitleIcon(settings())).toBe("");
 	});
 

@@ -11,7 +11,7 @@
  * clicks away however small the card.
  */
 import { setIcon } from "./glyphs";
-import { hearthMenu } from "./uidesign";
+import { zerohearthMenu } from "./uidesign";
 
 /** One tab as the strip draws it. */
 export interface StripTab {
@@ -51,25 +51,25 @@ export function drawTabStrip(
 	onPick: (id: string) => void,
 	moreLabel: string,
 ): () => void {
-	const list = parent.createDiv("hearth-rss-tablist");
+	const list = parent.createDiv("zerohearth-rss-tablist");
 	const chips: HTMLButtonElement[] = [];
 	for (const tab of tabs) {
-		const btn = list.createEl("button", { cls: "hearth-rss-tab", attr: { type: "button", title: tab.label } });
-		btn.createSpan({ cls: "hearth-rss-tab-label", text: tab.label });
-		if (tab.count > 0) btn.createSpan({ cls: "hearth-rss-tab-count", text: countText(tab.count) });
+		const btn = list.createEl("button", { cls: "zerohearth-rss-tab", attr: { type: "button", title: tab.label } });
+		btn.createSpan({ cls: "zerohearth-rss-tab-label", text: tab.label });
+		if (tab.count > 0) btn.createSpan({ cls: "zerohearth-rss-tab-count", text: countText(tab.count) });
 		if (tab.id === activeId) btn.addClass("is-active");
 		btn.addEventListener("click", () => onPick(tab.id));
 		chips.push(btn);
 	}
 
 	const more = parent.createEl("button", {
-		cls: "hearth-rss-tabmore",
+		cls: "zerohearth-rss-tabmore",
 		attr: { type: "button", "aria-label": moreLabel, title: moreLabel },
 	});
-	setIcon(more.createSpan("hearth-rss-tabmore-icon"), "chevron-down");
-	const moreCount = more.createSpan("hearth-rss-tabmore-count");
+	setIcon(more.createSpan("zerohearth-rss-tabmore-icon"), "chevron-down");
+	const moreCount = more.createSpan("zerohearth-rss-tabmore-count");
 	more.addEventListener("click", (evt) => {
-		const menu = hearthMenu();
+		const menu = zerohearthMenu();
 		for (const tab of tabs) {
 			menu.addItem((i) =>
 				i

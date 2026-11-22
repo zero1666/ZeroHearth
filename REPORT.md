@@ -1,10 +1,10 @@
-# Report: Tasks-plugin source as a native Hearth source
+# Report: Tasks-plugin source as a native ZeroHearth source
 
 ## What changed against the previous version
 
 The previous version rendered the obsidian-tasks plugin's own `tasks` query
 block inside the card. This version deletes that embedding entirely and makes
-the Tasks-plugin source a first-class Hearth source:
+the Tasks-plugin source a first-class ZeroHearth source:
 
 - **Collection (`src/tasksplugin.ts`, `collectTasksPluginTasks` in
   `src/cards/tasks.ts`).** The card scans in-scope notes for checkbox lines,
@@ -15,10 +15,10 @@ the Tasks-plugin source a first-class Hearth source:
   status label are the plugin's. The vault's task format is parsed off each
   line in both shapes — Emoji (`📅 ⏫ 🔁`) and Dataview inline fields
   (`[due:: …] [priority:: …]`) — with emoji winning when both are present.
-  Folder scope, `showCompleted`, the task cap, sorting, and the Hearth filter
+  Folder scope, `showCompleted`, the task cap, sorting, and the ZeroHearth filter
   (tags, priority, status, due, text) all apply over these hits, exactly as for
   the other sources.
-- **Rendering.** The card draws its normal rows/board/matrix with Hearth's own
+- **Rendering.** The card draws its normal rows/board/matrix with ZeroHearth's own
   chips, coloured dots, text styles and colours — no foreign widget. Priority,
   dates, status, repeat and tags flow through the normal task rendering,
   including the custom-field system (a field can be a chip, a dot, text, or
@@ -28,7 +28,7 @@ the Tasks-plugin source a first-class Hearth source:
 - **Writes stay the plugin's.** Ticking goes through
   `executeToggleTaskDoneCommand`, editing through `editTaskLineModal`, creating
   through `createTaskLineModal` (into today's daily note, created when missing,
-  or a chosen note). Hearth never rewrites a task line for this source: chip
+  or a chosen note). ZeroHearth never rewrites a task line for this source: chip
   pickers, the metadata editor, inline title edits and convert-to-note are
   disabled, and `writeTaskFieldValue` refuses. Deleting removes the line only.
 - **Read-only layouts.** The board groups by the plugin's statuses and the
@@ -38,7 +38,7 @@ the Tasks-plugin source a first-class Hearth source:
   only the plugin edit / open note / delete. The layout picker stays, with a
   read-only note.
 - **Missing plugin.** Same clear message and one-click switch back to
-  checkboxes, now drawn by Hearth instead of around an embedded block. The
+  checkboxes, now drawn by ZeroHearth instead of around an embedded block. The
   legacy `tasksQuery` setting is kept for load/migration but no longer read or
   shown.
 - **Kept fixes.** TaskNotes-only field scoping is untouched (only TaskNotes
@@ -49,7 +49,7 @@ the Tasks-plugin source a first-class Hearth source:
   `layoutDescReadonly`, updated source/integration descriptions) in all six
   locales; user-guide chapter 8 and the changelog rewritten for the new
   behaviour; `tasksplugin.test.ts` now covers parsing, the registry probe and
-  the toggle/edit/delete writes; `tasksplugincard.dom.test.ts` asserts Hearth
+  the toggle/edit/delete writes; `tasksplugincard.dom.test.ts` asserts ZeroHearth
   rows, filter/cap and the missing-plugin switch; `taskfields.test.ts`
   covers the plugin status source and default.
 
@@ -61,7 +61,7 @@ the Tasks-plugin source a first-class Hearth source:
   given version exposes), custom-status labels/order on a real board, and the
   toggle/edit/create modals end to end (recurrence rollover, done-date stamps,
   Dataview-format vaults).
-- Visual check: that rows/board/matrix with Hearth chips read as one card
+- Visual check: that rows/board/matrix with ZeroHearth chips read as one card
   (colours, dots, dark/light themes), and that the read-only board/matrix
   affordances (locked quadrants, non-draggable cards) are obvious rather than
   merely inert.

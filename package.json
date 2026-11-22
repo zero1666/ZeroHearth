@@ -1,5 +1,5 @@
 {
-	"name": "hearth",
+	"name": "zerohearth",
 	"version": "3.9.0",
 	"description": "A beautiful, customizable home screen for your vault — search, dashboard, and launcher in one.",
 	"main": "main.js",
@@ -19,7 +19,7 @@
 		"home",
 		"launcher"
 	],
-	"author": "ondreu",
+	"author": "zero1666",
 	"license": "MIT",
 	"devDependencies": {
 		"@stratejya/operon-cli": "^1.2.0",

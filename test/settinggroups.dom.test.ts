@@ -26,7 +26,7 @@ function row(body: HTMLElement, name: string, heading = false): HTMLElement {
 function shape(body: HTMLElement): string[][] {
 	return Array.from(body.children).map((group) => {
 		const head = group.querySelector<HTMLElement>(":scope > .setting-item-heading");
-		const rows = Array.from(group.querySelectorAll<HTMLElement>(":scope > .hearth-x-group-body > *"));
+		const rows = Array.from(group.querySelectorAll<HTMLElement>(":scope > .zerohearth-x-group-body > *"));
 		return [head?.dataset.name ?? "-", ...rows.map((r) => r.dataset.name ?? "?")];
 	});
 }
@@ -52,12 +52,12 @@ describe("groupSettingRows", () => {
 	it("splits at a break marker and drops the marker, however many are in a row", () => {
 		const body = document.body.createDiv();
 		row(body, "a");
-		body.createDiv("hearth-x-group-break");
-		body.createDiv("hearth-x-group-break");
+		body.createDiv("zerohearth-x-group-break");
+		body.createDiv("zerohearth-x-group-break");
 		row(body, "b");
 		groupSettingRows(body);
 		expect(shape(body)).toEqual([["-", "a"], ["-", "b"]]);
-		expect(body.querySelector(".hearth-x-group-break")).toBeNull();
+		expect(body.querySelector(".zerohearth-x-group-break")).toBeNull();
 	});
 
 	it("puts a row added later into the last group and leaves the rest as they were", () => {

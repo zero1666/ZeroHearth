@@ -65,7 +65,7 @@ export function clipTemplateEditor(
 		);
 	if (cfg.enabled === false) return;
 
-	const wrap = containerEl.createDiv("hearth-clip-editor");
+	const wrap = containerEl.createDiv("zerohearth-clip-editor");
 
 	// The field a clicked variable goes into: the last one that had focus.
 	let target: HTMLInputElement | HTMLTextAreaElement | null = null;
@@ -89,7 +89,7 @@ export function clipTemplateEditor(
 					cfg.name = v === spec.defaults.name ? undefined : v;
 					changed();
 				});
-			txt.inputEl.addClass("hearth-clip-input");
+			txt.inputEl.addClass("zerohearth-clip-input");
 			track(txt.inputEl);
 		});
 
@@ -102,7 +102,7 @@ export function clipTemplateEditor(
 				cfg.folder = value === spec.defaults.folder ? undefined : value;
 				changed();
 			});
-		txt.inputEl.addClass("hearth-clip-input");
+		txt.inputEl.addClass("zerohearth-clip-input");
 		track(txt.inputEl);
 	});
 	folder.addExtraButton((b) =>
@@ -138,7 +138,7 @@ export function clipTemplateEditor(
 	const own = (): ClipProperty[] => (cfg.properties ??= spec.defaults.properties.map((p) => ({ ...p })));
 
 	shown.forEach((prop, index) => {
-		const row = new Setting(wrap).setClass("hearth-clip-prop");
+		const row = new Setting(wrap).setClass("zerohearth-clip-prop");
 		row.addText((txt) => {
 			txt.setPlaceholder(s.propertyName)
 				.setValue(prop.name)
@@ -146,7 +146,7 @@ export function clipTemplateEditor(
 					own()[index].name = v;
 					changed();
 				});
-			txt.inputEl.addClass("hearth-clip-prop-name");
+			txt.inputEl.addClass("zerohearth-clip-prop-name");
 		});
 		row.addText((txt) => {
 			txt.setPlaceholder(s.propertyValue)
@@ -155,7 +155,7 @@ export function clipTemplateEditor(
 					own()[index].value = v;
 					changed();
 				});
-			txt.inputEl.addClass("hearth-clip-prop-value");
+			txt.inputEl.addClass("zerohearth-clip-prop-value");
 			track(txt.inputEl);
 		});
 		row.addDropdown((d) => {
@@ -199,7 +199,7 @@ export function clipTemplateEditor(
 	);
 
 	// ---- Body ----
-	const body = new Setting(wrap).setName(s.body).setDesc(s.bodyDesc).setClass("hearth-clip-body");
+	const body = new Setting(wrap).setName(s.body).setDesc(s.bodyDesc).setClass("zerohearth-clip-body");
 	if (cfg.body !== undefined) {
 		body.addExtraButton((b) =>
 			b
@@ -218,7 +218,7 @@ export function clipTemplateEditor(
 			changed();
 		});
 		ta.inputEl.rows = 6;
-		ta.inputEl.addClass("hearth-clip-textarea");
+		ta.inputEl.addClass("zerohearth-clip-textarea");
 		track(ta.inputEl);
 	});
 
@@ -228,7 +228,7 @@ export function clipTemplateEditor(
 			cfg.template = v.trim() || undefined;
 			ctx.opts.save();
 		});
-		txt.inputEl.addClass("hearth-clip-input");
+		txt.inputEl.addClass("zerohearth-clip-input");
 	});
 	template.addExtraButton((b) =>
 		b
@@ -283,36 +283,36 @@ export function clipTemplateEditor(
 		void navigator.clipboard.writeText(text).then(() => new Notice(s.copied(text)));
 	};
 
-	const ref = wrap.createDiv("hearth-clip-ref");
-	ref.createDiv({ cls: "hearth-clip-ref-head", text: s.variables });
-	ref.createDiv({ cls: "hearth-clip-ref-hint", text: s.variablesHint });
-	const vars = ref.createDiv("hearth-clip-vars");
+	const ref = wrap.createDiv("zerohearth-clip-ref");
+	ref.createDiv({ cls: "zerohearth-clip-ref-head", text: s.variables });
+	ref.createDiv({ cls: "zerohearth-clip-ref-hint", text: s.variablesHint });
+	const vars = ref.createDiv("zerohearth-clip-vars");
 	for (const name of spec.variables) {
-		const chip = vars.createEl("button", { cls: "hearth-clip-chip", attr: { type: "button" } });
-		chip.createSpan({ cls: "hearth-clip-chip-code", text: `{{${name}}}` });
-		chip.createSpan({ cls: "hearth-clip-chip-desc", text: s.vars[name as keyof typeof s.vars] ?? "" });
+		const chip = vars.createEl("button", { cls: "zerohearth-clip-chip", attr: { type: "button" } });
+		chip.createSpan({ cls: "zerohearth-clip-chip-code", text: `{{${name}}}` });
+		chip.createSpan({ cls: "zerohearth-clip-chip-desc", text: s.vars[name as keyof typeof s.vars] ?? "" });
 		// Keep the field's focus and selection: insert where the cursor is.
 		chip.addEventListener("mousedown", (e) => e.preventDefault());
 		chip.addEventListener("click", () => insert(`{{${name}}}`));
 	}
 
-	const filters = ref.createEl("details", { cls: "hearth-clip-filters" });
+	const filters = ref.createEl("details", { cls: "zerohearth-clip-filters" });
 	filters.createEl("summary", { text: s.filters });
-	filters.createDiv({ cls: "hearth-clip-ref-hint", text: s.filtersHint });
-	const list = filters.createDiv("hearth-clip-filterlist");
+	filters.createDiv({ cls: "zerohearth-clip-ref-hint", text: s.filtersHint });
+	const list = filters.createDiv("zerohearth-clip-filterlist");
 	for (const name of CLIP_FILTERS) {
 		const doc = s.filterDocs[name];
-		const row = list.createDiv("hearth-clip-filter");
+		const row = list.createDiv("zerohearth-clip-filter");
 		row.createEl("code", { text: doc.syntax });
 		row.createSpan({ text: doc.desc });
 	}
 
 	// ---- Preview ----
-	const preview = wrap.createDiv("hearth-clip-preview");
-	const head = preview.createDiv("hearth-clip-ref-head");
-	const where = preview.createDiv("hearth-clip-ref-hint");
-	const pathEl = preview.createDiv("hearth-clip-preview-path");
-	const out = preview.createEl("pre", { cls: "hearth-clip-preview-text" });
+	const preview = wrap.createDiv("zerohearth-clip-preview");
+	const head = preview.createDiv("zerohearth-clip-ref-head");
+	const where = preview.createDiv("zerohearth-clip-ref-hint");
+	const pathEl = preview.createDiv("zerohearth-clip-preview-path");
+	const out = preview.createEl("pre", { cls: "zerohearth-clip-preview-text" });
 	head.setText(s.preview);
 	const draw = (): void => {
 		const sample = spec.sample();

@@ -17,17 +17,17 @@
 import { cellWidth, styles, type Line, type Seg, type TuiStyle } from "./text";
 
 /** The class every grid row wears. */
-export const LINE_CLASS = "hearth-tui-line";
+export const LINE_CLASS = "zerohearth-tui-line";
 
 /** The class of a text run that is a control. */
-export const ACTION_CLASS = "hearth-tui-act";
+export const ACTION_CLASS = "zerohearth-tui-act";
 
 /** The class that makes a character exactly two cells wide. */
-const WIDE_CLASS = "hearth-tui-wide";
+const WIDE_CLASS = "zerohearth-tui-wide";
 
 /** The CSS class for one style. */
 export function styleClass(style: TuiStyle): string {
-	return `hearth-tui-${style}`;
+	return `zerohearth-tui-${style}`;
 }
 
 /** Append `text` to `el`, wrapping each wide character in a two-cell span. */
@@ -49,8 +49,8 @@ function appendText(el: HTMLElement, text: string): void {
 export function drawSeg(parent: HTMLElement, s: Seg): HTMLElement {
 	const classes = styles(s).map(styleClass);
 	if (s.onClick || s.onMenu) classes.push(ACTION_CLASS);
-	if (s.color) classes.push("hearth-tui-colored");
-	if (s.bg) classes.push("hearth-tui-bg");
+	if (s.color) classes.push("zerohearth-tui-colored");
+	if (s.bg) classes.push("zerohearth-tui-bg");
 	const span = parent.createSpan({ cls: classes });
 	if (s.color) span.setCssProps({ "--tui-seg-color": s.color });
 	if (s.bg) span.setCssProps({ "--tui-seg-bg": s.bg });

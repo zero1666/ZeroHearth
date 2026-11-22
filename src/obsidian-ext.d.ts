@@ -76,7 +76,7 @@ declare module "obsidian" {
 	 * `on(name: string, …)` — so listening to `raw` needs its own overload.
 	 *
 	 * Unlike the public events, `raw` reports every path the adapter sees change,
-	 * the config folder included. That makes it the only way to notice Hearth's
+	 * the config folder included. That makes it the only way to notice ZeroHearth's
 	 * own `data.json` being rewritten by sync (see `src/settingssync.ts`). It's
 	 * an internal, but a long-standing one: it is how core Obsidian picks up an
 	 * edited CSS snippet, and community plugins have listened to it for years.
@@ -95,7 +95,7 @@ declare module "obsidian" {
 	/** The menu's element. Not in the public typings, but built in the
 	 * constructor and long relied on by community plugins to add a class to a
 	 * menu; optional here because a native (OS-drawn) menu has none to style.
-	 * Used only to dress Hearth's own menus (see `src/uidesign.ts`). */
+	 * Used only to dress ZeroHearth's own menus (see `src/uidesign.ts`). */
 	interface Menu {
 		dom?: HTMLElement;
 	}

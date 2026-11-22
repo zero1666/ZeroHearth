@@ -17,15 +17,15 @@ import {
  */
 
 const ctx: RedactionReportContext = {
-	hearthVersion: "3.1.0",
+	zerohearthVersion: "3.1.0",
 	obsidianVersion: "1.8.7",
 	platform: "Desktop",
 };
 
 describe("redactionReportGithubUrl", () => {
-	it("opens the bug form on the Hearth repository", () => {
+	it("opens the bug form on the ZeroHearth repository", () => {
 		const url = new URL(redactionReportGithubUrl(ctx));
-		expect(url.origin + url.pathname).toBe("https://github.com/ondreu/hearth/issues/new");
+		expect(url.origin + url.pathname).toBe("https://github.com/zero1666/ZeroHearth/issues/new");
 		expect(url.searchParams.get("template")).toBe("bug_report.yml");
 		expect(url.searchParams.get("labels")).toBe("bug");
 		expect(url.searchParams.get("title")).toBe(REDACTION_REPORT_TITLE);
@@ -44,7 +44,7 @@ describe("redactionReportGithubUrl", () => {
 
 	it("fills in the versions the form asks for, so nobody has to be asked", () => {
 		const params = new URL(redactionReportGithubUrl(ctx)).searchParams;
-		expect(params.get("hearth-version")).toBe("3.1.0");
+		expect(params.get("zerohearth-version")).toBe("3.1.0");
 		expect(params.get("obsidian-version")).toBe("1.8.7");
 		expect(params.get("what-happened")).toContain("Desktop");
 	});

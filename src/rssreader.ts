@@ -1,5 +1,5 @@
 /**
- * Reading RSS entries inside Hearth (#377).
+ * Reading RSS entries inside ZeroHearth (#377).
  *
  * The reader is a page of its own, drawn by {@link RssReader} into whatever
  * hosts it — a dialog over the board ({@link RssReaderModal}) or a tab
@@ -51,7 +51,7 @@ import { RSS_NOTE_DEFAULTS, rssClipVars } from "./rssnote";
 import { drawTabStrip } from "./tabstrip";
 import { onRssReadChange, setRssRead } from "./rssstate";
 import type { CardDesign, DashboardCard, HomeSettings, RssOpenIn } from "./types";
-import { currentUiDesign, DESIGN_ATTR, HearthModal } from "./uidesign";
+import { currentUiDesign, DESIGN_ATTR, ZeroHearthModal } from "./uidesign";
 
 /* moment's export can type as `any` where @types/moment isn't in scope; pin
  * the two calls the reader makes to an explicit shape (as clip.ts does). */
@@ -62,13 +62,13 @@ const WEB_LINK = /^https?:\/\//i;
 // ---- Deciding where an entry opens -------------------------------------------
 
 /** What activating an entry does: open its page in the browser, read it in
- * Hearth, or nothing (no link and no text to show). */
+ * ZeroHearth, or nothing (no link and no text to show). */
 export type RssOpenAction = "link" | "reader" | null;
 
 /** How an entry opens under a card's "Open entries in". In the browser by
  * default — the page is the article — with the reader as the fallback for an
  * entry that only carries its text; the reader modes read every entry that
- * has text in Hearth, and fall back to the page for one that has none. */
+ * has text in ZeroHearth, and fall back to the page for one that has none. */
 export function rssOpenAction(item: RssItem, openIn: RssOpenIn = "browser"): RssOpenAction {
 	const hasLink = WEB_LINK.test(item.link);
 	const hasBody = hasText(item);
@@ -89,7 +89,7 @@ export interface RssOpenContext {
 
 /**
  * Open an entry the way its card says: its page, or the reader as a dialog or
- * in a tab — `as` overrides the card (an item menu's "Read in Hearth"). The
+ * in a tab — `as` overrides the card (an item menu's "Read in ZeroHearth"). The
  * entry counts as read either way.
  */
 export function openRssEntry(
@@ -136,7 +136,7 @@ const TABLE_WIDTHS = ["width", "min-width"];
 /** Where a picture's address waits while the markup is sanitised: an `<img>`
  * with a `src` starts downloading the moment it is created in the page, which
  * the sanitiser's copy into the page would do. */
-const HELD_SRC = "data-hearth-src";
+const HELD_SRC = "data-zerohearth-src";
 
 /** Whether a body is plain text (shown with its line breaks kept) rather
  * than markup. */
@@ -364,7 +364,7 @@ export class RssReader {
 		state: RssReaderState,
 	) {
 		this.state = state;
-		this.root = parent.createDiv({ cls: "hearth-rss-reader", attr: { tabindex: "0" } });
+		this.root = parent.createDiv({ cls: "zerohearth-rss-reader", attr: { tabindex: "0" } });
 		this.root.addEventListener("keydown", (e) => this.key(e));
 		// Read marks made anywhere — this reader included — repaint the feed
 		// counts and the list's dots, never the entry being read.
@@ -475,7 +475,7 @@ export class RssReader {
 		if (!this.state.card) return;
 		if (!card) {
 			this.host.setTitle(strings.title);
-			this.root.createDiv({ cls: "hearth-rss-reader-empty", text: strings.gone });
+			this.root.createDiv({ cls: "zerohearth-rss-reader-empty", text: strings.gone });
 			return;
 		}
 		const tab = this.tab(card);
@@ -492,10 +492,10 @@ export class RssReader {
 		}
 
 		this.root.toggleClass("is-list-hidden", listHidden ?? false);
-		this.barEl = this.root.createDiv("hearth-rss-reader-bar");
-		const main = this.root.createDiv("hearth-rss-reader-main");
-		this.listEl = main.createDiv("hearth-rss-reader-list hearth-rss-content");
-		this.articleEl = main.createDiv("hearth-rss-reader-article");
+		this.barEl = this.root.createDiv("zerohearth-rss-reader-bar");
+		const main = this.root.createDiv("zerohearth-rss-reader-main");
+		this.listEl = main.createDiv("zerohearth-rss-reader-list zerohearth-rss-content");
+		this.articleEl = main.createDiv("zerohearth-rss-reader-article");
 		this.drawBar();
 		this.drawList();
 		this.listEl.scrollTop = listScroll;
@@ -510,7 +510,7 @@ export class RssReader {
 
 	private iconButton(parent: HTMLElement, icon: string, label: string, onClick: () => void): HTMLButtonElement {
 		const btn = parent.createEl("button", {
-			cls: "clickable-icon hearth-rss-reader-iconbtn",
+			cls: "clickable-icon zerohearth-rss-reader-iconbtn",
 			attr: { "aria-label": label, type: "button" },
 		});
 		setIcon(btn, icon);
@@ -540,7 +540,7 @@ export class RssReader {
 			t().cards.rss.allFeeds,
 		);
 		if (tabs.length > 1) this.iconButton(bar, "chevron-right", strings.nextFeed, () => this.stepFeed(1));
-		bar.createDiv("hearth-rss-reader-spacer");
+		bar.createDiv("zerohearth-rss-reader-spacer");
 		this.iconButton(bar, "check-check", t().cards.rss.markAllRead, () => {
 			const tab = this.tab(card);
 			if (tab) setRssRead(rssTabEntries(card, tab), true);
@@ -555,14 +555,14 @@ export class RssReader {
 		const keepScroll = list.scrollTop;
 		list.empty();
 		for (const entry of this.entries) {
-			const row = list.createDiv("hearth-rss-item");
+			const row = list.createDiv("zerohearth-rss-item");
 			row.toggleClass("is-read", rssEntryRead(entry));
 			row.toggleClass("is-current", entry.key === this.state.entry);
-			row.createSpan({ cls: "hearth-rss-dot", attr: { "aria-hidden": "true" } });
-			const main = row.createDiv("hearth-rss-main");
-			main.createDiv({ cls: "hearth-rss-title", text: entry.item.title || t().cards.rss.untitled });
+			row.createSpan({ cls: "zerohearth-rss-dot", attr: { "aria-hidden": "true" } });
+			const main = row.createDiv("zerohearth-rss-main");
+			main.createDiv({ cls: "zerohearth-rss-title", text: entry.item.title || t().cards.rss.untitled });
 			const meta = [this.state.feed === "all" ? entry.feed : "", ago(entry.item.published)].filter(Boolean);
-			if (meta.length) main.createDiv({ cls: "hearth-rss-meta", text: meta.join(" · ") });
+			if (meta.length) main.createDiv({ cls: "zerohearth-rss-meta", text: meta.join(" · ") });
 			row.addEventListener("click", () => this.go({ entry: entry.key }));
 		}
 		list.scrollTop = keepScroll;
@@ -578,7 +578,7 @@ export class RssReader {
 		const entry = this.current();
 		if (!card || !entry) {
 			el.createDiv({
-				cls: "hearth-rss-reader-empty",
+				cls: "zerohearth-rss-reader-empty",
 				text: this.loading ? strings.loading : strings.reader.noItems,
 			});
 			return;
@@ -590,11 +590,11 @@ export class RssReader {
 		const meta = [entry.feed, item.published ? moment(new Date(item.published)).format("LLL") : "", item.author]
 			.filter(Boolean)
 			.join(" · ");
-		if (meta) el.createDiv({ cls: "hearth-rss-reader-meta", text: meta });
-		el.createEl("h1", { cls: "hearth-rss-reader-title", text: item.title || strings.untitled });
+		if (meta) el.createDiv({ cls: "zerohearth-rss-reader-meta", text: meta });
+		el.createEl("h1", { cls: "zerohearth-rss-reader-title", text: item.title || strings.untitled });
 
 		// ---- Actions ----
-		const actions = el.createDiv("hearth-rss-reader-actions");
+		const actions = el.createDiv("zerohearth-rss-reader-actions");
 		const hasLink = WEB_LINK.test(item.link);
 		if (hasLink) {
 			this.action(actions, "globe", strings.openBrowser, () => window.open(item.link, "_blank"), "mod-cta");
@@ -616,13 +616,13 @@ export class RssReader {
 		const images = mode === "always" || (mode === "ask" && this.imagesAllowed);
 		const { fragment, text, blocked } = entryFragment(item, images);
 		if (blocked > 0 && mode === "ask") {
-			const note = el.createDiv("hearth-rss-reader-blocked");
-			setIcon(note.createSpan("hearth-rss-reader-btnicon"), "image-off");
-			note.createSpan({ cls: "hearth-rss-reader-blocked-text", text: strings.reader.imagesBlocked(blocked) });
-			const load = note.createEl("button", { cls: "hearth-rss-reader-action", text: strings.reader.loadImages, attr: { type: "button" } });
+			const note = el.createDiv("zerohearth-rss-reader-blocked");
+			setIcon(note.createSpan("zerohearth-rss-reader-btnicon"), "image-off");
+			note.createSpan({ cls: "zerohearth-rss-reader-blocked-text", text: strings.reader.imagesBlocked(blocked) });
+			const load = note.createEl("button", { cls: "zerohearth-rss-reader-action", text: strings.reader.loadImages, attr: { type: "button" } });
 			load.addEventListener("click", () => this.loadImages());
 		}
-		const body = el.createDiv("hearth-rss-reader-body markdown-rendered");
+		const body = el.createDiv("zerohearth-rss-reader-body markdown-rendered");
 		if (fragment) body.appendChild(fragment);
 		else {
 			body.addClass("is-plain");
@@ -631,11 +631,11 @@ export class RssReader {
 
 		// ---- Stepping ----
 		const at = this.entries.indexOf(entry);
-		const nav = el.createDiv("hearth-rss-reader-nav");
+		const nav = el.createDiv("zerohearth-rss-reader-nav");
 		this.navButton(nav, this.entries[at - 1], "prev");
-		nav.createDiv({ cls: "hearth-rss-reader-pos", text: strings.reader.position(at + 1, this.entries.length) });
+		nav.createDiv({ cls: "zerohearth-rss-reader-pos", text: strings.reader.position(at + 1, this.entries.length) });
 		this.navButton(nav, this.entries[at + 1], "next");
-		el.createDiv({ cls: "hearth-rss-reader-keys", text: strings.reader.keys });
+		el.createDiv({ cls: "zerohearth-rss-reader-keys", text: strings.reader.keys });
 
 		// Opened is read. Marked last, so the repaint it triggers finds the
 		// page already drawn.
@@ -643,24 +643,24 @@ export class RssReader {
 	}
 
 	private action(parent: HTMLElement, icon: string, label: string, onClick: () => void, cls = ""): void {
-		const btn = parent.createEl("button", { cls: `hearth-rss-reader-action ${cls}`.trim(), attr: { type: "button" } });
-		setIcon(btn.createSpan("hearth-rss-reader-btnicon"), icon);
+		const btn = parent.createEl("button", { cls: `zerohearth-rss-reader-action ${cls}`.trim(), attr: { type: "button" } });
+		setIcon(btn.createSpan("zerohearth-rss-reader-btnicon"), icon);
 		btn.createSpan({ text: label });
 		btn.addEventListener("click", onClick);
 	}
 
 	private navButton(nav: HTMLElement, entry: RssEntry | undefined, dir: "prev" | "next"): void {
 		const strings = t().cards.rss.reader;
-		const btn = nav.createEl("button", { cls: `hearth-rss-reader-step is-${dir}`, attr: { type: "button" } });
+		const btn = nav.createEl("button", { cls: `zerohearth-rss-reader-step is-${dir}`, attr: { type: "button" } });
 		if (!entry) {
 			btn.disabled = true;
 			btn.addClass("is-empty");
 		}
-		const icon = createSpan("hearth-rss-reader-btnicon");
+		const icon = createSpan("zerohearth-rss-reader-btnicon");
 		setIcon(icon, dir === "prev" ? "arrow-left" : "arrow-right");
-		const label = createDiv("hearth-rss-reader-steplabel");
-		label.createDiv({ cls: "hearth-rss-reader-stepdir", text: dir === "prev" ? strings.prev : strings.next });
-		if (entry) label.createDiv({ cls: "hearth-rss-reader-steptitle", text: entry.item.title || t().cards.rss.untitled });
+		const label = createDiv("zerohearth-rss-reader-steplabel");
+		label.createDiv({ cls: "zerohearth-rss-reader-stepdir", text: dir === "prev" ? strings.prev : strings.next });
+		if (entry) label.createDiv({ cls: "zerohearth-rss-reader-steptitle", text: entry.item.title || t().cards.rss.untitled });
 		if (dir === "prev") btn.append(icon, label);
 		else btn.append(label, icon);
 		btn.addEventListener("click", () => this.step(dir === "prev" ? -1 : 1));
@@ -750,7 +750,7 @@ function ago(ms: number | null): string {
 // ---- The dialog -----------------------------------------------------------------
 
 /** The reader over the board. */
-export class RssReaderModal extends HearthModal {
+export class RssReaderModal extends ZeroHearthModal {
 	private reader: RssReader | null = null;
 
 	constructor(
@@ -762,7 +762,7 @@ export class RssReaderModal extends HearthModal {
 	}
 
 	onOpen(): void {
-		this.modalEl.addClass("hearth-rss-reader-modal");
+		this.modalEl.addClass("zerohearth-rss-reader-modal");
 		const host: RssReaderHost = {
 			...this.ctx,
 			card: () => this.cardRef,
@@ -793,7 +793,7 @@ export class RssReaderModal extends HearthModal {
 
 /** The view type the reader registers under in a tab (`rssreaderview.ts`).
  * Declared here so the card can open one without importing the view. */
-export const VIEW_TYPE_RSS_READER = "hearth-rss-reader";
+export const VIEW_TYPE_RSS_READER = "zerohearth-rss-reader";
 
 /** Open the reader in a tab — the card's own, when it already has one. */
 export async function openRssReaderTab(app: App, state: RssReaderState): Promise<void> {

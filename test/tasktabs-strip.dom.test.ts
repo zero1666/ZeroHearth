@@ -78,10 +78,10 @@ const FILES = {
 	"Notes/T.md": "- [ ] alpha #work\n- [ ] beta #home\n- [x] done thing #work\n",
 };
 
-const tabLabel = (btn: Element): string => btn.querySelector(".hearth-tasktab-label")?.textContent ?? "";
+const tabLabel = (btn: Element): string => btn.querySelector(".zerohearth-tasktab-label")?.textContent ?? "";
 
 function tabButtons(root: ParentNode): HTMLButtonElement[] {
-	return Array.from(root.querySelectorAll(".hearth-tasktab"), (el) => el as HTMLButtonElement);
+	return Array.from(root.querySelectorAll(".zerohearth-tasktab"), (el) => el as HTMLButtonElement);
 }
 
 describe("taskTabFacts", () => {
@@ -123,10 +123,10 @@ describe("renderTaskTabStrip", () => {
 		const host = document.body.createDiv();
 		tasks.renderTaskTabStrip(host, resolved, (row, id) => picks.push([row.id, id]));
 
-		expect(host.querySelector(".hearth-tasktabs")?.getAttribute("aria-label")).toBe(
+		expect(host.querySelector(".zerohearth-tasktabs")?.getAttribute("aria-label")).toBe(
 			locales.en.cards.tasks.tabs.title,
 		);
-		expect(host.querySelector(".hearth-tasktab-caption-label")?.textContent).toBe("Tags");
+		expect(host.querySelector(".zerohearth-tasktab-caption-label")?.textContent).toBe("Tags");
 		const buttons = tabButtons(host);
 		expect(buttons.map(tabLabel)).toEqual([
 			locales.en.cards.tasks.tabs.all,
@@ -134,12 +134,12 @@ describe("renderTaskTabStrip", () => {
 			"#work",
 		]);
 		// Counts match the card's own filter math: All sees 3, #home sees 1.
-		expect(buttons.map((b) => b.querySelector(".hearth-tasktab-count")?.textContent)).toEqual(["3", "1", "2"]);
+		expect(buttons.map((b) => b.querySelector(".zerohearth-tasktab-count")?.textContent)).toEqual(["3", "1", "2"]);
 		// Toggle buttons, not tabs: the strip filters one list that has no
 		// tabpanel, so the state rides on aria-pressed.
 		expect(buttons[0].getAttribute("aria-pressed")).toBe("true");
 		expect(buttons[1].getAttribute("aria-pressed")).toBe("false");
-		expect(host.querySelector(".hearth-tasktab-list")?.getAttribute("role")).toBe("group");
+		expect(host.querySelector(".zerohearth-tasktab-list")?.getAttribute("role")).toBe("group");
 
 		// A fixed row naming a value no task carries keeps its tab, dimmed.
 		host.empty();
@@ -147,8 +147,8 @@ describe("renderTaskTabStrip", () => {
 		tasks.renderTaskTabStrip(host, fixed, () => {});
 		const zero = tabButtons(host)[1];
 		expect(tabLabel(zero)).toBe("#zzz");
-		expect(zero.querySelector(".hearth-tasktab-count")?.textContent).toBe("0");
-		expect(zero.querySelector(".hearth-tasktab-count")?.classList.contains("is-zero")).toBe(true);
+		expect(zero.querySelector(".zerohearth-tasktab-count")?.textContent).toBe("0");
+		expect(zero.querySelector(".zerohearth-tasktab-count")?.classList.contains("is-zero")).toBe(true);
 	});
 
 	it("reports picks and moves selection with the keyboard", () => {
@@ -186,9 +186,9 @@ describe("the tasks card with tab rows", () => {
 		await flush();
 
 		const counts = () =>
-			tabButtons(body.querySelector(".hearth-tasks-wrap")!).map((b) => [
+			tabButtons(body.querySelector(".zerohearth-tasks-wrap")!).map((b) => [
 				tabLabel(b),
-				b.querySelector(".hearth-tasktab-count")?.textContent,
+				b.querySelector(".zerohearth-tasktab-count")?.textContent,
 			]);
 		// "done thing #work" is complete and the list hides it by default.
 		expect(counts()).toEqual([
@@ -207,8 +207,8 @@ describe("the tasks card with tab rows", () => {
 		);
 		await flush();
 		expect(
-			tabButtons(again.querySelector(".hearth-tasks-wrap")!).map(
-				(b) => b.querySelector(".hearth-tasktab-count")?.textContent,
+			tabButtons(again.querySelector(".zerohearth-tasks-wrap")!).map(
+				(b) => b.querySelector(".zerohearth-tasktab-count")?.textContent,
 			),
 		).toEqual(["3", "1", "2"]);
 	});
@@ -219,10 +219,10 @@ describe("the tasks card with tab rows", () => {
 		tasks.renderTasks(view, cardWith({ tabRows: [{ id: "s1", facet: "status", mode: "auto" }] }), body);
 		await flush();
 
-		const wrap = () => body.querySelector(".hearth-tasks-wrap")!;
+		const wrap = () => body.querySelector(".zerohearth-tasks-wrap")!;
 		const counts = tabButtons(wrap()).map((b) => [
 			tabLabel(b),
-			b.querySelector(".hearth-tasktab-count")?.textContent,
+			b.querySelector(".zerohearth-tasktab-count")?.textContent,
 		]);
 		// "To do" 2, "Done" 1 even though the list hides completed tasks.
 		expect(counts).toEqual([
@@ -245,8 +245,8 @@ describe("the tasks card with tab rows", () => {
 		tasks.renderTasks(view, card, body);
 		await flush();
 
-		const wrap = body.querySelector(".hearth-tasks-wrap")!;
-		expect(wrap.firstElementChild?.classList.contains("hearth-tasktabs")).toBe(true);
+		const wrap = body.querySelector(".zerohearth-tasks-wrap")!;
+		expect(wrap.firstElementChild?.classList.contains("zerohearth-tasktabs")).toBe(true);
 		expect(body.textContent).toContain("alpha");
 		expect(body.textContent).toContain("beta");
 
@@ -258,7 +258,7 @@ describe("the tasks card with tab rows", () => {
 		expect(body.textContent).toContain("beta");
 		// View state only: no vault write, and the active tab moved.
 		expect(saveData).not.toHaveBeenCalled();
-		const after = tabButtons(body.querySelector(".hearth-tasks-wrap")!);
+		const after = tabButtons(body.querySelector(".zerohearth-tasks-wrap")!);
 		expect(after.find((b) => b.classList.contains("is-active") && tabLabel(b) === "#home")).toBeTruthy();
 
 		// Back to All restores the list.
@@ -272,7 +272,7 @@ describe("the tasks card with tab rows", () => {
 		const plain = document.body.createDiv();
 		tasks.renderTasks(viewWith(FILES).view, cardWith({}), plain);
 		await flush();
-		expect(plain.querySelector(".hearth-tasktabs")).toBeNull();
+		expect(plain.querySelector(".zerohearth-tasktabs")).toBeNull();
 
 		const matrix = document.body.createDiv();
 		tasks.renderTasks(
@@ -281,8 +281,8 @@ describe("the tasks card with tab rows", () => {
 			matrix,
 		);
 		await flush();
-		expect(matrix.querySelector(".hearth-tasktabs")).toBeNull();
-		expect(matrix.querySelector(".hearth-matrix")).not.toBeNull();
+		expect(matrix.querySelector(".zerohearth-tasktabs")).toBeNull();
+		expect(matrix.querySelector(".zerohearth-matrix")).not.toBeNull();
 	});
 
 	it("draws the strip over the kanban board too", async () => {
@@ -293,8 +293,8 @@ describe("the tasks card with tab rows", () => {
 			body,
 		);
 		await flush();
-		const wrap = body.querySelector(".hearth-tasks-wrap")!;
-		expect(wrap.firstElementChild?.classList.contains("hearth-tasktabs")).toBe(true);
-		expect(wrap.querySelector(".hearth-kanban")).not.toBeNull();
+		const wrap = body.querySelector(".zerohearth-tasks-wrap")!;
+		expect(wrap.firstElementChild?.classList.contains("zerohearth-tasktabs")).toBe(true);
+		expect(wrap.querySelector(".zerohearth-kanban")).not.toBeNull();
 	});
 });

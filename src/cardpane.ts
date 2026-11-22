@@ -24,8 +24,8 @@ import type { HomeView } from "./view";
 /**
  * Draw the pane's card into `root`.
  *
- * Same wrapper chain the view builds for a board (`hearth-scroll` →
- * `hearth-inner` → `hearth-dashboard`), because the card's sizing and the
+ * Same wrapper chain the view builds for a board (`zerohearth-scroll` →
+ * `zerohearth-inner` → `zerohearth-dashboard`), because the card's sizing and the
  * single-card fill in styles.css are written against it — the only difference
  * is that the board handed to the renderer is the pane's own.
  */
@@ -35,24 +35,24 @@ export function renderCardPane(
 	root: HTMLElement,
 	child: Component,
 ): void {
-	root.addClass("hearth-card-pane");
-	const scroll = root.createDiv("hearth-scroll hearth-fit");
-	const inner = scroll.createDiv("hearth-inner");
-	const dashboard = inner.createDiv("hearth-dashboard");
+	root.addClass("zerohearth-card-pane");
+	const scroll = root.createDiv("zerohearth-scroll zerohearth-fit");
+	const inner = scroll.createDiv("zerohearth-inner");
+	const dashboard = inner.createDiv("zerohearth-dashboard");
 	renderDashboard(view, dashboard, child, paneBoard(card));
 
 	// The card fills the pane, so its own gear (which lives in the arrange
 	// header) has nowhere to be. These two ride over its top-right corner and
 	// appear on hover, the way the card's own overlay buttons do.
-	const actions = root.createDiv("hearth-pane-actions");
+	const actions = root.createDiv("zerohearth-pane-actions");
 	const gear = actions.createEl("button", {
-		cls: "hearth-pane-action",
+		cls: "zerohearth-pane-action",
 		attr: { "aria-label": t().cardPane.settings, type: "button" },
 	});
 	setIcon(gear, "settings-2");
 	gear.addEventListener("click", () => openCardSettings(view, card));
 	const close = actions.createEl("button", {
-		cls: "hearth-pane-action",
+		cls: "zerohearth-pane-action",
 		attr: { "aria-label": t().cardPane.close, type: "button" },
 	});
 	setIcon(close, "x");
@@ -65,8 +65,8 @@ export function renderCardPane(
  * pane at another card.
  */
 export function renderCardPaneMissing(view: HomeView, root: HTMLElement): void {
-	root.addClass("hearth-card-pane");
-	const wrap = root.createDiv("hearth-card-pane-empty");
+	root.addClass("zerohearth-card-pane");
+	const wrap = root.createDiv("zerohearth-card-pane-empty");
 	emptyState(wrap, "layout-panel-left", t().cardPane.missing);
 	const pick = wrap.createEl("button", { cls: "mod-cta", text: t().cardPane.choose });
 	pick.addEventListener("click", () => {

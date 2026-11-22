@@ -135,7 +135,7 @@ function iconButton(
 	cls: string,
 ): HTMLButtonElement {
 	const button = parent.createEl("button", {
-		cls: `hearth-music-btn ${cls}`,
+		cls: `zerohearth-music-btn ${cls}`,
 		attr: { type: "button", "aria-label": label, title: label },
 	});
 	setIcon(button, icon);
@@ -145,10 +145,10 @@ function iconButton(
 /** Title and subtitle. Every layout places this block differently; none of them
  * changes what is in it. */
 function metaBlock(parent: HTMLElement): { title: HTMLElement; sub: HTMLElement } {
-	const meta = parent.createDiv("hearth-music-meta");
+	const meta = parent.createDiv("zerohearth-music-meta");
 	return {
-		title: meta.createDiv("hearth-music-title"),
-		sub: meta.createDiv("hearth-music-sub"),
+		title: meta.createDiv("zerohearth-music-title"),
+		sub: meta.createDiv("zerohearth-music-sub"),
 	};
 }
 
@@ -158,10 +158,10 @@ function progressBlock(parent: HTMLElement): {
 	total: HTMLElement;
 } {
 	const strings = t().cards.music;
-	const progress = parent.createDiv("hearth-music-progress");
-	const elapsed = progress.createDiv("hearth-music-time is-elapsed");
+	const progress = parent.createDiv("zerohearth-music-progress");
+	const elapsed = progress.createDiv("zerohearth-music-time is-elapsed");
 	const seek = progress.createEl("input", {
-		cls: "hearth-music-seek",
+		cls: "zerohearth-music-seek",
 		attr: {
 			type: "range",
 			min: "0",
@@ -171,7 +171,7 @@ function progressBlock(parent: HTMLElement): {
 			"aria-label": strings.seek,
 		},
 	});
-	const total = progress.createDiv("hearth-music-time is-total");
+	const total = progress.createDiv("zerohearth-music-time is-total");
 	return { elapsed, seek, total };
 }
 
@@ -184,15 +184,15 @@ function transportBlock(parent: HTMLElement): {
 	volume: HTMLInputElement;
 } {
 	const strings = t().cards.music;
-	const transport = parent.createDiv("hearth-music-transport");
+	const transport = parent.createDiv("zerohearth-music-transport");
 	const previous = iconButton(transport, "skip-back", strings.previous, "is-step");
 	const play = iconButton(transport, "play", strings.play, "is-play");
 	const next = iconButton(transport, "skip-forward", strings.next, "is-step");
-	const tools = transport.createDiv("hearth-music-tools");
+	const tools = transport.createDiv("zerohearth-music-tools");
 	const shuffle = iconButton(tools, "shuffle", strings.shuffle, "is-tool");
 	const repeat = iconButton(tools, "repeat", strings.repeat, "is-tool");
 	const volume = tools.createEl("input", {
-		cls: "hearth-music-volume",
+		cls: "zerohearth-music-volume",
 		attr: {
 			type: "range",
 			min: "0",
@@ -234,51 +234,51 @@ function buildChrome(body: HTMLElement, layout: MusicLook, showQueue: boolean): 
 	// element, and `container-type: size` needs a box whose height is its own
 	// content box — on the body that is the card's height, which makes every
 	// `@container` threshold below measure the wrong thing.
-	const root = body.createDiv("hearth-music");
+	const root = body.createDiv("zerohearth-music");
 	root.addClass(`is-layout-${layout}`);
 
 	// Created once and moved into whichever container the layout wants.
-	const art = root.createDiv("hearth-music-art");
+	const art = root.createDiv("zerohearth-music-art");
 	let meta: ReturnType<typeof metaBlock>;
 	let progress: ReturnType<typeof progressBlock>;
 	let transport: ReturnType<typeof transportBlock>;
 	let list: HTMLElement | null = null;
 
 	if (layout === "cover") {
-		const stage = root.createDiv("hearth-music-stage");
+		const stage = root.createDiv("zerohearth-music-stage");
 		stage.appendChild(art);
-		stage.createDiv("hearth-music-scrim");
-		const overlay = stage.createDiv("hearth-music-overlay");
+		stage.createDiv("zerohearth-music-scrim");
+		const overlay = stage.createDiv("zerohearth-music-overlay");
 		meta = metaBlock(overlay);
 		progress = progressBlock(overlay);
 		transport = transportBlock(overlay);
 	} else if (layout === "medium") {
-		const main = root.createDiv("hearth-music-main");
+		const main = root.createDiv("zerohearth-music-main");
 		main.appendChild(art);
-		const side = main.createDiv("hearth-music-side");
+		const side = main.createDiv("zerohearth-music-side");
 		meta = metaBlock(side);
 		progress = progressBlock(side);
 		transport = transportBlock(side);
-		if (showQueue) list = root.createDiv("hearth-music-queue");
+		if (showQueue) list = root.createDiv("zerohearth-music-queue");
 	} else if (layout === "panel") {
-		const split = root.createDiv("hearth-music-split");
-		const stage = split.createDiv("hearth-music-stage");
+		const split = root.createDiv("zerohearth-music-split");
+		const stage = split.createDiv("zerohearth-music-stage");
 		stage.appendChild(art);
-		const side = split.createDiv("hearth-music-side");
+		const side = split.createDiv("zerohearth-music-side");
 		meta = metaBlock(side);
 		progress = progressBlock(side);
 		transport = transportBlock(side);
-		if (showQueue) list = side.createDiv("hearth-music-queue");
+		if (showQueue) list = side.createDiv("zerohearth-music-queue");
 	} else {
-		const now = root.createDiv("hearth-music-now");
+		const now = root.createDiv("zerohearth-music-now");
 		now.appendChild(art);
 		meta = metaBlock(now);
 		progress = progressBlock(root);
 		transport = transportBlock(root);
-		if (showQueue) list = root.createDiv("hearth-music-queue");
+		if (showQueue) list = root.createDiv("zerohearth-music-queue");
 	}
 
-	const status = root.createDiv("hearth-music-status");
+	const status = root.createDiv("zerohearth-music-status");
 	return {
 		art,
 		title: meta.title,
@@ -313,16 +313,16 @@ function paintArt(chrome: Chrome, now: NowPlaying): void {
 		chrome.art.dataset.key = key;
 		chrome.art.empty();
 		if (now.coverUrl) {
-			const img = chrome.art.createEl("img", { cls: "hearth-music-cover" });
+			const img = chrome.art.createEl("img", { cls: "zerohearth-music-cover" });
 			img.src = now.coverUrl;
 			img.alt = "";
 			img.draggable = false;
 		} else if (chrome.layout === "plain") {
 			setIcon(chrome.art, "music");
 		} else {
-			const disc = chrome.art.createDiv("hearth-music-disc");
-			disc.createDiv("hearth-music-disc-label");
-			disc.createDiv("hearth-music-disc-hole");
+			const disc = chrome.art.createDiv("zerohearth-music-disc");
+			disc.createDiv("zerohearth-music-disc-label");
+			disc.createDiv("zerohearth-music-disc-hole");
 		}
 	}
 	chrome.art.toggleClass("is-playing", now.playing);
@@ -396,19 +396,19 @@ function paintList(
 		shown.forEach((row) => {
 			const nav = row.icon !== undefined;
 			const el = list.createEl("button", {
-				cls: `hearth-music-row${nav ? " is-nav" : ""}${row.current === true ? " is-current" : ""}`,
+				cls: `zerohearth-music-row${nav ? " is-nav" : ""}${row.current === true ? " is-current" : ""}`,
 				attr: { type: "button" },
 			});
 			if (row.icon) {
 				// An element of its own: setIcon writes into the element it is
 				// given, so pointing it at the row would wipe the label.
-				setIcon(el.createSpan("hearth-music-row-icon"), row.icon);
+				setIcon(el.createSpan("zerohearth-music-row-icon"), row.icon);
 			}
-			const text = el.createDiv("hearth-music-row-text");
-			text.createDiv({ cls: "hearth-music-row-label", text: row.label });
-			if (row.sub) text.createDiv({ cls: "hearth-music-row-sub", text: row.sub });
+			const text = el.createDiv("zerohearth-music-row-text");
+			text.createDiv({ cls: "zerohearth-music-row-label", text: row.label });
+			if (row.sub) text.createDiv({ cls: "zerohearth-music-row-sub", text: row.sub });
 			if (row.trailing) {
-				setIcon(el.createSpan("hearth-music-row-icon is-trailing"), row.trailing);
+				setIcon(el.createSpan("zerohearth-music-row-icon is-trailing"), row.trailing);
 				el.setAttribute("title", t().cards.music.openAlbum);
 				el.setAttribute("aria-label", `${row.label} — ${t().cards.music.openAlbum}`);
 			}
@@ -417,12 +417,12 @@ function paintList(
 		if (rows.length > shown.length) {
 			const tracks = rows.filter((row) => row.playable === true).length;
 			list.createDiv({
-				cls: "hearth-music-row-more",
+				cls: "zerohearth-music-row-more",
 				text: t().cards.music.moreTracks(shownTracks, tracks),
 			});
 		}
 	}
-	const items = list.querySelectorAll<HTMLElement>(".hearth-music-row");
+	const items = list.querySelectorAll<HTMLElement>(".zerohearth-music-row");
 	items.forEach((el, index) => el.toggleClass("is-current", shown[index]?.current === true));
 }
 
@@ -602,7 +602,7 @@ function renderVaultSource(
 	component.register(() => unsubscribe());
 }
 
-/** The repeat button's tooltip for Hearth's own repeat modes. */
+/** The repeat button's tooltip for ZeroHearth's own repeat modes. */
 function repeatTitle(mode: MusicRepeat): string {
 	const strings = t().cards.music;
 	if (mode === "one") return strings.repeatOne;
@@ -720,9 +720,9 @@ export function renderMusic(
 	component: Component,
 ): void {
 	const cfg = card.music ?? {};
-	body.addClass("hearth-music-host");
+	body.addClass("zerohearth-music-host");
 	// The source is a card setting, and the two have nothing in common beyond the
-	// chrome: one plays vault files through Hearth's own player, the other drives
+	// chrome: one plays vault files through ZeroHearth's own player, the other drives
 	// the Stereo plugin's.
 	if (musicSource(cfg) === "stereo") renderStereoSource(view, card, body, component, cfg);
 	else renderVaultSource(view, card, body, component, cfg);

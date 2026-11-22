@@ -17,7 +17,7 @@ export const zhTW: Translations = {
 		newDrawing: "新增 Excalidraw 繪圖",
 		recordVoice: "開始／停止錄音",
 		openDailyNote: "開啟今天的日記",
-		runSetup: "設定 Hearth（首次執行精靈）",
+		runSetup: "設定 ZeroHearth（首次執行精靈）",
 		searchTips: "顯示搜尋技巧",
 		switchDashboard: (n: number) => `切換到儀表板 ${n}`,
 		openDashboard: (n: number) => `開啟儀表板 ${n}`,
@@ -25,62 +25,62 @@ export const zhTW: Translations = {
 		previousDashboard: "上一個儀表板",
 	},
 	ribbon: {
-		openHome: "開啟 Hearth 首頁",
+		openHome: "開啟 ZeroHearth 首頁",
 	},
 
 	// ---- Notices (transient toasts) ------------------------------------
 	notices: {
-		couldNotCreateNote: "Hearth：無法新增筆記。",
-		operonTaskMissing: "Hearth：該 Operon 任務的筆記已不在儲存庫中。",
-		operonRechecked: "Hearth：已重新檢查 Operon 連線。",
-		operonWriteFailed: (reason: string) => `Hearth：Operon 拒絕了此變更 — ${reason}`,
+		couldNotCreateNote: "ZeroHearth：無法新增筆記。",
+		operonTaskMissing: "ZeroHearth：該 Operon 任務的筆記已不在儲存庫中。",
+		operonRechecked: "ZeroHearth：已重新檢查 Operon 連線。",
+		operonWriteFailed: (reason: string) => `ZeroHearth：Operon 拒絕了此變更 — ${reason}`,
 		/** A refused create, with the Operon setting that decided the target —
 		 * the error alone names a configured target without saying which one. */
 		operonCreateFailed: (reason: string, where: string) =>
-			`Hearth：Operon 拒絕建立該任務 — ${reason} ${where} ` +
+			`ZeroHearth：Operon 拒絕建立該任務 — ${reason} ${where} ` +
 			"請在 Operon 的設定中修改，或在此卡片設定的「新任務」下選擇其他目標。",
-		/** The mutation may have landed. Hearth has already spent its one legal
+		/** The mutation may have landed. ZeroHearth has already spent its one legal
 		 * recovery attempt, so the honest report is "unknown", not "failed" —
 		 * and never an offer to retry, which could apply the change twice. */
 		operonWriteUnknown: (reason: string) =>
-			`Hearth：Operon 無法確認變更是否已套用（${reason}）。` +
+			`ZeroHearth：Operon 無法確認變更是否已套用（${reason}）。` +
 			"卡片已重新讀取——請先檢查該任務再重試。",
-		enableExcalidraw: "Hearth：請啟用 Excalidraw 外掛以建立繪圖。",
-		excalidrawCommandMissing: "Hearth：找不到 Excalidraw 的「新增繪圖」命令。",
-		enableAudioRecorder: "Hearth：請啟用核心外掛「錄音機」。",
-		couldNotRecordVoice: "Hearth：無法開始錄音。",
-		enableDailyNotes: "Hearth：請啟用核心外掛「日記」。",
-		couldNotOpenDaily: "Hearth：無法開啟今天的日記。",
-		couldNotOpenPeriodic: "Hearth：Periodic Notes 無法建立該筆記。",
-		couldNotCreateJournalNote: "Hearth：Journals 無法建立該筆記。",
-		commandNotFound: (id: string) => `Hearth：找不到命令：${id}`,
-		couldNotCreateNoteForDay: (day: string) => `Hearth：無法為 ${day} 建立筆記。`,
-		couldNotCreateEventNote: "Hearth：無法為該活動建立筆記。",
-		taskNotesCreateFailed: "Hearth：無法執行 TaskNotes：新增任務。",
-		tasksPluginCreateFailed: "Hearth：無法開啟 Tasks 外掛的新增任務對話框。",
-		tasksPluginNoTarget: "Hearth：請在此卡片設定中選擇新任務的去向。",
-		tasksPluginNoDailyNotes: "Hearth：請啟用核心「日記」外掛，或在此卡片設定中為新任務選擇一篇筆記。",
+		enableExcalidraw: "ZeroHearth：請啟用 Excalidraw 外掛以建立繪圖。",
+		excalidrawCommandMissing: "ZeroHearth：找不到 Excalidraw 的「新增繪圖」命令。",
+		enableAudioRecorder: "ZeroHearth：請啟用核心外掛「錄音機」。",
+		couldNotRecordVoice: "ZeroHearth：無法開始錄音。",
+		enableDailyNotes: "ZeroHearth：請啟用核心外掛「日記」。",
+		couldNotOpenDaily: "ZeroHearth：無法開啟今天的日記。",
+		couldNotOpenPeriodic: "ZeroHearth：Periodic Notes 無法建立該筆記。",
+		couldNotCreateJournalNote: "ZeroHearth：Journals 無法建立該筆記。",
+		commandNotFound: (id: string) => `ZeroHearth：找不到命令：${id}`,
+		couldNotCreateNoteForDay: (day: string) => `ZeroHearth：無法為 ${day} 建立筆記。`,
+		couldNotCreateEventNote: "ZeroHearth：無法為該活動建立筆記。",
+		taskNotesCreateFailed: "ZeroHearth：無法執行 TaskNotes：新增任務。",
+		tasksPluginCreateFailed: "ZeroHearth：無法開啟 Tasks 外掛的新增任務對話框。",
+		tasksPluginNoTarget: "ZeroHearth：請在此卡片設定中選擇新任務的去向。",
+		tasksPluginNoDailyNotes: "ZeroHearth：請啟用核心「日記」外掛，或在此卡片設定中為新任務選擇一篇筆記。",
 		tasksPluginNoteMissing: (path: string) =>
-			`Hearth：在「${path}」找不到用於新任務的筆記 — 請在此卡片設定中另選一篇。`,
-		taskChangedOnDisk: "Hearth：該任務在磁碟上已變更——已重新整理。",
-		couldNotOpenTaskNote: "Hearth：無法開啟該任務的筆記。",
-		couldNotUpdateTaskStatus: "Hearth：無法更新任務狀態。",
-		couldNotCompleteRecurring: "Hearth：無法將該重複任務標記為完成。",
-		couldNotUndoRecurring: "Hearth：無法復原該重複任務的完成狀態。",
-		couldNotAddKanbanCard: "Hearth：無法將卡片新增到看板。",
-		couldNotConvertCard: "Hearth：無法將卡片轉換為筆記。",
-		templaterNoTemplate: (path: string) => `Hearth：找不到範本：${path}`,
-		templaterFailed: (name: string) => `Hearth：Templater 未能從 ${name} 建立筆記。`,
-		templaterCreated: (path: string) => `Hearth：已建立 ${path}`,
+			`ZeroHearth：在「${path}」找不到用於新任務的筆記 — 請在此卡片設定中另選一篇。`,
+		taskChangedOnDisk: "ZeroHearth：該任務在磁碟上已變更——已重新整理。",
+		couldNotOpenTaskNote: "ZeroHearth：無法開啟該任務的筆記。",
+		couldNotUpdateTaskStatus: "ZeroHearth：無法更新任務狀態。",
+		couldNotCompleteRecurring: "ZeroHearth：無法將該重複任務標記為完成。",
+		couldNotUndoRecurring: "ZeroHearth：無法復原該重複任務的完成狀態。",
+		couldNotAddKanbanCard: "ZeroHearth：無法將卡片新增到看板。",
+		couldNotConvertCard: "ZeroHearth：無法將卡片轉換為筆記。",
+		templaterNoTemplate: (path: string) => `ZeroHearth：找不到範本：${path}`,
+		templaterFailed: (name: string) => `ZeroHearth：Templater 未能從 ${name} 建立筆記。`,
+		templaterCreated: (path: string) => `ZeroHearth：已建立 ${path}`,
 		newNoteTemplaterMissing:
-			"Hearth：「新增筆記」按鈕指向一個 Templater 範本，但 Templater 未啟用——" +
+			"ZeroHearth：「新增筆記」按鈕指向一個 Templater 範本，但 Templater 未啟用——" +
 			"改為建立空白筆記。",
-		exported: "Hearth：已匯出。",
-		layoutExported: "Hearth：版面配置已匯出。",
-		layoutImported: "Hearth：版面配置已匯入。",
-		layoutImportError: (error: string) => `Hearth：${error}`,
-		exportedToVault: (file: string) => `Hearth：已將 ${file} 儲存到 Obsidian 儲存庫根目錄。`,
-		exportFailed: "Hearth：無法儲存匯出檔案。",
+		exported: "ZeroHearth：已匯出。",
+		layoutExported: "ZeroHearth：版面配置已匯出。",
+		layoutImported: "ZeroHearth：版面配置已匯入。",
+		layoutImportError: (error: string) => `ZeroHearth：${error}`,
+		exportedToVault: (file: string) => `ZeroHearth：已將 ${file} 儲存到 Obsidian 儲存庫根目錄。`,
+		exportFailed: "ZeroHearth：無法儲存匯出檔案。",
 		cardCopied: "卡片已複製到儀表板。",
 	},
 
@@ -104,7 +104,7 @@ export const zhTW: Translations = {
 		noMatchingCommands: "沒有符合的命令",
 		tips: {
 			title: "搜尋列能做什麼",
-			intro: "在任何 Hearth 搜尋列中輸入以下內容。",
+			intro: "在任何 ZeroHearth 搜尋列中輸入以下內容。",
 			introTry: "點擊範例即可試用。",
 			findHeading: "尋找筆記",
 			answersHeading: "即時答案",
@@ -173,7 +173,7 @@ export const zhTW: Translations = {
 			loading: "載入中…",
 			invalid: "不是有效的運算式",
 			noQuote: (query: string) => `沒有「${query}」的行情資料`,
-			externalOff: "Hearth 設定中已停用外部請求",
+			externalOff: "ZeroHearth 設定中已停用外部請求",
 			rate: (from: string, rate: string, to: string) => `1 ${from} = ${rate} ${to}`,
 			days: (n: number) => `${n} 天`,
 			today: "今天",
@@ -201,7 +201,7 @@ export const zhTW: Translations = {
 
 	// ---- "What's new" release-notes dialog -----------------------------
 	whatsNew: {
-		title: "Hearth 更新內容",
+		title: "ZeroHearth 更新內容",
 		intro: "感謝更新！以下是您上次查看以來的變化。",
 		/** Shown instead of {@link intro} when there are headlines to click. */
 		introHint:
@@ -246,7 +246,7 @@ export const zhTW: Translations = {
 		},
 		/** The line under each heading. */
 		stepDescs: {
-			purpose: "可複選，Hearth 會據此挑選卡片。只需三個步驟，之後一切都可以修改。",
+			purpose: "可複選，ZeroHearth 會據此挑選卡片。只需三個步驟，之後一切都可以修改。",
 			look: "只作用於正在建立的儀表板，其他儀表板保留各自的外觀。",
 			finish: "目前尚未變更任何內容。以下就是將要建立的儀表板。",
 		},
@@ -263,7 +263,7 @@ export const zhTW: Translations = {
 			showTitleDesc: "關閉後儀表板將完全沒有標題。",
 			titleIcon: "標題圖示",
 			titleIconDesc:
-				"標題旁顯示的表情符號、一兩個字元、Lucide 圖示 ID、儲存庫圖片路徑或圖片網址。留空則使用 Hearth 水晶圖示。",
+				"標題旁顯示的表情符號、一兩個字元、Lucide 圖示 ID、儲存庫圖片路徑或圖片網址。留空則使用 ZeroHearth 水晶圖示。",
 			themeColor: "跟隨主題的強調色",
 			themeColorDesc: "品牌標誌的哪些部分採用主題的顏色。",
 			themeColorOptions: {
@@ -277,8 +277,8 @@ export const zhTW: Translations = {
 		},
 		look: {
 			designHeading: "設計",
-			designNote: "此選項適用於整個 Hearth，而不僅是此儀表板。可隨時在 設定 → Hearth → 外觀 中變更。",
-			terminalNote: "終端機模式適用於整個 Hearth 和所有儀表板。它不繪製桌布和卡片底色，因此這裡沒有其他可選項。這是實驗性功能：可隨時在 設定 → Hearth → 外觀 中關閉，儀表板會恢復為其下的設計。",
+			designNote: "此選項適用於整個 ZeroHearth，而不僅是此儀表板。可隨時在 設定 → ZeroHearth → 外觀 中變更。",
+			terminalNote: "終端機模式適用於整個 ZeroHearth 和所有儀表板。它不繪製桌布和卡片底色，因此這裡沒有其他可選項。這是實驗性功能：可隨時在 設定 → ZeroHearth → 外觀 中關閉，儀表板會恢復為其下的設計。",
 			surfaceHeading: "卡片",
 			backgroundHeading: "背景",
 			color: "顏色",
@@ -314,12 +314,12 @@ export const zhTW: Translations = {
 			classic: {
 				icon: "square",
 				name: "經典",
-				desc: "Hearth 一貫的樣子：安靜的表面，細邊框。",
+				desc: "ZeroHearth 一貫的樣子：安靜的表面，細邊框。",
 			},
 			expressive: {
 				icon: "shapes",
 				name: "Expressive",
-				desc: "整個 Hearth 使用 Material 3 Expressive——卡片、按鈕、選單、對話框和設定——採用強調色的色調。",
+				desc: "整個 ZeroHearth 使用 Material 3 Expressive——卡片、按鈕、選單、對話框和設定——採用強調色的色調。",
 			},
 			terminal: {
 				icon: "terminal",
@@ -330,8 +330,8 @@ export const zhTW: Translations = {
 		backgrounds: {
 			default: {
 				icon: "image",
-				name: "Hearth 桌布",
-				desc: "由 Hearth 繪製的山丘，隨主題呈現白天或夜晚。",
+				name: "ZeroHearth 桌布",
+				desc: "由 ZeroHearth 繪製的山丘，隨主題呈現白天或夜晚。",
 			},
 			harbour: {
 				icon: "anchor",
@@ -399,7 +399,7 @@ export const zhTW: Translations = {
 		},
 		integrations: {
 			lead:
-				"這裡每開啟一項，Hearth 都會為此儀表板新增一張已設定好的卡片——" +
+				"這裡每開啟一項，ZeroHearth 都會為此儀表板新增一張已設定好的卡片——" +
 				"不會安裝或變更其他外掛，也不會影響此儀表板之外的任何內容。",
 			recommended: "推薦",
 			effects: {
@@ -414,7 +414,7 @@ export const zhTW: Translations = {
 				git: "新增一張 Git 卡片顯示 Git 儲存庫狀態，並帶有提交與同步按鈕。",
 				operon:
 					"新增一張 Operon 任務卡片，透過 Operon 的開發者 API 讀取資料。" +
-					"卡片首次載入時，需要您在 Operon 自己的設定中核准 Hearth；" +
+					"卡片首次載入時，需要您在 Operon 自己的設定中核准 ZeroHearth；" +
 					"在此之前，卡片會說明它在等什麼。",
 				bases: "新增一張卡片，嵌入 Obsidian 儲存庫中的某個 base。",
 				dailyNotes: "新增一張卡片顯示今天的日記，可直接編輯。",
@@ -425,7 +425,7 @@ export const zhTW: Translations = {
 			taskNotesDue: "到期欄位",
 			taskNotesPriority: "優先順序欄位",
 			taskNotesDone: "視為已完成",
-			taskNotesDoneNone: "未定義 — Hearth 將使用「done」",
+			taskNotesDoneNone: "未定義 — ZeroHearth 將使用「done」",
 		},
 		finish: {
 			empty:
@@ -444,7 +444,7 @@ export const zhTW: Translations = {
 			calloutTitle: "這是起點，不是預設",
 			calloutHint:
 				"每張卡片都可以透過「排列」（儀表板右上角）移動、縮放、重新設定或刪除；" +
-				"其餘內容在 設定 → Hearth 中。您隨時可以從 設定 → 關於 再次執行此精靈。",
+				"其餘內容在 設定 → ZeroHearth 中。您隨時可以從 設定 → 關於 再次執行此精靈。",
 			clock: "時鐘",
 			clockDesc: "側欄頂端的一個小時鐘和問候語。",
 			more: "標題與頁首",
@@ -504,7 +504,7 @@ export const zhTW: Translations = {
 			},
 		},
 		notice: {
-			done: (n: number) => `Hearth：儀表板已就緒——新增了 ${n} 張卡片。`,
+			done: (n: number) => `ZeroHearth：儀表板已就緒——新增了 ${n} 張卡片。`,
 		},
 	},
 
@@ -592,7 +592,7 @@ export const zhTW: Translations = {
 			name: "名稱",
 			mode: "儀表板類型",
 			modeDesc:
-				"由 Hearth 卡片組成的儀表板、鋪滿整個儀表板的單張 Hearth 卡片，或將整個儀表板交給某個外掛的檢視。切換類型會保留此儀表板的卡片——切換回來即可恢復。",
+				"由 ZeroHearth 卡片組成的儀表板、鋪滿整個儀表板的單張 ZeroHearth 卡片，或將整個儀表板交給某個外掛的檢視。切換類型會保留此儀表板的卡片——切換回來即可恢復。",
 			modeOptions: {
 				cards: "卡片",
 				single: "單張卡片",
@@ -636,7 +636,7 @@ export const zhTW: Translations = {
 			linkedWorkspaceNone: "無",
 			mobileDefault: "行動裝置預設",
 			mobileDefaultDesc:
-				"在手機或平板上載入 Hearth 時開啟此儀表板。只能有一個儀表板作為行動裝置預設；開啟此項會清除其他儀表板的設定。",
+				"在手機或平板上載入 ZeroHearth 時開啟此儀表板。只能有一個儀表板作為行動裝置預設；開啟此項會清除其他儀表板的設定。",
 			titleVisibility: "標題可見性",
 			titleVisibilityDesc:
 				"僅針對此儀表板顯示或隱藏標題／圖示區塊。覆寫全域設定。",
@@ -709,7 +709,7 @@ export const zhTW: Translations = {
 				"此儀表板的繪製方式——其卡片、按鈕以及從它開啟的對話框和選單——卡片未個別指定時生效：經典，或 Material 3 Expressive。",
 			skyDesign: "背景設計",
 			skyDesignDesc: "在此儀表板上使用經典手繪天空，或 Material 3 Expressive 風格的扁平天空。",
-			wallpaperDesignDesc: "此儀表板上的 Hearth 桌布：經典山丘，或以你的強調色繪製的 Material 3 Expressive 扁平圖形。",
+			wallpaperDesignDesc: "此儀表板上的 ZeroHearth 桌布：經典山丘，或以你的強調色繪製的 Material 3 Expressive 扁平圖形。",
 			visibilityDefaultPlugin: (state: string) => `外掛檢視儀表板的預設值（${state}）`,
 			visibilityDefaultSingle: (state: string) =>
 				`單卡片儀表板的預設值（${state}）`,
@@ -721,7 +721,7 @@ export const zhTW: Translations = {
 			titleTextDesc: "為此儀表板覆寫全域標題文字。",
 			titleIcon: "標題圖示",
 			titleIconDesc:
-				"此儀表板標題旁的標誌：Lucide 圖示 ID、表情符號或短文字、Obsidian 儲存庫圖片路徑，或圖片網址。清空後，僅此儀表板會顯示 Hearth 水晶圖示。",
+				"此儀表板標題旁的標誌：Lucide 圖示 ID、表情符號或短文字、Obsidian 儲存庫圖片路徑，或圖片網址。清空後，僅此儀表板會顯示 ZeroHearth 水晶圖示。",
 			titleAlign: "標題對齊",
 			titleAlignDesc: "僅對齊標題／圖示區塊。搜尋列保持自身配置。",
 			alignDefault: "預設（置中）",
@@ -752,7 +752,7 @@ export const zhTW: Translations = {
 				"單卡片儀表板始終鋪滿窗格——卡片會填滿它並自行捲動。",
 			themeColorTarget: "標題上的強調色",
 			themeColorTargetDesc:
-				"此儀表板品牌標誌的哪些部分跟隨主題的圖示顏色。僅為此儀表板覆寫全域設定；Hearth 的分頁與側邊欄圖示仍跟隨全域設定。",
+				"此儀表板品牌標誌的哪些部分跟隨主題的圖示顏色。僅為此儀表板覆寫全域設定；ZeroHearth 的分頁與側邊欄圖示仍跟隨全域設定。",
 			themeColorTargetDefault: (state: string) => `使用全域預設（${state}）`,
 			themeColorTargetOptions: {
 				none: "都不",
@@ -793,7 +793,7 @@ export const zhTW: Translations = {
 		backgroundOptions: {
 			default: "使用全域預設",
 			none: "無",
-			hdefault: "Hearth 預設",
+			hdefault: "ZeroHearth 預設",
 			harbour: "港口小鎮",
 			color: "純色",
 			image: "Obsidian 儲存庫圖片",
@@ -835,7 +835,7 @@ export const zhTW: Translations = {
 			dashboard: "網格、卡片表面與儀表板周圍的控制項。",
 			behaviour: "啟動、筆記開啟方式與隱私。",
 			mobile: "手機上的堆疊版面配置，以及操作列。",
-			integrations: "TaskNotes、檔案圖示，以及 Hearth 讀取的每個外掛。",
+			integrations: "TaskNotes、檔案圖示，以及 ZeroHearth 讀取的每個外掛。",
 			backup: "匯出與匯入您的版面配置和設定。",
 			about: "版本、更新內容，以及問題回報管道。",
 		},
@@ -873,18 +873,18 @@ export const zhTW: Translations = {
 			startup: "啟動與分頁",
 			startupDesc: "首頁檢視何時、在何處開啟。",
 			opening: "開啟筆記",
-			openingDesc: "在 Hearth 中點擊筆記時它在哪裡開啟。",
+			openingDesc: "在 ZeroHearth 中點擊筆記時它在哪裡開啟。",
 			mobileMode: "版面配置",
 			mobileModeDesc: "當螢幕寬度不足以容納儀表板本身的配置時，儀表板如何排列。",
 			privacy: "隱私與網路",
-			privacyDesc: "控制 Hearth 允許發出的對外請求。",
+			privacyDesc: "控制 ZeroHearth 允許發出的對外請求。",
 		},
 		about: {
-			heading: "關於 Hearth",
+			heading: "關於 ZeroHearth",
 			headingDesc: "專案連結、支援與版本。",
-			setup: "設定 Hearth",
+			setup: "設定 ZeroHearth",
 			setupDesc:
-				"回答幾個關於您工作方式和已安裝外掛的問題，Hearth 就會建立一個相符的儀表板。" +
+				"回答幾個關於您工作方式和已安裝外掛的問題，ZeroHearth 就會建立一個相符的儀表板。" +
 				"它會作為新儀表板新增——您已有的內容都不會改變。",
 			setupAgain: "建立一個儀表板",
 			setupAgainDesc:
@@ -900,13 +900,11 @@ export const zhTW: Translations = {
 			reportIssue: "回報問題",
 			reportIssueDesc: "遇到 bug 或有功能想法？請在 GitHub 上提交 issue。",
 			reportIssueButton: "回報問題",
-			kofi: "支持 Hearth",
-			kofiDesc:
-				"Hearth 是免費的，並且永遠免費。如果它值得留在您的主畫面上，" +
-				"歡迎贊助——完全自願，不會鎖定任何功能。",
-			kofiButton: "在 Ko-fi 上贊助",
+			kofi: "支持上游作者",
+			kofiDesc: "贊助將給 ZeroHearth 所基於的 Hearth 專案的作者。",
+			kofiButton: "在 Ko-fi 上支持上游作者",
 			version: (v: string) => `版本 ${v}`,
-			versionDesc: "您正在執行的 Hearth 建置版本。",
+			versionDesc: "您正在執行的 ZeroHearth 建置版本。",
 		},
 		appearance: {
 			heading: "外觀",
@@ -922,10 +920,10 @@ export const zhTW: Translations = {
 			titleIconDesc:
 				"標題旁繪製的標誌。可以是 Lucide 圖示 ID（用 🔍 按鈕瀏覽圖示集）、" +
 				"表情符號或一兩個字元、Obsidian 儲存庫中圖片的路徑（📷 按鈕），或網路圖片的網址。" +
-				"留空則使用 Hearth 水晶圖示。每個儀表板都可以在自己的設定中覆寫此項。",
+				"留空則使用 ZeroHearth 水晶圖示。每個儀表板都可以在自己的設定中覆寫此項。",
 			tabIcon: "分頁圖示",
 			tabIconDesc:
-				"用於 Hearth 分頁標題列和側邊欄按鈕的 Lucide 圖示，取代 Hearth 水晶圖示。" +
+				"用於 ZeroHearth 分頁標題列和側邊欄按鈕的 Lucide 圖示，取代 ZeroHearth 水晶圖示。" +
 				"可瀏覽圖示集或輸入 ID；留空則使用水晶圖示。",
 			themeColorTarget: "跟隨主題圖示顏色",
 			themeColorTargetDesc:
@@ -953,7 +951,7 @@ export const zhTW: Translations = {
 			searchEngineDesc:
 				"為搜尋列提供支援的引擎。快速切換會像 Obsidian 的快速切換一樣比對：僅檔案，包含別名。" +
 				"Omnisearch 需要安裝並啟用 Omnisearch 社群外掛。",
-			searchEngineBuiltin: "Hearth（內建）",
+			searchEngineBuiltin: "ZeroHearth（內建）",
 			searchEngineOmnisearch: "Omnisearch",
 			searchEngineQuickSwitcher: "快速切換",
 			numberFormat: "數字格式",
@@ -977,7 +975,7 @@ export const zhTW: Translations = {
 			newNoteHeading: "「新增筆記」按鈕",
 			newNoteHeadingDesc:
 				"它建立什麼、建立在哪裡。同一組設定同時驅動搜尋列旁的按鈕、" +
-				"搜尋列卡片上的按鈕，以及 Hearth 的「新增筆記」命令。",
+				"搜尋列卡片上的按鈕，以及 ZeroHearth 的「新增筆記」命令。",
 			newNoteButtonLabel: "按鈕文字",
 			newNoteButtonLabelDesc: "按鈕上的文字。留空則顯示「新增筆記」。",
 			newNoteTemplate: "範本",
@@ -1038,7 +1036,7 @@ export const zhTW: Translations = {
 			pauseWhenUnfocused: "Obsidian 不在前景時暫停動畫",
 			pauseWhenUnfocusedDesc:
 				"當您在另一個應用程式或另一個視窗工作時，暫停所有動畫。" +
-				"被其他分頁擋住的 Hearth 分頁本身就不消耗資源；此項針對的是" +
+				"被其他分頁擋住的 ZeroHearth 分頁本身就不消耗資源；此項針對的是" +
 				"在您並未使用的視窗中仍可見的儀表板——例如與瀏覽器並排，或在第二個螢幕上。" +
 				"如果您讓儀表板常駐第二個螢幕，請關閉此項。",
 			color: "最簡模式背景",
@@ -1075,7 +1073,7 @@ export const zhTW: Translations = {
 			valueUrlDesc: "圖片的直接連結網址。",
 			valueVideoDesc: "Obsidian 儲存庫內的影片路徑，例如 Attachments/loop.mp4。它會靜音循環播放。",
 			videoNote:
-				"影片背景是 Hearth 能繪製的最耗資源的一種——儀表板開啟期間它一直在解碼畫面。它只在「完整」效能等級下播放；從「平衡」往下會停留在第一幀。",
+				"影片背景是 ZeroHearth 能繪製的最耗資源的一種——儀表板開啟期間它一直在解碼畫面。它只在「完整」效能等級下播放；從「平衡」往下會停留在第一幀。",
 			externalCallsDisabled:
 				"「行為」中的「停用對外連線」已開啟，因此不會顯示：該背景需要從網路取得。" +
 				"請改用 Obsidian 儲存庫內的圖片，或關閉該設定。",
@@ -1099,7 +1097,7 @@ export const zhTW: Translations = {
 			bannerFullWidth: "全寬",
 			bannerFullWidthDesc: "讓橫幅橫貫視窗兩端，而不是與下方內容對齊。",
 			labels: {
-				default: "Hearth 預設",
+				default: "ZeroHearth 預設",
 				harbour: "港口小鎮",
 				none: "無",
 				color: "純色",
@@ -1133,13 +1131,13 @@ export const zhTW: Translations = {
 			skyDesign: "設計",
 			skyDesignDesc: "經典的手繪天空，或 Material 3 Expressive 風格的扁平天空：山丘、圓潤的雲與旋轉的太陽。",
 			wallpaperDesignDesc:
-				"經典山丘與小屋——淺色主題下是清晨，深色主題下是月夜——或以強調色色調繪製的 Material 3 Expressive 扁平圖形。由 Hearth 繪製，無需下載任何內容。",
+				"經典山丘與小屋——淺色主題下是清晨，深色主題下是月夜——或以強調色色調繪製的 Material 3 Expressive 扁平圖形。由 ZeroHearth 繪製，無需下載任何內容。",
 			skyDesignClassic: "經典（手繪）",
 			skyDesignExpressive: "Expressive（扁平）",
 		},
 		behaviour: {
 			heading: "行為",
-			headingDesc: "Hearth 何時、在何處開啟，以及手機／平板的「僅搜尋」模式。",
+			headingDesc: "ZeroHearth 何時、在何處開啟，以及手機／平板的「僅搜尋」模式。",
 			openOnStartup: "啟動時開啟",
 			openOnStartupDesc: "Obsidian 儲存庫載入時開啟首頁檢視。",
 			replaceNewTabs: "取代新分頁",
@@ -1150,7 +1148,7 @@ export const zhTW: Translations = {
 			liveRefresh: "隨 Obsidian 儲存庫變化即時重新整理",
 			liveRefreshDesc:
 				"Obsidian 儲存庫變化時保持已開啟的首頁檢視為最新——最近、書籤和已儲存查詢卡片" +
-				"無需重新開啟分頁即會更新。無論此設定如何，切回 Hearth 分頁時總會重新整理。",
+				"無需重新開啟分頁即會更新。無論此設定如何，切回 ZeroHearth 分頁時總會重新整理。",
 			liveSettingsSync: "接收同步的變更",
 			liveSettingsSyncDesc:
 				"同步送達其他裝置上所做的儀表板變更後立即套用，而不必等到下次重新啟動 " +
@@ -1180,16 +1178,16 @@ export const zhTW: Translations = {
 			mobileTierMatch: "與桌面版一致",
 			disableExternalCalls: "停用對外連線",
 			disableExternalCallsDesc:
-				"阻止 Hearth 發出的所有對外網路請求，包括 Jira、外部行事曆、RSS 來源、" +
+				"阻止 ZeroHearth 發出的所有對外網路請求，包括 Jira、外部行事曆、RSS 來源、" +
 				"計算機的匯率查詢，以及以網址給出的背景圖片和標題圖示——它們會" +
-				"分別退回為不顯示圖片和 Hearth 水晶。",
+				"分別退回為不顯示圖片和 ZeroHearth 水晶。",
 			openIn: "筆記開啟位置",
 			openInDesc:
-				"從 Hearth 開啟筆記時它去哪裡。「目前分頁」會取代首頁檢視，" +
-				"使 Hearth 表現得像任何其他分頁。無論如何，Ctrl/Cmd 點擊總會開啟新分頁。",
+				"從 ZeroHearth 開啟筆記時它去哪裡。「目前分頁」會取代首頁檢視，" +
+				"使 ZeroHearth 表現得像任何其他分頁。無論如何，Ctrl/Cmd 點擊總會開啟新分頁。",
 			openInModes: {
 				tab: "新分頁",
-				same: "目前分頁（取代 Hearth）",
+				same: "目前分頁（取代 ZeroHearth）",
 				split: "分割窗格",
 				window: "新視窗",
 			},
@@ -1204,17 +1202,17 @@ export const zhTW: Translations = {
 				card: "卡片中的筆記",
 				cardDesc:
 					"由最近、書籤、我的最愛、行事曆、熱度圖和任務卡片列出的筆記，以及行動裝置操作按鈕。",
-				newNote: "Hearth 建立的筆記",
+				newNote: "ZeroHearth 建立的筆記",
 				newNoteDesc: "新筆記、日記和活動筆記，在建立時隨即開啟。",
 			},
-			openFromOutside: "從 Hearth 之外開啟的筆記",
+			openFromOutside: "從 ZeroHearth 之外開啟的筆記",
 			openFromOutsideDesc:
 				"檔案總管、快速切換器、關係圖譜——以及卡片嵌入的、自行開啟連結的內容。" +
-				"Obsidian 會把它們交給目前聚焦的分頁，因此 Hearth 分頁會被佔用。" +
-				"選擇「新分頁」可保留 Hearth 分頁；此時檔案總管將不再跟隨您開啟的檔案。",
+				"Obsidian 會把它們交給目前聚焦的分頁，因此 ZeroHearth 分頁會被佔用。" +
+				"選擇「新分頁」可保留 ZeroHearth 分頁；此時檔案總管將不再跟隨您開啟的檔案。",
 			openFromOutsideModes: {
-				same: "目前分頁（取代 Hearth）",
-				tab: "新分頁（保留 Hearth）",
+				same: "目前分頁（取代 ZeroHearth）",
+				tab: "新分頁（保留 ZeroHearth）",
 			},
 		},
 		mobileActions: {
@@ -1241,11 +1239,11 @@ export const zhTW: Translations = {
 		integrations: {
 			heading: "所有整合",
 			headingDesc:
-				"Hearth 可以配合使用的一切，無論是否已安裝都列在這裡。" +
+				"ZeroHearth 可以配合使用的一切，無論是否已安裝都列在這裡。" +
 				"多數整合無需設定——需要設定的會說明其設定所在的位置。",
 			groups: {
 				plugin: "社群外掛",
-				pluginDesc: "這些外掛一旦啟用，Hearth 就會自動辨識。",
+				pluginDesc: "這些外掛一旦啟用，ZeroHearth 就會自動辨識。",
 				core: "Obsidian 核心外掛",
 				coreDesc:
 					"內建於 Obsidian。如果某張卡片提示缺少其中之一，請在 設定 → 核心外掛 中啟用。",
@@ -1260,11 +1258,11 @@ export const zhTW: Translations = {
 				external: "網路",
 				always: "始終可用",
 			},
-			/** Tooltip on the status pill, spelling out what it means for Hearth. */
+			/** Tooltip on the status pill, spelling out what it means for ZeroHearth. */
 			statusTooltip: {
-				enabled: "已安裝並啟用 — Hearth 正在使用它。",
-				disabled: "已安裝但已關閉，因此 Hearth 目前無法使用它。",
-				missing: "未安裝。Hearth 的其他一切在沒有它的情況下也能正常運作。",
+				enabled: "已安裝並啟用 — ZeroHearth 正在使用它。",
+				disabled: "已安裝但已關閉，因此 ZeroHearth 目前無法使用它。",
+				missing: "未安裝。ZeroHearth 的其他一切在沒有它的情況下也能正常運作。",
 				external: "這是一次對外請求，而不是外掛。",
 				always: "無需安裝。",
 			},
@@ -1273,7 +1271,7 @@ export const zhTW: Translations = {
 				section: "設定就在本頁下方。",
 				tab: (tab: string) => `設定位於 ${tab} 下。`,
 				card: "在儀表板上的卡片本身進行設定。",
-				pluginSettings: "使用該外掛自己的設定 — Hearth 中無需設定。",
+				pluginSettings: "使用該外掛自己的設定 — ZeroHearth 中無需設定。",
 				none: "無需設定。",
 			},
 			/** Row buttons. */
@@ -1293,7 +1291,7 @@ export const zhTW: Translations = {
 					name: "Tasks",
 					desc:
 						"任務卡片可以讀取 Tasks 外掛自身的任務——它的狀態（含自訂狀態）與任務格式——" +
-						"由 Hearth 繪製並支援篩選、排序與欄位，經由外掛勾選、編輯，在日記或自選筆記中建立任務。",
+						"由 ZeroHearth 繪製並支援篩選、排序與欄位，經由外掛勾選、編輯，在日記或自選筆記中建立任務。",
 				},
 				stereo: {
 					name: "Stereo",
@@ -1304,7 +1302,7 @@ export const zhTW: Translations = {
 				omnisearch: {
 					name: "Omnisearch",
 					desc:
-						"把搜尋列切換到 Omnisearch 的模糊全文索引，取代 Hearth 的內建引擎。" +
+						"把搜尋列切換到 Omnisearch 的模糊全文索引，取代 ZeroHearth 的內建引擎。" +
 						"請在 搜尋 → 搜尋列 下選擇引擎；該選擇僅在 Omnisearch 啟用時保持有效。",
 				},
 				tasknotes: {
@@ -1357,12 +1355,12 @@ export const zhTW: Translations = {
 					desc:
 						"Operon 卡片——任務、看板、行程和計時器——透過 Operon 自己的開發者 API " +
 						"讀取資料，因此狀態、優先順序和重複規則仍由它定義。僅桌面版，" +
-						"需要 Obsidian 1.12.2 或更新版本，且 Operon 必須核准 Hearth 的讀取請求。",
+						"需要 Obsidian 1.12.2 或更新版本，且 Operon 必須核准 ZeroHearth 的讀取請求。",
 				},
 				iconic: {
 					name: "Iconic",
 					desc:
-						"用 Iconic 設定的個別檔案圖示會出現在 Hearth 列出檔案的任何位置——" +
+						"用 Iconic 設定的個別檔案圖示會出現在 ZeroHearth 列出檔案的任何位置——" +
 						"最近、我的最愛、已儲存搜尋和搜尋結果。",
 				},
 				iconize: {
@@ -1380,7 +1378,7 @@ export const zhTW: Translations = {
 					desc:
 						"Vault Pet 卡片把該外掛安置在您的儀表板上：既可以是它自己的寵物卡片，" +
 						"活生生且可點擊，也可以是它完整的小屋，含任務、圖鑑、徽章與統計。" +
-						"寵物、經驗以及解鎖的一切都屬於 Vault Pet，Hearth 只提供空間。",
+						"寵物、經驗以及解鎖的一切都屬於 Vault Pet，ZeroHearth 只提供空間。",
 				},
 				excalidraw: {
 					name: "Excalidraw",
@@ -1412,7 +1410,7 @@ export const zhTW: Translations = {
 				},
 				fileExplorer: {
 					name: "檔案總管",
-					desc: "為 Hearth 搜尋結果上的「在檔案總管中顯示」提供支援。",
+					desc: "為 ZeroHearth 搜尋結果上的「在檔案總管中顯示」提供支援。",
 				},
 				workspaces: {
 					name: "工作區",
@@ -1493,7 +1491,7 @@ export const zhTW: Translations = {
 			fieldsEnable: "自訂任務欄位",
 			fieldsEnableDesc:
 				"用您自己定義的欄位取代任務卡片顯示的固定中繼資料——任何 frontmatter 屬性" +
-				"或 Hearth 能讀取的內容，名稱、顏色和順序都由您決定。預設關閉，" +
+				"或 ZeroHearth 能讀取的內容，名稱、顏色和順序都由您決定。預設關閉，" +
 				"在您開啟之前任務保持一般的樣式。開啟後從空白開始：任務只顯示您新增的欄位。",
 			fields: "任務上顯示的欄位",
 			fieldsDesc:
@@ -1502,14 +1500,14 @@ export const zhTW: Translations = {
 		fileIcons: {
 			heading: "檔案圖示／Iconic／Iconize",
 			headingDesc:
-				"在 Hearth 顯示檔案的任何位置——最近、我的最愛、已儲存搜尋和搜尋列——" +
+				"在 ZeroHearth 顯示檔案的任何位置——最近、我的最愛、已儲存搜尋和搜尋列——" +
 				"使用您透過 Iconic 或 Iconize 外掛設定的個別檔案圖示。支援顯示 Lucide 圖示" +
-				"和表情符號；使用下載圖示包中圖示的檔案仍會顯示 Hearth 自己的檔案類型圖示。",
+				"和表情符號；使用下載圖示包中圖示的檔案仍會顯示 ZeroHearth 自己的檔案類型圖示。",
 			enable: "使用來自 Iconic／Iconize 的圖示",
-			enableDesc: "關閉後所有檔案都顯示 Hearth 的檔案類型圖示，忽略這兩個外掛。",
+			enableDesc: "關閉後所有檔案都顯示 ZeroHearth 的檔案類型圖示，忽略這兩個外掛。",
 			enableDescNoPlugin:
 				"目前 Iconic 與 Iconize 都未啟用，因此除非下方 frontmatter 選項已開啟，" +
-				"所有檔案都顯示 Hearth 的檔案類型圖示。此項可以保持開啟——一旦其中之一被安裝即會生效。",
+				"所有檔案都顯示 ZeroHearth 的檔案類型圖示。此項可以保持開啟——一旦其中之一被安裝即會生效。",
 			property: "Iconize frontmatter 屬性",
 			propertyDesc:
 				"Iconize 存放筆記圖示的屬性，用於透過 frontmatter 而非選單設定的圖示。" +
@@ -1520,7 +1518,7 @@ export const zhTW: Translations = {
 				"即使沒有安裝 Iconic 或 Iconize，也顯示筆記 frontmatter 中指定的圖示——" +
 				"適用於其他外掛（Notebook Navigator、Pretty Properties、AutoIcon）或手動寫入的圖示。" +
 				"預設關閉：「icon」是很常見的屬性名稱，用它表示其他含義的 Obsidian 儲存庫會把這些值顯示成圖示。" +
-				"只顯示表情符號和 Obsidian 已知的圖示 ID，其他情況保留 Hearth 的檔案類型圖示。",
+				"只顯示表情符號和 Obsidian 已知的圖示 ID，其他情況保留 ZeroHearth 的檔案類型圖示。",
 		},
 		frontMatterTitle: {
 			heading: "Front Matter Title",
@@ -1536,10 +1534,10 @@ export const zhTW: Translations = {
 			heading: "Operon",
 			headingDesc:
 				"透過 Operon 外掛自己的開發者 API 讀取任務、看板、行程和正在執行的計時器——" +
-				"任務的定義仍以 Operon 為準，Hearth 只顯示它回傳的內容。",
+				"任務的定義仍以 Operon 為準，ZeroHearth 只顯示它回傳的內容。",
 			enable: "連線到 Operon",
 			enableDesc:
-				"關閉即為總開關：Operon 卡片停止讀取，Hearth 也絕不會向 Operon 請求存取。" +
+				"關閉即為總開關：Operon 卡片停止讀取，ZeroHearth 也絕不會向 Operon 請求存取。" +
 				"在儀表板上出現 Operon 卡片之前不會發起任何請求。",
 			status: "連線",
 			statusAbsent: "Operon 未安裝或未啟用。",
@@ -1548,29 +1546,29 @@ export const zhTW: Translations = {
 			statusBooting: "Operon 正在執行，但仍在啟動中。",
 			statusPending:
 				"等待核准。請開啟 設定 → Operon → Core → General → Developer API " +
-				"Integrations 並核准 Hearth。",
+				"Integrations 並核准 ZeroHearth。",
 			statusSuspended:
-				"存取已暫停。請在 Operon 的 Developer API Integrations 中查看 Hearth 待核准的權限範圍。",
+				"存取已暫停。請在 Operon 的 Developer API Integrations 中查看 ZeroHearth 待核准的權限範圍。",
 			statusRevoked:
 				"存取已被撤銷。請在 Operon 的 Developer API Integrations 中重新授予。",
 			statusReady: "已連線 — Operon 卡片可以讀取任務。",
 			statusIdle: "尚未連線。新增一張 Operon 卡片即可開啟工作階段。",
-			statusOff: "該整合已關閉，因此 Hearth 不會從 Operon 讀取任何內容。",
+			statusOff: "該整合已關閉，因此 ZeroHearth 不會從 Operon 讀取任何內容。",
 			statusError: "Operon 拒絕了連線。",
 			detail: "Operon 回報",
 			install: "在社群外掛中開啟 Operon",
 			writes: "允許變更",
 			writesDesc:
 				"允許看板卡片透過拖曳把任務移到另一個狀態，並新增一個用於建立任務的「+」。" +
-				"新任務放在哪裡、某次移動是否合法都由 Operon 決定；Hearth 只是發起請求。" +
-				"開啟此項會擴大 Hearth 請求的權限範圍，因此您需要在 Operon 的 " +
-				"Developer API Integrations 中重新核准。關閉則表示 Hearth 只能讀取。",
+				"新任務放在哪裡、某次移動是否合法都由 Operon 決定；ZeroHearth 只是發起請求。" +
+				"開啟此項會擴大 ZeroHearth 請求的權限範圍，因此您需要在 Operon 的 " +
+				"Developer API Integrations 中重新核准。關閉則表示 ZeroHearth 只能讀取。",
 			writesPending:
 				"讀取正常，但變更權限尚未授予——請在 Operon 的 Developer API Integrations " +
-				"中重新核准 Hearth。在此之前卡片保持唯讀。",
+				"中重新核准 ZeroHearth。在此之前卡片保持唯讀。",
 			capabilities: "請求的存取權限",
 			capabilitiesDesc:
-				"Hearth 一次性請求全部權限，因為 Operon 不會開啟部分核准的工作階段。" +
+				"ZeroHearth 一次性請求全部權限，因為 Operon 不會開啟部分核准的工作階段。" +
 				"除非開啟「允許變更」（會追加任務狀態轉換與任務建立權限），否則均為唯讀。",
 			missing: (names: string) => `尚未授予：${names}`,
 			recheck: "重新檢查",
@@ -1623,8 +1621,8 @@ export const zhTW: Translations = {
 				"Expressive 卡片使用不透明的色調表面和大圓角，因此不透明度、模糊、圓角半徑和邊框只作用於經典卡片。",
 			cardDesign: "設計",
 			cardDesignDesc:
-				"Hearth 的繪製方式：經典，或 Material 3 Expressive——強調色的色調容器、膠囊與柔和形狀、較粗的字體。Expressive 適用於 Hearth 的整個介面：卡片、儀表板按鈕、所有對話框和選單，以及此設定頁面。儀表板或卡片仍可個別指定；內容來自你自己的卡片（筆記、嵌入、網頁）的內容保持不變，只採用 Expressive 的卡片外框。",
-			designClassicDesc: "安靜的表面與細邊框——Hearth 一貫的樣子。",
+				"ZeroHearth 的繪製方式：經典，或 Material 3 Expressive——強調色的色調容器、膠囊與柔和形狀、較粗的字體。Expressive 適用於 ZeroHearth 的整個介面：卡片、儀表板按鈕、所有對話框和選單，以及此設定頁面。儀表板或卡片仍可個別指定；內容來自你自己的卡片（筆記、嵌入、網頁）的內容保持不變，只採用 Expressive 的卡片外框。",
+			designClassicDesc: "安靜的表面與細邊框——ZeroHearth 一貫的樣子。",
 			designExpressiveDesc: "處處 Material 3 Expressive：源自強調色的色調、膠囊與柔和形狀、醒目的字體。",
 			designInUse: "使用中",
 			cards: "卡片",
@@ -1641,7 +1639,7 @@ export const zhTW: Translations = {
 			exportDashboardButton: "匯出儀表板…",
 			importAny: "匯入",
 			importAnyDesc:
-				"開啟一個 Hearth 檔案——單個儀表板、一份版面配置或一份完整備份。在任何變更之前會先告訴您檔案內容；單個儀表板會新增到您現有儀表板旁邊，而不會取代任何內容。",
+				"開啟一個 ZeroHearth 檔案——單個儀表板、一份版面配置或一份完整備份。在任何變更之前會先告訴您檔案內容；單個儀表板會新增到您現有儀表板旁邊，而不會取代任何內容。",
 			export: "匯出版面配置",
 			exportDesc: "將所有儀表板以及網格和版面配置設定下載為 JSON 檔案。",
 			exportButton: "匯出檔案",
@@ -1649,7 +1647,7 @@ export const zhTW: Translations = {
 			importButton: "匯入檔案",
 			exportSettings: "匯出設定",
 			exportSettingsDesc:
-				"將全部 Hearth 設定——完整版面配置加上頂端、背景、行為、外觀和 TaskNotes 選項——" +
+				"將全部 ZeroHearth 設定——完整版面配置加上頂端、背景、行為、外觀和 TaskNotes 選項——" +
 				"下載為 JSON 備份檔案。",
 		},
 	},
@@ -2017,14 +2015,14 @@ export const zhTW: Translations = {
 				"依卡片高度能容納的數量列出檔案，而不是固定數量。調整卡片大小會改變顯示數量。",
 			count: "檔案數量",
 			countDesc: (max: number) =>
-				`列出多少個最近開啟的檔案——最多 ${max} 個，這也是 Hearth 最近檔案記錄的上限。`,
+				`列出多少個最近開啟的檔案——最多 ${max} 個，這也是 ZeroHearth 最近檔案記錄的上限。`,
 			types: "檔案類型",
 			typesDesc: "只列出所選類型的檔案。可任意組合；不選則顯示所有類型。",
 		},
 		bookmarks: {
 			heading: "資料夾書籤",
 			folderTarget: "開啟資料夾書籤時",
-			folderTargetDesc: "在 Hearth 的資料夾瀏覽頁中開啟，或在側邊欄的 Obsidian 檔案總管中顯示。",
+			folderTargetDesc: "在 ZeroHearth 的資料夾瀏覽頁中開啟，或在側邊欄的 Obsidian 檔案總管中顯示。",
 		},
 		folder: {
 			folder: "資料夾",
@@ -2032,7 +2030,7 @@ export const zhTW: Translations = {
 			folderPlaceholder: "專案/2026",
 			pickFolder: "選擇資料夾",
 			sort: "排序",
-			sortDesc: "內容的排列順序。使用 Hearth 自帶的排序時，資料夾排在前面並依名稱排列，與檔案總管一致。",
+			sortDesc: "內容的排列順序。使用 ZeroHearth 自帶的排序時，資料夾排在前面並依名稱排列，與檔案總管一致。",
 			sorts: {
 				explorer: "與檔案總管一致",
 				name: "名稱（A–Z）",
@@ -2093,7 +2091,7 @@ export const zhTW: Translations = {
 			operonTasks: "顯示 Operon 任務",
 			operonTasksDesc:
 				"標記有 Operon 任務到期的日期，並在行程中列出這些任務。" +
-				"透過 Operon 的開發者 API 讀取，因此需要在 設定 → Hearth → 整合 中" +
+				"透過 Operon 的開發者 API 讀取，因此需要在 設定 → ZeroHearth → 整合 中" +
 				"核准 Operon。僅有預定時間（無到期日）的任務不包含在內。",
 			operonTaskColor: "Operon 任務顏色",
 			operonTaskColorDesc: "任務標記的顏色。預設使用強調色。",
@@ -2175,7 +2173,7 @@ export const zhTW: Translations = {
 			taskNotesSubLoaded: (count: number) => `已載入 ${count} 個活動。`,
 			taskNotesSubPending: "尚未載入——請在下方重新整理。",
 			taskNotesSubDisabled: "已在 TaskNotes 中停用。",
-			taskNotesSubBlocked: "未取得：Hearth 的設定中已停用對外連線。",
+			taskNotesSubBlocked: "未取得：ZeroHearth 的設定中已停用對外連線。",
 			taskNotesSubFailed: (reason: string) => `無法載入：${reason}`,
 			taskNotesSubNotCalendar: "回傳的內容不是 iCalendar 來源。",
 			taskNotesSubMissingFile: "該檔案不在 Obsidian 儲存庫中。",
@@ -2417,7 +2415,7 @@ export const zhTW: Translations = {
 			targetNote: "目標（筆記路徑）",
 			targetFolder: "目標（資料夾路徑）",
 			folderTarget: "開啟資料夾按鈕時",
-			folderTargetDesc: "在 Hearth 的資料夾瀏覽頁中開啟，或在側邊欄的 Obsidian 檔案總管中顯示。",
+			folderTargetDesc: "在 ZeroHearth 的資料夾瀏覽頁中開啟，或在側邊欄的 Obsidian 檔案總管中顯示。",
 			moveUp: "上移",
 			moveDown: "下移",
 			removeLink: "移除連結",
@@ -2506,9 +2504,9 @@ export const zhTW: Translations = {
 			source: "來源",
 			sourceDesc:
 				"Markdown 核取方塊在任何地方都可用。TaskNotes 透過 frontmatter 讀取該外掛的" +
-				"任務筆記（欄位名稱可在 設定 → Hearth 中設定，因為 TaskNotes 沒有供其他外掛" +
+				"任務筆記（欄位名稱可在 設定 → ZeroHearth 中設定，因為 TaskNotes 沒有供其他外掛" +
 				"查詢的 API）。Kanban 讀取單個 Kanban 外掛的看板筆記，每個標題作為一欄。" +
-				"Tasks 外掛讀取該外掛自身的任務——它的狀態與任務格式——由 Hearth 繪製，" +
+				"Tasks 外掛讀取該外掛自身的任務——它的狀態與任務格式——由 ZeroHearth 繪製，" +
 				"並使用該外掛的勾選、編輯和建立體驗。",
 			sourceCheckbox: "Markdown 核取方塊",
 			sourceTaskNotes: "TaskNotes 外掛",
@@ -2636,12 +2634,12 @@ export const zhTW: Translations = {
 			doneStatuses: "視為已完成的狀態",
 			doneStatusesDesc:
 				"TaskNotes 來源：哪些狀態值被視為已完成（除非開啟「顯示已完成」，否則隱藏；" +
-				"顯示時加刪除線），每行一個。留空則僅使用 設定 → Hearth 中的完成值。" +
+				"顯示時加刪除線），每行一個。留空則僅使用 設定 → ZeroHearth 中的完成值。" +
 				"例如加上「canceled」可把已取消的任務也算作已完成。",
 			doneStatusesPlaceholder: "done\ncanceled",
 			fields: "欄位",
 			fieldsFollowGlobal:
-				"目前跟隨 設定 → Hearth → 整合 中的欄位。開啟後可為此卡片個別設定。",
+				"目前跟隨 設定 → ZeroHearth → 整合 中的欄位。開啟後可為此卡片個別設定。",
 			fieldsOwnDesc:
 				"此來源不跟隨全庫 TaskNotes 清單。開啟後可為此卡片設定自有欄位，" +
 				"從卡片一向顯示的內容開始。",
@@ -2701,15 +2699,15 @@ export const zhTW: Translations = {
 			fieldNoKeys: "無鍵",
 			fieldAddKey: "新增一個鍵",
 			fieldAddKeyDesc:
-				"Hearth 自己的值可以取得核取方塊行的優先順序、看板欄以及解析出的日期；" +
+				"ZeroHearth 自己的值可以取得核取方塊行的優先順序、看板欄以及解析出的日期；" +
 				"屬性則讀取 frontmatter 中的任何內容。",
-			fieldAddBuiltin: "Hearth 讀取的內容",
+			fieldAddBuiltin: "ZeroHearth 讀取的內容",
 			fieldAddProperty: "Frontmatter 屬性",
 			fieldAddKeyTyped: "輸入屬性名稱…",
 			fieldAddKeyPlaceholder: "屬性名稱",
 			fieldRemoveKey: "移除鍵",
 			fieldPickProperty: "在您的筆記中找到的屬性",
-			fieldPickBuiltin: "Hearth 自行解析的值",
+			fieldPickBuiltin: "ZeroHearth 自行解析的值",
 			fieldKeyAlreadyAdded: (key: string) => `「${key}」已經是此欄位的一個鍵。`,
 			fieldMapValues: "值與顏色",
 			fieldMappedValues: (n: number) => `已對應 ${n} 個值`,
@@ -2877,7 +2875,7 @@ export const zhTW: Translations = {
 			languageTs: "指令碼（TS）",
 			query: "查詢",
 			queryDesc:
-				"一條 Datacore 查詢，例如 @page and #project。Hearth 會把符合項目轉譯為" +
+				"一條 Datacore 查詢，例如 @page and #project。ZeroHearth 會把符合項目轉譯為" +
 				"即時連結清單。執行時沒有「目前筆記」，因此全域查詢完全可用，" +
 				"但相對檔案的查詢沒有可解析的檔案。",
 			queryPlaceholder: "@page and #project",
@@ -3103,7 +3101,7 @@ export const zhTW: Translations = {
 			removeFeed: "移除訂閱源",
 			github: "從 GitHub 新增",
 			githubDesc:
-				"以 owner/repo 形式輸入 Git 儲存庫（或貼上其網址）並選擇要關注的內容 — Hearth 會為您建構 Atom 訂閱源。",
+				"以 owner/repo 形式輸入 Git 儲存庫（或貼上其網址）並選擇要關注的內容 — ZeroHearth 會為您建構 Atom 訂閱源。",
 			githubPlaceholder: "owner/repo",
 			githubReleases: "發行版本",
 			githubCommits: "提交",
@@ -3132,7 +3130,7 @@ export const zhTW: Translations = {
 			showDateDesc: "顯示每個項目的發布時間。",
 			reading: "閱讀",
 			openIn: "開啟項目於",
-			openInDesc: "點擊項目後前往何處。沒有網頁的項目（例如電子報）總是在 Hearth 閱讀器中開啟。",
+			openInDesc: "點擊項目後前往何處。沒有網頁的項目（例如電子報）總是在 ZeroHearth 閱讀器中開啟。",
 			openInBrowser: "瀏覽器",
 			openInDialog: "閱讀器（對話框）",
 			openInTab: "閱讀器（分頁）",
@@ -3244,9 +3242,9 @@ export const zhTW: Translations = {
 			location: "位置",
 			search: "尋找地點",
 			searchDesc:
-				"依名稱搜尋 — Hearth 會把座標存在卡片上，因此這次查詢只發生一次。",
+				"依名稱搜尋 — ZeroHearth 會把座標存在卡片上，因此這次查詢只發生一次。",
 			searchDisabled:
-				"Hearth 設定中已停用對外連線，地點搜尋不可用。您仍可在下方輸入座標。",
+				"ZeroHearth 設定中已停用對外連線，地點搜尋不可用。您仍可在下方輸入座標。",
 			searchPlaceholder: "台北、里斯本、京都…",
 			searchButton: "搜尋",
 			searchEmpty: "請輸入要搜尋的地名。",
@@ -3330,7 +3328,7 @@ export const zhTW: Translations = {
 			hostDesc: "Jira 網站的來源位址。傳送個人存取 Token 時必須使用 HTTPS。",
 			hostPlaceholder: "https://jira.example.com",
 			pat: "個人存取 Token",
-			patDesc: "此卡片使用的 Bearer PAT。儲存在 Hearth 的外掛資料中。",
+			patDesc: "此卡片使用的 Bearer PAT。儲存在 ZeroHearth 的外掛資料中。",
 			apiBase: "API 基礎路徑",
 			apiBaseDesc: "Jira REST 的相對路徑。完整網址會被拒絕。",
 			apiBasePlaceholder: "/rest/api/latest",
@@ -3342,7 +3340,7 @@ export const zhTW: Translations = {
 			noFavoriteFilters: "Jira 未回傳任何我的最愛篩選器。",
 			loadFailed: "無法載入 Jira 篩選器。請檢查主機、API 路徑和 Token。",
 			externalCallsDisabled:
-				"Hearth 設定中已停用對外連線，無法載入我的最愛篩選器。",
+				"ZeroHearth 設定中已停用對外連線，無法載入我的最愛篩選器。",
 			controls: "篩選控制項",
 			maxResults: "最大結果數",
 			maxResultsDesc: "最多顯示多少筆篩選後的工作項目，上限 200。",
@@ -3371,7 +3369,7 @@ export const zhTW: Translations = {
 				"當卡片只顯示單個檔案時很實用。",
 			perfLabel: "效能",
 			perfNote:
-				"這是 Hearth 中負擔最大的卡片。它在儀表板內即時執行另一個外掛的完整檢視，" +
+				"這是 ZeroHearth 中負擔最大的卡片。它在儀表板內即時執行另一個外掛的完整檢視，" +
 				"因此只要儀表板處於開啟狀態，該外掛自己的計時器、監聽器和轉譯就會一直執行——" +
 				"每多一張這樣的卡片就再多一份負擔。最多使用一兩張，" +
 				"並預期在配備一般的硬體上儀表板會變慢。",
@@ -3625,13 +3623,13 @@ export const zhTW: Translations = {
 			vaultPetInstall: "安裝 Vault Pet 外掛即可在此養一隻寵物",
 			vaultPetNoHouse: "Vault Pet 的小屋不可用——請啟用或更新該外掛",
 			operonEnable: "請啟用 Operon 外掛以顯示其任務",
-			operonDisabled: "Operon 整合已關閉——請在 設定 → Hearth → 整合 中開啟",
+			operonDisabled: "Operon 整合已關閉——請在 設定 → ZeroHearth → 整合 中開啟",
 			operonUnsupported:
 				"Operon 的開發者 API 僅支援桌面版，且需要 Obsidian 1.12.2 或更新版本",
 			operonPending:
-				"請在 設定 → Operon → Core → General → Developer API Integrations 中核准 Hearth",
+				"請在 設定 → Operon → Core → General → Developer API Integrations 中核准 ZeroHearth",
 			operonSuspended:
-				"Operon 暫停了 Hearth 的存取權限——請在 Operon 的 Developer API Integrations 中查看",
+				"Operon 暫停了 ZeroHearth 的存取權限——請在 Operon 的 Developer API Integrations 中查看",
 			operonRevoked:
 				"Operon 存取權限已被撤銷——請在 Operon 的 Developer API Integrations 中重新授予",
 			operonBooting: "Operon 仍在啟動中",
@@ -3687,7 +3685,7 @@ export const zhTW: Translations = {
 			addTaskDue: "到期日",
 			confirmTitle: "Operon 需要確認",
 			/** Operon assessed the change and asked for consent; its own summary
-			 * of what would happen is shown rather than Hearth's guess at it. */
+			 * of what would happen is shown rather than ZeroHearth's guess at it. */
 			confirmMessage: (risk: string, effects: string) =>
 				effects
 					? `Operon 將此變更評定為 ${risk}：${effects}`
@@ -3767,7 +3765,7 @@ export const zhTW: Translations = {
 			markAllRead: "全部標為已讀",
 			markRead: "標為已讀",
 			markUnread: "標為未讀",
-			readHere: "在 Hearth 中閱讀",
+			readHere: "在 ZeroHearth 中閱讀",
 			openTab: "在新分頁中閱讀",
 			openBrowser: "在瀏覽器中開啟",
 			saveNote: "儲存為筆記",
@@ -4497,7 +4495,7 @@ export const zhTW: Translations = {
 		journal: "來自 Journals 外掛的某個日誌的目前筆記",
 		web: "iframe 中的網頁，依計時器重新整理",
 		bookmarks: "您的 Obsidian 書籤，一鍵可達",
-		favorites: "您在 Hearth 中加上星號的筆記",
+		favorites: "您在 ZeroHearth 中加上星號的筆記",
 		recent: "您最近開啟的檔案",
 		folder: "資料夾下一層的內容，並可繼續展開瀏覽",
 		links: "連結、筆記、命令與資料夾的啟動台",
@@ -4553,7 +4551,7 @@ export const zhTW: Translations = {
 			railLabel: "申請一種卡片",
 			heading: "申請一種卡片",
 			intro:
-				"缺了什麼？請描述您希望 Hearth 擁有的卡片——它應該顯示什麼，" +
+				"缺了什麼？請描述您希望 ZeroHearth 擁有的卡片——它應該顯示什麼，" +
 				"資料又從哪裡來。",
 			footPrompt: "沒找到您想要的？",
 			footLink: "申請一種卡片",
@@ -4565,7 +4563,7 @@ export const zhTW: Translations = {
 			emailDesc: "如果您不想用 GitHub，可以直接寄給維護者。會開啟您的郵件應用程式。",
 			emailAction: "開啟電子郵件",
 			prefilledNote:
-				"兩種方式都會預先填入幾個提示問題以及您的 Hearth 和 Obsidian 版本——送出前可任意修改。",
+				"兩種方式都會預先填入幾個提示問題以及您的 ZeroHearth 和 Obsidian 版本——送出前可任意修改。",
 		},
 	},
 
@@ -4623,12 +4621,12 @@ export const zhTW: Translations = {
 			snapshotLeak:
 				"如果圖裡能讀到你的內容，請不要發布這個儀表板：別人一旦安裝，這張圖就再也收不回來了。也請告訴我們——這是塗抹功能的缺陷，最好在它落到別人身上之前修好。",
 			snapshotLeakReport: "前往 GitHub 回報",
-			snapshotFailed: "Hearth 無法擷取儀表板圖片。",
+			snapshotFailed: "ZeroHearth 無法擷取儀表板圖片。",
 			snapshotRequired: "圖庫項目需要一張儀表板截圖。請先截圖——發布前你可以先檢查它。",
 			snapshotUnavailable:
 				"發布需要一張儀表板截圖，而目前版本無法截圖——截圖需要桌面版應用程式。你仍然可以把儀表板儲存為檔案，再從桌面版的 Obsidian 儲存庫發布。",
 			snapshotNotActive:
-				"發布需要一張儀表板截圖，而 Hearth 只能拍攝目前開啟的儀表板。請先切換到這個儀表板，再發布它。",
+				"發布需要一張儀表板截圖，而 ZeroHearth 只能拍攝目前開啟的儀表板。請先切換到這個儀表板，再發布它。",
 			theme: "建議搭配我的主題",
 			themeDesc: (name: string) =>
 				`標明這個儀表板適合在 ${name}（你正在使用的主題）下檢視。這只是給安裝者的提示——不會在對方那邊安裝或變更任何東西。`,
@@ -4662,7 +4660,7 @@ export const zhTW: Translations = {
 			identityReplaceConfirm: "取代",
 			identityRestoreLabel: "復原金鑰",
 			identityRestored: (name: string) => `現在你的發布身分是 ${name}。`,
-			identityRestoreFailed: "這不是一把 Hearth 復原金鑰。",
+			identityRestoreFailed: "這不是一把 ZeroHearth 復原金鑰。",
 
 			// ---- What travels ----
 			contents: "包含哪些內容",
@@ -4725,7 +4723,7 @@ export const zhTW: Translations = {
 			signatureInvalid:
 				"該檔案聲明了作者，但簽章驗證不通過——可能是簽章之後被修改過，" +
 				"也可能是有人把別人的代號放在了上面。因此它以「無作者」顯示。匯入的其他部分不受影響。",
-			madeWith: (version: string) => `Hearth ${version}`,
+			madeWith: (version: string) => `ZeroHearth ${version}`,
 			cardCount: (n: number) => `${n} 種卡片`,
 			assetCount: (n: number) => `隨附 ${n} 張圖片`,
 			pathCount: (n: number) => `指向 ${n} 個 Obsidian 儲存庫內路徑`,
@@ -4736,7 +4734,7 @@ export const zhTW: Translations = {
 			modeAddBoards: "把它的儀表板新增到我的 Obsidian 儲存庫",
 			modeReplaceBoard: (name: string) => `直接更新「${name}」`,
 			modeReplaceAll: "取代我的全部設定",
-			replaceAllWarning: "這會用檔案中的內容取代你的儀表板和每一項 Hearth 設定，且無法復原。",
+			replaceAllWarning: "這會用檔案中的內容取代你的儀表板和每一項 ZeroHearth 設定，且無法復原。",
 			heads: "需要留意",
 			missingPlugins: (plugins: string) =>
 				`此處未安裝或未啟用：${plugins}。在啟用之前，這些卡片會是空的。`,
@@ -4754,7 +4752,7 @@ export const zhTW: Translations = {
 			warnMissingPlugins: (n: number) => `它需要的 ${n} 個外掛未啟用。`,
 			warnTaskFields:
 				"它的任務卡片使用了自訂欄位——請在「設定 → 整合」中開啟任務欄位自訂才能看到。",
-			warnUnknownCards: "部分卡片需要較新版本的 Hearth，已被略過。",
+			warnUnknownCards: "部分卡片需要較新版本的 ZeroHearth，已被略過。",
 			warnAssets: "檔案中缺少它的部分圖片。",
 		},
 	},
@@ -4804,9 +4802,9 @@ export const zhTW: Translations = {
 			pluginBoard: "承載外掛檢視",
 			noPicture: "沒有圖片",
 			needsIdentity:
-				"瀏覽和安裝無需代號，但投票和發布需要。Hearth 會用一把永不離開本 Obsidian 儲存庫的金鑰為你產生一個匿名代號。",
+				"瀏覽和安裝無需代號，但投票和發布需要。ZeroHearth 會用一把永不離開本 Obsidian 儲存庫的金鑰為你產生一個匿名代號。",
 			needsIdentityVote:
-				"投票需要一個代號。Hearth 會用一把永不離開本 Obsidian 儲存庫的金鑰為你產生匿名代號——不需要帳號，也不涉及你的任何身分資訊。現在就產生嗎？",
+				"投票需要一個代號。ZeroHearth 會用一把永不離開本 Obsidian 儲存庫的金鑰為你產生匿名代號——不需要帳號，也不涉及你的任何身分資訊。現在就產生嗎？",
 		},
 		detail: {
 			install: "安裝",
@@ -4820,13 +4818,13 @@ export const zhTW: Translations = {
 			updated: (when: string) => `更新於 ${when}`,
 			version: (v: string) => `作者版本 ${v}`,
 			theme: (name: string) => `建議搭配 ${name} 主題`,
-			madeWith: (v: string) => `使用 Hearth ${v} 製作`,
+			madeWith: (v: string) => `使用 ZeroHearth ${v} 製作`,
 			contents: "這個儀表板上有什麼",
 			requires: "它需要什麼",
 			requiresPlugins: "外掛",
 			requiresViews: "承載的檢視",
 			requiresSettings: "設定",
-			nothingRequired: "除 Hearth 本身外無需其他。",
+			nothingRequired: "除 ZeroHearth 本身外無需其他。",
 			size: (kb: number) => `${kb} KB`,
 			remote: (n: number) => `這個儀表板上有 ${n} 處內容來自網際網路。`,
 			noRemote: "這個儀表板不會從網際網路載入任何內容。",
@@ -4854,7 +4852,7 @@ export const zhTW: Translations = {
 		},
 		publish: {
 			title: "發布到圖庫",
-			intro: "把這個儀表板放進圖庫，任何使用這個 Hearth 圖庫的人都能找到並安裝它。",
+			intro: "把這個儀表板放進圖庫，任何使用這個 ZeroHearth 圖庫的人都能找到並安裝它。",
 			category: "分類",
 			categoryDesc: "這個儀表板是做什麼用的。別人靠它找到你。",
 			button: "發布",
@@ -4874,7 +4872,7 @@ export const zhTW: Translations = {
 			updateMissing:
 				"這個 Obsidian 儲存庫裡沒有當初用來發布它的儀表板——可能已被刪除，或者它在另一個 Obsidian 儲存庫裡。從這裡發布只會新增一個項目，所以沒有可更新的對象。",
 			updateUnknown:
-				"Hearth 還不知道這個項目對應你的哪個儀表板。點擊「更新」，它會讀取項目來確認。",
+				"ZeroHearth 還不知道這個項目對應你的哪個儀表板。點擊「更新」，它會讀取項目來確認。",
 			unpublish: "從圖庫移除",
 			unpublishConfirm: (name: string) =>
 				`要把「${name}」從圖庫移除嗎？已經安裝的人仍然保留副本，但新的人再也找不到它。`,
@@ -4884,9 +4882,9 @@ export const zhTW: Translations = {
 			heading: "儀表板圖庫",
 			host: "圖庫位址",
 			hostDesc:
-				"Hearth 瀏覽與發布儀表板的圖庫。開啟圖庫之前不會擷取任何內容，發布之前也不會傳送任何內容。清空此項即可徹底關閉圖庫，並且會一直保持關閉。只接受 https（自行架設的圖庫也可用 localhost 上的 http）。",
+				"ZeroHearth 瀏覽與發布儀表板的圖庫。開啟圖庫之前不會擷取任何內容，發布之前也不會傳送任何內容。清空此項即可徹底關閉圖庫，並且會一直保持關閉。只接受 https（自行架設的圖庫也可用 localhost 上的 http）。",
 			hostPlaceholder: "https://gallery.example.com",
-			hostInvalid: "這不是 Hearth 會連線的位址。請使用 https，或 localhost 上的 http。",
+			hostInvalid: "這不是 ZeroHearth 會連線的位址。請使用 https，或 localhost 上的 http。",
 			hostCleared: "已關閉圖庫。",
 			hostSet: (host: string) => `圖庫已設為 ${host}。`,
 			browse: "瀏覽圖庫",
@@ -4894,11 +4892,11 @@ export const zhTW: Translations = {
 			browseButton: "開啟圖庫",
 		},
 		errors: {
-			noHost: "尚未設定圖庫。請在 Hearth 設定的「儀表板圖庫」中填寫圖庫位址。",
+			noHost: "尚未設定圖庫。請在 ZeroHearth 設定的「儀表板圖庫」中填寫圖庫位址。",
 			externalCallsOff:
 				"圖庫是網際網路上的伺服器，而此 Obsidian 儲存庫啟用了「停用對外連線」。要瀏覽或發布，請先關閉該設定。",
 			offline: "無法連線到圖庫。它可能已下線，或此裝置目前離線。",
-			badResponse: "該位址有回應，但不像是一個 Hearth 圖庫。",
+			badResponse: "該位址有回應，但不像是一個 ZeroHearth 圖庫。",
 			unauthorized: "圖庫沒有接受這個 Obsidian 儲存庫的身分。",
 			forbidden: "圖庫不允許這個 Obsidian 儲存庫的身分執行該操作。",
 			rateLimited: "圖庫請求你放慢速度。請幾分鐘後再試。",
@@ -4906,7 +4904,7 @@ export const zhTW: Translations = {
 			rejected: (why: string) => `圖庫拒絕了它：${why}`,
 			notFound: "圖庫裡沒有這個內容。",
 			server: "圖庫在處理該請求時發生錯誤。",
-			unsigned: "Hearth 無法為檔案簽章，因此沒有發布——未簽章的儀表板無法證明作者是誰。",
+			unsigned: "ZeroHearth 無法為檔案簽章，因此沒有發布——未簽章的儀表板無法證明作者是誰。",
 		},
 	},
 
@@ -4916,9 +4914,9 @@ export const zhTW: Translations = {
 		notAnObject: "版面配置必須是一個 JSON 物件。",
 		noValidDashboards: "版面配置中沒有有效的儀表板。",
 		noValidCards: "版面配置中沒有有效的卡片。",
-		notAHearthLayout: '這不是 Hearth 版面配置——未找到 "dashboards" 或 "cards" 陣列。',
-		notHearthSettings:
-			'這不是 Hearth 設定備份——未找到 "hearthSettings" 標記或版面配置。',
+		notAZeroHearthLayout: '這不是 ZeroHearth 版面配置——未找到 "dashboards" 或 "cards" 陣列。',
+		notZeroHearthSettings:
+			'這不是 ZeroHearth 設定備份——未找到 "hearthSettings" 標記或版面配置。',
 	},
 
 	// ---- Cards with views（#385，src/cardviews.ts）---------------------------------
@@ -5069,12 +5067,12 @@ export const zhTW: Translations = {
 		schemes: {
 			theme: "Obsidian 主題",
 			htop: "Htop",
-			hearth: "Hearth",
+			zerohearth: "ZeroHearth",
 			amber: "琥珀",
 			paper: "紙張",
 		},
 		quitTitle: "離開終端機模式？",
-		quitMessage: "Hearth 將回到圖形設計。可在 設定 → Hearth → 外觀 中再次開啟終端機模式。",
+		quitMessage: "ZeroHearth 將回到圖形設計。可在 設定 → ZeroHearth → 外觀 中再次開啟終端機模式。",
 		quitConfirm: "離開終端機模式",
 		fn: {
 			help: "說明",
@@ -5172,7 +5170,7 @@ export const zhTW: Translations = {
 		settings: {
 			name: "終端機",
 			experimental: "實驗性",
-			desc: "把整個 Hearth 畫成文字：字元網格、線框卡片、一切皆有按鍵，就像終端機工具一樣。任何機器都跑得動。",
+			desc: "把整個 ZeroHearth 畫成文字：字元網格、線框卡片、一切皆有按鍵，就像終端機工具一樣。任何機器都跑得動。",
 			heading: "終端機模式",
 			headingDesc: "文字介面的外觀。開啟時每個儀表板都以它繪製。",
 			scheme: "配色",

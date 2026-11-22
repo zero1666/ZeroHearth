@@ -49,19 +49,19 @@ describe("the World Tension card", () => {
 					);
 					paintTensionStyle(wrap, snapshot(score), r);
 					if (style === "artistic") {
-						const scene = wrap.querySelector(".hearth-tension-scene");
+						const scene = wrap.querySelector(".zerohearth-tension-scene");
 						expect(scene?.classList.contains(`is-${band}`), band).toBe(true);
 						expect(scene?.classList.contains("is-expressive")).toBe(expressive);
-						expect(wrap.querySelector("svg.hearth-tension-art .ts-sky")).not.toBeNull();
-						expect(wrap.querySelector(".hearth-tension-art-score")?.textContent).toContain(String(score));
+						expect(wrap.querySelector("svg.zerohearth-tension-art .ts-sky")).not.toBeNull();
+						expect(wrap.querySelector(".zerohearth-tension-art-score")?.textContent).toContain(String(score));
 					} else {
-						expect(wrap.querySelector(".hearth-tension-score")?.textContent).toContain(String(score));
-						expect(wrap.querySelector(".hearth-tension-scale-marker")).not.toBeNull();
-						expect(!!wrap.querySelector(".hearth-tension-cookie")).toBe(expressive);
+						expect(wrap.querySelector(".zerohearth-tension-score")?.textContent).toContain(String(score));
+						expect(wrap.querySelector(".zerohearth-tension-scale-marker")).not.toBeNull();
+						expect(!!wrap.querySelector(".zerohearth-tension-cookie")).toBe(expressive);
 					}
-					expect(wrap.querySelector(".hearth-tension-summary-text")?.textContent).toBe("Tension is up.");
-					expect(wrap.querySelector(".hearth-tension-change")?.textContent).toBe("▲ 1");
-					expect(wrap.querySelector(".hearth-tension-history path")).not.toBeNull();
+					expect(wrap.querySelector(".zerohearth-tension-summary-text")?.textContent).toBe("Tension is up.");
+					expect(wrap.querySelector(".zerohearth-tension-change")?.textContent).toBe("▲ 1");
+					expect(wrap.querySelector(".zerohearth-tension-history path")).not.toBeNull();
 					wrap.remove();
 				}
 			}
@@ -71,10 +71,10 @@ describe("the World Tension card", () => {
 	it("leaves out what the card doesn't show", () => {
 		const wrap = document.body.createDiv();
 		paintTensionStyle(wrap, snapshot(40), resolveTension({ showBand: false, showScale: false }));
-		expect(wrap.querySelector(".hearth-tension-band")).toBeNull();
-		expect(wrap.querySelector(".hearth-tension-scale")).toBeNull();
-		expect(wrap.querySelector(".hearth-tension-summary")).toBeNull();
-		expect(wrap.querySelector(".hearth-tension-history")).toBeNull();
+		expect(wrap.querySelector(".zerohearth-tension-band")).toBeNull();
+		expect(wrap.querySelector(".zerohearth-tension-scale")).toBeNull();
+		expect(wrap.querySelector(".zerohearth-tension-summary")).toBeNull();
+		expect(wrap.querySelector(".zerohearth-tension-history")).toBeNull();
 		wrap.remove();
 	});
 });

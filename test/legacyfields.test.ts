@@ -3,7 +3,7 @@ import { applySettings, sanitizeCard } from "../src/layout";
 import { DEFAULT_SETTINGS, HomeSettings, migrateSettings } from "../src/types";
 
 /**
- * The two fields Hearth used to persist and no longer declares:
+ * The two fields ZeroHearth used to persist and no longer declares:
  * `MobileActionButton.commandId` (pre-1.9.0) and `ClockConfig.use24Hour`
  * (pre-`hourFormat`).
  *

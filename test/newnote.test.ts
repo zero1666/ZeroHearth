@@ -22,7 +22,7 @@ function withLabel(label: string, board?: string): HomeSettings {
 /**
  * The configurable "New note" button (#227). The calls *into* Obsidian and
  * Templater are API and stay untested (per the no-mocks rule); what's covered
- * here is everything Hearth decides on its own — what the button is called, and
+ * here is everything ZeroHearth decides on its own — what the button is called, and
  * what the note it makes is called.
  */
 

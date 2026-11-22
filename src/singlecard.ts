@@ -15,7 +15,7 @@ import { openCardSettings, persistAndRender } from "./dashboard";
 import { openDashboardSettings } from "./dashboards";
 
 /**
- * A single-card board: a dashboard whose whole board is one of its own Hearth
+ * A single-card board: a dashboard whose whole board is one of its own ZeroHearth
  * cards, drawn at full size (Dashboard.mode === "single").
  *
  * The card itself is rendered by the ordinary board renderer — the same body,
@@ -33,7 +33,7 @@ import { openDashboardSettings } from "./dashboards";
  */
 export function addSingleBoardCard(view: BoardHost, dash: Dashboard, onAdded?: () => void): void {
 	openCardPicker(view.app, {
-		hearthVersion: view.plugin.manifest.version,
+		zerohearthVersion: view.plugin.manifest.version,
 		onChoose: (template) => {
 			const s = view.plugin.settings;
 			const card = cardFromTemplate(template);
@@ -59,7 +59,7 @@ export function addSingleBoardCard(view: BoardHost, dash: Dashboard, onAdded?: (
  * and the dashboard settings, where the board can be pointed at another card.
  */
 export function renderSingleCardActions(view: BoardHost, switcherZone: HTMLElement): void {
-	const zone = switcherZone.createDiv("hearth-arrange-zone hearth-plugin-actions");
+	const zone = switcherZone.createDiv("zerohearth-arrange-zone zerohearth-plugin-actions");
 	zone.toggleClass(
 		"is-auto-hide",
 		effectiveArrangeButtonVisibility(view.plugin.settings) === "hover",
@@ -67,13 +67,13 @@ export function renderSingleCardActions(view: BoardHost, switcherZone: HTMLEleme
 	const dash = activeDashboard(view.plugin.settings);
 	const card = singleBoardCard(dash);
 	if (card) {
-		const edit = zone.createEl("button", { cls: "hearth-tool-btn is-icon" });
-		setIcon(edit.createSpan("hearth-tool-icon"), "pencil");
+		const edit = zone.createEl("button", { cls: "zerohearth-tool-btn is-icon" });
+		setIcon(edit.createSpan("zerohearth-tool-icon"), "pencil");
 		edit.setAttribute("aria-label", t().dashboards.modal.singleCardEdit);
 		edit.addEventListener("click", () => openCardSettings(view, card));
 	}
-	const btn = zone.createEl("button", { cls: "hearth-tool-btn is-icon" });
-	setIcon(btn.createSpan("hearth-tool-icon"), "settings-2");
+	const btn = zone.createEl("button", { cls: "zerohearth-tool-btn is-icon" });
+	setIcon(btn.createSpan("zerohearth-tool-icon"), "settings-2");
 	btn.setAttribute("aria-label", t().dashboard.dashboardSettingsAria);
 	btn.addEventListener("click", () => openDashboardSettings(view, dash));
 }
@@ -81,7 +81,7 @@ export function renderSingleCardActions(view: BoardHost, switcherZone: HTMLEleme
 /** What a single-card board shows before it has a card: a spoken empty state
  * and the one button that fixes it. */
 export function renderSingleCardEmpty(view: BoardHost, container: HTMLElement): void {
-	const wrap = container.createDiv("hearth-single-card-empty");
+	const wrap = container.createDiv("zerohearth-single-card-empty");
 	emptyState(wrap, "square", t().cards.empty.boardPickCard);
 	const add = wrap.createEl("button", { cls: "mod-cta", text: t().dashboard.addCard });
 	add.addEventListener("click", () =>

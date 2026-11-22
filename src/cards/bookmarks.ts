@@ -71,10 +71,10 @@ export function renderBookmarks(
 		return;
 	}
 
-	renderBookmarkItems(view, body.createDiv("hearth-list"), tree, folderBookmarkTarget(card));
+	renderBookmarkItems(view, body.createDiv("zerohearth-list"), tree, folderBookmarkTarget(card));
 }
 
-/** Where a bookmarked folder opens (#448): Hearth's browser, or Obsidian's own
+/** Where a bookmarked folder opens (#448): ZeroHearth's browser, or Obsidian's own
  * file explorer in the sidebar. */
 export type FolderBookmarkTarget = FolderDestination;
 
@@ -111,13 +111,13 @@ function renderBookmarkGroup(
 	folders: FolderBookmarkTarget = "browser",
 ): void {
 	const label = group.title || t().cards.bookmarks.untitled;
-	const wrap = container.createDiv("hearth-bookmark-group");
-	const header = wrap.createDiv("hearth-list-item hearth-bookmark-group-header");
-	setIcon(header.createDiv("hearth-list-icon hearth-bookmark-chevron"), "chevron-right");
-	setIcon(header.createDiv("hearth-list-icon"), "folder");
-	header.createDiv({ cls: "hearth-list-label", text: label });
+	const wrap = container.createDiv("zerohearth-bookmark-group");
+	const header = wrap.createDiv("zerohearth-list-item zerohearth-bookmark-group-header");
+	setIcon(header.createDiv("zerohearth-list-icon zerohearth-bookmark-chevron"), "chevron-right");
+	setIcon(header.createDiv("zerohearth-list-icon"), "folder");
+	header.createDiv({ cls: "zerohearth-list-label", text: label });
 
-	const children = wrap.createDiv("hearth-bookmark-group-children");
+	const children = wrap.createDiv("zerohearth-bookmark-group-children");
 	renderBookmarkItems(view, children, group.items ?? [], folders);
 
 	const toggle = () => wrap.classList.toggle("is-collapsed");
@@ -149,8 +149,8 @@ function renderBookmarkLeaf(
 		item.url ||
 		item.query ||
 		t().cards.bookmarks.untitled;
-	const row = container.createDiv("hearth-list-item");
-	const iconEl = row.createDiv("hearth-list-icon");
+	const row = container.createDiv("zerohearth-list-item");
+	const iconEl = row.createDiv("zerohearth-list-icon");
 	// A bookmark that points at a vault file or folder gets that target's icon —
 	// its Iconize/Iconic icon when one is set, otherwise its file-type icon — so
 	// the same note looks the same here as in Recent or Favorites (#132). Every
@@ -174,7 +174,7 @@ function renderBookmarkLeaf(
 			item.type === "graph" ? "git-fork" : "file-text";
 		setIcon(iconEl, icon);
 	}
-	row.createDiv({ cls: "hearth-list-label", text: label });
+	row.createDiv({ cls: "zerohearth-list-label", text: label });
 	const open = () => openBookmark(view, item, inExpressiveCard(row), folders);
 	row.addEventListener("click", open);
 	makeClickable(row, open, label);
@@ -190,7 +190,7 @@ function renderFavicon(iconEl: HTMLElement, url: string): void {
 		setIcon(iconEl, "globe");
 		return;
 	}
-	const img = iconEl.createEl("img", { cls: "hearth-favicon" });
+	const img = iconEl.createEl("img", { cls: "zerohearth-favicon" });
 	img.setAttribute("loading", "lazy");
 	img.setAttribute("referrerpolicy", "no-referrer");
 	img.addEventListener("error", () => {
@@ -232,7 +232,7 @@ export function openBookmark(
 			void openGraph(view, target.options);
 			return;
 		case "folder":
-			// Hearth's own folder browser (#329) rather than core's reveal in the
+			// ZeroHearth's own folder browser (#329) rather than core's reveal in the
 			// sidebar: the plugin already has its own answer to "show me this
 			// folder", and it is a better one on a board. A card can ask for the
 			// sidebar instead (#448), and lands back in the browser when the core
@@ -265,7 +265,7 @@ function openNote(view: CardHost, path: string, subpath?: string): void {
 	void openFile(view, file, "card", null, subpath ? { eState: { subpath } } : undefined);
 }
 
-/** Hand a folder to Hearth's folder browser. There is no card config to
+/** Hand a folder to ZeroHearth's folder browser. There is no card config to
  * read here — a bookmark is a path and nothing else — so the browser opens on
  * its own defaults: the explorer's order, everything shown, no counts.
  *
@@ -276,7 +276,7 @@ export function openBookmarkedFolder(view: CardHost, path: string, expressive: b
 }
 
 /** Open a folder wherever the card's *where a folder opens* setting says
- * (#448): Hearth's browser, or Obsidian's file explorer in the sidebar.
+ * (#448): ZeroHearth's browser, or Obsidian's file explorer in the sidebar.
  *
  * A reveal that can't be made — the core plugin off, its internal changed
  * shape, the folder gone — falls back to the browser rather than leaving a

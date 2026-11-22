@@ -1,8 +1,8 @@
 /**
  * @vitest-environment jsdom
  *
- * The Tasks card reading from the obsidian-tasks plugin. Hearth draws the
- * plugin's tasks itself — normal rows with Hearth chips, filter/sort/cap over
+ * The Tasks card reading from the obsidian-tasks plugin. ZeroHearth draws the
+ * plugin's tasks itself — normal rows with ZeroHearth chips, filter/sort/cap over
  * what the plugin says exists — while ticking/editing/creating go through the
  * plugin. When the plugin is missing the card says so and offers the way back
  * to checkboxes.
@@ -91,18 +91,18 @@ describe("tasks-plugin source", () => {
 		await flush();
 
 		expect(body.textContent).toContain(locales.en.cards.empty.tasksPluginEnable);
-		expect(body.querySelector(".hearth-task-add")).toBeNull();
-		expect(body.querySelector(".hearth-tasks-plugin")).toBeNull();
+		expect(body.querySelector(".zerohearth-task-add")).toBeNull();
+		expect(body.querySelector(".zerohearth-tasks-plugin")).toBeNull();
 
 		// The switch writes the checkbox source back and draws the list.
-		(body.querySelector(".hearth-tasks-plugin-missing-switch") as HTMLButtonElement).click();
+		(body.querySelector(".zerohearth-tasks-plugin-missing-switch") as HTMLButtonElement).click();
 		await flush();
 		expect((card as { tasks: { source: string } }).tasks.source).toBe("checkbox");
-		expect(body.querySelector(".hearth-tasks-filter")).not.toBeNull();
+		expect(body.querySelector(".zerohearth-tasks-filter")).not.toBeNull();
 		expect(body.textContent).toContain(locales.en.cards.empty.tasksEmpty);
 	});
 
-	it("draws the plugin's tasks as Hearth rows, not a foreign widget", async () => {
+	it("draws the plugin's tasks as ZeroHearth rows, not a foreign widget", async () => {
 		const view = viewWith({
 			plugins: PLUGIN,
 			enabled: ["obsidian-tasks-plugin"],
@@ -112,14 +112,14 @@ describe("tasks-plugin source", () => {
 		tasks.renderTasks(view, cardWith("obsidian-tasks"), body);
 		await flush();
 
-		// Hearth rows with Hearth controls — filter, sort and the plugin's own
+		// ZeroHearth rows with ZeroHearth controls — filter, sort and the plugin's own
 		// create button — and no embedded foreign widget.
-		expect(body.querySelector(".hearth-tasks-plugin")).toBeNull();
-		expect(body.querySelectorAll(".hearth-task").length).toBeGreaterThan(0);
+		expect(body.querySelector(".zerohearth-tasks-plugin")).toBeNull();
+		expect(body.querySelectorAll(".zerohearth-task").length).toBeGreaterThan(0);
 		expect(body.textContent).toContain("buy milk");
-		expect(body.querySelector(".hearth-tasks-filter")).not.toBeNull();
-		expect(body.querySelector(".hearth-tasks-sort")).not.toBeNull();
-		expect(body.querySelectorAll(".hearth-task-add")).toHaveLength(1);
+		expect(body.querySelector(".zerohearth-tasks-filter")).not.toBeNull();
+		expect(body.querySelector(".zerohearth-tasks-sort")).not.toBeNull();
+		expect(body.querySelectorAll(".zerohearth-task-add")).toHaveLength(1);
 	});
 
 	it("filters, sorts and caps over what the plugin says exists", async () => {
@@ -142,7 +142,7 @@ describe("tasks-plugin source", () => {
 		const capped = document.body.createDiv();
 		tasks.renderTasks(view, cardWith("obsidian-tasks", { count: 1 }), capped);
 		await flush();
-		expect(capped.querySelectorAll(".hearth-task")).toHaveLength(1);
+		expect(capped.querySelectorAll(".zerohearth-task")).toHaveLength(1);
 	});
 
 	it("loads tasks for text views instead of a draw-here message", async () => {

@@ -16,14 +16,14 @@
  * - `published.ts`  which entry each board this vault published became.
  * - `redactionreport.ts` where an author goes when the picture leaked.
  *
- * Nothing about the gallery is required for Hearth to work, and nothing here
+ * Nothing about the gallery is required for ZeroHearth to work, and nothing here
  * runs unless a host is configured: no host means the buttons say so and stop,
  * rather than reaching out to somewhere by default. That is deliberate — a
  * vault should not talk to a server because a plugin shipped with one in a
  * constant.
  */
 
-import type HearthPlugin from "../main";
+import type ZeroHearthPlugin from "../main";
 import { GalleryClient, GalleryError, normalizeGalleryUrl } from "./client";
 
 export * from "./categories";
@@ -46,14 +46,14 @@ export * from "./snapshot";
  * them. Every entry point reads this, so turning the setting on removes the
  * buttons rather than leaving them to fail.
  */
-export function galleryConfigured(plugin: HearthPlugin): boolean {
+export function galleryConfigured(plugin: ZeroHearthPlugin): boolean {
 	if (plugin.settings.disableExternalCalls) return false;
 	return normalizeGalleryUrl(plugin.settings.galleryUrl) !== null;
 }
 
 /** Whether the gallery is off *because* external calls are, which is a
  * different sentence from "no host is set up". */
-export function galleryBlockedByExternalCalls(plugin: HearthPlugin): boolean {
+export function galleryBlockedByExternalCalls(plugin: ZeroHearthPlugin): boolean {
 	return (
 		plugin.settings.disableExternalCalls &&
 		normalizeGalleryUrl(plugin.settings.galleryUrl) !== null
@@ -69,7 +69,7 @@ export function galleryBlockedByExternalCalls(plugin: HearthPlugin): boolean {
  */
 let cached: { host: string; client: GalleryClient } | null = null;
 
-export function galleryClient(plugin: HearthPlugin): GalleryClient | null {
+export function galleryClient(plugin: ZeroHearthPlugin): GalleryClient | null {
 	// Not just "is a host set": a vault with external calls off has no client at
 	// all, so nothing downstream can reach the network by holding one.
 	const host = galleryConfigured(plugin) ? normalizeGalleryUrl(plugin.settings.galleryUrl) : null;

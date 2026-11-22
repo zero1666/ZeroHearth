@@ -11,13 +11,13 @@ import type { HomeSettings } from "./types";
  * their files with characters they want kept out of sight.
  *
  * Unlike Iconic and Iconize (`fileicons.ts`), this plugin publishes an API for
- * other plugins, so Hearth asks it rather than reading its stored state. The
+ * other plugins, so ZeroHearth asks it rather than reading its stored state. The
  * contract is the one its `front-matter-plugin-api-provider` package declares;
  * it is mirrored here as a few structural types instead of pulled in as a
  * dependency, because all the package does is reach `getDefer()` on the plugin
  * instance — which is all this module does too.
  *
- * Hearth asks for the title the plugin's *explorer* feature would show, and
+ * ZeroHearth asks for the title the plugin's *explorer* feature would show, and
  * only while that feature is on: the point is to match the sidebar, so a vault
  * where the explorer shows file names keeps showing file names here.
  *
@@ -37,7 +37,7 @@ interface FmtResolver {
 	resolve(path: string): string | null;
 }
 
-/** The plugin's public API, as far as Hearth uses it. */
+/** The plugin's public API, as far as ZeroHearth uses it. */
 interface FmtApi {
 	getResolverFactory(): { createResolver(feature: string): FmtResolver } | null;
 	getEnabledFeatures(): string[];

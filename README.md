@@ -1,15 +1,14 @@
-# Hearth — a home screen for Obsidian
+# ZeroHearth — a home screen for Obsidian
 
 **English** · [简体中文](README.zh-CN.md)
 
-[![Build](https://img.shields.io/github/actions/workflow/status/ondreu/Hearth/ci.yml?branch=main&label=build)](https://github.com/ondreu/Hearth/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/ondreu/Hearth?sort=semver)](https://github.com/ondreu/Hearth/releases/latest)
-[![Downloads](https://img.shields.io/badge/dynamic/json?logo=obsidian&color=%23483699&url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24.hearth.downloads&label=downloads)](https://obsidian.md/plugins?id=hearth)
-[![License](https://img.shields.io/github/license/ondreu/Hearth)](LICENSE)
+[![Build](https://img.shields.io/github/actions/workflow/status/zero1666/ZeroHearth/ci.yml?branch=main&label=build)](https://github.com/zero1666/ZeroHearth/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/zero1666/ZeroHearth?sort=semver)](https://github.com/zero1666/ZeroHearth/releases/latest)
+[![License](https://img.shields.io/github/license/zero1666/ZeroHearth)](LICENSE)
 
-![Hearth — customizable Obsidian dashboard, search and launcher](assets/Header.png)
+![ZeroHearth — customizable Obsidian dashboard, search and launcher](assets/Header.png)
 
-**Hearth turns your Obsidian vault into a welcoming front page.** A fast fuzzy
+**ZeroHearth turns your Obsidian vault into a welcoming front page.** A fast fuzzy
 search bar, quick file-type filters, and a freely arrangeable grid of live
 widgets — notes, tasks, kanban boards, calendars, web pages, stats, clocks and
 launchers — on desktop and mobile.
@@ -28,6 +27,8 @@ Think of it as a new-tab dashboard, start page and command launcher in one.
 
 ## Screenshots
 
+These upstream Hearth screenshots illustrate the inherited layouts.
+
 | | |
 | --- | --- |
 | ![Full dashboard](assets/Full_Dash.png) | ![Search-only launcher](assets/Just_search.png) |
@@ -43,7 +44,7 @@ of your accent color.
 | ![Expressive design, green accent](assets/M3_Green.png) | ![Expressive design, purple accent](assets/M3_Purple.png) |
 | ![Expressive design, red accent](assets/M3_Red.png) | ![Expressive design, turquoise accent](assets/M3_Torq.png) |
 
-<img src="assets/phone.png" width="280" alt="Hearth on mobile" />
+<img src="assets/phone.png" width="280" alt="ZeroHearth on mobile" />
 
 ## Contents
 
@@ -51,21 +52,21 @@ of your accent color.
 [Search](#search) · [Cards](#cards) · [Integrations](#integrations) ·
 [Layout](#layout) · [Appearance](#appearance) · [Mobile](#mobile) ·
 [Settings & shortcuts](#settings--shortcuts) · [Privacy & network](#privacy--network) ·
-[Development](#development) ·
-[Contributing](#contributing)
+[Development](#development)
 
-> **Looking for more detail?** The [Hearth User Guide](docs/user-guide/) is a
+> **Looking for more detail?** The [ZeroHearth User Guide](docs/user-guide/) is a
 > full, chapter-by-chapter manual: every card, every setting, every integration,
 > plus troubleshooting and a glossary. This README is the tour; the guide is the
 > reference.
 
 ## Quick start
 
-1. Install **Hearth** from Obsidian's community plugin browser — or drop
-   `main.js`, `manifest.json` and `styles.css` into
-   `<vault>/.obsidian/plugins/hearth/` and enable it.
-2. Hearth opens on startup and replaces empty new tabs (both toggleable in
-   **Settings → Hearth**).
+1. Get `main.js`, `manifest.json` and `styles.css` from a [ZeroHearth release](https://github.com/zero1666/ZeroHearth/releases)
+   or [build from source](docs/user-guide/02-getting-started.md#build-from-source).
+   Put all three files in `<vault>/.obsidian/plugins/zerohearth/` and enable
+   **ZeroHearth** under **Settings → Community plugins**.
+2. ZeroHearth opens on startup and replaces empty new tabs (both toggleable in
+   **Settings → ZeroHearth**).
 3. Open it any time from the ribbon **home** icon or the **Open home
    dashboard** command.
 4. Hit **Arrange** (top-right) to add, move, resize and configure cards right
@@ -73,8 +74,8 @@ of your accent color.
 
 ## Setup wizard
 
-On a fresh install Hearth offers to build your first dashboard for you, in
-three steps: what the vault is for (with the plugins Hearth found), the look —
+On a fresh install ZeroHearth offers to build your first dashboard for you, in
+three steps: what the vault is for (with the plugins ZeroHearth found), the look —
 design, background and, for Classic, card style, each shown as a small
 painting — and a preview of the board. It lays out a board from the answers
 rather than dropping you on a generic starter grid: working cards in a main
@@ -84,19 +85,19 @@ empty cards — anything that needs a feed or a place asks for it in the wizard.
 It also **looks at what you already have**. Every plugin below that is installed
 and enabled is offered with the one thing accepting it will do:
 
-| Found | What Hearth does with it |
+| Found | What ZeroHearth does with it |
 | --- | --- |
 | **TaskNotes** | Adds a Tasks card on the TaskNotes source, using TaskNotes' *own* field names and completed statuses |
 | **Kanban** | Adds a Tasks card showing your board as draggable columns |
 | **Dataview** / **Datacore** | Adds a card, seeded with an editable query |
 | **Templater** | Adds a launchpad with a button per template you already have |
 | **Git** | Adds a Git card with status, commit and sync |
-| **Operon** | Adds an Operon tasks card (desktop only — Operon still asks you to approve Hearth) |
+| **Operon** | Adds an Operon tasks card (desktop only — Operon still asks you to approve ZeroHearth) |
 | **Bases** | Embeds a base from your vault |
 | **Daily notes** / **Bookmarks** | Adds the matching card |
 
 The TaskNotes case is the one worth calling out: its field names are
-user-remappable and its statuses user-defined, so Hearth reads them from the
+user-remappable and its statuses user-defined, so ZeroHearth reads them from the
 plugin and copies them onto the card it builds. A vault that renamed `due` to
 `deadline` gets a Tasks card that works on its first render.
 
@@ -108,17 +109,17 @@ the accent, the card surface, the spacing and the background all land as
 *per-board overrides* on that one dashboard, and the TaskNotes field mapping
 lands on the Tasks card itself — so your vault-wide settings, and every other
 board you have, come out of a setup run exactly as they went in. That is also
-why it no longer asks about things that can only be vault-wide (whether Hearth
+why it no longer asks about things that can only be vault-wide (whether ZeroHearth
 opens on startup, where notes open, which search engine to use, whose file
-icons to show): those live in **Settings → Hearth**, one toggle each, and apply
+icons to show): those live in **Settings → ZeroHearth**, one toggle each, and apply
 to everything by design.
 
 The last step previews the board — a scale drawing plus a list of every card and
 why it's there — before anything is written. Nothing is applied until you press
 **Build my dashboard**.
 
-You can run it again any time from **Settings → Hearth → About → Build a
-dashboard**, or the **Set up Hearth** command. Run that way it *always* adds a
+You can run it again any time from **Settings → ZeroHearth → About → Build a
+dashboard**, or the **Set up ZeroHearth** command. Run that way it *always* adds a
 new dashboard: every board you already have is left exactly as it is.
 
 ## Search
@@ -183,7 +184,7 @@ the views can stay behind the switcher or stack as separate cards.
 | **Embedded base** | A `.base` file, rendered by Obsidian's Bases | Bases (core) |
 | **Recent files** | The files you opened most recently, as a list or tiles | — |
 | **Folder** | What is in a folder, one level down, in the file explorer's own order — with a browser behind it: a breadcrumb, every subfolder opened one level, and any folder on the page steppable into | — |
-| **Favorites** | The notes you starred in Hearth, as a list or tiles | — |
+| **Favorites** | The notes you starred in ZeroHearth, as a list or tiles | — |
 | **Bookmarks** | Your Obsidian bookmarks, with site favicons | Bookmarks (core) |
 
 ### Planning
@@ -269,7 +270,7 @@ do from its own command.
 
 Git and Operon both work *through* the other plugin rather than around it: Git
 commits go through the Git plugin's own task queue, so your remote, credentials
-and commit-message template apply unchanged, and Hearth never parses Operon's
+and commit-message template apply unchanged, and ZeroHearth never parses Operon's
 notes. See [Operon](#operon) for its setup, which is the one that needs a step
 from you.
 
@@ -288,13 +289,13 @@ image or title icon given as a web address.
 
 ## Integrations
 
-Hearth picks these up on its own — nothing to connect, no keys to paste. The
+ZeroHearth picks these up on its own — nothing to connect, no keys to paste. The
 full list, with live status and where each one's settings live, is under
-**Settings → Hearth → Integrations**.
+**Settings → ZeroHearth → Integrations**.
 
 **Community plugins**
 
-| Plugin | What Hearth does with it | Configured in |
+| Plugin | What ZeroHearth does with it | Configured in |
 | --- | --- | --- |
 | [Omnisearch](https://github.com/scambier/obsidian-omnisearch) | Becomes the engine behind the search bar | Search tab |
 | [TaskNotes](https://obsidian.md/plugins?id=tasknotes) | Tasks cards read one-note-per-task vaults — status, due date and priority from frontmatter, under TaskNotes' own field names | Integrations tab |
@@ -305,7 +306,7 @@ full list, with live status and where each one's settings live, is under
 | [Journals](https://github.com/srg-kostyrko/obsidian-journal) | An alternative source for the Periodic note card — pick a journal by name, custom cadences included | The card |
 | [Git](https://github.com/Vinzent03/obsidian-git) | The Git card, acting through the plugin's own task queue | The card |
 | [Operon](https://github.com/hasanyilmaz/operon) | Four cards on Operon's Developer API — [details below](#operon) | Integrations tab |
-| [Iconic](https://obsidian.md/plugins?id=iconic) / [Iconize](https://obsidian.md/plugins?id=obsidian-icon-folder) | Your per-file icons show wherever Hearth lists a file | Integrations tab |
+| [Iconic](https://obsidian.md/plugins?id=iconic) / [Iconize](https://obsidian.md/plugins?id=obsidian-icon-folder) | Your per-file icons show wherever ZeroHearth lists a file | Integrations tab |
 | [Front Matter Title](https://obsidian.md/plugins?id=obsidian-front-matter-title-plugin) | Notes listed by the titles the file explorer shows — folder cards, and a fallback for Recent files and Favorites | Integrations tab |
 | [Excalidraw](https://github.com/zsviczian/obsidian-excalidraw-plugin) | Drawings render live in Embed cards; "New drawing" runs its command | The card |
 | [Kanban](https://github.com/obsidian-community/obsidian-kanban) | Tasks cards read and write its board notes in its own format | The card |
@@ -313,7 +314,7 @@ full list, with live status and where each one's settings live, is under
 
 **Obsidian core plugins**
 
-| Core plugin | What Hearth does with it |
+| Core plugin | What ZeroHearth does with it |
 | --- | --- |
 | **Daily notes** | Daily note, Mini calendar and Vault statistics resolve today's note from its folder, format and template |
 | **Bases** | Embed cards show a `.base` view |
@@ -350,23 +351,23 @@ scopes (*Happening today*, *Overdue*, *Recently touched*). Clicking a task
 opens its note on the exact line.
 
 **Reading is the default; changing is a choice.** Switch on *Allow changes*
-(**Settings → Hearth → Integrations → Operon**) and the board card lets you drag
+(**Settings → ZeroHearth → Integrations → Operon**) and the board card lets you drag
 a task into another status column — or pick one from the row's right-click menu,
 so it works without a mouse — and every card grows a **+** that creates a task
-where Operon's own settings say new tasks go. Hearth previews the change,
+where Operon's own settings say new tasks go. ZeroHearth previews the change,
 Operon rates it and applies it, and anything more than routine is confirmed with
 you first. A move carries the status the board was drawn from, so a drag onto a
 stale board is refused rather than quietly undoing someone else's change. Leave
-the switch off and Hearth can only read.
+the switch off and ZeroHearth can only read.
 
 Before you add one:
 
 | | |
 | --- | --- |
 | **Platform** | Desktop only, Obsidian 1.12.2 or newer |
-| **Approval** | Hearth's request appears in **Settings → Operon → Core → General → Developer API Integrations** — approve it there. Until then the cards say what they're waiting for |
+| **Approval** | ZeroHearth's request appears in **Settings → Operon → Core → General → Developer API Integrations** — approve it there. Until then the cards say what they're waiting for |
 | **Widening it** | Operon grants all-or-nothing, so turning *Allow changes* on needs a fresh approval |
-| **Status & kill switch** | **Settings → Hearth → Integrations** shows the connection, what was requested, and how to cut it |
+| **Status & kill switch** | **Settings → ZeroHearth → Integrations** shows the connection, what was requested, and how to cut it |
 
 ## Layout
 
@@ -410,7 +411,7 @@ Before you add one:
 - **Fit to page** — lock the board to one screen or let it scroll.
 - **Import / export** — share one dashboard as a file that looks the same in
   someone else's vault (wallpaper optionally carried inside it), signed with an
-  anonymous handle Hearth makes for you that nobody else can publish under, with
+  anonymous handle ZeroHearth makes for you that nobody else can publish under, with
   one switch to leave your note paths, calendar links and location out of it —
   or back up every board and setting as JSON.
 - **Dashboard gallery** — browse boards other people have published, by
@@ -426,12 +427,12 @@ Before you add one:
 ## Appearance
 
 - **Design: Classic or Material 3 Expressive** — Expressive redraws everything
-  Hearth draws in tonal steps of your accent color, in light and dark themes:
+  ZeroHearth draws in tonal steps of your accent color, in light and dark themes:
   opaque tonal cards with large rounded corners, grouped lists, pills and
   button groups, and the same look on the search row, dialogs, menus and
-  Hearth's settings. Obsidian's own interface is left to your theme. The choice
-  cascades vault → board → card (**Settings → Hearth → Appearance → Design**).
-- **Terminal mode** — the third design: all of Hearth as a text interface, the
+  ZeroHearth's settings. Obsidian's own interface is left to your theme. The choice
+  cascades vault → board → card (**Settings → ZeroHearth → Appearance → Design**).
+- **Terminal mode** — the third design: all of ZeroHearth as a text interface, the
   way `htop` looks. One character grid in a bundled monospaced font, cards as
   box-drawn frames that join their neighbours, tasks as tables, notes as
   highlighted Markdown you can tick and edit, calendars as `cal`, the weather
@@ -439,7 +440,7 @@ Before you add one:
   everything (Tab between cards, arrows inside, `m` the card menu, `z` zoom,
   F1–F10 for the board). Five colour schemes, one of them your theme's.
 - **Background** — solid color, vault image, URL, a background **drawn by
-  Hearth** (*Hearth default* — hills and a cabin, or Material's soft shapes in
+  ZeroHearth** (*ZeroHearth default* — hills and a cabin, or Material's soft shapes in
   Expressive — and *Harbour town*, both following your light or dark theme and
   never going online), or a **live weather sky**:
   the board's backdrop becomes the painted sky the weather card's artistic style
@@ -470,12 +471,12 @@ Before you add one:
   takes a **Lucide icon** (searched from a picker rather than typed from
   memory), an **emoji or a couple of characters**, the **vault path of an
   image**, or the **URL of an image on the web**. Each dashboard can override
-  it; leave it empty and the Hearth crystal stays as it was. Hearth's **tab and
+  it; leave it empty and the ZeroHearth crystal stays as it was. ZeroHearth's **tab and
   ribbon** button takes a Lucide icon of its own.
 
 ## Mobile
 
-Hearth's board is laid out freely — cards sit where you drop them, at a
+ZeroHearth's board is laid out freely — cards sit where you drop them, at a
 fraction of the board's width. Below **700px** by default that stops meaning
 anything, so the board **reflows into a single full-width column**, top to
 bottom, in the order the desktop board reads in. Your layout is never
@@ -487,7 +488,7 @@ narrow desktop pane gets the same treatment, and you can see the phone layout
 by dragging a pane narrow.
 
 - **Stacked column** — cards full width, one per row. Turn it off in
-  **Settings → Hearth → Mobile** to keep the free-form layout, or move the
+  **Settings → ZeroHearth → Mobile** to keep the free-form layout, or move the
   threshold with **Narrow below** (vault-wide, or per board in
   **Dashboard settings → Layout**).
 - **Per-card overrides** — in a card's settings (Layout → *On a narrow board*):
@@ -505,7 +506,7 @@ by dragging a pane narrow.
 - **Its own performance tier** — defaults to *Balanced* on mobile; your desktop
   tier is stored separately and untouched.
 - **Its own settings category** — everything above lives under
-  **Settings → Hearth → Mobile**.
+  **Settings → ZeroHearth → Mobile**.
 - **Mobile mode** — still there: an optional search-only launcher, if that is
   all you want on a phone.
 - **Action bar** — a row of buttons under the search field (New note, New
@@ -515,7 +516,7 @@ by dragging a pane narrow.
 
 ## Settings & shortcuts
 
-Everything lives under **Settings → Hearth**, grouped by a category ribbon:
+Everything lives under **Settings → ZeroHearth**, grouped by a category ribbon:
 **Appearance**, **Search**, **Dashboard**, **Behaviour** (startup, new tabs,
 where notes open, mobile, privacy), **Integrations**, **Backup** and **About**.
 Per-card settings are edited from the card itself in arrange mode.
@@ -524,9 +525,9 @@ Bindable under **Settings → Hotkeys**:
 
 - **Open home dashboard**
 - **Focus board search** — puts the cursor in the board's search field, opening
-  Hearth first if it isn't up, so typing starts on the keyboard alone
+  ZeroHearth first if it isn't up, so typing starts on the keyboard alone
 - **Switch to dashboard 1…9** — changes the active board
-- **Open dashboard 1…9** — changes it *and* brings Hearth up, so jumping to a
+- **Open dashboard 1…9** — changes it *and* brings ZeroHearth up, so jumping to a
   particular board from anywhere in the vault is one shortcut
 - **Switch to next / previous dashboard**
 
@@ -534,7 +535,7 @@ In the search field: `↑`/`↓` to move, `Enter` to open, `Esc` to dismiss.
 
 ## Privacy & network
 
-Hearth has **no telemetry, no analytics and no ads**, and it never sends your
+ZeroHearth has **no telemetry, no analytics and no ads**, and it never sends your
 notes anywhere. Out of the box it makes no network requests at all: every call
 below happens only because you added the card, typed the query or opened the
 screen that needs it, and **Settings → Behaviour → Disable external calls**
@@ -558,11 +559,11 @@ browser only when you click them.
 
 **Your vault.** Search, the statistics and heatmap cards and the tasks cards
 list the files in your vault and read notes to show them on the board. That
-stays on your device. Hearth writes to your vault only when you act: a note
+stays on your device. ZeroHearth writes to your vault only when you act: a note
 created from a card or template, a checkbox ticked, an event note, an imported
 picture.
 
-**Clipboard.** Hearth writes to the clipboard when you press a copy button (an
+**Clipboard.** ZeroHearth writes to the clipboard when you press a copy button (an
 instant answer, a publishing key). It never reads the clipboard.
 
 ## Disclaimer
@@ -583,31 +584,18 @@ npm run typecheck
 ```
 
 To test in a vault, symlink or copy `main.js`, `manifest.json` and `styles.css`
-into `<vault>/.obsidian/plugins/hearth/`.
+into `<vault>/.obsidian/plugins/zerohearth/`.
 
-**Translations** — Hearth speaks English, Simplified Chinese, German and French,
+**Translations** — ZeroHearth speaks English, Simplified Chinese, German and French,
 following Obsidian's display language. User-facing strings live in
 [`src/locales/`](src/locales/). English (`en.ts`) is the source of truth; copy
 it, translate the values and register the file. See [`src/locales/README.md`](src/locales/README.md).
 
-## Contributing
-
-Hearth moves fast, so the most valuable contributions right now are **bug
-reports**, **feature ideas** and **translations**. Small, obvious fixes are
-always welcome; for anything larger, please open an issue first — big PRs
-against a fast-moving codebase tend to go stale. See
-[CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Support
-
-Hearth is free and open source. If it's earned a place on your vault's front
-page, you can buy me a coffee — it genuinely helps keep the updates coming.
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B7K822EW68)
-
 ## License
 
-MIT © ondreu · [Changelog](CHANGELOG.md) · [Security](SECURITY.md)
+ZeroHearth is based on [Hearth by ondreu](https://github.com/ondreu/Hearth).
+
+[MIT License](LICENSE) · [Changelog](CHANGELOG.md) · [Security](SECURITY.md)
 
 Terminal mode draws with a subset of [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono),
 embedded in `styles.css`: Copyright 2020 The JetBrains Mono Project Authors,

@@ -1,10 +1,10 @@
 import { type Component, Platform } from "obsidian";
 import { setIcon } from "./glyphs";
-import { hearthMenu } from "./uidesign";
+import { zerohearthMenu } from "./uidesign";
 import type { HomeView } from "./view";
 import type { CardHost } from "./cardhost";
 import { SearchSection } from "./search";
-import { hearthIconIdFor } from "./icon";
+import { zerohearthIconIdFor } from "./icon";
 import { renderTitleIcon } from "./titleicon";
 import {
 	effectiveCardDesign,
@@ -43,33 +43,33 @@ export function renderHeader(view: HomeView, container: HTMLElement, component: 
 	container.addClass(`is-title-align-${effectiveHeaderAlign(s)}`);
 	const spacingBelow = effectiveHeaderSpacingBelow(s);
 	if (spacingBelow !== undefined) {
-		container.style.setProperty("--hearth-header-spacing-below", `${spacingBelow}px`);
+		container.style.setProperty("--zerohearth-header-spacing-below", `${spacingBelow}px`);
 	}
 
 	if (effectiveShowTitle(s)) {
-		const titleRow = container.createDiv("hearth-title");
+		const titleRow = container.createDiv("zerohearth-title");
 		// Tint the crystal and/or title text with the theme's icon color per
 		// the themeColorTarget setting — this board's override, or the global one
 		// (see styles.css).
 		const target = effectiveThemeColorTarget(s);
 		if (target === "icon" || target === "both") titleRow.addClass("is-icon-themed");
 		if (target === "title" || target === "both") titleRow.addClass("is-title-themed");
-		titleRow.style.setProperty("--hearth-title-scale", String(effectiveHeaderTitleScale(s)));
-		titleRow.style.setProperty("--hearth-logo-scale", String(effectiveHeaderLogoScale(s)));
+		titleRow.style.setProperty("--zerohearth-title-scale", String(effectiveHeaderTitleScale(s)));
+		titleRow.style.setProperty("--zerohearth-logo-scale", String(effectiveHeaderLogoScale(s)));
 		const marginTop = effectiveHeaderMarginTop(s);
 		if (marginTop !== undefined) {
-			titleRow.style.setProperty("--hearth-title-margin-top", `${marginTop}px`);
+			titleRow.style.setProperty("--zerohearth-title-margin-top", `${marginTop}px`);
 		}
 
 		// One setting decides the mark: a Lucide icon, an emoji or short text, a
 		// picture from the vault or the web, or — when it is empty, when a picture
 		// it names has gone missing, and when a web picture is one "Disable
-		// external calls" won't fetch — the Hearth crystal (#252, #281).
+		// external calls" won't fetch — the ZeroHearth crystal (#252, #281).
 		renderTitleIcon(view.app, titleRow, effectiveTitleIcon(s), {
-			fallbackIconId: hearthIconIdFor(target),
+			fallbackIconId: zerohearthIconIdFor(target),
 			externalCallsDisabled: s.disableExternalCalls,
 		});
-		titleRow.createSpan({ cls: "hearth-title-text", text: effectiveTitle(s) });
+		titleRow.createSpan({ cls: "zerohearth-title-text", text: effectiveTitle(s) });
 	}
 
 	if (!effectiveShowSearch(s)) return;
@@ -96,14 +96,14 @@ export function renderHeader(view: HomeView, container: HTMLElement, component: 
 	// it. The button loses its label to a tooltip at that width (see styles.css)
 	// so the field keeps the rest of the row.
 	const narrow = view.isNarrow();
-	const searchWrap = container.createDiv("hearth-search-wrap");
+	const searchWrap = container.createDiv("zerohearth-search-wrap");
 	searchWrap.toggleClass("is-narrow", narrow);
 	// The row isn't a card, but it sits on the board with them: it takes the
 	// board's card design (else the vault's), so an Expressive board has an
 	// Expressive search field, filter chips, button and results.
 	searchWrap.toggleClass("is-expressive", effectiveCardDesign(s, undefined) === "expressive");
-	const searchCol = searchWrap.createDiv("hearth-search-col");
-	const searchRow = searchCol.createDiv("hearth-search");
+	const searchCol = searchWrap.createDiv("zerohearth-search-col");
+	const searchRow = searchCol.createDiv("zerohearth-search");
 	const bar = search.renderBar(searchRow);
 
 	if (effectiveShowNewNoteButton(s) && !mobileOnly) {
@@ -133,7 +133,7 @@ export function createSearchBarButton(
 
 /** Read the current query out of the search bar's input element. */
 function getSearchQuery(bar: HTMLElement): string {
-	return bar.querySelector<HTMLInputElement>(".hearth-search-input")?.value.trim() ?? "";
+	return bar.querySelector<HTMLInputElement>(".zerohearth-search-input")?.value.trim() ?? "";
 }
 
 /** The New-note button: creates a note on click. What that note is — blank, or
@@ -149,7 +149,7 @@ function getSearchQuery(bar: HTMLElement): string {
 function createNewNoteButton(view: CardHost, bar: HTMLElement): HTMLElement {
 	const label = newNoteButtonLabel(view.plugin.settings);
 	const btn = createEl("button", {
-		cls: "hearth-newnote",
+		cls: "zerohearth-newnote",
 		// A renamed button describes itself; the generic aria label is only
 		// right for the default one.
 		attr: {
@@ -158,8 +158,8 @@ function createNewNoteButton(view: CardHost, bar: HTMLElement): HTMLElement {
 				t().header.newNoteAria,
 		},
 	});
-	setIcon(btn.createSpan("hearth-newnote-icon"), "plus");
-	btn.createSpan({ cls: "hearth-newnote-label", text: label });
+	setIcon(btn.createSpan("zerohearth-newnote-icon"), "plus");
+	btn.createSpan({ cls: "zerohearth-newnote-label", text: label });
 	btn.addEventListener("click", () => {
 		void view.plugin.createNewNote(view, getSearchQuery(bar));
 	});
@@ -175,29 +175,29 @@ function createNewNoteButton(view: CardHost, bar: HTMLElement): HTMLElement {
  * a clickable corner: the caret is then reachable by keyboard and announces
  * itself as a menu opener. */
 function createSearchOnlineButton(view: CardHost, bar: HTMLElement): HTMLElement {
-	const wrap = createDiv("hearth-searchonline");
+	const wrap = createDiv("zerohearth-searchonline");
 
 	const btn = wrap.createEl("button", {
-		cls: "hearth-newnote hearth-newnote-search",
+		cls: "zerohearth-newnote zerohearth-newnote-search",
 		attr: { "aria-label": t().header.searchOnlineAria },
 	});
-	setIcon(btn.createSpan("hearth-newnote-icon"), "globe");
-	btn.createSpan({ cls: "hearth-newnote-label", text: t().header.searchOnline });
+	setIcon(btn.createSpan("zerohearth-newnote-icon"), "globe");
+	btn.createSpan({ cls: "zerohearth-newnote-label", text: t().header.searchOnline });
 	btn.addEventListener("click", () => {
 		openWebSearch(view.plugin.settings.webSearchEngine, getSearchQuery(bar));
 	});
 
 	const caret = wrap.createEl("button", {
-		cls: "hearth-newnote hearth-newnote-search-caret",
+		cls: "zerohearth-newnote zerohearth-newnote-search-caret",
 		attr: {
 			"aria-label": t().header.searchOnlinePickAria,
 			"aria-haspopup": "menu",
 		},
 	});
-	setIcon(caret.createSpan("hearth-newnote-icon"), "chevron-down");
+	setIcon(caret.createSpan("zerohearth-newnote-icon"), "chevron-down");
 	caret.addEventListener("click", (evt) => {
 		const current = view.plugin.settings.webSearchEngine;
-		const menu = hearthMenu();
+		const menu = zerohearthMenu();
 		for (const engine of WEB_SEARCH_ENGINES) {
 			menu.addItem((item) =>
 				item

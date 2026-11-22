@@ -5,7 +5,7 @@
  * comes out. The wizard (`wizard.ts`) only collects the answers and draws the
  * result — none of the decisions below depend on Obsidian, so all of them are
  * unit-testable, which matters because this is the one code path a new user's
- * very first impression of Hearth is built by.
+ * very first impression of ZeroHearth is built by.
  *
  * The two halves are deliberately separate:
  *
@@ -19,14 +19,14 @@
  * collects lands on the dashboard it builds — as a per-dashboard override (the
  * header, the card surface, the background, the spacing) or in a card's
  * own config (the TaskNotes field mapping) — so running setup, or re-running
- * it later, cannot change how any *other* board looks or how Hearth behaves
+ * it later, cannot change how any *other* board looks or how ZeroHearth behaves
  * vault-wide. The only fields of {@link HomeSettings} touched here are the
  * structural ones that installing a board *is*: the `dashboards` list,
  * `activeDashboardId`, and the `setupStatus` flag that stops the wizard
  * offering itself twice.
  *
  * The exception is the Design (Classic or Expressive), because it is not only
- * a board's look: in Expressive it dresses all of Hearth's interface — its
+ * a board's look: in Expressive it dresses all of ZeroHearth's interface — its
  * dialogs, menus and settings pane (see src/uidesign.ts) — which no board-level
  * override can reach. So the *first* setup (the one a new vault gets, or the
  * first one a user who skipped it runs) writes it vault-wide, with the drawn
@@ -59,7 +59,7 @@ import type { SetupDetection, SetupIntegrationId } from "./detect";
 import { taskNotesImport } from "./detect";
 
 /**
- * What a user says they want Hearth *for*.
+ * What a user says they want ZeroHearth *for*.
  *
  * The wizard asks this instead of asking which cards to add, because a new user
  * has no idea what a "heatmap card" is and every idea of whether they journal.
@@ -111,7 +111,7 @@ export const SURFACE_PRESETS: Record<
 	SetupSurface,
 	Pick<HomeSettings, "cardOpacity" | "cardBlur" | "cardRadius" | "cardBorderWidth">
 > = {
-	// Hearth's signature: translucent cards over the wallpaper, frosted.
+	// ZeroHearth's signature: translucent cards over the wallpaper, frosted.
 	glass: { cardOpacity: 0.5, cardBlur: 7, cardRadius: 14, cardBorderWidth: 1 },
 	// Opaque panels. Reads best against a busy photograph, and costs no blur.
 	solid: { cardOpacity: 1, cardBlur: 0, cardRadius: 12, cardBorderWidth: 1 },
@@ -137,7 +137,7 @@ export const SETUP_BACKGROUNDS: readonly SetupBackground[] = [
  * The backdrop's opacity and blur per choice.
  *
  * Not one set of numbers for all of them: a photograph needs to be pushed well
- * back to keep text legible, while a flat colour — or Hearth's own flat, muted
+ * back to keep text legible, while a flat colour — or ZeroHearth's own flat, muted
  * wallpaper — is *already* legible and fading it only makes it muddy.
  */
 const BACKGROUND_TUNING: Record<SetupBackground, { opacity: number; blur: number }> = {
@@ -164,7 +164,7 @@ export interface SetupAnswers {
 	title: string;
 	showTitle: boolean;
 	/** The mark beside the title: emoji/text, a Lucide id, a vault image path or
-	 * an image URL — see `titleicon.ts`. Empty = the Hearth crystal. */
+	 * an image URL — see `titleicon.ts`. Empty = the ZeroHearth crystal. */
 	titleIcon: string;
 	themeColorTarget: HomeSettings["themeColorTarget"];
 	/** Whether the built board shows the search/command section. Stored as the
@@ -173,7 +173,7 @@ export interface SetupAnswers {
 
 	// ---- Step: the look ----
 	/** Classic or Expressive — for the cards, the drawn background and, on a
-	 * first setup, all of Hearth's interface (see {@link applyDesign}). */
+	 * first setup, all of ZeroHearth's interface (see {@link applyDesign}). */
 	design: CardDesign;
 	/** Terminal mode (experimental), which draws every card board as text.
 	 * Vault-wide, and independent of `design`: the Classic or Expressive choice
@@ -214,7 +214,7 @@ export interface SetupAnswers {
 /**
  * The answers a vault starts the wizard with.
  *
- * Every default is either Hearth's own default or something the detection pass
+ * Every default is either ZeroHearth's own default or something the detection pass
  * discovered, so a user who clicks straight through to the end still gets a
  * sensible, working board rather than an empty one.
  */
@@ -287,7 +287,7 @@ export interface PlannedCard {
 /** A planned card before it has an id or a packed position. */
 type CardDraft = Omit<DashboardCard, "id">;
 
-/** The default grid width a plan lays out against — Hearth's own default, so a
+/** The default grid width a plan lays out against — ZeroHearth's own default, so a
  * board built here lines up with one built by hand. */
 const PLAN_COLUMNS = 12;
 
@@ -320,7 +320,7 @@ const MOVABLE = new Set([
  * Two rules shape every board built here:
  *
  *  - **No card arrives empty.** A card that opens on "Add a feed in card
- *    settings" reads as broken, and on a first board it reads as Hearth being
+ *    settings" reads as broken, and on a first board it reads as ZeroHearth being
  *    broken. So a card that needs something only the user can give (a feed, a
  *    place) is planned only once it has it, and a launchpad is seeded with
  *    actions that work on any vault.
@@ -484,7 +484,7 @@ export function planCards(
 	if (accepted(answers, "operon")) {
 		// The list view, not the board: it is the one Operon view that reads
 		// correctly at any size, needs no pipeline chosen for it, and asks only
-		// for the read capabilities Hearth requests by default. A board seeded
+		// for the read capabilities ZeroHearth requests by default. A board seeded
 		// with someone else's idea of which pipeline matters is a worse first
 		// impression than a list of what is due.
 		add("operon", "operon", "main", {
@@ -721,7 +721,7 @@ function taskReason(answers: SetupAnswers): string {
  * shows every cancelled task as outstanding, and one pointed at a vault that
  * renamed its fields shows nothing at all. Both are read from the plugin — and
  * both are stored *on the card*, not in the vault-wide TaskNotes mapping in
- * Settings → Hearth, so a wizard run configures this board's card and leaves
+ * Settings → ZeroHearth, so a wizard run configures this board's card and leaves
  * every other card reading whatever it read before.
  */
 function planTasksConfig(
@@ -812,7 +812,7 @@ function applyHeader(dashboard: Dashboard, answers: SetupAnswers): void {
 	const header: NonNullable<Dashboard["header"]> = {
 		...(dashboard.header ?? {}),
 		showTitle: answers.showTitle,
-		// An empty title icon is a real override: this board shows the Hearth
+		// An empty title icon is a real override: this board shows the ZeroHearth
 		// crystal even in a vault whose global mark is an emoji.
 		titleIcon: answers.titleIcon.trim(),
 		themeColorTarget: answers.themeColorTarget,
@@ -847,7 +847,7 @@ function applyLook(dashboard: Dashboard, answers: SetupAnswers): void {
 }
 
 /**
- * Classic or Expressive, for the cards and the drawn background (Hearth's
+ * Classic or Expressive, for the cards and the drawn background (ZeroHearth's
  * wallpaper, the harbour, the weather sky).
  *
  * On the first setup it is the vault's Design and background design, and the
@@ -907,7 +907,7 @@ export function plannedBackground(answers: SetupAnswers): BackgroundConfig {
  * How many grid rows a board may occupy and still be worth squeezing onto one
  * screen.
  *
- * Fit-to-page is Hearth's default and is what makes a board read as a *home
+ * Fit-to-page is ZeroHearth's default and is what makes a board read as a *home
  * screen* rather than a page — but it works by scaling the whole layout down
  * until it fits, so a board twice as tall as the viewport renders every card at
  * half height. The starter board is thirteen rows and squeezes comfortably; a

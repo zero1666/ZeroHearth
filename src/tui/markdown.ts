@@ -318,7 +318,7 @@ function editorOutput(ctx: TuiContext, src: MarkdownSource): TuiOutput {
 		rows: Math.max(1, ctx.rows),
 		mount: (host: HTMLElement, component: Component) => {
 			const area = host.createEl("textarea", {
-				cls: "hearth-tui-editor",
+				cls: "zerohearth-tui-editor",
 				attr: { spellcheck: "false", "aria-label": t().tui.cards.editing },
 			});
 			area.value = src.text ?? "";

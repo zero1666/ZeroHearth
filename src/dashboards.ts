@@ -1,7 +1,7 @@
 import { type Menu, Setting } from "obsidian";
 import type { BoardHost } from "./cardhost";
 import { setIcon } from "./glyphs";
-import { hearthMenu } from "./uidesign";
+import { zerohearthMenu } from "./uidesign";
 import {
 	type BackgroundConfig,
 	type BackgroundKind,
@@ -58,7 +58,7 @@ import { configuredPlaces, renderSkySource } from "./placepicker";
 import { formatSkyValue, parseSkyValue } from "./sky";
 import { confirmAction } from "./ui";
 import type { WorkspacesInstance } from "./obsidian-ext";
-import { HearthTabbedModal, type HearthModalTab } from "./tabbedmodal";
+import { ZeroHearthTabbedModal, type ZeroHearthModalTab } from "./tabbedmodal";
 import { t } from "./i18n";
 import { addSingleBoardCard } from "./singlecard";
 import { openCardSettings } from "./dashboard";
@@ -118,15 +118,15 @@ export function renderDashboardSwitcher(
 	container: HTMLElement,
 ): HTMLElement {
 	const s = view.plugin.settings;
-	const zone = container.createDiv("hearth-dash-switcher-zone");
+	const zone = container.createDiv("zerohearth-dash-switcher-zone");
 	zone.toggleClass("is-auto-hide", effectiveSwitcherVisibility(s) === "hover");
-	const bar = zone.createDiv("hearth-dash-switcher");
+	const bar = zone.createDiv("zerohearth-dash-switcher");
 
 	s.dashboards.forEach((d, i) => {
 		const lucide = d.iconLucide?.trim();
 		const icon = d.icon?.trim();
 		const btn = bar.createEl("button", {
-			cls: "hearth-dash-btn",
+			cls: "zerohearth-dash-btn",
 		});
 		// An icon id that names nothing renderable falls through to the emoji or
 		// the number, so a mistyped id never leaves a blank switcher button.
@@ -172,7 +172,7 @@ export function renderDashboardSwitcher(
 	});
 
 	const add = bar.createEl("button", {
-		cls: "hearth-dash-btn hearth-dash-add",
+		cls: "zerohearth-dash-btn zerohearth-dash-add",
 		attr: { "aria-label": t().dashboards.newDashboard },
 	});
 	setIcon(add, "plus");
@@ -214,7 +214,7 @@ export function showDashboardMenu(
 	extend?: (menu: Menu) => void,
 ): void {
 	const s = view.plugin.settings;
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	if (extend) {
 		extend(menu);
 		menu.addSeparator();
@@ -305,7 +305,7 @@ function confirmDeleteDashboard(
  * Laid out as a tabbed modal (General / Layout / Style / Background) with a
  * persistent Done footer, mirroring the plugin settings pane so both configure
  * the same way. */
-class DashboardSettingsModal extends HearthTabbedModal {
+class DashboardSettingsModal extends ZeroHearthTabbedModal {
 	private view: BoardHost;
 	private dash: Dashboard;
 
@@ -321,13 +321,13 @@ class DashboardSettingsModal extends HearthTabbedModal {
 
 	onOpen(): void {
 		this.titleEl.setText(t().dashboards.modal.title);
-		this.hearthRenderShell();
+		this.zerohearthRenderShell();
 	}
 
 	/** Rebuild the modal in place, keeping the active tab. Used by the override
 	 * toggles and background dropdown, which swap which controls are shown. */
 	private render(): void {
-		this.hearthRenderShell();
+		this.zerohearthRenderShell();
 	}
 
 	/** Persist and refresh the live view without closing the modal. */
@@ -336,8 +336,8 @@ class DashboardSettingsModal extends HearthTabbedModal {
 		this.view.render();
 	}
 
-	protected hearthTabStorageKey(): string {
-		return "hearth-dash-settings-tab";
+	protected zerohearthTabStorageKey(): string {
+		return "zerohearth-dash-settings-tab";
 	}
 
 	/** Whether this board is drawn graphically. Terminal mode draws a card
@@ -348,7 +348,7 @@ class DashboardSettingsModal extends HearthTabbedModal {
 		return !terminalModeActive(this.view.plugin.settings) || isPluginBoard(this.dash);
 	}
 
-	protected hearthTabs(): HearthModalTab[] {
+	protected zerohearthTabs(): ZeroHearthModalTab[] {
 		const tabs = t().dashboards.modal.tabs;
 		const plugin = isPluginBoard(this.dash);
 		const graphical = this.graphical;
@@ -376,7 +376,7 @@ class DashboardSettingsModal extends HearthTabbedModal {
 		];
 	}
 
-	protected hearthRenderBody(body: HTMLElement, tabId: string): void {
+	protected zerohearthRenderBody(body: HTMLElement, tabId: string): void {
 		switch (tabId) {
 			case "general":
 				this.generalSection(body);
@@ -403,7 +403,7 @@ class DashboardSettingsModal extends HearthTabbedModal {
 	}
 
 	/** Persistent footer shared by every tab: delete the dashboard, or close. */
-	protected hearthRenderFooter(footer: HTMLElement): void {
+	protected zerohearthRenderFooter(footer: HTMLElement): void {
 		const setting = new Setting(footer);
 		// Always keep at least one dashboard around.
 		if (this.view.plugin.settings.dashboards.length > 1) {
@@ -411,7 +411,7 @@ class DashboardSettingsModal extends HearthTabbedModal {
 				b.setButtonText(t().dashboards.modal.deleteDashboard).onClick(() =>
 					confirmDeleteDashboard(this.view, this.dash, () => this.close()),
 				);
-				b.buttonEl.addClass("hearth-danger-btn");
+				b.buttonEl.addClass("zerohearth-danger-btn");
 			});
 		}
 		setting.addButton((b) =>
@@ -455,13 +455,13 @@ class DashboardSettingsModal extends HearthTabbedModal {
 			const hint = new Setting(containerEl).setDesc(
 				t().dashboards.modal.modePickViewHint,
 			);
-			hint.settingEl.addClass("hearth-setting-note");
+			hint.settingEl.addClass("zerohearth-setting-note");
 		}
 		if (isSingleCardBoard(dash) && !singleBoardCard(dash)) {
 			const hint = new Setting(containerEl).setDesc(
 				t().dashboards.modal.modePickCardHint,
 			);
-			hint.settingEl.addClass("hearth-setting-note");
+			hint.settingEl.addClass("zerohearth-setting-note");
 		}
 
 		// The switcher's icons are drawn by the graphical switcher alone —
@@ -630,8 +630,8 @@ class DashboardSettingsModal extends HearthTabbedModal {
 			const missing = new Setting(containerEl).setDesc(
 				t().cards.empty.leafViewMissing,
 			);
-			missing.settingEl.addClass("hearth-setting-note");
-			missing.settingEl.addClass("hearth-setting-warning");
+			missing.settingEl.addClass("zerohearth-setting-note");
+			missing.settingEl.addClass("zerohearth-setting-warning");
 		}
 
 		const fileSetting = new Setting(containerEl)
@@ -712,9 +712,9 @@ class DashboardSettingsModal extends HearthTabbedModal {
 		const note = new Setting(containerEl)
 			.setName(t().editors.leaf.perfLabel)
 			.setDesc(strings.pluginViewPerfNote);
-		note.settingEl.addClass("hearth-setting-note");
-		note.settingEl.addClass("hearth-setting-warning");
-		const icon = createSpan("hearth-setting-note-icon");
+		note.settingEl.addClass("zerohearth-setting-note");
+		note.settingEl.addClass("zerohearth-setting-warning");
+		const icon = createSpan("zerohearth-setting-note-icon");
 		setIcon(icon, "alert-triangle");
 		note.nameEl.prepend(icon);
 	}
@@ -1041,7 +1041,7 @@ class DashboardSettingsModal extends HearthTabbedModal {
 		for (const group of FILE_TYPE_GROUPS) {
 			new Setting(containerEl)
 				.setName(fileTypeLabel(group))
-				.setClass("hearth-setting-sub")
+				.setClass("zerohearth-setting-sub")
 				.addToggle((tg) =>
 					tg.setValue(!hidden.has(group.id)).onChange((v) => {
 						if (v) hidden.delete(group.id);
@@ -1103,7 +1103,7 @@ class DashboardSettingsModal extends HearthTabbedModal {
 			const off = vaultOff.has(id);
 			const row = new Setting(containerEl)
 				.setName(t().search.tips.features[id].title)
-				.setClass("hearth-setting-sub");
+				.setClass("zerohearth-setting-sub");
 			if (off) row.setDesc(strings.hiddenInstantOffVault);
 			row.addToggle((tg) =>
 				tg
@@ -1220,7 +1220,7 @@ class DashboardSettingsModal extends HearthTabbedModal {
 	 * Turning the toggle on seeds the override with whatever the global mark is,
 	 * so the board starts from the look it already had; clearing the field
 	 * leaves an empty override, which is a board that deliberately wears the
-	 * Hearth crystal while the vault-wide setting has something else.
+	 * ZeroHearth crystal while the vault-wide setting has something else.
 	 */
 	private overrideHeaderIcon(
 		containerEl: HTMLElement,
@@ -1415,7 +1415,7 @@ class DashboardSettingsModal extends HearthTabbedModal {
 						? t().dashboards.modal.fitToPagePluginNote
 						: t().dashboards.modal.fitToPageSingleNote,
 				);
-			note.settingEl.addClass("hearth-setting-note");
+			note.settingEl.addClass("zerohearth-setting-note");
 			return;
 		}
 
@@ -1472,7 +1472,7 @@ class DashboardSettingsModal extends HearthTabbedModal {
 			});
 
 		// The design first: it decides whether the surface settings below apply.
-		this.hearthGroupBreak(containerEl);
+		this.zerohearthGroupBreak(containerEl);
 		const designs = {
 			classic: t().editors.design.classic,
 			expressive: t().editors.design.expressive,
@@ -1492,11 +1492,11 @@ class DashboardSettingsModal extends HearthTabbedModal {
 
 		// Opacity, blur, radius and border shape the Classic frame only; on a
 		// board with no Classic card they step aside for a line saying why.
-		this.hearthGroupBreak(containerEl);
+		this.zerohearthGroupBreak(containerEl);
 		if (!classicCardsInUse(s, dash)) {
 			const note = new Setting(containerEl).setDesc(t().settings.dashboard.cardSurfaceExpressive);
-			note.settingEl.addClass("hearth-setting-note");
-			const icon = createSpan("hearth-setting-note-icon");
+			note.settingEl.addClass("zerohearth-setting-note");
+			const icon = createSpan("zerohearth-setting-note-icon");
 			setIcon(icon, "shapes");
 			note.descEl.prepend(icon);
 			return;
@@ -1610,7 +1610,7 @@ class DashboardSettingsModal extends HearthTabbedModal {
 						d.addOption(k, label);
 					},
 				);
-				// The dropdown's "default" means "follow the vault", so Hearth's
+				// The dropdown's "default" means "follow the vault", so ZeroHearth's
 				// own wallpaper — the "default" kind — goes by "hdefault" here.
 				d.setValue(!bg ? "default" : bg.kind === "default" ? "hdefault" : bg.kind).onChange((v) => {
 					if (v === "default") {
@@ -1643,8 +1643,8 @@ class DashboardSettingsModal extends HearthTabbedModal {
 			const note = new Setting(containerEl).setDesc(
 				t().settings.background.externalCallsDisabled,
 			);
-			note.settingEl.addClass("hearth-setting-note");
-			const icon = createSpan("hearth-setting-note-icon");
+			note.settingEl.addClass("zerohearth-setting-note");
+			const icon = createSpan("zerohearth-setting-note-icon");
 			setIcon(icon, "wifi-off");
 			note.descEl.prepend(icon);
 		}
@@ -1653,8 +1653,8 @@ class DashboardSettingsModal extends HearthTabbedModal {
 		// plays, rather than leave it looking broken.
 		if (shownKind === "video") {
 			const note = new Setting(containerEl).setDesc(t().settings.background.videoNote);
-			note.settingEl.addClass("hearth-setting-note");
-			const icon = createSpan("hearth-setting-note-icon");
+			note.settingEl.addClass("zerohearth-setting-note");
+			const icon = createSpan("zerohearth-setting-note-icon");
 			setIcon(icon, "gauge");
 			note.descEl.prepend(icon);
 		}
@@ -1689,7 +1689,7 @@ class DashboardSettingsModal extends HearthTabbedModal {
 				},
 			);
 		}
-		// Hearth's own wallpaper is drawn in the same two designs as the sky, so
+		// ZeroHearth's own wallpaper is drawn in the same two designs as the sky, so
 		// it takes the same override.
 		if (drawnKind === "weather" || drawnKind === "default") {
 			const sky = t().settings.background;

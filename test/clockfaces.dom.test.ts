@@ -32,7 +32,7 @@ function draw(clock: ClockConfig, design: "classic" | "expressive"): HTMLElement
 		plugin: { settings: { dashboards: [{ id: "a", cards: [] }], activeDashboardId: "a", cardDesign: design } },
 	};
 	const card = { id: "c", kind: "clock", clock } as unknown as DashboardCard;
-	const body = document.body.createDiv("hearth-card-body");
+	const body = document.body.createDiv("zerohearth-card-body");
 	const component = { registerInterval: (id: number) => id };
 	renderClock(view as never, card, body, component as never);
 	return body;
@@ -58,8 +58,8 @@ describe("the clock faces", () => {
 				for (const showSeconds of [false, true]) {
 					const body = draw({ mode: face, showSeconds, hourFormat: "24" }, design);
 					const drawn = resolveClockFace(face, design === "expressive");
-					expect(body.querySelector(`.hearth-clock.is-face-${drawn}`)).not.toBeNull();
-					expect(body.hasClass("hearth-clock-host")).toBe(drawn !== "digital" && drawn !== "analog");
+					expect(body.querySelector(`.zerohearth-clock.is-face-${drawn}`)).not.toBeNull();
+					expect(body.hasClass("zerohearth-clock-host")).toBe(drawn !== "digital" && drawn !== "analog");
 				}
 			}
 		}
@@ -67,36 +67,36 @@ describe("the clock faces", () => {
 
 	it("shows the time's pieces on the text faces", () => {
 		const stacked = draw({ mode: "stacked", hourFormat: "24" }, "classic");
-		expect(stacked.querySelector(".hearth-clock-stack-h")?.textContent).toBe("13");
-		expect(stacked.querySelector(".hearth-clock-stack-m")?.textContent).toBe("07");
+		expect(stacked.querySelector(".zerohearth-clock-stack-h")?.textContent).toBe("13");
+		expect(stacked.querySelector(".zerohearth-clock-stack-m")?.textContent).toBe("07");
 
 		const flip = draw({ mode: "flip", hourFormat: "24", showSeconds: true }, "expressive");
-		const nums = Array.from(flip.querySelectorAll(".hearth-clock-flip-num")).map((n) => n.textContent);
+		const nums = Array.from(flip.querySelectorAll(".zerohearth-clock-flip-num")).map((n) => n.textContent);
 		expect(nums).toEqual(["13", "07", "30"]);
 
 		const shapes = draw({ mode: "shapes", hourFormat: "24" }, "expressive");
-		const digits = Array.from(shapes.querySelectorAll(".hearth-clock-shape-num")).map((n) => n.textContent);
+		const digits = Array.from(shapes.querySelectorAll(".zerohearth-clock-shape-num")).map((n) => n.textContent);
 		expect(digits).toEqual(["1", "3", "0", "7"]);
 
 		const orbit = draw({ mode: "orbit", hourFormat: "12" }, "expressive");
-		expect(orbit.querySelector(".hearth-clock-orbit-h")?.textContent).toBe("1");
-		expect(orbit.querySelector(".hearth-clock-orbit-p")?.textContent).not.toBe("");
+		expect(orbit.querySelector(".zerohearth-clock-orbit-h")?.textContent).toBe("1");
+		expect(orbit.querySelector(".zerohearth-clock-orbit-p")?.textContent).not.toBe("");
 	});
 
 	it("fills the rings with the time and moves them as it passes", () => {
 		const body = draw({ mode: "ring", hourFormat: "24" }, "expressive");
-		const minutes = body.querySelector(".hearth-clock-ring-bar.is-minutes");
+		const minutes = body.querySelector(".zerohearth-clock-ring-bar.is-minutes");
 		const before = minutes?.getAttribute("stroke-dasharray");
 		// 7.5 minutes of 60.
 		expect(before?.startsWith("12.5 ")).toBe(true);
 		vi.advanceTimersByTime(60_000);
 		expect(minutes?.getAttribute("stroke-dasharray")).not.toBe(before);
-		expect(body.querySelector(".hearth-clock-ring-time")?.textContent).toBe("13:08");
+		expect(body.querySelector(".zerohearth-clock-ring-time")?.textContent).toBe("13:08");
 	});
 
 	it("turns a flip tile over only when its number changes", () => {
 		const body = draw({ mode: "flip", hourFormat: "24" }, "classic");
-		const [hours, minutes] = Array.from(body.querySelectorAll(".hearth-clock-flip-tile"));
+		const [hours, minutes] = Array.from(body.querySelectorAll(".zerohearth-clock-flip-tile"));
 		expect(minutes.hasClass("is-turning")).toBe(false);
 		vi.advanceTimersByTime(30_000);
 		expect(minutes.hasClass("is-turning")).toBe(true);

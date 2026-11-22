@@ -94,10 +94,10 @@ export const searchbarTui: TuiRenderer = {
 					rows: Math.max(1, ctx.rows),
 					mount: (host, component) => {
 						const search = new SearchSection(ctx.view);
-						const shell = host.createDiv("hearth-search-wrap hearth-tui-searchwrap hearth-tui-cardsearch");
-						const col = shell.createDiv("hearth-search-col");
-						const row = col.createDiv("hearth-search hearth-tui-searchrow");
-						row.createSpan({ cls: "hearth-tui-searchlabel", text: "/" });
+						const shell = host.createDiv("zerohearth-search-wrap zerohearth-tui-searchwrap zerohearth-tui-cardsearch");
+						const col = shell.createDiv("zerohearth-search-col");
+						const row = col.createDiv("zerohearth-search zerohearth-tui-searchrow");
+						row.createSpan({ cls: "zerohearth-tui-searchlabel", text: "/" });
 						const bar = search.renderBar(row, { placeholder: cfg.placeholder });
 						if (cfg.button && cfg.button !== "none") row.append(createSearchBarButton(ctx.view, bar, cfg.button));
 						search.renderResultsAndFilters(col, col, component, {
@@ -115,7 +115,7 @@ export const searchbarTui: TuiRenderer = {
 	},
 	key(ctx, evt) {
 		if (evt.key !== "/" && evt.key !== "i") return false;
-		const input = ctx.view.contentEl.querySelector<HTMLInputElement>(`.hearth-tui-body[data-card="${ctx.card.id}"] .hearth-search-input`);
+		const input = ctx.view.contentEl.querySelector<HTMLInputElement>(`.zerohearth-tui-body[data-card="${ctx.card.id}"] .zerohearth-search-input`);
 		if (!input) return false;
 		input.focus();
 		return true;

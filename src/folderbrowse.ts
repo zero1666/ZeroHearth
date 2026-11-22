@@ -93,7 +93,7 @@ export function defaultBrowseState(path: string): FolderBrowseState {
  * the vault is configured, so it stays out of `data.json` — and out of the
  * sync traffic that follows it.
  */
-export const FOLDED_KEY = "hearth-folder-folded";
+export const FOLDED_KEY = "zerohearth-folder-folded";
 
 /** How many folded sections the store keeps. A browsing habit, not a record:
  * paths of folders since renamed would otherwise accumulate for ever. */

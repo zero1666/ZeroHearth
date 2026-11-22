@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  *
  * Linkless RSS entries (#377): the parser keeps an entry's full body and its
- * permalink guid, the card decides between the page and Hearth's reader, and
+ * permalink guid, the card decides between the page and ZeroHearth's reader, and
  * the reader's tidy pass strips what a feed's HTML shouldn't bring into a
  * dialog. DOMPurify itself (Obsidian's sanitizeHTMLToDom) is not under test.
  */
@@ -90,12 +90,12 @@ describe("rssOpenAction", () => {
 		expect(rssOpenAction(item({ link: "https://example.com", content: "<p>x</p>" }))).toBe("link");
 	});
 
-	it("reads a linkless entry with a body in Hearth", () => {
+	it("reads a linkless entry with a body in ZeroHearth", () => {
 		expect(rssOpenAction(item({ content: "<p>x</p>" }))).toBe("reader");
 		expect(rssOpenAction(item({ link: "javascript:alert(1)", excerpt: "x" }))).toBe("reader");
 	});
 
-	it("reads in Hearth when the card says, but only when there is a body", () => {
+	it("reads in ZeroHearth when the card says, but only when there is a body", () => {
 		expect(rssOpenAction(item({ link: "https://example.com", content: "<p>x</p>" }), "dialog")).toBe("reader");
 		expect(rssOpenAction(item({ link: "https://example.com", content: "<p>x</p>" }), "tab")).toBe("reader");
 		expect(rssOpenAction(item({ link: "https://example.com" }), "tab")).toBe("link");
@@ -183,14 +183,14 @@ describe("holding picture addresses through the sanitiser", () => {
 		expect(blocked).toBe(0);
 		expect(body.querySelectorAll("img[src], video")).toHaveLength(0);
 		const img = body.querySelector("img")!;
-		expect(img.getAttribute("data-hearth-src")).toBe("https://e.com/a.png");
+		expect(img.getAttribute("data-zerohearth-src")).toBe("https://e.com/a.png");
 		// What the sanitiser would hand back: the same markup, links stripped of target.
 		const copy = new DOMParser().parseFromString(body.innerHTML.replace(/ target="_blank"/g, ""), "text/html").body;
 		releaseImages(copy);
 		const out = copy.querySelector("img")!;
 		expect(out.getAttribute("src")).toBe("https://e.com/a.png");
 		expect(out.getAttribute("referrerpolicy")).toBe("no-referrer");
-		expect(out.hasAttribute("data-hearth-src")).toBe(false);
+		expect(out.hasAttribute("data-zerohearth-src")).toBe(false);
 		expect(copy.querySelector("a")!.getAttribute("target")).toBe("_blank");
 	});
 
@@ -200,7 +200,7 @@ describe("holding picture addresses through the sanitiser", () => {
 			hold: true,
 		});
 		expect(held).toEqual(["https://e.com/1.png", "https://e.com/2.png"]);
-		const stripped = new DOMParser().parseFromString(body.innerHTML.replace(/ data-hearth-src="[^"]*"/g, ""), "text/html").body;
+		const stripped = new DOMParser().parseFromString(body.innerHTML.replace(/ data-zerohearth-src="[^"]*"/g, ""), "text/html").body;
 		releaseImages(stripped, held);
 		expect(Array.from(stripped.querySelectorAll("img")).map((i) => i.getAttribute("src"))).toEqual(held);
 		// Counts that disagree are not trusted: the pictures go instead.
@@ -210,7 +210,7 @@ describe("holding picture addresses through the sanitiser", () => {
 	});
 
 	it("won't release an address that isn't a web one", () => {
-		const body = new DOMParser().parseFromString(`<img data-hearth-src="javascript:alert(1)">`, "text/html").body;
+		const body = new DOMParser().parseFromString(`<img data-zerohearth-src="javascript:alert(1)">`, "text/html").body;
 		releaseImages(body);
 		expect(body.querySelector("img")).toBeNull();
 	});

@@ -1,7 +1,7 @@
 import { type App, Component, Setting } from "obsidian";
 import type { CardHost } from "../cardhost";
 import { setIcon } from "../glyphs";
-import { HearthModal } from "../uidesign";
+import { ZeroHearthModal } from "../uidesign";
 import { emptyState } from "../cardbodies";
 import { t } from "../i18n";
 import {
@@ -159,7 +159,7 @@ export function resolveConfig(
 		showUpdated: cfg.showUpdated ?? false,
 		hourlyCount: cfg.hourlyCount ?? defaultHourlyCount(style),
 		dailyCount: cfg.dailyCount ?? defaultDailyCount(style),
-		// A still tier stops every animation Hearth runs; the painted sky is no
+		// A still tier stops every animation ZeroHearth runs; the painted sky is no
 		// exception, and it is the most expensive one on the board.
 		animate: (cfg.animate ?? true) && !lowPower,
 		moonLayout: cfg.moonLayout ?? "full",
@@ -302,7 +302,7 @@ export function headlineBits(snapshot: WeatherSnapshot, r: Resolved): string[] {
 
 /** A bullet-separated line of small text, or nothing when there is nothing to
  * say. */
-function metaLine(parent: HTMLElement, bits: string[], cls = "hearth-weather-meta"): void {
+function metaLine(parent: HTMLElement, bits: string[], cls = "zerohearth-weather-meta"): void {
 	if (!bits.length) return;
 	parent.createDiv({ cls, text: bits.join(" · ") });
 }
@@ -315,17 +315,17 @@ function readings(
 	parent: HTMLElement,
 	items: { text: string; icon?: string }[],
 	r: Resolved,
-	cls = "hearth-weather-meta",
+	cls = "zerohearth-weather-meta",
 ): void {
 	if (!items.length) return;
 	if (!r.expressive) {
 		metaLine(parent, items.map((item) => item.text), cls);
 		return;
 	}
-	const row = parent.createDiv(`${cls} hearth-weather-chips`);
+	const row = parent.createDiv(`${cls} zerohearth-weather-chips`);
 	for (const item of items) {
-		const chip = row.createDiv("hearth-weather-chip");
-		if (item.icon) setIcon(chip.createSpan("hearth-weather-chip-icon"), item.icon);
+		const chip = row.createDiv("zerohearth-weather-chip");
+		if (item.icon) setIcon(chip.createSpan("zerohearth-weather-chip-icon"), item.icon);
 		chip.createSpan({ text: item.text });
 	}
 }
@@ -341,7 +341,7 @@ function metricLine(parent: HTMLElement, snapshot: WeatherSnapshot, r: Resolved,
 		parent,
 		metricsFor(snapshot, r).map((m) => ({ icon: m.icon, text: `${m.label} ${m.value}` })),
 		r,
-		`${cls} hearth-weather-meta-wrap`,
+		`${cls} zerohearth-weather-meta-wrap`,
 	);
 }
 
@@ -356,24 +356,24 @@ function placeLine(parent: HTMLElement, cfg: WeatherConfig, cls: string): void {
  * temperature and — when precipitation is on — its chance of rain. */
 function hourlyStrip(parent: HTMLElement, hours: WeatherHour[], r: Resolved): void {
 	if (!hours.length) return;
-	const strip = parent.createDiv("hearth-weather-hours");
+	const strip = parent.createDiv("zerohearth-weather-hours");
 	hours.forEach((hour, i) => {
-		const col = strip.createDiv("hearth-weather-hour");
+		const col = strip.createDiv("zerohearth-weather-hour");
 		col.toggleClass("is-now", i === 0);
 		col.createDiv({
-			cls: "hearth-weather-hour-label",
+			cls: "zerohearth-weather-hour-label",
 			// The first column is "now" rather than a time the reader has to
 			// compare against their own clock.
 			text: i === 0 ? t().cards.weather.now : formatHour(hour.time, r.hour12),
 		});
-		conditionGlyph(col, hour.code, hour.isDay, "hearth-weather-hour-icon", r);
+		conditionGlyph(col, hour.code, hour.isDay, "zerohearth-weather-hour-icon", r);
 		col.createDiv({
-			cls: "hearth-weather-hour-temp",
+			cls: "zerohearth-weather-hour-temp",
 			text: formatTemp(hour.temp, r.tempUnit),
 		});
 		if (r.showPrecip && hour.precipChance !== null) {
 			col.createDiv({
-				cls: "hearth-weather-hour-precip",
+				cls: "zerohearth-weather-hour-precip",
 				text: formatPercent(hour.precipChance),
 			});
 		}
@@ -412,7 +412,7 @@ function temperatureCurve(parent: HTMLElement, hours: WeatherHour[]): void {
 	});
 
 	const svg = parent.createSvg("svg", {
-		cls: "hearth-weather-curve",
+		cls: "zerohearth-weather-curve",
 		attr: { viewBox: `0 0 ${width} ${height}`, preserveAspectRatio: "none" },
 	});
 	const line = points.map((p) => `${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(" ");
@@ -422,19 +422,19 @@ function temperatureCurve(parent: HTMLElement, hours: WeatherHour[]): void {
 	const first = points[0];
 	const last = points[points.length - 1];
 	svg.createSvg("polygon", {
-		cls: "hearth-weather-curve-fill",
+		cls: "zerohearth-weather-curve-fill",
 		attr: {
 			points: `${first.x.toFixed(2)},${height} ${line} ${last.x.toFixed(2)},${height}`,
 		},
 	});
 	svg.createSvg("polyline", {
-		cls: "hearth-weather-curve-line",
+		cls: "zerohearth-weather-curve-line",
 		attr: { points: line, "vector-effect": "non-scaling-stroke" },
 	});
 	for (const point of points) {
 		if (point.temp === null) continue;
 		svg.createSvg("circle", {
-			cls: "hearth-weather-curve-dot",
+			cls: "zerohearth-weather-curve-dot",
 			attr: {
 				cx: point.x.toFixed(2),
 				cy: point.y.toFixed(2),
@@ -458,33 +458,33 @@ function dailyList(parent: HTMLElement, days: WeatherDay[], r: Resolved): void {
 	const ceiling = highs.length ? Math.max(...highs) : 1;
 	const span = ceiling - floor || 1;
 
-	const list = parent.createDiv("hearth-weather-days");
+	const list = parent.createDiv("zerohearth-weather-days");
 	days.forEach((day, i) => {
-		const row = list.createDiv("hearth-weather-day");
+		const row = list.createDiv("zerohearth-weather-day");
 		row.createDiv({
-			cls: "hearth-weather-day-label",
+			cls: "zerohearth-weather-day-label",
 			text: i === 0 ? t().cards.weather.todayLabel : formatWeekday(day.date),
 		});
-		conditionGlyph(row, day.code, true, "hearth-weather-day-icon", r);
+		conditionGlyph(row, day.code, true, "zerohearth-weather-day-icon", r);
 		if (r.showPrecip) {
 			row.createDiv({
-				cls: "hearth-weather-day-precip",
+				cls: "zerohearth-weather-day-precip",
 				text: day.precipChance === null ? "" : formatPercent(day.precipChance),
 			});
 		}
 		row.createDiv({
-			cls: "hearth-weather-day-low",
+			cls: "zerohearth-weather-day-low",
 			text: formatTemp(day.min, r.tempUnit),
 		});
-		const track = row.createDiv("hearth-weather-day-track");
-		const bar = track.createDiv("hearth-weather-day-bar");
+		const track = row.createDiv("zerohearth-weather-day-track");
+		const bar = track.createDiv("zerohearth-weather-day-bar");
 		const from = day.min === null ? floor : day.min;
 		const to = day.max === null ? ceiling : day.max;
 		bar.style.insetInlineStart = `${((from - floor) / span) * 100}%`;
 		// A degree-wide range would otherwise vanish; keep a sliver visible.
 		bar.style.width = `${Math.max(((to - from) / span) * 100, 6)}%`;
 		row.createDiv({
-			cls: "hearth-weather-day-high",
+			cls: "zerohearth-weather-day-high",
 			text: formatTemp(day.max, r.tempUnit),
 		});
 	});
@@ -493,13 +493,13 @@ function dailyList(parent: HTMLElement, days: WeatherDay[], r: Resolved): void {
 /** The metric grid used by the detailed style. */
 function metricGrid(parent: HTMLElement, metrics: Metric[]): void {
 	if (!metrics.length) return;
-	const grid = parent.createDiv("hearth-weather-metrics");
+	const grid = parent.createDiv("zerohearth-weather-metrics");
 	for (const metric of metrics) {
-		const tile = grid.createDiv("hearth-weather-metric");
-		glyph(tile, metric.icon, "hearth-weather-metric-icon");
-		const text = tile.createDiv("hearth-weather-metric-text");
-		text.createDiv({ cls: "hearth-weather-metric-label", text: metric.label });
-		text.createDiv({ cls: "hearth-weather-metric-value", text: metric.value });
+		const tile = grid.createDiv("zerohearth-weather-metric");
+		glyph(tile, metric.icon, "zerohearth-weather-metric-icon");
+		const text = tile.createDiv("zerohearth-weather-metric-text");
+		text.createDiv({ cls: "zerohearth-weather-metric-label", text: metric.label });
+		text.createDiv({ cls: "zerohearth-weather-metric-value", text: metric.value });
 	}
 }
 
@@ -517,17 +517,17 @@ export function updatedText(snapshot: WeatherSnapshot, r: Resolved): string {
 /** That line on the card, when the card is set to show it. */
 function updatedLine(parent: HTMLElement, snapshot: WeatherSnapshot, r: Resolved): void {
 	if (!r.showUpdated) return;
-	parent.createDiv({ cls: "hearth-weather-updated", text: updatedText(snapshot, r) });
+	parent.createDiv({ cls: "zerohearth-weather-updated", text: updatedText(snapshot, r) });
 }
 
 // ---- Styles -------------------------------------------------------------
 
 /** Minimal: one glyph, one temperature. Anything else is opt-in. */
 function paintMinimal(wrap: HTMLElement, snapshot: WeatherSnapshot, cfg: WeatherConfig, r: Resolved): void {
-	const hero = wrap.createDiv("hearth-weather-hero");
-	conditionGlyph(hero, snapshot.now.code, snapshot.now.isDay, "hearth-weather-glyph", r, true);
+	const hero = wrap.createDiv("zerohearth-weather-hero");
+	conditionGlyph(hero, snapshot.now.code, snapshot.now.isDay, "zerohearth-weather-glyph", r, true);
 	hero.createDiv({
-		cls: "hearth-weather-temp",
+		cls: "zerohearth-weather-temp",
 		text: formatTemp(snapshot.now.temp, r.tempUnit),
 	});
 
@@ -540,24 +540,24 @@ function paintMinimal(wrap: HTMLElement, snapshot: WeatherSnapshot, cfg: Weather
 
 /** Compact: a single row — glyph, temperature, and the words beside them. */
 function paintCompact(wrap: HTMLElement, snapshot: WeatherSnapshot, cfg: WeatherConfig, r: Resolved): void {
-	const row = wrap.createDiv("hearth-weather-row");
-	conditionGlyph(row, snapshot.now.code, snapshot.now.isDay, "hearth-weather-glyph", r, true);
+	const row = wrap.createDiv("zerohearth-weather-row");
+	conditionGlyph(row, snapshot.now.code, snapshot.now.isDay, "zerohearth-weather-glyph", r, true);
 	row.createDiv({
-		cls: "hearth-weather-temp",
+		cls: "zerohearth-weather-temp",
 		text: formatTemp(snapshot.now.temp, r.tempUnit),
 	});
 
-	const text = row.createDiv("hearth-weather-rowtext");
+	const text = row.createDiv("zerohearth-weather-rowtext");
 	if (r.showCondition) {
 		text.createDiv({
-			cls: "hearth-weather-condition",
+			cls: "zerohearth-weather-condition",
 			text: conditionText(snapshot.now.code),
 		});
 	}
-	if (r.showLocation) placeLine(text, cfg, "hearth-weather-place");
+	if (r.showLocation) placeLine(text, cfg, "zerohearth-weather-place");
 	headline(text, snapshot, r);
 
-	metricLine(wrap, snapshot, r, "hearth-weather-meta");
+	metricLine(wrap, snapshot, r, "zerohearth-weather-meta");
 	hourlyStrip(wrap, upcomingHours(snapshot, r.hourlyCount), r);
 	dailyList(wrap, upcomingDays(snapshot, r.dailyCount), r);
 	updatedLine(wrap, snapshot, r);
@@ -566,20 +566,20 @@ function paintCompact(wrap: HTMLElement, snapshot: WeatherSnapshot, cfg: Weather
 /** Detailed: the current conditions, then every metric that is switched on, then
  * the forecast strips. The weather-station layout. */
 function paintDetailed(wrap: HTMLElement, snapshot: WeatherSnapshot, cfg: WeatherConfig, r: Resolved): void {
-	const head = wrap.createDiv("hearth-weather-head");
-	conditionGlyph(head, snapshot.now.code, snapshot.now.isDay, "hearth-weather-glyph", r, true);
-	const headText = head.createDiv("hearth-weather-headtext");
+	const head = wrap.createDiv("zerohearth-weather-head");
+	conditionGlyph(head, snapshot.now.code, snapshot.now.isDay, "zerohearth-weather-glyph", r, true);
+	const headText = head.createDiv("zerohearth-weather-headtext");
 	headText.createDiv({
-		cls: "hearth-weather-temp",
+		cls: "zerohearth-weather-temp",
 		text: formatTemp(snapshot.now.temp, r.tempUnit),
 	});
 	if (r.showCondition) {
 		headText.createDiv({
-			cls: "hearth-weather-condition",
+			cls: "zerohearth-weather-condition",
 			text: conditionText(snapshot.now.code),
 		});
 	}
-	if (r.showLocation) placeLine(headText, cfg, "hearth-weather-place");
+	if (r.showLocation) placeLine(headText, cfg, "zerohearth-weather-place");
 	headline(headText, snapshot, r);
 
 	metricGrid(wrap, metricsFor(snapshot, r));
@@ -591,35 +591,35 @@ function paintDetailed(wrap: HTMLElement, snapshot: WeatherSnapshot, cfg: Weathe
 /** Forecast: the curve is the point. The current conditions shrink to one line
  * above it and the daily strip sits below. */
 function paintForecast(wrap: HTMLElement, snapshot: WeatherSnapshot, cfg: WeatherConfig, r: Resolved): void {
-	const row = wrap.createDiv("hearth-weather-row hearth-weather-row-tight");
-	conditionGlyph(row, snapshot.now.code, snapshot.now.isDay, "hearth-weather-glyph", r, true);
+	const row = wrap.createDiv("zerohearth-weather-row zerohearth-weather-row-tight");
+	conditionGlyph(row, snapshot.now.code, snapshot.now.isDay, "zerohearth-weather-glyph", r, true);
 	row.createDiv({
-		cls: "hearth-weather-temp",
+		cls: "zerohearth-weather-temp",
 		text: formatTemp(snapshot.now.temp, r.tempUnit),
 	});
-	const text = row.createDiv("hearth-weather-rowtext");
+	const text = row.createDiv("zerohearth-weather-rowtext");
 	if (r.showCondition) {
 		text.createDiv({
-			cls: "hearth-weather-condition",
+			cls: "zerohearth-weather-condition",
 			text: conditionText(snapshot.now.code),
 		});
 	}
-	if (r.showLocation) placeLine(text, cfg, "hearth-weather-place");
+	if (r.showLocation) placeLine(text, cfg, "zerohearth-weather-place");
 	headline(text, snapshot, r);
 
 	const hours = upcomingHours(snapshot, r.hourlyCount || defaultHourlyCount("forecast"));
 	if (hours.length >= 2) {
-		const chart = wrap.createDiv("hearth-weather-chart");
+		const chart = wrap.createDiv("zerohearth-weather-chart");
 		temperatureCurve(chart, hours);
-		const labels = chart.createDiv("hearth-weather-chart-labels");
+		const labels = chart.createDiv("zerohearth-weather-chart-labels");
 		hours.forEach((hour, i) => {
-			const col = labels.createDiv("hearth-weather-chart-label");
+			const col = labels.createDiv("zerohearth-weather-chart-label");
 			col.createDiv({
-				cls: "hearth-weather-chart-temp",
+				cls: "zerohearth-weather-chart-temp",
 				text: formatTemp(hour.temp, r.tempUnit),
 			});
 			col.createDiv({
-				cls: "hearth-weather-chart-hour",
+				cls: "zerohearth-weather-chart-hour",
 				text: i === 0 ? t().cards.weather.now : formatHour(hour.time, r.hour12),
 			});
 		});
@@ -640,24 +640,24 @@ function paintArtistic(wrap: HTMLElement, snapshot: WeatherSnapshot, cfg: Weathe
 		density: r.density,
 		design: r.expressive ? "expressive" : "classic",
 	});
-	const content = sky.createDiv("hearth-weather-art-content");
+	const content = sky.createDiv("zerohearth-weather-art-content");
 
-	const top = content.createDiv("hearth-weather-art-top");
-	if (r.showLocation) placeLine(top, cfg, "hearth-weather-art-place");
+	const top = content.createDiv("zerohearth-weather-art-top");
+	if (r.showLocation) placeLine(top, cfg, "zerohearth-weather-art-place");
 	if (r.showCondition) {
 		top.createDiv({
-			cls: "hearth-weather-art-condition",
+			cls: "zerohearth-weather-art-condition",
 			text: conditionText(now.code),
 		});
 	}
 
-	const bottom = content.createDiv("hearth-weather-art-bottom");
+	const bottom = content.createDiv("zerohearth-weather-art-bottom");
 	bottom.createDiv({
-		cls: "hearth-weather-art-temp",
+		cls: "zerohearth-weather-art-temp",
 		text: formatTemp(now.temp, r.tempUnit),
 	});
-	headline(bottom, snapshot, r, "hearth-weather-art-meta");
-	metricLine(bottom, snapshot, r, "hearth-weather-art-meta");
+	headline(bottom, snapshot, r, "zerohearth-weather-art-meta");
+	metricLine(bottom, snapshot, r, "zerohearth-weather-art-meta");
 	hourlyStrip(bottom, upcomingHours(snapshot, r.hourlyCount), r);
 	dailyList(bottom, upcomingDays(snapshot, r.dailyCount), r);
 	updatedLine(bottom, snapshot, r);
@@ -745,18 +745,18 @@ export function renderWeather(
 	const disabled = view.plugin.settings.disableExternalCalls;
 	const refreshMin = cfg.refreshMin ?? 30;
 	// A forecast is published hourly at best, so the cache floor is generous
-	// even when the card is set to "manual only" — it stops Hearth's frequent
+	// even when the card is set to "manual only" — it stops ZeroHearth's frequent
 	// full re-renders from turning into requests.
 	const ttlMs = Math.max(refreshMin, 10) * 60_000;
 
 	// The card body is the size container every style measures itself against,
 	// so a reading scales to the card's height as well as its width instead of
 	// being cut in half on a short card.
-	body.addClass("hearth-weather-host");
+	body.addClass("zerohearth-weather-host");
 	// The artistic sky and the moon's night are edge-to-edge; the others — the
 	// clean moon among them — keep the card's own padding.
 	if (r.style === "artistic" || (r.style === "moon" && r.moonLayout !== "clean")) {
-		body.addClass("hearth-weather-flush");
+		body.addClass("zerohearth-weather-flush");
 	}
 
 	// Async loads may resolve after the card is torn down and rebuilt; ignore them.
@@ -770,7 +770,7 @@ export function renderWeather(
 	/** Walks the daylight style's sun on between repaints; null elsewhere. */
 	let tick: ((ms: number) => boolean) | null = null;
 
-	const wrap = body.createDiv(`hearth-weather is-${r.style}`);
+	const wrap = body.createDiv(`zerohearth-weather is-${r.style}`);
 	wrap.toggleClass("is-expressive", r.expressive);
 	// The expressive glyphs have motion of their own (a turning sun), under the
 	// same switch as the painted sky's.
@@ -983,7 +983,7 @@ export function daySummary(day: WeatherDay, r: Resolved): string[] {
  * than patching it, which is cheap at this size and keeps one drawing path for
  * the first open, a day change and a refresh alike.
  */
-class WeatherDetailModal extends HearthModal {
+class WeatherDetailModal extends ZeroHearthModal {
 	/** The day the hourly table is showing, as a `YYYY-MM-DD`. Null until the
 	 * first draw picks today. */
 	private day: string | null = null;
@@ -995,13 +995,13 @@ class WeatherDetailModal extends HearthModal {
 	}
 
 	onOpen(): void {
-		this.modalEl.addClass("hearth-weather-modal");
+		this.modalEl.addClass("zerohearth-weather-modal");
 		const place = this.opts.cfg.place;
 		this.titleEl.setText(place?.name?.trim() || t().cards.weather.detail.title);
 		if (place?.region) {
-			this.titleEl.createSpan({ cls: "hearth-weather-detail-region", text: place.region });
+			this.titleEl.createSpan({ cls: "zerohearth-weather-detail-region", text: place.region });
 		}
-		this.host = this.contentEl.createDiv("hearth-weather-detail");
+		this.host = this.contentEl.createDiv("zerohearth-weather-detail");
 		// The card's design reaches its dialog: flat glyphs, and the metric
 		// tiles, day rows and range bars in the Expressive manner.
 		this.host.toggleClass("is-expressive", this.opts.r.expressive);
@@ -1040,15 +1040,15 @@ class WeatherDetailModal extends HearthModal {
 		const strings = t().cards.weather;
 		const now = snapshot.now;
 
-		const head = this.host.createDiv("hearth-weather-detail-now");
-		conditionGlyph(head, now.code, now.isDay, "hearth-weather-detail-glyph", r, true);
-		const text = head.createDiv("hearth-weather-detail-nowtext");
+		const head = this.host.createDiv("zerohearth-weather-detail-now");
+		conditionGlyph(head, now.code, now.isDay, "zerohearth-weather-detail-glyph", r, true);
+		const text = head.createDiv("zerohearth-weather-detail-nowtext");
 		text.createDiv({
-			cls: "hearth-weather-detail-temp",
+			cls: "zerohearth-weather-detail-temp",
 			text: formatTemp(now.temp, r.tempUnit, true),
 		});
 		text.createDiv({
-			cls: "hearth-weather-detail-condition",
+			cls: "zerohearth-weather-detail-condition",
 			text: conditionText(now.code),
 		});
 		const bits: string[] = [];
@@ -1057,7 +1057,7 @@ class WeatherDetailModal extends HearthModal {
 		if (day && (day.max !== null || day.min !== null)) {
 			bits.push(strings.highLow(formatTemp(day.max, r.tempUnit), formatTemp(day.min, r.tempUnit)));
 		}
-		metaLine(text, bits, "hearth-weather-detail-meta");
+		metaLine(text, bits, "zerohearth-weather-detail-meta");
 	}
 
 	/** Every current reading, in the grid the card uses for the two or three it
@@ -1082,10 +1082,10 @@ class WeatherDetailModal extends HearthModal {
 		const ceiling = highs.length ? Math.max(...highs) : 1;
 		const span = ceiling - floor || 1;
 
-		const list = section.createDiv("hearth-weather-detail-days");
+		const list = section.createDiv("zerohearth-weather-detail-days");
 		days.forEach((day, i) => {
 			const label = i === 0 ? strings.todayLabel : formatWeekday(day.date, "long");
-			const row = list.createDiv("hearth-weather-detail-day");
+			const row = list.createDiv("zerohearth-weather-detail-day");
 			row.toggleClass("is-selected", day.date === this.day);
 			const pick = (): void => {
 				this.day = day.date;
@@ -1094,31 +1094,31 @@ class WeatherDetailModal extends HearthModal {
 			row.addEventListener("click", pick);
 			makeClickable(row, pick, strings.detail.selectDay(label));
 
-			const name = row.createDiv("hearth-weather-detail-day-name");
-			name.createDiv({ cls: "hearth-weather-detail-day-weekday", text: label });
-			name.createDiv({ cls: "hearth-weather-detail-day-date", text: formatDayDate(day.date) });
-			conditionGlyph(row, day.code, true, "hearth-weather-detail-day-icon", this.opts.r);
+			const name = row.createDiv("zerohearth-weather-detail-day-name");
+			name.createDiv({ cls: "zerohearth-weather-detail-day-weekday", text: label });
+			name.createDiv({ cls: "zerohearth-weather-detail-day-date", text: formatDayDate(day.date) });
+			conditionGlyph(row, day.code, true, "zerohearth-weather-detail-day-icon", this.opts.r);
 			row.createDiv({
-				cls: "hearth-weather-detail-day-condition",
+				cls: "zerohearth-weather-detail-day-condition",
 				text: conditionText(day.code),
 			});
 			row.createDiv({
-				cls: "hearth-weather-detail-day-precip",
+				cls: "zerohearth-weather-detail-day-precip",
 				text: day.precipChance === null ? "" : formatPercent(day.precipChance),
 			});
 			row.createDiv({
-				cls: "hearth-weather-detail-day-low",
+				cls: "zerohearth-weather-detail-day-low",
 				text: formatTemp(day.min, r.tempUnit),
 			});
-			const bar = row.createDiv("hearth-weather-detail-day-track").createDiv(
-				"hearth-weather-detail-day-bar",
+			const bar = row.createDiv("zerohearth-weather-detail-day-track").createDiv(
+				"zerohearth-weather-detail-day-bar",
 			);
 			const from = day.min === null ? floor : day.min;
 			const to = day.max === null ? ceiling : day.max;
 			bar.style.insetInlineStart = `${((from - floor) / span) * 100}%`;
 			bar.style.width = `${Math.max(((to - from) / span) * 100, 6)}%`;
 			row.createDiv({
-				cls: "hearth-weather-detail-day-high",
+				cls: "zerohearth-weather-detail-day-high",
 				text: formatTemp(day.max, r.tempUnit),
 			});
 		});
@@ -1133,17 +1133,17 @@ class WeatherDetailModal extends HearthModal {
 		const detail = strings.detail;
 		const label = isToday ? strings.todayLabel : formatWeekday(day.date, "long");
 		const section = this.section(detail.hoursFor(`${label}, ${formatDayDate(day.date)}`));
-		metaLine(section, daySummary(day, r), "hearth-weather-detail-summary");
+		metaLine(section, daySummary(day, r), "zerohearth-weather-detail-summary");
 
 		const hours = hoursOn(snapshot, day.date);
 		if (!hours.length) {
-			section.createDiv({ cls: "hearth-weather-detail-empty", text: detail.noHours });
+			section.createDiv({ cls: "zerohearth-weather-detail-empty", text: detail.noHours });
 			return;
 		}
 
 		const table = section
-			.createDiv("hearth-weather-detail-scroll")
-			.createEl("table", { cls: "hearth-weather-detail-table" });
+			.createDiv("zerohearth-weather-detail-scroll")
+			.createEl("table", { cls: "zerohearth-weather-detail-table" });
 		const headRow = table.createEl("thead").createEl("tr");
 		const columns = [
 			detail.columnTime,
@@ -1165,14 +1165,14 @@ class WeatherDetailModal extends HearthModal {
 			const row = body.createEl("tr");
 			row.toggleClass("is-now", isNow);
 			row.createEl("td", {
-				cls: "hearth-weather-detail-cell-time",
+				cls: "zerohearth-weather-detail-cell-time",
 				text: isNow ? strings.now : formatHour(hour.time, r.hour12),
 			});
 			conditionGlyph(
-				row.createEl("td", { cls: "hearth-weather-detail-cell-icon" }),
+				row.createEl("td", { cls: "zerohearth-weather-detail-cell-icon" }),
 				hour.code,
 				hour.isDay,
-				"hearth-weather-detail-cellicon",
+				"zerohearth-weather-detail-cellicon",
 				r,
 			);
 			row.createEl("td", { text: conditionText(hour.code) });
@@ -1189,17 +1189,17 @@ class WeatherDetailModal extends HearthModal {
 	 * a newer one. */
 	private drawFoot(snapshot: WeatherSnapshot): void {
 		const detail = t().cards.weather.detail;
-		const foot = this.host.createDiv("hearth-weather-detail-foot");
+		const foot = this.host.createDiv("zerohearth-weather-detail-foot");
 		metaLine(
 			foot,
 			[updatedText(snapshot, this.opts.r), detail.source],
-			"hearth-weather-detail-source",
+			"zerohearth-weather-detail-source",
 		);
 
 		const reload = this.opts.reload;
 		if (!reload) return;
-		const button = foot.createEl("button", { cls: "hearth-weather-detail-refresh" });
-		setIcon(button.createSpan("hearth-weather-detail-btnicon"), "refresh-cw");
+		const button = foot.createEl("button", { cls: "zerohearth-weather-detail-refresh" });
+		setIcon(button.createSpan("zerohearth-weather-detail-btnicon"), "refresh-cw");
 		button.createSpan({ text: detail.refresh });
 		button.disabled = this.refreshing;
 		button.addEventListener("click", () => {
@@ -1216,8 +1216,8 @@ class WeatherDetailModal extends HearthModal {
 
 	/** A titled block of the body. */
 	private section(title: string): HTMLElement {
-		const section = this.host.createDiv("hearth-weather-detail-section");
-		section.createDiv({ cls: "hearth-weather-detail-heading", text: title });
+		const section = this.host.createDiv("zerohearth-weather-detail-section");
+		section.createDiv({ cls: "zerohearth-weather-detail-heading", text: title });
 		return section;
 	}
 }

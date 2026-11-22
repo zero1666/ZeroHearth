@@ -966,7 +966,7 @@ describe("the full settings backup carries every setting", () => {
 	});
 });
 
-describe("reading every export Hearth has ever written", () => {
+describe("reading every export ZeroHearth has ever written", () => {
 	it("reads a v3 envelope", () => {
 		const pkg = captureLayout(opinionatedVault());
 		const outcome = readPackage(serializePackage(pkg));
@@ -1039,7 +1039,7 @@ describe("reading every export Hearth has ever written", () => {
 		);
 	});
 
-	it("says so when a file comes from a newer Hearth", () => {
+	it("says so when a file comes from a newer ZeroHearth", () => {
 		const pkg = captureLayout(vault());
 		pkg.hearth.format = PACKAGE_FORMAT + 5;
 		const outcome = readPackage(serializePackage(pkg));
@@ -1071,12 +1071,12 @@ describe("reading every export Hearth has ever written", () => {
 		expect(validatePackage(s, { hearth: { format: 3, kind: "settings" }, payload: {} })).toBeNull();
 	});
 
-	it("rejects what isn't a Hearth file, without touching the vault", () => {
+	it("rejects what isn't a ZeroHearth file, without touching the vault", () => {
 		expect(readPackage("not json").error).toBe("invalidJson");
 		expect(readPackage("[]").error).toBe("notAnObject");
-		expect(readPackage("{}").error).toBe("notHearth");
+		expect(readPackage("{}").error).toBe("notZeroHearth");
 		expect(readPackage(JSON.stringify({ hearth: { format: 3, kind: "nope" } })).error).toBe(
-			"notHearth",
+			"notZeroHearth",
 		);
 	});
 });
@@ -1409,13 +1409,13 @@ describe("carrying the wallpaper", () => {
 		await embedAssets(pkg, source);
 
 		const target = fakeStore({});
-		const report = await materializeAssets(pkg, target, "Hearth/imported");
+		const report = await materializeAssets(pkg, target, "ZeroHearth/imported");
 
-		expect(report.written).toEqual(["Hearth/imported/wall.png"]);
-		expect(target.written["Hearth/imported/wall.png"]).toBe("PNGDATA");
+		expect(report.written).toEqual(["ZeroHearth/imported/wall.png"]);
+		expect(target.written["ZeroHearth/imported/wall.png"]).toBe("PNGDATA");
 		expect(
 			(pkg.payload as { dashboard: Dashboard }).dashboard.background?.value,
-		).toBe("Hearth/imported/wall.png");
+		).toBe("ZeroHearth/imported/wall.png");
 		// The base64 has done its job and must not reach data.json.
 		expect(pkg.assets).toBeUndefined();
 	});
@@ -1424,14 +1424,14 @@ describe("carrying the wallpaper", () => {
 		const mine = opinionatedVault();
 		const pkg = captureDashboard(mine, mine.dashboards[0]);
 		await embedAssets(pkg, fakeStore({ "Attachments/wall.png": "PNGDATA" }));
-		await materializeAssets(pkg, fakeStore({}), "Hearth/imported");
+		await materializeAssets(pkg, fakeStore({}), "ZeroHearth/imported");
 
 		const theirs = contraryVault();
 		applyPackage(theirs, pkg, { mode: "add" });
 
 		const background = effectiveBackground(theirs);
 		expect(background.kind).toBe("image");
-		expect(background.value).toBe("Hearth/imported/wall.png");
+		expect(background.value).toBe("ZeroHearth/imported/wall.png");
 		expect(background.opacity).toBe(0.6);
 		expect(background.layout).toBe("banner");
 	});
@@ -1480,7 +1480,7 @@ describe("carrying the wallpaper", () => {
 		await embedAssets(pkg, fakeStore({ "Attachments/wall.png": "PNGDATA" }));
 		pkg.assets![0].bytes = 99;
 
-		const report = await materializeAssets(pkg, fakeStore({}), "Hearth/imported");
+		const report = await materializeAssets(pkg, fakeStore({}), "ZeroHearth/imported");
 
 		expect(report.written).toEqual([]);
 		expect(report.skipped).toEqual([{ id: "a1", reason: "corrupt" }]);
@@ -1511,7 +1511,7 @@ describe("carrying the wallpaper", () => {
 		pkg.assets![0].bytes = 10;
 
 		const target = fakeStore({});
-		const report = await materializeAssets(pkg, target, "Hearth/imported");
+		const report = await materializeAssets(pkg, target, "ZeroHearth/imported");
 
 		expect(report.skipped).toEqual([{ id: "a1", reason: "tooLarge" }]);
 		expect(report.written).toEqual([]);
@@ -1528,12 +1528,12 @@ describe("carrying the wallpaper", () => {
 		const s = opinionatedVault();
 		const pkg = captureDashboard(s, s.dashboards[0]);
 		await embedAssets(pkg, fakeStore({ "Attachments/wall.png": "PNGDATA" }));
-		pkg.assets![0].name = "../../../.config/plugins/hearth/main.js";
+		pkg.assets![0].name = "../../../.config/plugins/zerohearth/main.js";
 
 		const target = fakeStore({});
-		const report = await materializeAssets(pkg, target, "Hearth/imported");
+		const report = await materializeAssets(pkg, target, "ZeroHearth/imported");
 
-		expect(report.written).toEqual(["Hearth/imported/a1.png"]);
+		expect(report.written).toEqual(["ZeroHearth/imported/a1.png"]);
 	});
 
 	it("keeps a hostile asset id from escaping its folder", async () => {
@@ -1543,14 +1543,14 @@ describe("carrying the wallpaper", () => {
 		// A name whose extension doesn't match the mime sends safeAssetName down
 		// its fallback branch, which is the one that reads the id.
 		pkg.assets![0].name = "x";
-		pkg.assets![0].id = "../../../.config/plugins/hearth/evil";
+		pkg.assets![0].id = "../../../.config/plugins/zerohearth/evil";
 
 		const target = fakeStore({});
-		const report = await materializeAssets(pkg, target, "Hearth/imported");
+		const report = await materializeAssets(pkg, target, "ZeroHearth/imported");
 
 		// The directories are stripped before the name is built, so what is left
 		// is a plain segment inside the import folder.
-		expect(report.written).toEqual(["Hearth/imported/evil.png"]);
+		expect(report.written).toEqual(["ZeroHearth/imported/evil.png"]);
 		expect(Object.keys(target.written).every((path) => !path.includes(".."))).toBe(true);
 	});
 
@@ -1577,7 +1577,7 @@ describe("carrying the wallpaper", () => {
 		// What a gallery download looks like when the pictures were dropped.
 		delete pkg.assets;
 
-		const report = await materializeAssets(pkg, fakeStore({}), "Hearth/imported");
+		const report = await materializeAssets(pkg, fakeStore({}), "ZeroHearth/imported");
 
 		expect(report.missingRefs).toEqual(["a1"]);
 		expect(

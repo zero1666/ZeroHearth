@@ -24,7 +24,7 @@ import { type GalleryEntrySummary, GalleryError } from "./gallery";
 /** What a card kind is called, and the icon it wears — taken from the card
  * registry so the gallery names a `tasks` card exactly as the picker does. A
  * kind this build has never heard of keeps its raw id and a neutral icon,
- * which is also what tells the reader they need a newer Hearth. */
+ * which is also what tells the reader they need a newer ZeroHearth. */
 export function cardKindLabel(kind: string): { name: string; icon: string } {
 	// An own-property check, for the same reason `SKELETON` is a Map: `kind`
 	// comes from a server, and `CARD_DEFINITIONS["toString"]` is a function
@@ -61,12 +61,12 @@ export function renderPreview(
 	parent: HTMLElement,
 	opts: { snapshot?: string; wallpaper?: string; large?: boolean } = {},
 ): HTMLElement {
-	const frame = parent.createDiv("hearth-gallery-preview");
+	const frame = parent.createDiv("zerohearth-gallery-preview");
 	frame.toggleClass("is-large", opts.large === true);
 
 	if (opts.snapshot) {
 		frame.addClass("is-photo");
-		const shot = frame.createEl("img", { cls: "hearth-gallery-preview-photo" });
+		const shot = frame.createEl("img", { cls: "zerohearth-gallery-preview-photo" });
 		shot.src = opts.snapshot;
 		shot.alt = "";
 		shot.loading = "lazy";
@@ -84,7 +84,7 @@ export function renderPreview(
 	// is the one thing about its look that did travel, so it stands in.
 	if (opts.wallpaper) {
 		frame.addClass("is-wallpaper");
-		const img = frame.createEl("img", { cls: "hearth-gallery-preview-photo" });
+		const img = frame.createEl("img", { cls: "zerohearth-gallery-preview-photo" });
 		img.src = opts.wallpaper;
 		img.alt = "";
 		img.loading = "lazy";
@@ -102,9 +102,9 @@ export function renderPreview(
 
 function renderNoPicture(frame: HTMLElement): void {
 	frame.addClass("is-empty");
-	setIcon(frame.createSpan("hearth-gallery-preview-icon"), "image-off");
+	setIcon(frame.createSpan("zerohearth-gallery-preview-icon"), "image-off");
 	frame.createDiv({
-		cls: "hearth-gallery-preview-note",
+		cls: "zerohearth-gallery-preview-note",
 		text: t().gallery.browse.noPicture,
 	});
 }
@@ -119,15 +119,15 @@ export function renderAuthor(
 ): void {
 	const strings = t().gallery.browse;
 	if (!entry.author) {
-		parent.createSpan({ cls: "hearth-gallery-author is-anonymous", text: strings.anonymous });
+		parent.createSpan({ cls: "zerohearth-gallery-author is-anonymous", text: strings.anonymous });
 		return;
 	}
 	// The mark beside the name, so a shelf of boards by one person reads as one
 	// person's shelf without anybody parsing six-character suffixes.
-	const line = parent.createDiv("hearth-gallery-author-line");
+	const line = parent.createDiv("zerohearth-gallery-author-line");
 	renderAvatar(line, entry.author.publicKey, "is-inline");
 	const el = line.createSpan({
-		cls: "hearth-gallery-author",
+		cls: "zerohearth-gallery-author",
 		// The whole handle, suffix included: `polished-yarrow-n5tjd6` and
 		// `…-n5tjd5` read the same to anyone skimming, and truncating to the two
 		// words would make impersonation a matter of minting keys until they
@@ -162,18 +162,18 @@ export function activate(el: HTMLElement, onActivate: () => void, label?: string
 /** Score and installs, the two numbers every row carries. */
 export function renderStats(parent: HTMLElement, entry: GalleryEntrySummary): void {
 	const strings = t().gallery.browse;
-	const stats = parent.createDiv("hearth-gallery-stats");
+	const stats = parent.createDiv("zerohearth-gallery-stats");
 
-	const score = stats.createDiv("hearth-gallery-stat");
+	const score = stats.createDiv("zerohearth-gallery-stat");
 	score.toggleClass("is-positive", entry.score > 0);
 	score.toggleClass("is-negative", entry.score < 0);
-	setIcon(score.createSpan("hearth-gallery-stat-icon"), "arrow-big-up");
-	score.createSpan({ cls: "hearth-gallery-stat-value", text: strings.score(entry.score) });
+	setIcon(score.createSpan("zerohearth-gallery-stat-icon"), "arrow-big-up");
+	score.createSpan({ cls: "zerohearth-gallery-stat-value", text: strings.score(entry.score) });
 
-	const downloads = stats.createDiv("hearth-gallery-stat");
-	setIcon(downloads.createSpan("hearth-gallery-stat-icon"), "download");
+	const downloads = stats.createDiv("zerohearth-gallery-stat");
+	setIcon(downloads.createSpan("zerohearth-gallery-stat-icon"), "download");
 	downloads.createSpan({
-		cls: "hearth-gallery-stat-value",
+		cls: "zerohearth-gallery-stat-value",
 		text: String(entry.downloads),
 	});
 }
@@ -189,19 +189,19 @@ export function renderEntryCard(
 		onOpenProfile?: (publicKey: string) => void;
 	},
 ): HTMLElement {
-	const card = grid.createDiv("hearth-gallery-card");
+	const card = grid.createDiv("zerohearth-gallery-card");
 	const preview = renderPreview(card, {
 		wallpaper: opts.wallpaper,
 		snapshot: opts.snapshot,
 	});
 	activate(preview, () => opts.onOpen(entry), entry.name);
 
-	const body = card.createDiv("hearth-gallery-card-body");
-	const title = body.createDiv({ cls: "hearth-gallery-card-name", text: entry.name });
+	const body = card.createDiv("zerohearth-gallery-card-body");
+	const title = body.createDiv({ cls: "zerohearth-gallery-card-name", text: entry.name });
 	activate(title, () => opts.onOpen(entry), entry.name);
 	renderAuthor(body, entry, opts.onOpenProfile);
 	if (entry.description) {
-		body.createDiv({ cls: "hearth-gallery-card-desc", text: entry.description });
+		body.createDiv({ cls: "zerohearth-gallery-card-desc", text: entry.description });
 	}
 	renderStats(body, entry);
 	return card;
@@ -217,10 +217,10 @@ export function renderEntryCard(
  * dismisses on click or Escape.
  */
 export function openPictureViewer(src: string, label: string): void {
-	const overlay = document.body.createDiv("hearth-lightbox");
+	const overlay = document.body.createDiv("zerohearth-lightbox");
 	overlay.setAttribute("role", "dialog");
 	overlay.setAttribute("aria-label", label);
-	const img = overlay.createEl("img", { cls: "hearth-lightbox-img" });
+	const img = overlay.createEl("img", { cls: "zerohearth-lightbox-img" });
 	img.src = src;
 	img.alt = label;
 
@@ -249,7 +249,7 @@ export function openPictureViewer(src: string, label: string): void {
  *
  * The host's own explanation is shown only for the two codes where it is a
  * message meant for a person — a refusal and a rejection it chose the wording
- * of. For everything else Hearth says what happened in its own words, because
+ * of. For everything else ZeroHearth says what happened in its own words, because
  * a server's 500-page body is not an error message and pasting one into a modal
  * teaches people to read arbitrary text from an arbitrary host as instructions.
  */
@@ -285,7 +285,7 @@ export function galleryErrorText(err: unknown): string {
 
 /** A date the server sent, as the reader's locale writes it. Dates from a
  * gallery are absolute rather than relative to the vault's clock, so they are
- * formatted rather than run through Hearth's "3 days ago" wording. */
+ * formatted rather than run through ZeroHearth's "3 days ago" wording. */
 export function galleryDate(iso: string | undefined): string {
 	if (!iso) return "";
 	const ms = Date.parse(iso);
@@ -299,7 +299,7 @@ export function galleryDate(iso: string | undefined): string {
 
 /** A modal-sized "nothing to show" block: an icon, a line, and nothing else. */
 export function renderEmpty(parent: HTMLElement, icon: string, text: string): void {
-	const empty = parent.createDiv("hearth-gallery-empty");
-	setIcon(empty.createSpan("hearth-gallery-empty-icon"), icon);
-	empty.createDiv({ cls: "hearth-gallery-empty-text", text });
+	const empty = parent.createDiv("zerohearth-gallery-empty");
+	setIcon(empty.createSpan("zerohearth-gallery-empty-icon"), icon);
+	empty.createDiv({ cls: "zerohearth-gallery-empty-text", text });
 }

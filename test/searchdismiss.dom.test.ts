@@ -62,8 +62,8 @@ function mount() {
 	search.renderBar(wrap);
 	search.renderResultsAndFilters(wrap, wrap, new Component(), { filters: false });
 	const outside = root.createDiv();
-	const input = wrap.querySelector<HTMLInputElement>(".hearth-search-input")!;
-	const results = wrap.querySelector<HTMLElement>(".hearth-search-results")!;
+	const input = wrap.querySelector<HTMLInputElement>(".zerohearth-search-input")!;
+	const results = wrap.querySelector<HTMLElement>(".zerohearth-search-results")!;
 	input.value = "1+1";
 	input.dispatchEvent(new Event("input"));
 	return { results, outside };

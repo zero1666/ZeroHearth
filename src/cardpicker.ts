@@ -6,7 +6,7 @@ import {
 	type App,
 } from "obsidian";
 import { setIcon } from "./glyphs";
-import { HearthModal } from "./uidesign";
+import { ZeroHearthModal } from "./uidesign";
 import {
 	CARD_CATEGORIES,
 	CARD_TEMPLATES,
@@ -45,11 +45,11 @@ import { createKofiTipButton } from "./kofi";
 type PickerScope = "all" | "request" | CardCategory;
 
 /** localStorage key for the scope the picker reopens on. */
-const SCOPE_KEY = "hearth-card-picker-scope";
+const SCOPE_KEY = "zerohearth-card-picker-scope";
 
 export interface CardPickerOptions {
-	/** The running Hearth version, stamped into a card request. */
-	hearthVersion: string;
+	/** The running ZeroHearth version, stamped into a card request. */
+	zerohearthVersion: string;
 	/** Add this template to the dashboard. */
 	onChoose: (template: CardTemplateDef) => void;
 	/**
@@ -69,11 +69,11 @@ export function openCardPicker(app: App, opts: CardPickerOptions): void {
 	new CardPickerModal(app, opts).open();
 }
 
-class CardPickerModal extends HearthModal {
+class CardPickerModal extends ZeroHearthModal {
 	private opts: CardPickerOptions;
 	/** Named `pickerScope`, not `scope`: `Modal` already has a `scope` (its
 	 * keymap `Scope`), and shadowing it would break the modal's key handling —
-	 * the #52 naming hazard documented on `HearthTabbedModal`. */
+	 * the #52 naming hazard documented on `ZeroHearthTabbedModal`. */
 	private pickerScope: PickerScope = "all";
 	private query = "";
 
@@ -98,14 +98,14 @@ class CardPickerModal extends HearthModal {
 		const { contentEl, modalEl } = this;
 		// The frame is sized on modalEl (a grid of tiles needs more than the
 		// default modal width); the content layout hangs off contentEl.
-		modalEl.addClass("hearth-card-picker-modal");
+		modalEl.addClass("zerohearth-card-picker-modal");
 		contentEl.empty();
-		contentEl.addClass("hearth-card-picker");
+		contentEl.addClass("zerohearth-card-picker");
 
 		this.renderSearch(contentEl);
-		const body = contentEl.createDiv("hearth-picker-body");
-		this.railEl = body.createDiv("hearth-picker-rail");
-		this.resultsEl = body.createDiv("hearth-picker-results");
+		const body = contentEl.createDiv("zerohearth-picker-body");
+		this.railEl = body.createDiv("zerohearth-picker-rail");
+		this.resultsEl = body.createDiv("zerohearth-picker-results");
 		this.renderRail();
 		this.renderResults();
 
@@ -138,10 +138,10 @@ class CardPickerModal extends HearthModal {
 	// ---- Search ---------------------------------------------------------
 
 	private renderSearch(containerEl: HTMLElement): void {
-		const row = containerEl.createDiv("hearth-picker-search");
-		setIcon(row.createSpan("hearth-picker-search-icon"), "search");
+		const row = containerEl.createDiv("zerohearth-picker-search");
+		setIcon(row.createSpan("zerohearth-picker-search-icon"), "search");
 		const input = row.createEl("input", {
-			cls: "hearth-picker-search-input",
+			cls: "zerohearth-picker-search-input",
 			attr: {
 				type: "text",
 				placeholder: t().cardPicker.searchPlaceholder,
@@ -152,7 +152,7 @@ class CardPickerModal extends HearthModal {
 		input.addEventListener("input", () => {
 			this.query = input.value.trim();
 			// Typing searches the whole catalogue: a query that matches nothing in
-			// the category you happen to be standing in reads as "Hearth has no
+			// the category you happen to be standing in reads as "ZeroHearth has no
 			// such card", which is exactly the wrong answer.
 			if (this.query && this.pickerScope !== "all") this.setScope("all");
 			else this.renderResults();
@@ -183,15 +183,15 @@ class CardPickerModal extends HearthModal {
 		for (const category of CARD_CATEGORIES) {
 			this.railButton(rail, category, strings.categories[category], CATEGORY_ICONS[category]);
 		}
-		rail.createDiv("hearth-picker-rail-sep");
+		rail.createDiv("zerohearth-picker-rail-sep");
 		// Above "Request a card" and below the categories: the catalogue you can
 		// add from, then whole boards other people have arranged, then the way to
 		// ask for what neither has.
 		if (this.opts.onGallery) {
-			const gallery = rail.createEl("button", { cls: "hearth-picker-rail-btn is-gallery" });
-			setIcon(gallery.createSpan("hearth-picker-rail-icon"), "layout-template");
+			const gallery = rail.createEl("button", { cls: "zerohearth-picker-rail-btn is-gallery" });
+			setIcon(gallery.createSpan("zerohearth-picker-rail-icon"), "layout-template");
 			gallery.createSpan({
-				cls: "hearth-picker-rail-label",
+				cls: "zerohearth-picker-rail-label",
 				text: t().gallery.browse.openLabel,
 			});
 			gallery.setAttribute("aria-label", t().gallery.browse.openAria);
@@ -205,16 +205,16 @@ class CardPickerModal extends HearthModal {
 		// Straight under "Request a card", and the only entry in the rail that
 		// isn't a scope: someone browsing the whole catalogue is exactly who
 		// might feel like leaving a tip, and nothing here is behind one.
-		createKofiTipButton(rail).addClass("hearth-picker-rail-kofi");
+		createKofiTipButton(rail).addClass("zerohearth-picker-rail-kofi");
 	}
 
 	private railButton(rail: HTMLElement, scope: PickerScope, label: string, icon: string): void {
-		const btn = rail.createEl("button", { cls: "hearth-picker-rail-btn" });
+		const btn = rail.createEl("button", { cls: "zerohearth-picker-rail-btn" });
 		btn.toggleClass("is-active", this.pickerScope === scope);
 		btn.toggleClass("is-request", scope === "request");
 		btn.setAttribute("aria-pressed", String(this.pickerScope === scope));
-		setIcon(btn.createSpan("hearth-picker-rail-icon"), icon);
-		btn.createSpan({ cls: "hearth-picker-rail-label", text: label });
+		setIcon(btn.createSpan("zerohearth-picker-rail-icon"), icon);
+		btn.createSpan({ cls: "zerohearth-picker-rail-label", text: label });
 		btn.addEventListener("click", () => this.setScope(scope));
 	}
 
@@ -247,7 +247,7 @@ class CardPickerModal extends HearthModal {
 				const inCategory = matches.filter((tpl) => templateCategory(tpl.id) === category);
 				if (!inCategory.length) continue;
 				results.createDiv({
-					cls: "hearth-picker-section",
+					cls: "zerohearth-picker-section",
 					text: t().cardPicker.categories[category],
 				});
 				this.renderGrid(results, inCategory);
@@ -256,10 +256,10 @@ class CardPickerModal extends HearthModal {
 
 		// A quiet way out at the end of the list, for the case the picker can't
 		// answer: you scrolled everything and none of it was the card you wanted.
-		const foot = results.createDiv("hearth-picker-foot");
+		const foot = results.createDiv("zerohearth-picker-foot");
 		foot.createSpan({ text: t().cardPicker.request.footPrompt });
 		const link = foot.createEl("button", {
-			cls: "hearth-picker-foot-link",
+			cls: "zerohearth-picker-foot-link",
 			text: t().cardPicker.request.footLink,
 		});
 		link.addEventListener("click", () => this.setScope("request"));
@@ -275,7 +275,7 @@ class CardPickerModal extends HearthModal {
 
 		// Name and description both feed the match, so "todo" finds Tasks and
 		// "iframe" finds the web card. Obsidian's own fuzzy matcher, for the same
-		// feel as every other search surface in Hearth.
+		// feel as every other search surface in ZeroHearth.
 		const fuzzy = prepareFuzzySearch(this.query);
 		const ranked: { template: CardTemplateDef; score: number }[] = [];
 		for (const template of scoped) {
@@ -291,23 +291,23 @@ class CardPickerModal extends HearthModal {
 	}
 
 	private renderGrid(containerEl: HTMLElement, templates: CardTemplateDef[]): void {
-		const grid = containerEl.createDiv("hearth-picker-grid");
+		const grid = containerEl.createDiv("zerohearth-picker-grid");
 		for (const template of templates) this.renderTile(grid, template);
 	}
 
 	private renderTile(grid: HTMLElement, template: CardTemplateDef): void {
 		const missing = unmetRequirement(this.app, template);
-		const tile = grid.createEl("button", { cls: "hearth-card-tile" });
+		const tile = grid.createEl("button", { cls: "zerohearth-card-tile" });
 		tile.toggleClass("is-unmet", !!missing);
-		setIcon(tile.createSpan("hearth-card-tile-icon"), template.icon);
+		setIcon(tile.createSpan("zerohearth-card-tile-icon"), template.icon);
 
-		const text = tile.createDiv("hearth-card-tile-text");
-		text.createDiv({ cls: "hearth-card-tile-name", text: templateName(template) });
+		const text = tile.createDiv("zerohearth-card-tile-text");
+		text.createDiv({ cls: "zerohearth-card-tile-name", text: templateName(template) });
 		const description = templateDescription(template);
-		if (description) text.createDiv({ cls: "hearth-card-tile-desc", text: description });
+		if (description) text.createDiv({ cls: "zerohearth-card-tile-desc", text: description });
 		if (missing) {
-			const badge = text.createDiv("hearth-card-tile-badge");
-			setIcon(badge.createSpan("hearth-card-tile-badge-icon"), "puzzle");
+			const badge = text.createDiv("zerohearth-card-tile-badge");
+			setIcon(badge.createSpan("zerohearth-card-tile-badge-icon"), "puzzle");
 			badge.createSpan({ text: t().cardPicker.requires(missing.name) });
 		}
 
@@ -362,9 +362,9 @@ class CardPickerModal extends HearthModal {
 	}
 
 	private renderNoMatches(containerEl: HTMLElement): void {
-		const empty = containerEl.createDiv("hearth-picker-empty");
-		setIcon(empty.createSpan("hearth-picker-empty-icon"), "search-x");
-		empty.createDiv({ cls: "hearth-picker-empty-text", text: t().cardPicker.noMatches });
+		const empty = containerEl.createDiv("zerohearth-picker-empty");
+		setIcon(empty.createSpan("zerohearth-picker-empty-icon"), "search-x");
+		empty.createDiv({ cls: "zerohearth-picker-empty-text", text: t().cardPicker.noMatches });
 		const btn = empty.createEl("button", {
 			cls: "mod-cta",
 			text: t().cardPicker.request.railLabel,
@@ -376,12 +376,12 @@ class CardPickerModal extends HearthModal {
 
 	private renderRequest(containerEl: HTMLElement): void {
 		const strings = t().cardPicker.request;
-		const page = containerEl.createDiv("hearth-picker-request");
-		page.createDiv({ cls: "hearth-picker-section", text: strings.heading });
-		page.createDiv({ cls: "hearth-picker-request-intro", text: strings.intro });
+		const page = containerEl.createDiv("zerohearth-picker-request");
+		page.createDiv({ cls: "zerohearth-picker-section", text: strings.heading });
+		page.createDiv({ cls: "zerohearth-picker-request-intro", text: strings.intro });
 
 		const context = {
-			hearthVersion: this.opts.hearthVersion,
+			zerohearthVersion: this.opts.zerohearthVersion,
 			obsidianVersion: apiVersion,
 			platform: Platform.isMobile ? "Mobile" : "Desktop",
 		};
@@ -403,18 +403,18 @@ class CardPickerModal extends HearthModal {
 			url: cardRequestMailtoUrl(context),
 		});
 
-		page.createDiv({ cls: "hearth-picker-request-note", text: strings.prefilledNote });
+		page.createDiv({ cls: "zerohearth-picker-request-note", text: strings.prefilledNote });
 	}
 
 	private requestOption(
 		containerEl: HTMLElement,
 		opts: { icon: string; title: string; description: string; action: string; url: string },
 	): void {
-		const row = containerEl.createDiv("hearth-picker-request-option");
-		setIcon(row.createSpan("hearth-picker-request-icon"), opts.icon);
-		const text = row.createDiv("hearth-picker-request-text");
-		text.createDiv({ cls: "hearth-picker-request-title", text: opts.title });
-		text.createDiv({ cls: "hearth-picker-request-desc", text: opts.description });
+		const row = containerEl.createDiv("zerohearth-picker-request-option");
+		setIcon(row.createSpan("zerohearth-picker-request-icon"), opts.icon);
+		const text = row.createDiv("zerohearth-picker-request-text");
+		text.createDiv({ cls: "zerohearth-picker-request-title", text: opts.title });
+		text.createDiv({ cls: "zerohearth-picker-request-desc", text: opts.description });
 		const btn = row.createEl("button", { cls: "mod-cta", text: opts.action });
 		btn.addEventListener("click", () => {
 			// mailto: and https: both go through the OS handler — the browser (or

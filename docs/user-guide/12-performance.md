@@ -1,12 +1,12 @@
 # 12. Performance tiers and battery life
 
-A Hearth dashboard can be an expensive thing to draw. A painted animated sky, a
+A ZeroHearth dashboard can be an expensive thing to draw. A painted animated sky, a
 frosted-glass blur behind every card, a handful of cards refreshing on timers,
-and a hosted plugin view all cost CPU, GPU and battery. Hearth therefore has an
+and a hosted plugin view all cost CPU, GPU and battery. ZeroHearth therefore has an
 explicit performance control rather than leaving you to guess which setting is
 the expensive one.
 
-It lives at **Settings → Hearth → Appearance → Performance**.
+It lives at **Settings → ZeroHearth → Appearance → Performance**.
 
 ## The performance tier
 
@@ -45,7 +45,7 @@ cards, no motion, and no card refreshing itself on a timer.
 
 ### Exactly what each tier changes
 
-Hearth lists the effects of the selected tier under the dropdown. The full set of
+ZeroHearth lists the effects of the selected tier under the dropdown. The full set of
 possible effects, in the order the tiers apply them, is:
 
 | Effect | Applies at |
@@ -70,7 +70,7 @@ minimal tier. It accepts any CSS colour, for example `#4a4459`.
 *Pause animation when Obsidian isn't in front* holds every animation while you
 are working in another application or another window. It is on by default.
 
-The reasoning is worth knowing: a Hearth tab hidden behind another Obsidian tab
+The reasoning is worth knowing: a ZeroHearth tab hidden behind another Obsidian tab
 already costs nothing, because it is not being drawn. This setting covers the
 case a hidden tab does not — a **visible** board in a window you are not using,
 sitting beside a browser or on a second screen.
@@ -81,8 +81,8 @@ and want the sky to keep moving.
 ## A separate tier for mobile
 
 Phones and tablets draw the animated sky and the frosted glass on the smallest
-screen and pay for it out of a battery, so Hearth keeps a **separate tier for
-mobile**: *Performance tier on mobile*, under **Settings → Hearth → Mobile →
+screen and pay for it out of a battery, so ZeroHearth keeps a **separate tier for
+mobile**: *Performance tier on mobile*, under **Settings → ZeroHearth → Mobile →
 Layout**.
 
 It defaults to **Balanced**. It can also be set to *Match desktop*. Your desktop
@@ -94,7 +94,7 @@ Three costs sit outside the tier system, and it is worth knowing which:
 
 **Hosted plugin views.** The **Plugin view** card and a **plugin view
 dashboard** both run another plugin's full view live. That plugin manages its own
-timers, listeners and rendering, so Hearth's tier cannot slow it down. The card's
+timers, listeners and rendering, so ZeroHearth's tier cannot slow it down. The card's
 own settings say as much, and add that if you have already stepped the tier down
 and the dashboard still feels heavy, this is the one card worth removing.
 
@@ -104,7 +104,7 @@ and the dashboard still feels heavy, this is the one card worth removing.
 
 ## A practical tuning order
 
-If a Hearth board is making your machine work harder than you want, change
+If a ZeroHearth board is making your machine work harder than you want, change
 things in roughly this order — each step is cheaper to give up than the one
 before it:
 
@@ -121,14 +121,14 @@ before it:
 
 ## Reduced-motion preferences
 
-If your operating system asks for reduced motion, Hearth honours it: the painted
+If your operating system asks for reduced motion, ZeroHearth honours it: the painted
 sky holds still regardless of the tier and regardless of the per-board *Animate
 the sky* setting. This is accessibility behaviour and is not something you have
-to configure in Hearth.
+to configure in ZeroHearth.
 
 ## Further reading
 
-The repository contains a detailed engineering investigation into Hearth's power
+The repository contains a detailed engineering investigation into ZeroHearth's power
 use on macOS, at
 [`docs/performance/macos-power-investigation.md`](../performance/macos-power-investigation.md),
 along with the benchmarks it was based on. That document is written for

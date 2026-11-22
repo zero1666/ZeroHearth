@@ -47,7 +47,7 @@ import {
 	vaultAssetStore,
 } from "./assets";
 import {
-	type HearthPackage,
+	type ZeroHearthPackage,
 	type ImportResult,
 	failure,
 	warn,
@@ -106,7 +106,7 @@ export interface ExportDashboardOptions extends CaptureDashboardOptions {
 export interface ExportOutcome {
 	/** The file's contents, ready to be written or downloaded. */
 	json: string;
-	pkg: HearthPackage;
+	pkg: ZeroHearthPackage;
 	/** Present when embedding was asked for. */
 	assets?: EmbedReport;
 	/** Present when a strip was asked for: what came out, and anything
@@ -228,9 +228,9 @@ function readErrorMessage(error: string | undefined): string {
 		case "notAnObject":
 			return t().layout.notAnObject;
 		case "emptyPayload":
-			return t().layout.notAHearthLayout;
+			return t().layout.notAZeroHearthLayout;
 		default:
-			return t().layout.notAHearthLayout;
+			return t().layout.notAZeroHearthLayout;
 	}
 }
 

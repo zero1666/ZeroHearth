@@ -1,7 +1,7 @@
 /**
  * Remembering where the board was scrolled to (#276).
  *
- * Hearth rebuilds the whole board on every render — and it renders whenever the
+ * ZeroHearth rebuilds the whole board on every render — and it renders whenever the
  * tab is focused again, so following a link out of a card and coming back used
  * to land at the top of a board the user had scrolled halfway down. The scroll
  * area is a fresh element each time, so there is nothing for the browser to
@@ -14,8 +14,8 @@
  *    and synced between devices; a scroll offset belongs to one tab of one
  *    window. It also gives the asked-for asymmetry for free: a tab keeps its
  *    place across an app reload, because the layout is persisted with it, while
- *    a Hearth tab *replaced* by a note takes its state with it — so opening
- *    Hearth fresh afterwards starts at the top, as a newly opened board should.
+ *    a ZeroHearth tab *replaced* by a note takes its state with it — so opening
+ *    ZeroHearth fresh afterwards starts at the top, as a newly opened board should.
  *  - **Per dashboard.** Switching boards is a re-render like any other, and the
  *    two boards share nothing but a scroll container. Keying the offset by
  *    dashboard means each board comes back where it was left instead of the
@@ -86,7 +86,7 @@ function offset(value: unknown): number {
 /**
  * The offsets held in a leaf's persisted view state.
  *
- * Defensive by design: this is data written by an older (or newer) Hearth into
+ * Defensive by design: this is data written by an older (or newer) ZeroHearth into
  * `workspace.json`, hand-editable, and merged by sync. Anything that isn't a
  * positive number under a non-empty key is dropped, and the result is capped —
  * a board that can't be scrolled to a remembered place is a triviality, a

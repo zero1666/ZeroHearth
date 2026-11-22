@@ -1,4 +1,4 @@
-# Running a Hearth gallery
+# Running a ZeroHearth gallery
 
 This is the operator's guide: what to do, in order, to have a dashboard gallery
 that people can browse and publish to. The wire contract is
@@ -9,11 +9,11 @@ Everything below assumes you have cloned that repository and are at its root:
 
 ```sh
 git clone --recurse-submodules https://github.com/ondreu/hearth-gallery.git
-cd hearth-gallery
+cd zerohearth-gallery
 ```
 
 The `--recurse-submodules` is not optional. The server bundles the plugin's own
-package engine, and `vendor/hearth` is where it reads it from — pinned to a
+package engine, and `vendor/zerohearth` is where it reads it from — pinned to a
 released tag, so a gallery never serves packages the released plugin cannot
 read. After a plain clone, `git submodule update --init --depth 1`.
 
@@ -32,9 +32,9 @@ state in one SQLite file inside a Docker volume. Check it:
 curl http://localhost:8787/v1/info
 ```
 
-Then, in Obsidian: **Settings → Hearth → Import / export → Dashboard gallery**,
+Then, in Obsidian: **Settings → ZeroHearth → Import / export → Dashboard gallery**,
 and replace the address there with `http://localhost:8787` (the field arrives
-holding the default gallery — see §8). Hearth allows plain `http` on a loopback
+holding the default gallery — see §8). ZeroHearth allows plain `http` on a loopback
 address for exactly this, so no certificate is needed to try it. The gallery
 buttons — beside "Add card" in arrange mode, in the add-card picker's rail, and
 on the setup wizard's first step — follow whatever address is saved.
@@ -79,7 +79,7 @@ Three things have to be true, and only the first is about the gallery.
 ### TLS, from something in front
 
 The server speaks plain HTTP and should never be the thing facing the internet.
-Hearth refuses to talk to an `https`-less host anyway (outside loopback), so
+ZeroHearth refuses to talk to an `https`-less host anyway (outside loopback), so
 this is not optional. Caddy is the shortest path:
 
 ```caddyfile
@@ -144,7 +144,7 @@ are actually decisions:
 
 ### Votes can be manufactured, and no setting fixes that
 
-An identity is a key somebody's copy of Hearth generated. Keys are free to mint,
+An identity is a key somebody's copy of ZeroHearth generated. Keys are free to mint,
 so identities are free, so votes are free. Nothing in this design is
 Sybil-resistant and nothing you can add to the server makes it so.
 
@@ -157,7 +157,7 @@ What you have is friction:
   costs an attacker a day per identity.
 
 Say this in your terms rather than implying a robustness the mechanism doesn't
-have. A vote count here means "some number of people who have Hearth installed",
+have. A vote count here means "some number of people who have ZeroHearth installed",
 not "some number of distinct humans".
 
 ### You are hosting other people's files
@@ -185,7 +185,7 @@ The tools for that are in the database, which is one file:
 
 ```sh
 # What is live, newest first
-sqlite3 /var/lib/hearth/gallery.db \
+sqlite3 /var/lib/zerohearth/gallery.db \
 	"SELECT id, name, category, remote_refs, published_at FROM entries WHERE status='live' ORDER BY published_at DESC LIMIT 20;"
 
 # Held for review — the strip's own backstop saw something path-shaped
@@ -220,7 +220,7 @@ and `sqlite3` over ssh is one you already have.
 ### Withdrawing is not deletion
 
 Someone who installed a board keeps it. Nothing about publishing is retractable
-from other people's vaults, and Hearth says so before anybody publishes.
+from other people's vaults, and ZeroHearth says so before anybody publishes.
 
 ---
 
@@ -231,7 +231,7 @@ entries, packages, wallpapers, votes, profiles.
 
 ```sh
 # Safe while the server is running. Don't `cp` a live SQLite file.
-sqlite3 /var/lib/hearth/gallery.db ".backup '/backups/gallery-$(date +%F).db'"
+sqlite3 /var/lib/zerohearth/gallery.db ".backup '/backups/gallery-$(date +%F).db'"
 ```
 
 With Docker:
@@ -273,7 +273,7 @@ until somebody changes it. Three things follow, and they are the reason this
 section exists:
 
 - **It is what you are on the hook for.** Uptime, moderation, and the bandwidth
-  of every listing thumbnail every Hearth user loads when they open the gallery.
+  of every listing thumbnail every ZeroHearth user loads when they open the gallery.
   §5 is the part worth re-reading before a release goes out.
 - **Nothing is fetched until somebody opens it.** Configuring a host draws the
   buttons; it does not make a request. A vault that never opens the gallery
@@ -290,18 +290,18 @@ that one line, plus the address field for anybody who wants to do it per vault.
 
 ## Troubleshooting
 
-**"That isn't an address Hearth will talk to."** `https`, or `http` on
+**"That isn't an address ZeroHearth will talk to."** `https`, or `http` on
 localhost. Not an `http` host on the network — including `http://192.168.…`,
 which is the common one.
 
-**"That address answered, but not like a Hearth gallery."** `GET /v1/info`
+**"That address answered, but not like a ZeroHearth gallery."** `GET /v1/info`
 didn't come back with `api: 1`. Usually a proxy serving something else at that
-path, or a trailing path prefix Hearth kept and the proxy strips.
+path, or a trailing path prefix ZeroHearth kept and the proxy strips.
 
 **Uploads fail at ~1 MB.** The reverse proxy's body limit, not the server's.
 See the Caddy/nginx snippets above.
 
-**"The picture of the board is too large."** A snapshot over 1 MiB. Hearth
+**"The picture of the board is too large."** A snapshot over 1 MiB. ZeroHearth
 writes ~900px JPEGs at quality 70, which land far below that, so this means a
 different client — or a package edited by hand.
 
@@ -315,6 +315,6 @@ proxy. Set it to 0.
 stable from Node 24, which is what the Docker image uses.
 
 **A publish is refused with "still names N things from its author's vault".**
-The uploader published without the strip. In Hearth's own publish path that
+The uploader published without the strip. In ZeroHearth's own publish path that
 can't happen — it is pinned on — so this means a different client, or a
 hand-made file.

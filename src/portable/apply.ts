@@ -3,7 +3,7 @@
  *
  * Two halves. {@link readPackage} turns a string into a package or an error,
  * and recognises the two pre-v3 files as well as the v3 envelope, so there is
- * one parser for every Hearth export that has ever existed.
+ * one parser for every ZeroHearth export that has ever existed.
  * {@link applyPackage} then applies it — through the sanitizers in `layout.ts`,
  * never around them, so a hostile file can still only ever set values the
  * settings UI itself could produce.
@@ -43,7 +43,7 @@ import {
 	type DashboardPayload,
 	emptyResult,
 	failure,
-	type HearthPackage,
+	type ZeroHearthPackage,
 	type ImportMode,
 	type ImportResult,
 	PACKAGE_FORMAT,
@@ -55,12 +55,12 @@ import { boardReferences } from "./refs";
 import { withViews } from "../cardviews";
 
 /** Parse failure reasons, as message keys the caller turns into words. */
-export type ReadError = "invalidJson" | "notAnObject" | "notHearth" | "emptyPayload";
+export type ReadError = "invalidJson" | "notAnObject" | "notZeroHearth" | "emptyPayload";
 
 export interface ReadOutcome {
-	pkg?: HearthPackage;
+	pkg?: ZeroHearthPackage;
 	error?: ReadError;
-	/** The package was written by a newer format than this Hearth knows. It is
+	/** The package was written by a newer format than this ZeroHearth knows. It is
 	 * still applied — unknown fields are ignored — but the caller should say so. */
 	newerFormat?: boolean;
 }
@@ -91,10 +91,10 @@ export function readPackage(json: string): ReadOutcome {
 	if (isBag(parsed.hearth)) {
 		const header = parsed.hearth;
 		const kind = header.kind;
-		if (!PACKAGE_KINDS.includes(kind as PackageKind)) return { error: "notHearth" };
+		if (!PACKAGE_KINDS.includes(kind as PackageKind)) return { error: "notZeroHearth" };
 		if (!isBag(parsed.payload)) return { error: "emptyPayload" };
 		const format = typeof header.format === "number" ? header.format : 0;
-		const pkg: HearthPackage = {
+		const pkg: ZeroHearthPackage = {
 			hearth: {
 				format,
 				kind: kind as PackageKind,
@@ -121,7 +121,7 @@ export function readPackage(json: string): ReadOutcome {
 	if (Array.isArray(parsed.cards)) {
 		return { pkg: legacy("layout", 1, parsed) };
 	}
-	return { error: "notHearth" };
+	return { error: "notZeroHearth" };
 }
 
 /**
@@ -138,10 +138,10 @@ export function readPackage(json: string): ReadOutcome {
  * The size caps are enforced later, at the point of writing, where the encoded
  * length can be checked against what the file claims.
  */
-function sanitizeAssets(raw: unknown): HearthPackage["assets"] {
+function sanitizeAssets(raw: unknown): ZeroHearthPackage["assets"] {
 	if (!Array.isArray(raw)) return undefined;
 	const seen = new Set<string>();
-	const assets = raw.filter((entry): entry is NonNullable<HearthPackage["assets"]>[number] => {
+	const assets = raw.filter((entry): entry is NonNullable<ZeroHearthPackage["assets"]>[number] => {
 		if (!isBag(entry)) return false;
 		const { id, name, mime, bytes, data, from } = entry;
 		if (typeof id !== "string" || !/^[A-Za-z0-9_-]{1,64}$/.test(id)) return false;
@@ -160,7 +160,7 @@ function legacy(
 	kind: PackageKind,
 	format: number,
 	payload: Record<string, unknown>,
-): HearthPackage {
+): ZeroHearthPackage {
 	return { hearth: { format, kind }, payload };
 }
 
@@ -198,7 +198,7 @@ export interface ApplyOptions {
  * Runs the same sanitizers the apply does, on a throwaway copy, and answers
  * with the message the apply would have failed with.
  */
-export function validatePackage(s: HomeSettings, pkg: HearthPackage): string | null {
+export function validatePackage(s: HomeSettings, pkg: ZeroHearthPackage): string | null {
 	if (pkg.hearth.kind === "dashboard") {
 		const board = (pkg.payload as DashboardPayload).dashboard;
 		return sanitizeDashboard(board, s, 0) ? null : t().layout.noValidDashboards;
@@ -212,7 +212,7 @@ export function validatePackage(s: HomeSettings, pkg: HearthPackage): string | n
 	if (!boards) {
 		// A settings package may legitimately carry no boards at all — it is a
 		// projection of every setting, and the layout half is optional.
-		return pkg.hearth.kind === "settings" ? null : t().layout.notAHearthLayout;
+		return pkg.hearth.kind === "settings" ? null : t().layout.notAZeroHearthLayout;
 	}
 	const usable = boards.some((entry, i) => sanitizeDashboard(entry, s, i, payload) !== null);
 	return usable ? null : t().layout.noValidDashboards;
@@ -228,7 +228,7 @@ export function validatePackage(s: HomeSettings, pkg: HearthPackage): string | n
  */
 export function applyPackage(
 	s: HomeSettings,
-	pkg: HearthPackage,
+	pkg: ZeroHearthPackage,
 	opts: ApplyOptions = {},
 ): ImportResult {
 	const result = emptyResult();
@@ -248,7 +248,7 @@ export function applyPackage(
 /** Apply a one-board package. */
 function applyDashboardPackage(
 	s: HomeSettings,
-	pkg: HearthPackage,
+	pkg: ZeroHearthPackage,
 	opts: ApplyOptions,
 	result: ImportResult,
 ): ImportResult {
@@ -256,7 +256,7 @@ function applyDashboardPackage(
 	const board = sanitizeDashboard(payload.dashboard, s, s.dashboards.length);
 	if (!board) return failure(t().layout.noValidDashboards);
 
-	// Count what the sanitizer dropped, so a card this Hearth is too old to
+	// Count what the sanitizer dropped, so a card this ZeroHearth is too old to
 	// know about is reported rather than silently missing.
 	reportDroppedCards(payload.dashboard, board, result);
 
@@ -315,7 +315,7 @@ function applyDashboardPackage(
 /** Apply a layout or full-settings package: the restore path. */
 function applyWholeVaultPackage(
 	s: HomeSettings,
-	pkg: HearthPackage,
+	pkg: ZeroHearthPackage,
 	opts: ApplyOptions,
 	result: ImportResult,
 ): ImportResult {
@@ -331,7 +331,7 @@ function applyWholeVaultPackage(
 			: Array.isArray(payload.cards)
 				? [{ name: t().dashboards.fallbackName, cards: payload.cards }]
 				: [];
-		if (raw.length === 0) return failure(t().layout.notAHearthLayout);
+		if (raw.length === 0) return failure(t().layout.notAZeroHearthLayout);
 		let last: Dashboard | undefined;
 		raw.forEach((entry, i) => {
 			const board = sanitizeDashboard(entry, s, s.dashboards.length + i, payload);
@@ -429,7 +429,7 @@ function adoptLegacyExtras(board: Dashboard, payload: DashboardPayload): void {
 
 /** Cards the sanitizer refused, reported by kind. A card whose `kind` this
  * build doesn't know is the case that matters: it means the package came from a
- * newer Hearth, and saying so is better than a board that is quietly short a
+ * newer ZeroHearth, and saying so is better than a board that is quietly short a
  * card. */
 function reportDroppedCards(
 	raw: unknown,
@@ -451,7 +451,7 @@ function reportDroppedCards(
 
 /**
  * Everything the board wants that this vault may not have: missing note paths,
- * missing plugins, unregistered view types, and the one Hearth setting a folded
+ * missing plugins, unregistered view types, and the one ZeroHearth setting a folded
  * task-field list depends on.
  *
  * All warnings, never refusals. A board whose Dataview card is inert until the
@@ -460,7 +460,7 @@ function reportDroppedCards(
 function checkEnvironment(
 	s: HomeSettings,
 	board: Dashboard,
-	pkg: HearthPackage,
+	pkg: ZeroHearthPackage,
 	env: ImportEnvironment | undefined,
 	result: ImportResult,
 ): void {
@@ -529,7 +529,7 @@ export function uniqueBoardName(s: HomeSettings, name: string): string {
  */
 export function existingBoardFor(
 	s: HomeSettings,
-	pkg: HearthPackage,
+	pkg: ZeroHearthPackage,
 ): Dashboard | undefined {
 	if (pkg.hearth.kind !== "dashboard") return undefined;
 	const sourceId = packageSourceId(pkg);
@@ -540,7 +540,7 @@ export function existingBoardFor(
 /** The package's shared-work identity, if it carries a usable one. Validated
  * here rather than trusted: it is written onto a board and matched against
  * boards already in the vault. */
-export function packageSourceId(pkg: HearthPackage): string | undefined {
+export function packageSourceId(pkg: ZeroHearthPackage): string | undefined {
 	const id = pkg.meta?.id;
 	if (typeof id !== "string") return undefined;
 	const trimmed = id.trim();

@@ -8,7 +8,7 @@ import {
 } from "obsidian";
 import { setIcon } from "./glyphs";
 import type { CardHost } from "./cardhost";
-import { hearthMenu, HearthModal } from "./uidesign";
+import { zerohearthMenu, ZeroHearthModal } from "./uidesign";
 import {
 	createDailyNoteAt,
 	dailyNotesOptions,
@@ -160,7 +160,7 @@ function buildCheckboxSource(cfg: CheckboxTasksSourceConfig | undefined): Checkb
 }
 
 /** Source id given to every checkbox-task entry. */
-const CHECKBOX_SOURCE_ID = "hearth:checkbox";
+const CHECKBOX_SOURCE_ID = "zerohearth:checkbox";
 
 /** Parsed checkbox tasks per note, stamped with the mtime they were read at.
  * The calendar cards are rebuilt on every vault change, so this keeps a
@@ -207,10 +207,10 @@ async function readCheckboxFiles(app: App, files: TFile[]): Promise<void> {
 
 /** Source id given to every TaskNotes task/timeblock entry, so it resolves a
  * label and colour through the same lookup as an ICS feed. */
-const TASKNOTES_SOURCE_ID = "hearth:tasknotes";
+const TASKNOTES_SOURCE_ID = "zerohearth:tasknotes";
 
 /** Source id prefix for a calendar subscribed inside TaskNotes. */
-const TASKNOTES_SUB_PREFIX = "hearth:tnsub:";
+const TASKNOTES_SUB_PREFIX = "zerohearth:tnsub:";
 
 /** Resolve the card's TaskNotes source: its live settings plus the layers to
  * draw. Each layer follows TaskNotes' own calendar settings unless this card
@@ -502,7 +502,7 @@ export function eventDateLabel(ev: IcsOccurrence): string {
 /** A full modal with every field an ICS event carries: name, date, time,
  * location, notes, source calendar and any link. Fields that are absent are
  * simply skipped, so a bare event shows just its name and when. */
-class EventDetailModal extends HearthModal {
+class EventDetailModal extends ZeroHearthModal {
 	constructor(
 		private readonly view: CardHost,
 		private readonly ev: IcsOccurrence,
@@ -513,11 +513,11 @@ class EventDetailModal extends HearthModal {
 
 	onOpen(): void {
 		const ev = this.ev;
-		this.modalEl.addClass("hearth-event-modal");
+		this.modalEl.addClass("zerohearth-event-modal");
 		this.titleEl.setText(ev.summary || t().cards.calendar.untitledEvent);
 
 		const task = taskNotesMeta(ev);
-		const rows = this.contentEl.createDiv("hearth-event-rows");
+		const rows = this.contentEl.createDiv("zerohearth-event-rows");
 		this.row(rows, "calendar-days", eventDateLabel(ev));
 		this.row(rows, "clock", eventTimeLabel(ev));
 		if (ev.location) this.row(rows, "map-pin", ev.location);
@@ -527,24 +527,24 @@ class EventDetailModal extends HearthModal {
 		if (label) {
 			const row = this.row(rows, null, label);
 			// Fill the icon gutter with the source's colour dot.
-			const dot = row.querySelector<HTMLElement>(".hearth-event-icon")!.createDiv(
-				"hearth-event-caldot",
+			const dot = row.querySelector<HTMLElement>(".zerohearth-event-icon")!.createDiv(
+				"zerohearth-event-caldot",
 			);
 			dot.style.setProperty("--ev-color", this.ics.eventColor(ev));
 		}
 
 		if (ev.description) {
-			const block = this.contentEl.createDiv("hearth-event-desc");
+			const block = this.contentEl.createDiv("zerohearth-event-desc");
 			this.row(block, "align-left", t().cards.calendar.eventNotes).addClass(
-				"hearth-event-desc-head",
+				"zerohearth-event-desc-head",
 			);
-			block.createDiv({ cls: "hearth-event-desc-body", text: ev.description });
+			block.createDiv({ cls: "zerohearth-event-desc-body", text: ev.description });
 		}
 
 		if (ev.url && /^https?:\/\//i.test(ev.url)) {
-			const row = this.row(this.contentEl.createDiv("hearth-event-rows"), "link", "");
+			const row = this.row(this.contentEl.createDiv("zerohearth-event-rows"), "link", "");
 			row.createEl("a", {
-				cls: "hearth-event-link",
+				cls: "zerohearth-event-link",
 				text: ev.url,
 				href: ev.url,
 				attr: { target: "_blank", rel: "noopener" },
@@ -565,8 +565,8 @@ class EventDetailModal extends HearthModal {
 		const strings = t().cards.calendar;
 		if (task.statusLabel) {
 			const row = this.row(rows, null, task.statusLabel);
-			const dot = row.querySelector<HTMLElement>(".hearth-event-icon")!.createDiv(
-				"hearth-event-caldot",
+			const dot = row.querySelector<HTMLElement>(".zerohearth-event-icon")!.createDiv(
+				"zerohearth-event-caldot",
 			);
 			dot.style.setProperty("--ev-color", task.color || "var(--interactive-accent)");
 		}
@@ -585,9 +585,9 @@ class EventDetailModal extends HearthModal {
 	/** Footer actions for a TaskNotes entry: open it (in TaskNotes' own editor
 	 * when it can be, otherwise the note), and complete/reopen this occurrence. */
 	private renderTaskActions(task: TaskNotesMeta): void {
-		const footer = this.contentEl.createDiv("hearth-event-footer");
+		const footer = this.contentEl.createDiv("zerohearth-event-footer");
 		const open = footer.createEl("button", { cls: "mod-cta" });
-		setIcon(open.createSpan("hearth-event-btnicon"), "file-text");
+		setIcon(open.createSpan("zerohearth-event-btnicon"), "file-text");
 		open.createSpan({
 			text: task.kind === "timeblock"
 				? t().cards.calendar.openDailyNote
@@ -601,7 +601,7 @@ class EventDetailModal extends HearthModal {
 
 		if (!canComplete(task, this.ics)) return;
 		const toggle = footer.createEl("button");
-		setIcon(toggle.createSpan("hearth-event-btnicon"), task.done ? "rotate-ccw" : "check");
+		setIcon(toggle.createSpan("zerohearth-event-btnicon"), task.done ? "rotate-ccw" : "check");
 		toggle.createSpan({
 			text: task.done ? t().cards.calendar.taskReopen : t().cards.calendar.taskComplete,
 		});
@@ -646,9 +646,9 @@ class EventDetailModal extends HearthModal {
 		const linkKey = cfg.linkKey === undefined ? DEFAULT_EVENT_LINK_KEY : cfg.linkKey.trim();
 		const existing = findNoteByProperty(this.app, linkKey, this.ev.uid);
 
-		const footer = this.contentEl.createDiv("hearth-event-footer");
+		const footer = this.contentEl.createDiv("zerohearth-event-footer");
 		const btn = footer.createEl("button", { cls: "mod-cta" });
-		setIcon(btn.createSpan("hearth-event-btnicon"), existing ? "file-text" : "file-plus");
+		setIcon(btn.createSpan("zerohearth-event-btnicon"), existing ? "file-text" : "file-plus");
 		btn.createSpan({
 			text: existing
 				? t().cards.calendar.openEventNote
@@ -677,10 +677,10 @@ class EventDetailModal extends HearthModal {
 
 	/** One label row: an icon (or a blank gutter when null) plus its text. */
 	private row(parent: HTMLElement, icon: string | null, text: string): HTMLElement {
-		const row = parent.createDiv("hearth-event-row");
-		const iconEl = row.createDiv("hearth-event-icon");
+		const row = parent.createDiv("zerohearth-event-row");
+		const iconEl = row.createDiv("zerohearth-event-icon");
 		if (icon) setIcon(iconEl, icon);
-		if (text) row.createDiv({ cls: "hearth-event-text", text });
+		if (text) row.createDiv({ cls: "zerohearth-event-text", text });
 		return row;
 	}
 }
@@ -727,7 +727,7 @@ export function showDayMenu(
 	ics: IcsContext,
 	anchor: MouseEvent | HTMLElement,
 ): void {
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	if (options) {
 		const exists = file instanceof TFile;
 		menu.addItem((item) =>
@@ -781,7 +781,7 @@ function renderTaskCompleteBox(
 	ics: IcsContext,
 ): void {
 	const box = row.createEl("input", {
-		cls: "hearth-agenda-evcheck",
+		cls: "zerohearth-agenda-evcheck",
 		attr: { type: "checkbox", "aria-label": t().cards.calendar.taskComplete },
 	});
 	box.checked = task.done;
@@ -837,7 +837,7 @@ export function renderEventRow(
 ): void {
 	const task = taskNotesMeta(ev);
 	const chips = ics.chips;
-	const row = parent.createDiv("hearth-agenda-event");
+	const row = parent.createDiv("zerohearth-agenda-event");
 	row.toggleClass("is-task", task !== null);
 	row.toggleClass("is-done", task?.done === true);
 
@@ -846,44 +846,44 @@ export function renderEventRow(
 	if (task && canComplete(task, ics)) {
 		renderTaskCompleteBox(view, row, task, ics);
 	} else {
-		const bullet = row.createDiv("hearth-agenda-evbullet");
+		const bullet = row.createDiv("zerohearth-agenda-evbullet");
 		bullet.style.setProperty("--ev-color", ics.eventColor(ev));
 	}
 
 	if (chips.time) {
-		const time = row.createDiv("hearth-agenda-evtime");
+		const time = row.createDiv("zerohearth-agenda-evtime");
 		time.setText(ev.allDay ? t().cards.calendar.allDay : moment(new Date(ev.start)).format("LT"));
 	}
 
-	const body = row.createDiv("hearth-agenda-evbody");
-	body.createSpan({ cls: "hearth-agenda-evtitle", text: ev.summary || t().cards.calendar.untitledEvent });
+	const body = row.createDiv("zerohearth-agenda-evbody");
+	body.createSpan({ cls: "zerohearth-agenda-evtitle", text: ev.summary || t().cards.calendar.untitledEvent });
 	if (task) {
 		if (chips.due && task.kind === "due") {
 			const badge = body.createSpan({
-				cls: "hearth-agenda-evbadge is-due",
+				cls: "zerohearth-agenda-evbadge is-due",
 				text: t().cards.calendar.taskDue,
 			});
 			badge.style.setProperty("--ev-color", ics.eventColor(ev));
 		}
 		if (chips.timeblock && task.kind === "timeblock") {
 			body.createSpan({
-				cls: "hearth-agenda-evbadge is-timeblock",
+				cls: "zerohearth-agenda-evbadge is-timeblock",
 				text: t().cards.calendar.taskTimeblock,
 			});
 		}
 		if (chips.recurring && task.recurring) {
-			body.createSpan({ cls: "hearth-agenda-evbadge", text: t().cards.tasks.recurring });
+			body.createSpan({ cls: "zerohearth-agenda-evbadge", text: t().cards.tasks.recurring });
 		}
 		if (chips.status && task.statusLabel) {
-			body.createSpan({ cls: "hearth-agenda-evbadge", text: task.statusLabel });
+			body.createSpan({ cls: "zerohearth-agenda-evbadge", text: task.statusLabel });
 		}
 		if (chips.priority && task.priorityLabel) {
-			body.createSpan({ cls: "hearth-agenda-evbadge", text: task.priorityLabel });
+			body.createSpan({ cls: "zerohearth-agenda-evbadge", text: task.priorityLabel });
 		}
 	}
 	if (chips.source && ics.multiSource) {
 		const label = ics.label(ev.sourceId);
-		if (label) body.createSpan({ cls: "hearth-agenda-evbadge", text: label });
+		if (label) body.createSpan({ cls: "zerohearth-agenda-evbadge", text: label });
 	}
 
 	const open = () => showEventDetail(view, ev, ics);
@@ -1318,7 +1318,7 @@ export function calendarSourcesEditor(ctx: CardEditorContext, containerEl: HTMLE
 	new Setting(containerEl).setDesc(t().editors.calendar.externalCalendarsDesc);
 
 	sources.forEach((source, index) => {
-		const row = new Setting(containerEl).setClass("hearth-rss-setting");
+		const row = new Setting(containerEl).setClass("zerohearth-rss-setting");
 		row.addText((txt) =>
 			txt
 				.setPlaceholder(t().editors.calendar.sourceNamePlaceholder)
@@ -1338,7 +1338,7 @@ export function calendarSourcesEditor(ctx: CardEditorContext, containerEl: HTMLE
 					ctx.opts.save();
 					ctx.opts.rerender();
 				});
-			txt.inputEl.addClass("hearth-rss-url");
+			txt.inputEl.addClass("zerohearth-rss-url");
 		});
 		row.addColorPicker((c) =>
 			c.setValue(source.color ?? "#7c6cff").onChange((v) => {
@@ -1459,7 +1459,7 @@ function subscriptionStatusList(
 		new Setting(containerEl)
 			.setName(sub.name || where)
 			.setDesc(`${where} — ${state}`)
-			.setClass("hearth-rss-setting");
+			.setClass("zerohearth-rss-setting");
 	}
 
 	new Setting(containerEl).addButton((b) =>
@@ -1513,7 +1513,7 @@ export function eventNoteEditor(ctx: CardEditorContext, containerEl: HTMLElement
 			const start = new Date();
 			start.setHours(10, 0, 0, 0);
 			const ev: EventNoteInput = {
-				uid: "sample-event@hearth",
+				uid: "sample-event@zerohearth",
 				summary: sample.title,
 				location: sample.location,
 				description: sample.description,

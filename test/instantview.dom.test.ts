@@ -157,7 +157,7 @@ describe("instant answers panel", () => {
 		const { answers, draw } = panel();
 		expect(answers.setQuery("1+1")?.kind).toBe("calc");
 		const el = draw();
-		expect(el.querySelector(".hearth-instant-value")?.textContent).toBe("2");
+		expect(el.querySelector(".zerohearth-instant-value")?.textContent).toBe("2");
 		expect(answers.takesEnter()).toBe(true);
 		expect(calls).toEqual([]);
 	});
@@ -173,23 +173,23 @@ describe("instant answers panel", () => {
 		answers.setQuery("20CZK to EUR");
 		await settle();
 		const el = draw();
-		expect(el.querySelector(".hearth-instant-value")?.textContent).toBe("0.8 EUR");
-		expect(el.querySelector(".hearth-instant-note")?.textContent).toContain("1 CZK = ");
-		expect(el.querySelector(".hearth-instant-chart svg")).not.toBeNull();
-		expect(el.querySelectorAll(".hearth-market-range").length).toBeGreaterThan(0);
+		expect(el.querySelector(".zerohearth-instant-value")?.textContent).toBe("0.8 EUR");
+		expect(el.querySelector(".zerohearth-instant-note")?.textContent).toContain("1 CZK = ");
+		expect(el.querySelector(".zerohearth-instant-chart svg")).not.toBeNull();
+		expect(el.querySelectorAll(".zerohearth-market-range").length).toBeGreaterThan(0);
 	});
 
 	it("looks a $ query up: quote, chart and the other matches", async () => {
 		const { answers, draw, changes } = panel();
 		answers.setQuery("$apple");
-		expect(draw().querySelector(".hearth-instant-note")?.textContent).toBe("Loading…");
+		expect(draw().querySelector(".zerohearth-instant-note")?.textContent).toBe("Loading…");
 		await settle();
 		expect(changes()).toBeGreaterThan(0);
 		const el = draw();
-		expect(el.querySelector(".hearth-instant-value")?.textContent).toBe("227.52");
-		expect(el.querySelector(".hearth-instant-move")?.classList.contains("is-up")).toBe(true);
-		expect(el.querySelector(".hearth-instant-chart svg")).not.toBeNull();
-		expect(el.querySelectorAll(".hearth-instant-alt").length).toBe(1);
+		expect(el.querySelector(".zerohearth-instant-value")?.textContent).toBe("227.52");
+		expect(el.querySelector(".zerohearth-instant-move")?.classList.contains("is-up")).toBe(true);
+		expect(el.querySelector(".zerohearth-instant-chart svg")).not.toBeNull();
+		expect(el.querySelectorAll(".zerohearth-instant-alt").length).toBe(1);
 		expect(calls.some((c) => c.includes("/v1/finance/search"))).toBe(true);
 	});
 
@@ -197,7 +197,7 @@ describe("instant answers panel", () => {
 		const { answers, draw } = panel(true);
 		answers.setQuery("$AAPL");
 		await settle();
-		expect(draw().querySelector(".hearth-instant-note")?.textContent).toMatch(/disabled/);
+		expect(draw().querySelector(".zerohearth-instant-note")?.textContent).toMatch(/disabled/);
 		expect(calls).toEqual([]);
 	});
 
@@ -205,9 +205,9 @@ describe("instant answers panel", () => {
 		const { answers, draw } = panel();
 		answers.setQuery("days until 2099-01-01");
 		expect(answers.takesEnter()).toBe(false);
-		expect(draw().querySelector(".hearth-instant-value")?.textContent).toMatch(/^\d+ days$/);
+		expect(draw().querySelector(".zerohearth-instant-value")?.textContent).toMatch(/^\d+ days$/);
 		answers.setQuery("tomorrow");
-		expect(draw().querySelector(".hearth-instant-note")?.textContent).toMatch(/^Tomorrow · Week \d+$/);
+		expect(draw().querySelector(".zerohearth-instant-note")?.textContent).toMatch(/^Tomorrow · Week \d+$/);
 	});
 
 	it("answers a stock asked for by name", async () => {
@@ -215,7 +215,7 @@ describe("instant answers panel", () => {
 		answers.setQuery("apple stock");
 		expect(answers.takesEnter()).toBe(true);
 		await settle();
-		expect(draw().querySelector(".hearth-instant-value")?.textContent).toBe("227.52");
+		expect(draw().querySelector(".zerohearth-instant-value")?.textContent).toBe("227.52");
 	});
 
 	it("shows the weather and the next days", async () => {
@@ -223,9 +223,9 @@ describe("instant answers panel", () => {
 		answers.setQuery("weather Prague");
 		await settle();
 		const el = draw();
-		expect(el.querySelector(".hearth-instant-value")?.textContent).toMatch(/^18°[CF] · /);
-		expect(el.querySelector(".hearth-instant-note")?.textContent).toContain("Prague, Prague, Czechia");
-		expect(el.querySelectorAll(".hearth-instant-day").length).toBeGreaterThan(0);
+		expect(el.querySelector(".zerohearth-instant-value")?.textContent).toMatch(/^18°[CF] · /);
+		expect(el.querySelector(".zerohearth-instant-note")?.textContent).toContain("Prague, Prague, Czechia");
+		expect(el.querySelectorAll(".zerohearth-instant-day").length).toBeGreaterThan(0);
 	});
 
 	it("summarises a Wikipedia article", async () => {
@@ -233,16 +233,16 @@ describe("instant answers panel", () => {
 		answers.setQuery("wiki prague");
 		await settle();
 		const el = draw();
-		expect(el.querySelector(".hearth-instant-value")?.textContent).toBe("Prague");
-		expect(el.querySelector(".hearth-instant-extract")?.textContent).toContain("capital");
+		expect(el.querySelector(".zerohearth-instant-value")?.textContent).toBe("Prague");
+		expect(el.querySelector(".zerohearth-instant-extract")?.textContent).toContain("capital");
 	});
 
 	it("flips a coin and rolls dice without a request", () => {
 		const { answers, draw } = panel();
 		answers.setQuery("coin flip");
-		expect(["Heads", "Tails"]).toContain(draw().querySelector(".hearth-instant-value")?.textContent);
+		expect(["Heads", "Tails"]).toContain(draw().querySelector(".zerohearth-instant-value")?.textContent);
 		answers.setQuery("roll 3d6");
-		const sum = Number(draw().querySelector(".hearth-instant-value")?.textContent);
+		const sum = Number(draw().querySelector(".zerohearth-instant-value")?.textContent);
 		expect(sum).toBeGreaterThanOrEqual(3);
 		expect(sum).toBeLessThanOrEqual(18);
 		expect(calls).toEqual([]);

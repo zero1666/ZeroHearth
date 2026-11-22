@@ -94,7 +94,7 @@ export const WEB_SEARCH_ENGINES: readonly WebSearchEngine[] = [
 	},
 ];
 
-/** The engine Hearth uses when nothing else is chosen. */
+/** The engine ZeroHearth uses when nothing else is chosen. */
 export const DEFAULT_WEB_SEARCH_ENGINE: WebSearchEngineId = "duckduckgo";
 
 /** Whether `id` is one of the engines above — used to validate settings and

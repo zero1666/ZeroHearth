@@ -1,6 +1,6 @@
 # Translations (i18n)
 
-Hearth's user-facing strings live in this folder so the plugin can be
+ZeroHearth's user-facing strings live in this folder so the plugin can be
 translated without touching feature code. English (`en.ts`) is the source of
 truth; every other locale is type-checked against it.
 
@@ -27,7 +27,7 @@ truth; every other locale is type-checked against it.
   so each language controls word order and pluralization itself, e.g.
 
   ```ts
-  commandNotFound: (id: string) => `Hearth: command not found: ${id}`,
+  commandNotFound: (id: string) => `ZeroHearth: command not found: ${id}`,
   ```
 
 - Call sites read strings as `t().section.key` (or `t().section.key(arg)` for
@@ -65,7 +65,7 @@ truth; every other locale is type-checked against it.
 4. Run `npm run typecheck`. TypeScript will list any key you missed or
    mistyped. Fix them until it's clean, then `npm run build`.
 5. Teach the search bar your language. Instant answers read phrases in every
-   language Hearth is translated into, and that part lives in code, not in
+   language ZeroHearth is translated into, and that part lives in code, not in
    the locale file:
    - `src/instant.ts` — the phrase rules (`TIME_RULES`, `MARKET_RULES`,
      `WEATHER_RULES`, `COIN_RE`/`DIE_RE`/`RANDOM_RE`, `COUNT_UNTIL`/

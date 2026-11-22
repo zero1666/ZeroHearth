@@ -37,11 +37,11 @@ function draw(calculator: CalculatorConfig, numberFormat: DecimalSeparator = "."
 
 /** Type into the card's field the way a user does, and let it redraw. */
 function type(body: HTMLElement, text: string): string {
-	const input = body.querySelector<HTMLInputElement>(".hearth-calc-input");
+	const input = body.querySelector<HTMLInputElement>(".zerohearth-calc-input");
 	if (!input) throw new Error("no calculator input");
 	input.value = text;
 	input.dispatchEvent(new Event("input"));
-	return body.querySelector(".hearth-calc-result")?.textContent ?? "";
+	return body.querySelector(".zerohearth-calc-result")?.textContent ?? "";
 }
 
 describe("the calculator card's number format", () => {
@@ -64,7 +64,7 @@ describe("the calculator card's number format", () => {
 
 	it("puts the chosen separator on the keypad", () => {
 		const labels = (calculator: CalculatorConfig) =>
-			Array.from(draw(calculator).querySelectorAll(".hearth-calc-key"), (key) => key.textContent);
+			Array.from(draw(calculator).querySelectorAll(".zerohearth-calc-key"), (key) => key.textContent);
 		expect(labels({ keypad: "basic" })).toContain(".");
 		expect(labels({ keypad: "basic" })).not.toContain(",");
 		expect(labels({ keypad: "basic", decimalSeparator: "," })).toContain(",");
@@ -76,14 +76,14 @@ describe("the calculator card's number format", () => {
 		Object.defineProperty(navigator, "clipboard", { value: { writeText }, configurable: true });
 		const body = draw({ decimalSeparator: "," });
 		expect(type(body, "1,5 + 3")).toBe("4,5");
-		body.querySelector<HTMLButtonElement>(".hearth-calc-copy")?.click();
+		body.querySelector<HTMLButtonElement>(".zerohearth-calc-copy")?.click();
 		await Promise.resolve();
 		expect(writeText).toHaveBeenCalledWith("4,5");
 	});
 
 	it("offers nothing to copy while the query is empty or invalid", () => {
 		const hidden = (body: HTMLElement) =>
-			body.querySelector(".hearth-calc-actions")?.classList.contains("is-hidden");
+			body.querySelector(".zerohearth-calc-actions")?.classList.contains("is-hidden");
 		const body = draw({});
 		expect(hidden(body)).toBe(true);
 		type(body, "2 + 2");

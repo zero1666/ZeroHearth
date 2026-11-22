@@ -85,8 +85,8 @@ function mount(tweak: (s: HomeSettings) => void = () => {}, hiddenInstantAnswers
 	const wrap = root.createDiv();
 	search.renderBar(wrap);
 	search.renderResultsAndFilters(wrap, wrap, new Component(), { filters: false, hiddenInstantAnswers });
-	const input = wrap.querySelector<HTMLInputElement>(".hearth-search-input")!;
-	const results = wrap.querySelector<HTMLElement>(".hearth-search-results")!;
+	const input = wrap.querySelector<HTMLInputElement>(".zerohearth-search-input")!;
+	const results = wrap.querySelector<HTMLElement>(".zerohearth-search-results")!;
 	const type = (text: string) => {
 		input.value = text;
 		input.dispatchEvent(new Event("input"));
@@ -99,7 +99,7 @@ describe("search bar instant answers", () => {
 	it("offers the tips once on an empty bar, until they're seen", () => {
 		const { input, results, enter } = mount();
 		input.dispatchEvent(new Event("focus"));
-		expect(results.querySelector(".hearth-tips-hint .hearth-result-name")?.textContent).toMatch(/^New:/);
+		expect(results.querySelector(".zerohearth-tips-hint .zerohearth-result-name")?.textContent).toMatch(/^New:/);
 		enter();
 		expect(opened).toEqual(["SearchTipsModal"]);
 		input.dispatchEvent(new Event("focus"));
@@ -110,7 +110,7 @@ describe("search bar instant answers", () => {
 	it("the hint can be dismissed without opening the tips", () => {
 		const { input, results } = mount();
 		input.dispatchEvent(new Event("focus"));
-		results.querySelector<HTMLElement>(".hearth-tips-dismiss")!.click();
+		results.querySelector<HTMLElement>(".zerohearth-tips-dismiss")!.click();
 		expect(opened).toEqual([]);
 		input.dispatchEvent(new Event("focus"));
 		// Nothing left to offer an empty bar in an empty vault: no dropdown.
@@ -120,7 +120,7 @@ describe("search bar instant answers", () => {
 	it("a lone ? always offers the tips", () => {
 		const { results, type, enter } = mount();
 		type("?");
-		expect(results.querySelector(".hearth-tips-hint .hearth-result-name")?.textContent).toBe("Search tips");
+		expect(results.querySelector(".zerohearth-tips-hint .zerohearth-result-name")?.textContent).toBe("Search tips");
 		enter();
 		expect(opened).toEqual(["SearchTipsModal"]);
 	});
@@ -128,37 +128,37 @@ describe("search bar instant answers", () => {
 	it("answers a sum above the notes, without a 'No matches'", () => {
 		const { results, type } = mount();
 		type("1+1");
-		expect(results.querySelector(".hearth-instant-value")?.textContent).toBe("2");
-		expect(results.querySelector(".hearth-search-empty")).toBeNull();
+		expect(results.querySelector(".zerohearth-instant-value")?.textContent).toBe("2");
+		expect(results.querySelector(".zerohearth-search-empty")).toBeNull();
 	});
 
 	it("writes its answer in the vault's number format", () => {
 		const dot = mount();
 		dot.type("1.5 + 3");
-		expect(dot.results.querySelector(".hearth-instant-value")?.textContent).toBe("4.5");
+		expect(dot.results.querySelector(".zerohearth-instant-value")?.textContent).toBe("4.5");
 		// A decimal comma is not a number in the dot format, so no answer.
 		dot.type("1,5 + 3");
-		expect(dot.results.querySelector(".hearth-instant")).toBeNull();
+		expect(dot.results.querySelector(".zerohearth-instant")).toBeNull();
 
 		const comma = mount((s) => (s.numberFormat = ","));
 		comma.type("1,5 + 3");
-		expect(comma.results.querySelector(".hearth-instant-value")?.textContent).toBe("4,5");
+		expect(comma.results.querySelector(".zerohearth-instant-value")?.textContent).toBe("4,5");
 		// Thousands follow the same choice.
 		comma.type("1500 * 2");
-		expect(comma.results.querySelector(".hearth-instant-value")?.textContent).toBe("3\u00A0000");
+		expect(comma.results.querySelector(".zerohearth-instant-value")?.textContent).toBe("3\u00A0000");
 	});
 
 	it("stays silent for an answer off on the card or vault-wide", () => {
 		const card = mount(() => {}, ["calc"]);
 		card.type("1+1");
-		expect(card.results.querySelector(".hearth-instant")).toBeNull();
+		expect(card.results.querySelector(".zerohearth-instant")).toBeNull();
 
 		const vault = mount((s) => (s.hiddenInstantAnswers = ["calc"]));
 		vault.type("1+1");
-		expect(vault.results.querySelector(".hearth-instant")).toBeNull();
+		expect(vault.results.querySelector(".zerohearth-instant")).toBeNull();
 
 		const off = mount((s) => (s.searchInstantAnswers = false));
 		off.type("1+1");
-		expect(off.results.querySelector(".hearth-instant")).toBeNull();
+		expect(off.results.querySelector(".zerohearth-instant")).toBeNull();
 	});
 });

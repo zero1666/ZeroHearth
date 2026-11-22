@@ -3,7 +3,7 @@ import { QueryFilter, QueryHit, filePassesFilter } from "./query";
 
 /**
  * The "Quick switcher" search engine: the search bar answers the way
- * Obsidian's own Quick switcher (Ctrl/Cmd+O) does, instead of with Hearth's
+ * Obsidian's own Quick switcher (Ctrl/Cmd+O) does, instead of with ZeroHearth's
  * banded name/path/body ranking.
  *
  * What that means, matching the core plugin's matcher:
@@ -226,7 +226,7 @@ function extensionRegistry(app: App): ExtensionRegistry {
 const aliasCache = new WeakMap<object, readonly string[]>();
 
 /**
- * Run a search the Quick switcher way and adapt it to Hearth's
+ * Run a search the Quick switcher way and adapt it to ZeroHearth's
  * {@link QueryHit} shape, best match first. The file-type chips still narrow
  * the list; the folders chip never reaches here (folders aren't the
  * switcher's to list), the search bar keeps that on the built-in engine.

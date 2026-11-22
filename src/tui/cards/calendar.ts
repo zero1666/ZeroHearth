@@ -172,7 +172,7 @@ function activateDay(ctx: TuiContext, day: Moment, ics: IcsContext, options: Dai
 	const events = ics.on(key);
 	const file = options ? dailyNoteFinder(ctx.view, options)(day) : null;
 	if (events.length || forceMenu) {
-		const anchor = evt instanceof MouseEvent && (evt.clientX || evt.clientY) ? evt : (ctx.view.contentEl.querySelector<HTMLElement>(`.hearth-tui-body[data-card="${ctx.card.id}"]`) ?? ctx.view.contentEl);
+		const anchor = evt instanceof MouseEvent && (evt.clientX || evt.clientY) ? evt : (ctx.view.contentEl.querySelector<HTMLElement>(`.zerohearth-tui-body[data-card="${ctx.card.id}"]`) ?? ctx.view.contentEl);
 		showDayMenu(ctx.view, day, options, file, isTodayKey(key), events, ics, anchor);
 	} else openDailyNote(ctx.view, day, options, file, isTodayKey(key));
 }

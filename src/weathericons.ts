@@ -6,7 +6,7 @@
  * Classic design uses, one per condition group and half of the day.
  *
  * Colours are classes the stylesheet fills from the weather palette (see the
- * `.hearth-wx-icon` tokens in styles.css), so the same drawing works in a light
+ * `.zerohearth-wx-icon` tokens in styles.css), so the same drawing works in a light
  * and a dark theme.
  */
 import { shapePath, boltShape, sparklePath } from "./shapes";
@@ -20,7 +20,7 @@ const CRESCENT = "M31.53 11.03 A15 15 0 1 1 11.03 31.53 A17 17 0 0 0 31.53 11.03
 
 /** A cloud: three circles on a pill, drawn in one colour so they read as one
  * body. `transform` places and sizes it in the 48-unit box. */
-function cloud(svg: SVGElement, transform: string, cls = "hearth-wx-cloud"): void {
+function cloud(svg: SVGElement, transform: string, cls = "zerohearth-wx-cloud"): void {
 	const g = svg.createSvg("g", { cls, attr: { transform } });
 	g.createSvg("rect", { attr: { x: "7", y: "25", width: "34", height: "14", rx: "7" } });
 	g.createSvg("circle", { attr: { cx: "17", cy: "26", r: "9" } });
@@ -30,20 +30,20 @@ function cloud(svg: SVGElement, transform: string, cls = "hearth-wx-cloud"): voi
 
 /** The sun, in a group of its own so it can turn about its centre. */
 function sun(svg: SVGElement, cx: number, cy: number, r: number): void {
-	svg.createSvg("g", { cls: "hearth-wx-spin" }).createSvg("path", {
-		cls: "hearth-wx-sun",
+	svg.createSvg("g", { cls: "zerohearth-wx-spin" }).createSvg("path", {
+		cls: "zerohearth-wx-sun",
 		attr: { d: shapePath(cx, cy, r, 8, 0.12) },
 	});
 }
 
 function moon(svg: SVGElement, transform = ""): void {
 	const g = svg.createSvg("g", transform ? { attr: { transform } } : {});
-	g.createSvg("path", { cls: "hearth-wx-moon", attr: { d: CRESCENT } });
+	g.createSvg("path", { cls: "zerohearth-wx-moon", attr: { d: CRESCENT } });
 }
 
 /** Short pills under a cloud: rain, or the lighter drizzle. */
 function drops(svg: SVGElement, long: boolean): void {
-	const layer = svg.createSvg("g", { cls: "hearth-wx-drops" });
+	const layer = svg.createSvg("g", { cls: "zerohearth-wx-drops" });
 	const len = long ? 8 : 4;
 	for (const [x, y] of [
 		[16, 35],
@@ -68,7 +68,7 @@ export function drawWeatherIcon(
 	cls: string,
 	backdrop = false,
 ): HTMLElement {
-	const host = parent.createDiv(`${cls} hearth-wx-icon`);
+	const host = parent.createDiv(`${cls} zerohearth-wx-icon`);
 	const svg = host.createSvg("svg", {
 		attr: {
 			...SVG_NS,
@@ -77,8 +77,8 @@ export function drawWeatherIcon(
 		},
 	});
 	if (backdrop) {
-		svg.createSvg("g", { cls: "hearth-wx-backdrop-wrap" }).createSvg("path", {
-			cls: "hearth-wx-backdrop",
+		svg.createSvg("g", { cls: "zerohearth-wx-backdrop-wrap" }).createSvg("path", {
+			cls: "zerohearth-wx-backdrop",
 			attr: { d: shapePath(24, 24, 31, 9, 0.05) },
 		});
 	}
@@ -89,7 +89,7 @@ export function drawWeatherIcon(
 			if (isDay) sun(svg, 24, 24, 15);
 			else {
 				moon(svg);
-				svg.createSvg("path", { cls: "hearth-wx-star", attr: { d: sparklePath(37, 11, 4.5) } });
+				svg.createSvg("path", { cls: "zerohearth-wx-star", attr: { d: sparklePath(37, 11, 4.5) } });
 			}
 			break;
 		case "partly":
@@ -98,12 +98,12 @@ export function drawWeatherIcon(
 			cloud(svg, "translate(7 8) scale(0.8)");
 			break;
 		case "cloudy":
-			cloud(svg, "translate(15 -3) scale(0.62)", "hearth-wx-cloud-back");
+			cloud(svg, "translate(15 -3) scale(0.62)", "zerohearth-wx-cloud-back");
 			cloud(svg, "translate(-1 3)");
 			break;
 		case "fog": {
 			cloud(svg, "translate(3 -7) scale(0.88)");
-			const fog = svg.createSvg("g", { cls: "hearth-wx-fog" });
+			const fog = svg.createSvg("g", { cls: "zerohearth-wx-fog" });
 			fog.createSvg("line", { attr: { x1: "9", y1: "34", x2: "39", y2: "34" } });
 			fog.createSvg("line", { attr: { x1: "15", y1: "42", x2: "35", y2: "42" } });
 			break;
@@ -118,7 +118,7 @@ export function drawWeatherIcon(
 			break;
 		case "snow": {
 			cloud(svg, rainy);
-			const flakes = svg.createSvg("g", { cls: "hearth-wx-flakes" });
+			const flakes = svg.createSvg("g", { cls: "zerohearth-wx-flakes" });
 			for (const [x, y] of [
 				[15, 38],
 				[24, 42],
@@ -130,7 +130,7 @@ export function drawWeatherIcon(
 		}
 		case "thunder":
 			cloud(svg, rainy);
-			svg.createSvg("path", { cls: "hearth-wx-bolt", attr: { d: boltShape(24, 27, 19) } });
+			svg.createSvg("path", { cls: "zerohearth-wx-bolt", attr: { d: boltShape(24, 27, 19) } });
 			break;
 	}
 	return host;

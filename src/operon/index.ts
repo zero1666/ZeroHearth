@@ -1,19 +1,19 @@
 /**
- * Operon integration — Hearth's client for the Operon plugin's in-process
+ * Operon integration — ZeroHearth's client for the Operon plugin's in-process
  * Developer API V1.
  *
  * The split:
  *
  * - `api.ts`      accessor probe, session lifecycle, access-state rules
- * - `reads.ts`    never-throwing wrappers over the reads Hearth uses
+ * - `reads.ts`    never-throwing wrappers over the reads ZeroHearth uses
  * - `mutations.ts` the preview → apply → recover flow behind the two writes
  * - `catalog.ts`  short-lived cache of Operon's taxonomy
  * - `map.ts`      pure shaping (due buckets, day groups, board columns, sort)
  * - `open.ts`     opening a task's note at its locator
- * - `types.ts`    Hearth-local names for the V1 read DTOs
+ * - `types.ts`    ZeroHearth-local names for the V1 read DTOs
  *
  * Cards import from here and never reach into Operon directly, so a contract
- * change upstream lands in one directory. Nothing in Hearth parses Operon's
+ * change upstream lands in one directory. Nothing in ZeroHearth parses Operon's
  * markdown or reimplements its rules — the API is the only seam.
  */
 

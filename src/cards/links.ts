@@ -1,5 +1,6 @@
 import { setTooltip, Setting, TFile } from "obsidian";
 import type { CardHost } from "../cardhost";
+import { zerohearthCommandId } from "../cardcommandstate";
 import { applyTileSize, createTileGrid, emptyState, makeTileDraggable, makeTileResizable, markOverlappingTiles } from "../cardbodies";
 import { moveItem } from "../editors";
 import { type FolderDestination, folderDestination } from "../fileexplorer";
@@ -24,10 +25,10 @@ export function renderLinks(view: CardHost, card: DashboardCard, body: HTMLEleme
 
 	const { grid, spec } = createTileGrid(view, card, body);
 	for (const link of links) {
-		const tile = grid.createDiv("hearth-link-tile");
+		const tile = grid.createDiv("zerohearth-link-tile");
 		applyTileSize(tile, link, spec);
 		applyTileVisual(view, tile, link.icon, linkFallbackIcon(link));
-		tile.createDiv({ cls: "hearth-link-label", text: link.label || link.target });
+		tile.createDiv({ cls: "zerohearth-link-label", text: link.label || link.target });
 		const open = () =>
 			openLink(view, link, inExpressiveCard(tile), folderDestination(card.folderTarget));
 		// In arrange mode, clicking a tile must NOT trigger its action — the
@@ -68,7 +69,7 @@ export function openLink(
 			if (link.target) window.open(link.target, "_blank");
 			break;
 		case "command":
-			if (link.target) view.app.commands.executeCommandById(link.target);
+			if (link.target) view.app.commands.executeCommandById(zerohearthCommandId(link.target));
 			break;
 		case "folder":
 			// A folder button opens the folder exactly as a folder bookmark does
@@ -129,7 +130,7 @@ export function linksEditor(ctx: CardEditorContext, containerEl: HTMLElement): v
 	}
 
 	links.forEach((link, index) => {
-		const row = new Setting(containerEl).setClass("hearth-link-setting");
+		const row = new Setting(containerEl).setClass("zerohearth-link-setting");
 		row.addText((txt) =>
 			txt
 				.setPlaceholder(t().editors.links.labelPlaceholder)
@@ -176,7 +177,7 @@ export function linksEditor(ctx: CardEditorContext, containerEl: HTMLElement): v
 			// makes command links actually fire.
 			row.addButton((b) => {
 				const current = link.target
-					? ctx.app.commands.listCommands().find((c) => c.id === link.target)
+					? ctx.app.commands.listCommands().find((c) => c.id === zerohearthCommandId(link.target))
 					: undefined;
 				b.setButtonText(
 					current ? current.name : t().editors.links.pickCommand,

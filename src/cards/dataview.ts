@@ -14,7 +14,7 @@ import { type CardDefinition, type CardEditorContext } from "./definition";
  * offers this card when Dataview is installed, and the card shows a friendly
  * prompt if Dataview is later disabled. Dataview attaches its own refreshable
  * renderer to `component`, so results update live as the vault (and Dataview's
- * index) change, without Hearth having to re-run the query. */
+ * index) change, without ZeroHearth having to re-run the query. */
 export function renderDataview(
 	view: CardHost,
 	card: DashboardCard,
@@ -35,7 +35,7 @@ export function renderDataview(
 		return;
 	}
 
-	const host = body.createDiv("hearth-dataview");
+	const host = body.createDiv("zerohearth-dataview");
 	// The dashboard has no "current note", so queries run with an empty origin
 	// path: global queries (FROM #tag, folder scopes…) work fully, but a query
 	// that relies on `this.file` has no meaningful current file to resolve to.
@@ -81,7 +81,7 @@ function setupDataviewColumnResize(
 	const persist = () => void view.plugin.saveData(view.plugin.settings);
 	const decorate = () => {
 		const table = host.querySelector<HTMLTableElement>("table");
-		if (!table || table.dataset.hearthDvResize === "1") return;
+		if (!table || table.dataset.zerohearthDvResize === "1") return;
 		decorateDataviewTable(card, cfg, table, persist);
 	};
 	const observer = new MutationObserver(() => decorate());
@@ -104,9 +104,9 @@ function dataviewHeaderCells(table: HTMLTableElement): HTMLTableCellElement[] {
 
 /** Ensure a `<colgroup>` at the front of `table` with `count` sized `<col>`s. */
 function dataviewColgroup(table: HTMLTableElement, count: number, widths: number[]): HTMLElement {
-	let colgroup = table.querySelector<HTMLElement>(":scope > colgroup.hearth-dv-cols");
+	let colgroup = table.querySelector<HTMLElement>(":scope > colgroup.zerohearth-dv-cols");
 	if (!colgroup) {
-		colgroup = table.createEl("colgroup", { cls: "hearth-dv-cols" });
+		colgroup = table.createEl("colgroup", { cls: "zerohearth-dv-cols" });
 		table.insertBefore(colgroup, table.firstChild);
 	}
 	colgroup.empty();
@@ -127,7 +127,7 @@ function decorateDataviewTable(
 	const headers = dataviewHeaderCells(table);
 	if (headers.length === 0) return;
 	// Mark before mutating so the observer skips our own edits (no render loop).
-	table.dataset.hearthDvResize = "1";
+	table.dataset.zerohearthDvResize = "1";
 	const colCount = headers.length;
 
 	// Stored widths only apply when they still match the table's shape; a query
@@ -140,16 +140,16 @@ function decorateDataviewTable(
 	}
 
 	const applyManualLayout = () => {
-		// The .hearth-dv-manual class carries `table-layout: fixed; width: auto`
+		// The .zerohearth-dv-manual class carries `table-layout: fixed; width: auto`
 		// so the per-column <col> widths below are honoured exactly.
-		table.classList.add("hearth-dv-manual");
+		table.classList.add("zerohearth-dv-manual");
 		dataviewColgroup(table, colCount, widths ?? []);
 	};
 	if (widths) applyManualLayout();
 
 	headers.forEach((th, index) => {
-		th.classList.add("hearth-dv-th");
-		const handle = th.createDiv("hearth-dv-col-resizer");
+		th.classList.add("zerohearth-dv-th");
+		const handle = th.createDiv("zerohearth-dv-col-resizer");
 		// Swallow the click so grabbing the handle never toggles Dataview's
 		// column sort (which lives on the header cell's click).
 		handle.addEventListener("click", (e) => {
@@ -166,7 +166,7 @@ function decorateDataviewTable(
 				applyManualLayout();
 			}
 			const cols = Array.from(
-				table.querySelectorAll<HTMLElement>(":scope > colgroup.hearth-dv-cols > col"),
+				table.querySelectorAll<HTMLElement>(":scope > colgroup.zerohearth-dv-cols > col"),
 			);
 			const startX = e.clientX;
 			const startW = widths[index];
@@ -175,7 +175,7 @@ function decorateDataviewTable(
 			// is toggled, not the main document's.
 			const dragDoc = activeDocument;
 			handle.addClass("is-dragging");
-			dragDoc.body.addClass("hearth-dv-resizing");
+			dragDoc.body.addClass("zerohearth-dv-resizing");
 			const onMove = (ev: PointerEvent) => {
 				const w = Math.max(40, startW + (ev.clientX - startX));
 				widths![index] = w;
@@ -185,7 +185,7 @@ function decorateDataviewTable(
 				window.removeEventListener("pointermove", onMove);
 				window.removeEventListener("pointerup", onUp);
 				handle.removeClass("is-dragging");
-				dragDoc.body.removeClass("hearth-dv-resizing");
+				dragDoc.body.removeClass("zerohearth-dv-resizing");
 				cfg.columnWidths = widths ? [...widths] : undefined;
 				persist();
 			};
@@ -231,9 +231,9 @@ export function dataviewEditor(ctx: CardEditorContext, containerEl: HTMLElement)
 				ctx.opts.save();
 			});
 		txt.inputEl.rows = 6;
-		txt.inputEl.addClass("hearth-dataview-input");
+		txt.inputEl.addClass("zerohearth-dataview-input");
 	});
-	query.settingEl.addClass("hearth-setting-stacked");
+	query.settingEl.addClass("zerohearth-setting-stacked");
 }
 
 /** A Dataview query, rendered through the Dataview plugin. Offered whether or

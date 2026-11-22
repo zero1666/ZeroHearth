@@ -76,7 +76,7 @@ function rectAt(top: number): DOMRect {
  * which is what the browser hands back after panning for the keyboard.
  */
 function fakeView(top: number): { view: FakeView; contentEl: HTMLElement; cleanups: Array<() => void> } {
-	const contentEl = document.body.createDiv("hearth-view");
+	const contentEl = document.body.createDiv("zerohearth-view");
 	contentEl.getBoundingClientRect = () => rectAt(top);
 	const cleanups: Array<() => void> = [];
 	return {
@@ -93,10 +93,10 @@ function fakeView(top: number): { view: FakeView; contentEl: HTMLElement; cleanu
 }
 
 function vh(contentEl: HTMLElement): string {
-	return contentEl.style.getPropertyValue("--hearth-vh");
+	return contentEl.style.getPropertyValue("--zerohearth-vh");
 }
 
-describe("--hearth-vh measures the visual viewport (#417)", () => {
+describe("--zerohearth-vh measures the visual viewport (#417)", () => {
 	it("fills the visible area while the keyboard is closed and nothing is panned", () => {
 		const { view, contentEl } = fakeView(0);
 		vv.height = 800;
@@ -145,7 +145,7 @@ describe("keyboard flag from the visual viewport", () => {
 		const { view, contentEl } = fakeView(0);
 		vv.height = 400;
 		priv.trackViewport.call(view);
-		expect(contentEl.hasClass("hearth-kbd-open")).toBe(true);
+		expect(contentEl.hasClass("zerohearth-kbd-open")).toBe(true);
 	});
 
 	it("drops the flag when the keyboard is back down", () => {
@@ -154,7 +154,7 @@ describe("keyboard flag from the visual viewport", () => {
 		priv.trackViewport.call(view);
 		vv.height = 800;
 		vv.dispatchEvent(new Event("resize"));
-		expect(contentEl.hasClass("hearth-kbd-open")).toBe(false);
+		expect(contentEl.hasClass("zerohearth-kbd-open")).toBe(false);
 	});
 
 	it("re-measures on a visual viewport scroll (the pan itself)", () => {
@@ -202,7 +202,7 @@ describe("card fields on mobile (#417)", () => {
 		priv.trackFieldFocus.call(view);
 		const area = field(contentEl);
 		area.el.focus();
-		expect(contentEl.hasClass("hearth-field-active")).toBe(true);
+		expect(contentEl.hasClass("zerohearth-field-active")).toBe(true);
 	});
 
 	it("re-settles the field once the keyboard has finished animating", () => {
@@ -237,7 +237,7 @@ describe("card fields on mobile (#417)", () => {
 		first.el.focus();
 		second.el.focus();
 		vi.advanceTimersByTime(250);
-		expect(contentEl.hasClass("hearth-field-active")).toBe(true);
+		expect(contentEl.hasClass("zerohearth-field-active")).toBe(true);
 	});
 
 	it("drops the flag once nothing on the board holds focus", () => {
@@ -248,28 +248,28 @@ describe("card fields on mobile (#417)", () => {
 		area.el.focus();
 		area.el.blur();
 		vi.advanceTimersByTime(199);
-		expect(contentEl.hasClass("hearth-field-active")).toBe(true);
+		expect(contentEl.hasClass("zerohearth-field-active")).toBe(true);
 		vi.advanceTimersByTime(1);
-		expect(contentEl.hasClass("hearth-field-active")).toBe(false);
+		expect(contentEl.hasClass("zerohearth-field-active")).toBe(false);
 	});
 
 	it("leaves the header search to its own keyboard handling", () => {
 		const { view, contentEl } = fakeView(0);
 		priv.trackFieldFocus.call(view);
-		const search = contentEl.createDiv("hearth-search");
+		const search = contentEl.createDiv("zerohearth-search");
 		const input = search.createEl("input");
-		input.className = "hearth-search-input";
+		input.className = "zerohearth-search-input";
 		input.focus();
-		expect(contentEl.hasClass("hearth-field-active")).toBe(false);
+		expect(contentEl.hasClass("zerohearth-field-active")).toBe(false);
 	});
 
 	it("ignores plain focusable chrome that isn't a field", () => {
 		const { view, contentEl } = fakeView(0);
 		priv.trackFieldFocus.call(view);
-		contentEl.createDiv("hearth-card");
+		contentEl.createDiv("zerohearth-card");
 		const button = contentEl.createEl("button");
 		button.focus();
-		expect(contentEl.hasClass("hearth-field-active")).toBe(false);
+		expect(contentEl.hasClass("zerohearth-field-active")).toBe(false);
 	});
 
 	it("covers a contenteditable editor (hosted Live Preview, Bases)", () => {
@@ -278,7 +278,7 @@ describe("card fields on mobile (#417)", () => {
 		const editor = contentEl.createDiv("cm-editor");
 		editor.setAttribute("contenteditable", "true");
 		editor.focus();
-		expect(contentEl.hasClass("hearth-field-active")).toBe(true);
+		expect(contentEl.hasClass("zerohearth-field-active")).toBe(true);
 	});
 
 	it("unwires itself on teardown", () => {
@@ -287,7 +287,7 @@ describe("card fields on mobile (#417)", () => {
 		for (const cb of cleanups) cb();
 		const area = field(contentEl);
 		area.el.focus();
-		expect(contentEl.hasClass("hearth-field-active")).toBe(false);
+		expect(contentEl.hasClass("zerohearth-field-active")).toBe(false);
 	});
 
 	it("does nothing on desktop", () => {
@@ -297,14 +297,14 @@ describe("card fields on mobile (#417)", () => {
 		priv.trackFieldFocus.call(view);
 		const area = field(contentEl);
 		area.el.focus();
-		expect(contentEl.hasClass("hearth-field-active")).toBe(false);
+		expect(contentEl.hasClass("zerohearth-field-active")).toBe(false);
 	});
 });
 
 /*
  * What this cannot cover, and belongs in the PR's vault checklist instead:
- * `.hearth-view.hearth-field-active .hearth-scroll` has to set
- * `height: var(--hearth-vh)` and the floating action bar has to hide while the
+ * `.zerohearth-view.zerohearth-field-active .zerohearth-scroll` has to set
+ * `height: var(--zerohearth-vh)` and the floating action bar has to hide while the
  * flag is on. The repository keeps stylesheet assertions out of the test suite
  * (no test reads styles.css or imports `node:fs`), so that half of the fix is
  * checked by hand on a phone.

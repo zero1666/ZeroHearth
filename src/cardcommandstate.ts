@@ -1,6 +1,11 @@
 import { t } from "./i18n";
 import type { DashboardCard, HomeSettings } from "./types";
 
+/** Resolve a shortcut from an imported Hearth dashboard under the new id. */
+export function zerohearthCommandId(id: string): string {
+	return id.replace(/^hearth:/, "zerohearth:");
+}
+
 /**
  * Which cards are reachable as commands (#491), what those commands are called,
  * and what a settings change means for the registry — the part of the feature
@@ -18,10 +23,10 @@ export function cardCommandId(card: DashboardCard): string {
 	return `open-card-${card.id}`;
 }
 
-/** `Hearth: Open Weather` — the title first, because that is what gets typed. */
+/** `ZeroHearth: Open Weather` — the title first, because that is what gets typed. */
 export function cardCommandName(card: DashboardCard): string {
 	const label = card.title?.trim() || t().editors.kinds[card.kind];
-	return `Hearth: Open ${label}`;
+	return `ZeroHearth: Open ${label}`;
 }
 
 /**

@@ -6,7 +6,7 @@ import {
 	type ViewStateResult,
 	type WorkspaceLeaf,
 } from "obsidian";
-import type HearthPlugin from "./main";
+import type ZeroHearthPlugin from "./main";
 import { renderHeader } from "./header";
 import { renderDashboard } from "./dashboard";
 import {
@@ -51,7 +51,7 @@ import {
 	terminalModeActive,
 } from "./types";
 import { tabIconIdFor } from "./icon";
-import { hearthLeafIsNavigable } from "./opener";
+import { zerohearthLeafIsNavigable } from "./opener";
 import { t } from "./i18n";
 import { stateDesign } from "./uidesign";
 import { PANE_STATE_KEY, paneCard, paneCardIdFromState } from "./cardpanestate";
@@ -60,26 +60,26 @@ import { TuiViewState } from "./tui/state";
 import type { TuiBoard } from "./tui/board";
 import { clearTerminalView, renderTerminalView } from "./tui/screen";
 
-export const VIEW_TYPE_HOME = "hearth-home-view";
+export const VIEW_TYPE_HOME = "zerohearth-home-view";
 
 /** Root classes of the graphical build that terminal mode must not inherit
  * from a previous render. */
 const TERMINAL_EXCLUDED_CLASSES = [
-	"hearth-compact",
-	"hearth-flush",
-	"hearth-x-ui",
-	"hearth-no-motion",
-	"hearth-no-frost",
-	"hearth-hide-header",
-	"hearth-mobile-only",
-	"hearth-plugin-view",
-	"hearth-single-card-view",
-	"hearth-empty-board",
-	"hearth-has-banner",
+	"zerohearth-compact",
+	"zerohearth-flush",
+	"zerohearth-x-ui",
+	"zerohearth-no-motion",
+	"zerohearth-no-frost",
+	"zerohearth-hide-header",
+	"zerohearth-mobile-only",
+	"zerohearth-plugin-view",
+	"zerohearth-single-card-view",
+	"zerohearth-empty-board",
+	"zerohearth-has-banner",
 ];
 
 /**
- * Take every open Hearth view out of arrange mode.
+ * Take every open ZeroHearth view out of arrange mode.
  *
  * Arrange mode is how a board is *edited*: it puts a title field and a row of
  * actions on every card and a toolbar above them. None of that is the board.
@@ -111,7 +111,7 @@ export function leaveArrangeMode(app: App): boolean {
 }
 
 export class HomeView extends ItemView {
-	plugin: HearthPlugin;
+	plugin: ZeroHearthPlugin;
 	/**
 	 * Whether the dashboard is a navigable pane (the base `View` default is
 	 * `false`). A non-navigable leaf is treated like the file explorer or
@@ -122,8 +122,8 @@ export class HomeView extends ItemView {
 	 * dashboard behaves like any editor tab and the selection tracks correctly.
 	 *
 	 * That is still the default, but it is now the user's call: it is also the
-	 * only lever over opens Hearth never sees (#106), so `render()` keeps it in
-	 * step with the "Notes opened from outside Hearth" setting.
+	 * only lever over opens ZeroHearth never sees (#106), so `render()` keeps it in
+	 * step with the "Notes opened from outside ZeroHearth" setting.
 	 */
 	navigation = true;
 	/** Whether the dashboard is in layout/arrange mode (drag & resize). */
@@ -174,7 +174,7 @@ export class HomeView extends ItemView {
 	 * render; absent in the graphical design). */
 	tuiSay: ((message: string) => void) | null = null;
 
-	constructor(leaf: WorkspaceLeaf, plugin: HearthPlugin) {
+	constructor(leaf: WorkspaceLeaf, plugin: ZeroHearthPlugin) {
 		super(leaf);
 		this.plugin = plugin;
 	}
@@ -239,7 +239,7 @@ export class HomeView extends ItemView {
 	 * Take the offsets back from persisted state — a reloaded workspace, or a
 	 * step back through this tab's history.
 	 *
-	 * A `setViewState` that carries no offsets (Hearth taking over an empty tab,
+	 * A `setViewState` that carries no offsets (ZeroHearth taking over an empty tab,
 	 * the ribbon opening a new one) correctly clears the memory: that is a board
 	 * this tab has never scrolled, and it should open at the top.
 	 */
@@ -336,7 +336,7 @@ export class HomeView extends ItemView {
 	 * error.
 	 */
 	focusSearch(): boolean {
-		const input = this.contentEl.querySelector<HTMLInputElement>(".hearth-search-input");
+		const input = this.contentEl.querySelector<HTMLInputElement>(".zerohearth-search-input");
 		if (!input) return false;
 		input.focus();
 		return true;
@@ -345,13 +345,13 @@ export class HomeView extends ItemView {
 	/** Whether the cursor is currently in this board's search field. Read by
 	 * {@link render} before the rebuild empties the element it is in. */
 	private searchHadFocus(): boolean {
-		const input = this.contentEl.querySelector<HTMLInputElement>(".hearth-search-input");
+		const input = this.contentEl.querySelector<HTMLInputElement>(".zerohearth-search-input");
 		return !!input && input === this.contentEl.ownerDocument.activeElement;
 	}
 
 	/**
 	 * When enabled, move keyboard focus into the search field as the view opens
-	 * so a freshly-opened Hearth tab is ready to type into (#115). Only runs from
+	 * so a freshly-opened ZeroHearth tab is ready to type into (#115). Only runs from
 	 * onOpen — not on every re-render — so a background refresh never steals focus
 	 * while the user is working. Desktop only: focusing an input on mobile pops
 	 * the on-screen keyboard, which would be jarring on every open.
@@ -380,13 +380,13 @@ export class HomeView extends ItemView {
 			// in the board the variable overshoots by exactly that pan (#417).
 			const top = this.contentEl.getBoundingClientRect().top;
 			this.contentEl.style.setProperty(
-				"--hearth-vh",
+				"--zerohearth-vh",
 				`${Math.max(0, Math.round(vv.height - top))}px`,
 			);
 			// Keyboard up when the visual viewport is meaningfully shorter than
 			// the layout viewport.
 			this.contentEl.toggleClass(
-				"hearth-kbd-open",
+				"zerohearth-kbd-open",
 				vv.height < window.innerHeight - 120,
 			);
 		};
@@ -417,14 +417,14 @@ export class HomeView extends ItemView {
 		const root = this.contentEl;
 		const isField = (el: Element | null): el is HTMLElement =>
 			el instanceof HTMLElement &&
-			!el.closest(".hearth-search-input") &&
+			!el.closest(".zerohearth-search-input") &&
 			el.matches("input, textarea, select, [contenteditable]:not([contenteditable='false'])") &&
 			root.contains(el);
 		const onFocusIn = (e: FocusEvent) => {
 			const target = e.target as Element | null;
 			if (!isField(target)) return;
 			const field = target;
-			root.addClass("hearth-field-active");
+			root.addClass("zerohearth-field-active");
 			// Let the viewport settle first, as the search field does — the
 			// keyboard is still animating and an immediate scroll fights the
 			// browser's own scroll-into-view on focus.
@@ -439,7 +439,7 @@ export class HomeView extends ItemView {
 			// fields (or onto a search result) must not drop the flag between.
 			window.setTimeout(() => {
 				if (!isField(root.ownerDocument.activeElement)) {
-					root.removeClass("hearth-field-active");
+					root.removeClass("zerohearth-field-active");
 				}
 			}, 200);
 		};
@@ -562,7 +562,7 @@ export class HomeView extends ItemView {
 		// choice takes effect without reopening the tab. Obsidian reads this at
 		// the moment it looks for a leaf to open a file in, so the current value
 		// is the one that counts.
-		this.navigation = hearthLeafIsNavigable(this.plugin.settings);
+		this.navigation = zerohearthLeafIsNavigable(this.plugin.settings);
 
 		// A plugin board has no cards to arrange and no reflow to preview, so both
 		// of those modes are dropped on the way in rather than hidden: switching to
@@ -582,7 +582,7 @@ export class HomeView extends ItemView {
 
 		const root = this.contentEl;
 		root.empty();
-		root.addClass("hearth-view");
+		root.addClass("zerohearth-view");
 
 		// A sidebar pane is one card filling the tab (#492). It draws through
 		// the ordinary board renderer, with a board of its own — and none of the
@@ -607,11 +607,11 @@ export class HomeView extends ItemView {
 		if (terminalModeActive(this.plugin.settings) && !pluginBoard) {
 			for (const cls of TERMINAL_EXCLUDED_CLASSES) root.removeClass(cls);
 			this.narrowAtRender = this.isNarrow();
-			root.toggleClass("hearth-narrow", this.narrowAtRender);
-			root.toggleClass("hearth-phone-preview", this.phonePreview);
+			root.toggleClass("zerohearth-narrow", this.narrowAtRender);
+			root.toggleClass("zerohearth-phone-preview", this.phonePreview);
 			stateDesign(root, "classic");
 			renderTerminalView(this, root, child);
-			const tuiScroll = root.querySelector<HTMLElement>(".hearth-scroll");
+			const tuiScroll = root.querySelector<HTMLElement>(".zerohearth-scroll");
 			if (tuiScroll) this.trackScroll(tuiScroll, child);
 			if (searchHadFocus) this.focusSearch();
 			return;
@@ -622,40 +622,40 @@ export class HomeView extends ItemView {
 		// in styles.css), so it wears the compact class too and the flush block
 		// only overrides what it means to be flush.
 		const density = effectiveDensity(this.plugin.settings);
-		root.toggleClass("hearth-compact", density !== "roomy");
-		root.toggleClass("hearth-flush", density === "flush");
+		root.toggleClass("zerohearth-compact", density !== "roomy");
+		root.toggleClass("zerohearth-flush", density === "flush");
 		// The board's furniture — the toolbar, the dashboard switcher, the card
 		// buttons — in the board's design, and every dialog opened from the board
 		// in it too (src/uidesign.ts). The cards state their own, one level down.
 		const design = effectiveCardDesign(this.plugin.settings, undefined);
-		root.toggleClass("hearth-x-ui", design === "expressive");
+		root.toggleClass("zerohearth-x-ui", design === "expressive");
 		stateDesign(root, design);
 		// The two performance-tier flags CSS keys off. They are separate because
 		// the tiers drop motion and frost at the same rung but for different
-		// reasons, and because `hearth-no-motion` is also what the focus/visibility
+		// reasons, and because `zerohearth-no-motion` is also what the focus/visibility
 		// gate toggles at runtime (see motion.ts) without touching the tier.
 		// Everything with a setting behind it — the background, card opacity, the
 		// blur radius, the refresh timers — is handled by the effective* resolvers
 		// instead, so these classes only cover what has no setting to override.
-		root.toggleClass("hearth-no-motion", !motionAllowed(this.plugin.settings));
-		root.toggleClass("hearth-no-frost", !frostAllowed(this.plugin.settings));
+		root.toggleClass("zerohearth-no-motion", !motionAllowed(this.plugin.settings));
+		root.toggleClass("zerohearth-no-frost", !frostAllowed(this.plugin.settings));
 		// Platform marker, not a state flag: it never changes for the life of the
 		// app, and it is what scopes the vibrancy rule in styles.css (#272) to the
 		// one platform that has a translucent window. The `is-translucent` half of
 		// that rule is Obsidian's own body class, so the pair reacts on its own
 		// when the user flips the setting — nothing here has to re-render.
-		root.toggleClass("hearth-macos", Platform.isMacOS);
+		root.toggleClass("zerohearth-macos", Platform.isMacOS);
 		// In arrange mode the user can hide the per-card headers to see each
 		// card's full body. The class is only applied while arranging so the
 		// headers come back automatically when arranging ends.
 		root.toggleClass(
-			"hearth-hide-header",
+			"zerohearth-hide-header",
 			this.arrangeMode && this.hideHeaderInArrange,
 		);
 
 		// Mobile-only mode: on a phone/tablet, collapse to just the search field.
 		const mobileOnly = Platform.isMobile && this.plugin.settings.mobileSearchOnly;
-		root.toggleClass("hearth-mobile-only", mobileOnly);
+		root.toggleClass("zerohearth-mobile-only", mobileOnly);
 
 		// The narrow layout, from the measured board width rather than the
 		// platform — see src/narrow.ts for why. Recorded on the view so the width
@@ -663,14 +663,14 @@ export class HomeView extends ItemView {
 		// ordinary resize (which the fractional layout already handles).
 		const narrow = this.isNarrow();
 		this.narrowAtRender = narrow;
-		root.toggleClass("hearth-narrow", narrow);
-		root.toggleClass("hearth-phone-preview", this.phonePreview);
+		root.toggleClass("zerohearth-narrow", narrow);
+		root.toggleClass("zerohearth-phone-preview", this.phonePreview);
 		// The whole board is one hosted view: it fills the pane and scrolls itself,
 		// on a single card surface instead of a grid of them.
-		root.toggleClass("hearth-plugin-view", pluginBoard);
+		root.toggleClass("zerohearth-plugin-view", pluginBoard);
 		// Likewise for a single card: it fills the fitted board instead of sitting
 		// at its stored place on the grid.
-		root.toggleClass("hearth-single-card-view", singleBoard);
+		root.toggleClass("zerohearth-single-card-view", singleBoard);
 
 		// With no cards to show (and not arranging), centre the search field
 		// vertically so the page reads as a clean launcher.
@@ -682,7 +682,7 @@ export class HomeView extends ItemView {
 			!singleBoard &&
 			!this.arrangeMode &&
 			renderCards(this.plugin.settings).length === 0;
-		root.toggleClass("hearth-empty-board", emptyBoard);
+		root.toggleClass("zerohearth-empty-board", emptyBoard);
 
 		// The backdrop is painted one of two ways. As a wallpaper it goes behind
 		// everything, so it is laid down before the scroll area; as a banner it is
@@ -694,10 +694,10 @@ export class HomeView extends ItemView {
 		// painted as a wallpaper there rather than as a strip floating above a
 		// launcher.
 		const banner = !mobileOnly && bannerActive(this.plugin.settings);
-		root.toggleClass("hearth-has-banner", banner);
+		root.toggleClass("zerohearth-has-banner", banner);
 		if (!banner) applyBackground(this, root, child);
 
-		const scroll = root.createDiv("hearth-scroll");
+		const scroll = root.createDiv("zerohearth-scroll");
 		// A stacked board is a list that runs off the bottom of the screen by
 		// design, so fit-to-page — which locks the board to exactly one screen and
 		// clips the rest — is not applied to it. The setting is untouched and
@@ -708,7 +708,7 @@ export class HomeView extends ItemView {
 		// fill and does its own scrolling inside it. Letting the page scroll
 		// instead would give the board no height at all to hand over.
 		scroll.toggleClass(
-			"hearth-fit",
+			"zerohearth-fit",
 			pluginBoard ||
 				singleBoard ||
 				(effectiveFitToPage(this.plugin.settings) && !stacked),
@@ -717,15 +717,15 @@ export class HomeView extends ItemView {
 		if (banner) renderBanner(this, scroll, child);
 
 		// The phone preview draws a device shell around the board. It is a wrapper
-		// rather than styling on `.hearth-inner` itself, because the bezel has to
+		// rather than styling on `.zerohearth-inner` itself, because the bezel has to
 		// paint a surface and the screen has to keep showing the board's own
 		// background through it — one element cannot do both. The screen width is
 		// published as a variable so the shell can size itself around it and the
 		// preview's width stays the one number that decides the layout.
-		const frame = this.phonePreview ? scroll.createDiv("hearth-phone-frame") : null;
-		frame?.style.setProperty("--hearth-phone-screen", `${PHONE_PREVIEW_WIDTH}px`);
+		const frame = this.phonePreview ? scroll.createDiv("zerohearth-phone-frame") : null;
+		frame?.style.setProperty("--zerohearth-phone-screen", `${PHONE_PREVIEW_WIDTH}px`);
 
-		const inner = (frame ?? scroll).createDiv("hearth-inner");
+		const inner = (frame ?? scroll).createDiv("zerohearth-inner");
 		// The column is fluid either way — it is `width: 100%` centred in the
 		// scroll area, so it already follows a narrow pane down. The setting only
 		// decides how far it may grow: to a pixel ceiling, or to the pane itself.
@@ -754,7 +754,7 @@ export class HomeView extends ItemView {
 		}
 
 		if (effectiveShowTitle(this.plugin.settings) || effectiveShowSearch(this.plugin.settings)) {
-			const header = inner.createDiv("hearth-header");
+			const header = inner.createDiv("zerohearth-header");
 			renderHeader(this, header, child);
 		}
 
@@ -764,7 +764,7 @@ export class HomeView extends ItemView {
 		gateMotionOnWindow(this, child);
 
 		if (!mobileOnly) {
-			const dashboard = inner.createDiv("hearth-dashboard");
+			const dashboard = inner.createDiv("zerohearth-dashboard");
 			if (pluginBoard) renderPluginBoard(this, dashboard, child);
 			else renderDashboard(this, dashboard, child);
 		}

@@ -8,9 +8,9 @@ import { type HomeSettings } from "./types";
  * Per-file icons from the Iconic and Iconize community plugins (#132).
  *
  * Neither plugin exposes an API for other plugins, so — exactly as with
- * TaskNotes in `cards/tasks.ts` — Hearth reads their stored state directly.
+ * TaskNotes in `cards/tasks.ts` — ZeroHearth reads their stored state directly.
  * That state is private and can change shape in any release of theirs, so every
- * read here is wrapped and every failure degrades silently to Hearth's own
+ * read here is wrapped and every failure degrades silently to ZeroHearth's own
  * file-type icon. A broken read must never surface as a broken card.
  *
  * Two plugins, because the two are mid-handover: Iconize
@@ -19,7 +19,7 @@ import { type HomeSettings } from "./types";
  *
  * Scope: Lucide icons and emoji. Iconize can also draw icons from downloaded
  * icon packs (Font Awesome, Remix, …), which are SVG blobs on disk — rendering
- * those means injecting third-party markup, so those files keep Hearth's
+ * those means injecting third-party markup, so those files keep ZeroHearth's
  * built-in icon instead.
  *
  * A note's icon can also live in a frontmatter property, which needs no plugin
@@ -62,7 +62,7 @@ export interface FileIconOptions {
 	/** Read that property on every note even when neither icon plugin is
 	 * enabled (#398). Off by default: `icon` is a common enough property name
 	 * that a vault using it for its own purposes would otherwise see it turn
-	 * into icons the moment Hearth lists the file. */
+	 * into icons the moment ZeroHearth lists the file. */
 	frontmatterWithoutPlugin: boolean;
 }
 
@@ -86,7 +86,7 @@ export function isEmojiIcon(value: string): boolean {
 
 /**
  * Convert Iconize's stored icon name into a plain Lucide id, or null when the
- * icon comes from a downloaded pack Hearth can't render.
+ * icon comes from a downloaded pack ZeroHearth can't render.
  *
  * Iconize stores `<PackPrefix><NormalizedName>` — the Lucide id `file-text`
  * becomes `LiFileText`. Undoing the normalization means splitting the
@@ -139,9 +139,9 @@ export function normalizeStoredIcon(
 
 /**
  * Split the settings field into property names. The field takes a comma
- * separated list so a vault whose icons are written by a plugin Hearth doesn't
+ * separated list so a vault whose icons are written by a plugin ZeroHearth doesn't
  * know by name — Pretty Properties, Notebook Navigator and AutoIcon all write
- * frontmatter — can point Hearth at that plain property instead of waiting for
+ * frontmatter — can point ZeroHearth at that plain property instead of waiting for
  * a per-plugin integration (#398).
  */
 export function iconProperties(property: string): string[] {
@@ -198,7 +198,7 @@ export function iconizeIconForPath(data: unknown, path: string): string | null {
 
 /** Pull the icon name for `path` out of an Iconic `fileIcons` map, which stores
  * `{ icon, color }` per vault path. The colour is read but not applied —
- * Hearth's icons take their colour from the theme. */
+ * ZeroHearth's icons take their colour from the theme. */
 export function iconicIconForPath(fileIcons: unknown, path: string): string | null {
 	if (!fileIcons || typeof fileIcons !== "object") return null;
 	const entry = (fileIcons as Record<string, unknown>)[path];
@@ -309,7 +309,7 @@ function isPluginEnabled(app: App, id: string): boolean {
  * Reading it with neither plugin installed is opt-in (#398). `icon` is a
  * common enough property name that a vault using it for its own purposes — a
  * template field, a Dataview column — would otherwise find those values
- * turning into icons in Hearth without ever having installed an icon plugin.
+ * turning into icons in ZeroHearth without ever having installed an icon plugin.
  * Plain enough that the user has to ask for it, in other words.
  */
 function frontmatterIcon(
@@ -338,7 +338,7 @@ export function hasFileIconPlugin(app: App): boolean {
 }
 
 /** The icon to draw for `file`: a custom one from Iconic or Iconize when the
- * user has set one or rules one in, otherwise Hearth's own file-type icon.
+ * user has set one or rules one in, otherwise ZeroHearth's own file-type icon.
  *
  * Iconic is consulted first — it is the maintained plugin, so in a vault
  * migrating from Iconize its choice is the more recent one. Within Iconic a
@@ -395,7 +395,7 @@ export function applyFileIcon(el: HTMLElement, icon: ResolvedIcon | string): voi
 	}
 	if (icon.kind === "emoji") {
 		el.empty();
-		el.createSpan({ cls: "hearth-emoji-icon", text: icon.char });
+		el.createSpan({ cls: "zerohearth-emoji-icon", text: icon.char });
 		return;
 	}
 	setIcon(el, icon.id);

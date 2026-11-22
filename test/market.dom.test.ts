@@ -145,7 +145,7 @@ function view() {
 const component = { register: () => undefined, registerInterval: () => 0 } as unknown as Component;
 
 function draw(market: MarketConfig, v = view().view): HTMLElement {
-	const body = document.body.createDiv("hearth-card-body");
+	const body = document.body.createDiv("zerohearth-card-body");
 	const card: DashboardCard = { id: "m", kind: "market", x: 0, y: 0, w: 4, h: 3, market };
 	renderMarket(v, card, body, component);
 	return body;
@@ -164,31 +164,31 @@ describe("every style, in both designs", () => {
 		for (const design of ["classic", "expressive"] as const) {
 			it(`draws ${style} (${design}) once the quotes land`, async () => {
 				const body = draw({ style, design, items: ITEMS.map((i) => ({ ...i })), upColor: "green" });
-				const wrap = body.querySelector(".hearth-market")!;
+				const wrap = body.querySelector(".zerohearth-market")!;
 				expect(wrap.classList.contains(`is-${style}`)).toBe(true);
 				expect(wrap.classList.contains("is-expressive")).toBe(design === "expressive");
 				await vi.waitFor(() => {
-					expect(body.querySelector(".hearth-market-price")).not.toBeNull();
-					expect(body.querySelector(".hearth-market-missing")).toBeNull();
+					expect(body.querySelector(".zerohearth-market-price")).not.toBeNull();
+					expect(body.querySelector(".zerohearth-market-missing")).toBeNull();
 				});
 				if (style === "spotlight" || style === "chart") {
-					await vi.waitFor(() => expect(body.querySelector(".hearth-market-chart polyline")).not.toBeNull());
-					expect(body.querySelectorAll(".hearth-market-range")).toHaveLength(6);
+					await vi.waitFor(() => expect(body.querySelector(".zerohearth-market-chart polyline")).not.toBeNull());
+					expect(body.querySelectorAll(".zerohearth-market-range")).toHaveLength(6);
 				}
 				if (style === "list" || style === "tiles") {
-					await vi.waitFor(() => expect(body.querySelectorAll(".hearth-market-spark")).toHaveLength(3));
+					await vi.waitFor(() => expect(body.querySelectorAll(".zerohearth-market-spark")).toHaveLength(3));
 				}
 				if (style === "ticker") {
 					// Twice over, for a seamless loop.
-					expect(body.querySelectorAll(".hearth-market-tape-item")).toHaveLength(6);
+					expect(body.querySelectorAll(".zerohearth-market-tape-item")).toHaveLength(6);
 				}
 				if (style === "portfolio") {
-					const total = body.querySelector(".hearth-market-summary-value")!.textContent ?? "";
+					const total = body.querySelector(".zerohearth-market-summary-value")!.textContent ?? "";
 					// 1000 × 3.935 CNY, the only holding, in its own currency.
 					expect(total).toContain("3,935.00");
 				}
 				if (design === "expressive" && (style === "minimal" || style === "spotlight")) {
-					expect(body.querySelector(".hearth-market-badge path")).not.toBeNull();
+					expect(body.querySelector(".zerohearth-market-badge path")).not.toBeNull();
 				}
 			});
 		}
@@ -198,22 +198,22 @@ describe("every style, in both designs", () => {
 describe("the move's colour", () => {
 	it("marks a rise, and swaps the colours for red-up readers", async () => {
 		const body = draw({ style: "list", items: [{ symbol: "AAPL" }], upColor: "red" });
-		await vi.waitFor(() => expect(body.querySelector(".hearth-market-row.is-up")).not.toBeNull());
-		expect(body.querySelector(".hearth-market")!.classList.contains("is-red-up")).toBe(true);
+		await vi.waitFor(() => expect(body.querySelector(".zerohearth-market-row.is-up")).not.toBeNull());
+		expect(body.querySelector(".zerohearth-market")!.classList.contains("is-red-up")).toBe(true);
 	});
 });
 
 describe("the feed's fallback", () => {
 	it("fetches a symbol Yahoo can't answer from Tencent, and stops asking Yahoo", async () => {
 		const body = draw({ style: "list", items: [{ symbol: "NOPE" }] });
-		await vi.waitFor(() => expect(body.querySelector(".hearth-market-price")).not.toBeNull());
+		await vi.waitFor(() => expect(body.querySelector(".zerohearth-market-price")).not.toBeNull());
 		expect(calls.some((c) => c.includes("/v8/finance/chart/NOPE"))).toBe(true);
 		expect(calls.some((c) => c.includes("qt.gtimg.cn/q=usNOPE"))).toBe(true);
 
 		// A redraw inside the refresh window: the cached Tencent quote, no requests.
 		calls.length = 0;
 		const again = draw({ style: "list", items: [{ symbol: "NOPE" }] });
-		expect(again.querySelector(".hearth-market-price")).not.toBeNull();
+		expect(again.querySelector(".zerohearth-market-price")).not.toBeNull();
 		await new Promise((r) => window.setTimeout(r, 20));
 		expect(calls.filter((c) => c.includes("NOPE"))).toEqual([]);
 	});
@@ -221,7 +221,7 @@ describe("the feed's fallback", () => {
 	it("serves a mainland fund from Yahoo when Tencent is down", async () => {
 		down.add("qt.gtimg.cn");
 		const body = draw({ style: "list", items: [{ symbol: "512880" }] });
-		await vi.waitFor(() => expect(body.querySelector(".hearth-market-price")).not.toBeNull());
+		await vi.waitFor(() => expect(body.querySelector(".zerohearth-market-price")).not.toBeNull());
 		expect(calls.some((c) => c.includes("/v8/finance/chart/512880.SS"))).toBe(true);
 	});
 });
@@ -233,14 +233,14 @@ describe("with external calls off", () => {
 		const body = draw({ style: "list", items: [{ symbol: "MSFT" }] }, v);
 		await new Promise((r) => window.setTimeout(r, 20));
 		expect(calls).toEqual([]);
-		expect(body.querySelector(".hearth-card-empty")).not.toBeNull();
+		expect(body.querySelector(".zerohearth-card-empty")).not.toBeNull();
 	});
 });
 
 describe("an empty card", () => {
 	it("asks for a symbol", () => {
 		const body = draw({ style: "list" });
-		expect(body.querySelector(".hearth-card-empty")).not.toBeNull();
+		expect(body.querySelector(".zerohearth-card-empty")).not.toBeNull();
 	});
 });
 
@@ -248,22 +248,22 @@ describe("the lookup", () => {
 	it("searches from the card and adds a result to it", async () => {
 		const { view: v, saveData } = view();
 		const market: MarketConfig = { style: "lookup", items: [] };
-		const body = document.body.createDiv("hearth-card-body");
+		const body = document.body.createDiv("zerohearth-card-body");
 		const card: DashboardCard = { id: "m", kind: "market", x: 0, y: 0, w: 4, h: 3, market };
 		renderMarket(v, card, body, component);
-		expect(body.querySelector(".hearth-market-hint")).not.toBeNull();
+		expect(body.querySelector(".zerohearth-market-hint")).not.toBeNull();
 
-		const input = body.querySelector<HTMLInputElement>(".hearth-market-search-input")!;
+		const input = body.querySelector<HTMLInputElement>(".zerohearth-market-search-input")!;
 		input.value = "apple";
 		input.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
-		await vi.waitFor(() => expect(body.querySelector(".hearth-market-result")).not.toBeNull());
-		expect(body.querySelector(".hearth-market-result .hearth-market-title")!.textContent).toBe("Apple Inc.");
+		await vi.waitFor(() => expect(body.querySelector(".zerohearth-market-result")).not.toBeNull());
+		expect(body.querySelector(".zerohearth-market-result .zerohearth-market-title")!.textContent).toBe("Apple Inc.");
 
-		body.querySelector<HTMLButtonElement>(".hearth-market-result .hearth-market-icon-button")!.click();
+		body.querySelector<HTMLButtonElement>(".zerohearth-market-result .zerohearth-market-icon-button")!.click();
 		expect(card.market?.items).toEqual([{ symbol: "AAPL", provider: "yahoo", name: "Apple Inc." }]);
 		expect(saveData).toHaveBeenCalled();
-		await vi.waitFor(() => expect(body.querySelector(".hearth-market-row .hearth-market-price")).not.toBeNull());
+		await vi.waitFor(() => expect(body.querySelector(".zerohearth-market-row .zerohearth-market-price")).not.toBeNull());
 		// The field survived every repaint.
-		expect(body.querySelector(".hearth-market-search-input")).toBe(input);
+		expect(body.querySelector(".zerohearth-market-search-input")).toBe(input);
 	});
 });

@@ -59,8 +59,8 @@ afterEach(() => {
 function fakeView(opts: { search?: boolean; focusOnOpen?: boolean } = {}): FakeView {
 	const settings = structuredClone(DEFAULT_SETTINGS);
 	settings.focusSearchOnOpen = opts.focusOnOpen ?? false;
-	const contentEl = document.body.createDiv("hearth-view");
-	if (opts.search ?? true) contentEl.createEl("input", { cls: "hearth-search-input" });
+	const contentEl = document.body.createDiv("zerohearth-view");
+	if (opts.search ?? true) contentEl.createEl("input", { cls: "zerohearth-search-input" });
 	const view: FakeView = {
 		plugin: { settings },
 		contentEl,
@@ -73,7 +73,7 @@ function fakeView(opts: { search?: boolean; focusOnOpen?: boolean } = {}): FakeV
 }
 
 function field(view: FakeView): HTMLInputElement {
-	const input = view.contentEl.querySelector<HTMLInputElement>(".hearth-search-input");
+	const input = view.contentEl.querySelector<HTMLInputElement>(".zerohearth-search-input");
 	if (!input) throw new Error("the test view was built without a search field");
 	return input;
 }

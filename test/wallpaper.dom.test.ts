@@ -1,7 +1,7 @@
 /**
  * @vitest-environment jsdom
  *
- * Hearth's own wallpaper, actually drawn: both designs under jsdom with
+ * ZeroHearth's own wallpaper, actually drawn: both designs under jsdom with
  * Obsidian's DOM helpers as its type definitions describe them (test/support),
  * whose createSvg rejects two classes in one string exactly as Obsidian does.
  */
@@ -23,9 +23,9 @@ describe("the classic wallpaper", () => {
 		const host = document.body.createDiv();
 		const wp = drawWallpaper(host, "classic");
 		expect(wp.classList.contains("is-classic")).toBe(true);
-		expect(wp.querySelectorAll(".hearth-wallpaper-ridge")).toHaveLength(5);
-		expect(wp.querySelector(".hearth-wallpaper-sun")).not.toBeNull();
-		expect(wp.querySelectorAll(".hearth-wallpaper-window")).toHaveLength(2);
+		expect(wp.querySelectorAll(".zerohearth-wallpaper-ridge")).toHaveLength(5);
+		expect(wp.querySelector(".zerohearth-wallpaper-sun")).not.toBeNull();
+		expect(wp.querySelectorAll(".zerohearth-wallpaper-window")).toHaveLength(2);
 		expect(wp.querySelector("svg")?.getAttribute("preserveAspectRatio")).toBe("xMidYMid slice");
 	});
 
@@ -40,7 +40,7 @@ describe("the classic wallpaper", () => {
 
 	it("comes out the same every time", () => {
 		const host = document.body.createDiv();
-		const strip = (el: HTMLElement): string => el.innerHTML.replace(/hearth-wallpaper-glow-\d+/g, "");
+		const strip = (el: HTMLElement): string => el.innerHTML.replace(/zerohearth-wallpaper-glow-\d+/g, "");
 		expect(strip(drawWallpaper(host, "classic"))).toBe(strip(drawWallpaper(host, "classic")));
 	});
 });
@@ -50,7 +50,7 @@ describe("the expressive wallpaper", () => {
 		const host = document.body.createDiv();
 		const wp = drawWallpaper(host, "expressive");
 		expect(wp.classList.contains("is-expressive")).toBe(true);
-		const corners = Array.from(wp.querySelectorAll(".hearth-wallpaper-corner"));
+		const corners = Array.from(wp.querySelectorAll(".zerohearth-wallpaper-corner"));
 		expect(corners.map((c) => Array.from(c.classList).find((k) => k.startsWith("is-")))).toEqual([
 			"is-tl",
 			"is-tr",
@@ -71,13 +71,13 @@ describe("the harbour town", () => {
 	it("draws a town, a lighthouse, boats and the sea in one sliced picture", () => {
 		const host = document.body.createDiv();
 		const wp = drawHarbour(host);
-		expect(wp.classList.contains("hearth-wallpaper")).toBe(true);
+		expect(wp.classList.contains("zerohearth-wallpaper")).toBe(true);
 		expect(wp.classList.contains("is-harbour")).toBe(true);
 		expect(wp.querySelector("svg")?.getAttribute("preserveAspectRatio")).toBe("xMidYMid slice");
-		expect(wp.querySelectorAll(".hearth-harbour-house").length).toBeGreaterThan(10);
-		expect(wp.querySelector(".hearth-harbour-lighthouse .hearth-harbour-lamp")).not.toBeNull();
-		expect(wp.querySelectorAll(".hearth-harbour-boat")).toHaveLength(4);
-		expect(wp.querySelectorAll(".hearth-harbour-wave").length).toBeGreaterThan(4);
+		expect(wp.querySelectorAll(".zerohearth-harbour-house").length).toBeGreaterThan(10);
+		expect(wp.querySelector(".zerohearth-harbour-lighthouse .zerohearth-harbour-lamp")).not.toBeNull();
+		expect(wp.querySelectorAll(".zerohearth-harbour-boat")).toHaveLength(4);
+		expect(wp.querySelectorAll(".zerohearth-harbour-wave").length).toBeGreaterThan(4);
 	});
 
 	it("names parts only, leaving every colour to the stylesheet", () => {
@@ -91,7 +91,7 @@ describe("the harbour town", () => {
 	});
 });
 
-describe("a board's own Hearth wallpaper", () => {
+describe("a board's own ZeroHearth wallpaper", () => {
 	const load = (kind: string) =>
 		sanitizeDashboard(
 			{ id: "b", name: "B", cards: [], background: { kind, value: "", opacity: 0.4, blur: 0 } },

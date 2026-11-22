@@ -1,5 +1,5 @@
 name: 🐛 Bug report
-description: Something in Hearth misbehaves
+description: Something in ZeroHearth misbehaves
 title: "[Bug]: "
 labels: ["bug"]
 body:
@@ -8,7 +8,7 @@ body:
       value: |
         Thanks for taking the time to report a bug! A clear, self-contained
         report is the single most useful thing you can send. Please search
-        [existing issues](https://github.com/ondreu/Hearth/issues?q=is%3Aissue)
+        [existing issues](https://github.com/zero1666/ZeroHearth/issues?q=is%3Aissue)
         first to avoid duplicates.
   - type: textarea
     id: what-happened
@@ -29,9 +29,9 @@ body:
     validations:
       required: false
   - type: input
-    id: hearth-version
+    id: zerohearth-version
     attributes:
-      label: Hearth version
+      label: ZeroHearth version
       placeholder: "1.8.0"
     validations:
       required: true

@@ -16,7 +16,7 @@
  * trusted — and it is built only when it is opened.
  *
  * Who the file is by is not a question either. A typed name is personal data
- * Hearth has no reason to hold and a label anybody can claim, so the dialog
+ * ZeroHearth has no reason to hold and a label anybody can claim, so the dialog
  * shows an anonymous handle derived from a key that never leaves the vault
  * (`src/identity.ts`) and offers to copy or replace that key.
  *
@@ -30,8 +30,8 @@
 
 import { apiVersion, type App, Notice, Platform, Setting, TFile } from "obsidian";
 import { setIcon } from "./glyphs";
-import { HearthModal } from "./uidesign";
-import type HearthPlugin from "./main";
+import { ZeroHearthModal } from "./uidesign";
+import type ZeroHearthPlugin from "./main";
 import { activeDashboard, type Dashboard } from "./types";
 import { leaveArrangeMode, VIEW_TYPE_HOME } from "./view";
 import { detectLanguage, t } from "./i18n";
@@ -65,7 +65,7 @@ import {
 	exportLayoutFile,
 	exportSettingsFile,
 	existingBoardFor,
-	type HearthPackage,
+	type ZeroHearthPackage,
 	type ImportResult,
 	type ImportWarning,
 	importPackageFile,
@@ -105,18 +105,18 @@ export async function saveExport(
 }
 
 /** Options every export route fills in the same way. */
-function commonOptions(plugin: HearthPlugin): { pluginVersion: string; locale: string } {
+function commonOptions(plugin: ZeroHearthPlugin): { pluginVersion: string; locale: string } {
 	return { pluginVersion: plugin.manifest.version, locale: detectLanguage() };
 }
 
 /** Export the whole dashboard setup (every board plus the layout globals). */
-export async function exportLayout(plugin: HearthPlugin): Promise<void> {
+export async function exportLayout(plugin: ZeroHearthPlugin): Promise<void> {
 	const outcome = exportLayoutFile(plugin.settings, commonOptions(plugin));
 	await saveExport(plugin.app, PACKAGE_FILENAMES.layout, outcome.json, t().notices.layoutExported);
 }
 
 /** Export every setting: the full backup. */
-export async function exportSettings(plugin: HearthPlugin): Promise<void> {
+export async function exportSettings(plugin: ZeroHearthPlugin): Promise<void> {
 	const outcome = exportSettingsFile(plugin.settings, commonOptions(plugin));
 	await saveExport(plugin.app, PACKAGE_FILENAMES.settings, outcome.json);
 }
@@ -125,7 +125,7 @@ export async function exportSettings(plugin: HearthPlugin): Promise<void> {
 type ShareMode = "export" | "publish";
 
 /** Open the share dialog for one board, on the "save a file" side. */
-export function openExportDashboard(plugin: HearthPlugin, dash: Dashboard): void {
+export function openExportDashboard(plugin: ZeroHearthPlugin, dash: Dashboard): void {
 	new ShareDashboardModal(plugin, dash, "export").open();
 }
 
@@ -142,7 +142,7 @@ export function openExportDashboard(plugin: HearthPlugin, dash: Dashboard): void
  * last publish, and then to the board's own name.
  */
 export function openPublishDashboard(
-	plugin: HearthPlugin,
+	plugin: ZeroHearthPlugin,
 	dash: Dashboard,
 	listing?: PublishedListing,
 ): void {
@@ -163,9 +163,9 @@ export function openPublishDashboard(
  * sanitizers, not a shortcut around them.
  */
 export function openImportPackage(
-	plugin: HearthPlugin,
+	plugin: ZeroHearthPlugin,
 	json: string,
-	pkg: HearthPackage,
+	pkg: ZeroHearthPackage,
 ): void {
 	new ImportModal(plugin, json, pkg).open();
 }
@@ -204,7 +204,7 @@ const GROUP_SCOPES: Record<StripGroup, readonly ReferenceScope[]> = {
  * settings tab does not: a vault that has never shared anything has no identity
  * to have, and merely reading a settings page is not a reason to acquire one.
  */
-export function vaultIdentity(plugin: HearthPlugin, mint = false): AuthorIdentity | null {
+export function vaultIdentity(plugin: ZeroHearthPlugin, mint = false): AuthorIdentity | null {
 	const s = plugin.settings;
 	if (!s.authorKey && mint) {
 		s.authorKey = newAuthorKey();
@@ -218,7 +218,7 @@ export function vaultIdentity(plugin: HearthPlugin, mint = false): AuthorIdentit
  * about it: copy the key that carries the handle elsewhere, or paste one in.
  *
  * There is deliberately no field to type a name into. A typed name is personal
- * data Hearth has no reason to hold and a label anybody could claim; this
+ * data ZeroHearth has no reason to hold and a label anybody could claim; this
  * handle is computed from a secret the vault never sends, so it is anonymous,
  * the same on every export, and not something a stranger can publish under.
  * See `src/identity.ts`.
@@ -244,7 +244,7 @@ export function vaultIdentity(plugin: HearthPlugin, mint = false): AuthorIdentit
  * caller that is about to *use* the identity; see {@link vaultIdentity}.
  */
 export function identitySetting(
-	plugin: HearthPlugin,
+	plugin: ZeroHearthPlugin,
 	containerEl: HTMLElement,
 	onChanged: () => void,
 	opts: { mint?: boolean; decorate?: (row: Setting) => void } = {},
@@ -260,7 +260,7 @@ export function identitySetting(
 	// value. Selectable, because people copy it into a message to say "that one
 	// is mine".
 	if (identity) {
-		row.nameEl.createDiv({ cls: "hearth-identity-handle", text: identity.handle });
+		row.nameEl.createDiv({ cls: "zerohearth-identity-handle", text: identity.handle });
 	}
 
 	decorate?.(row);
@@ -307,7 +307,7 @@ export function identitySetting(
 					.setCta()
 					.onClick(() => void copyRecoveryKey(plugin, onChanged)),
 			);
-		warning.settingEl.addClass("hearth-setting-warning");
+		warning.settingEl.addClass("zerohearth-setting-warning");
 	}
 	return row;
 }
@@ -321,7 +321,7 @@ export function identitySetting(
  * finding out what you are called by looking for it later is worse.
  */
 export async function createIdentity(
-	plugin: HearthPlugin,
+	plugin: ZeroHearthPlugin,
 	onChanged: () => void,
 ): Promise<AuthorIdentity | null> {
 	const identity = vaultIdentity(plugin, true);
@@ -334,7 +334,7 @@ export async function createIdentity(
 /** Asking for the key is asking for an identity, so this mints one if the vault
  * hasn't got one yet — writing it down before it is needed is the whole point
  * of the button. */
-async function copyRecoveryKey(plugin: HearthPlugin, onChanged: () => void): Promise<void> {
+async function copyRecoveryKey(plugin: ZeroHearthPlugin, onChanged: () => void): Promise<void> {
 	const strings = t().portable.exportModal;
 	const identity = vaultIdentity(plugin, true);
 	if (!identity) return;
@@ -357,7 +357,7 @@ async function copyRecoveryKey(plugin: HearthPlugin, onChanged: () => void): Pro
 
 /** Paste a key from another install. The handle comes back with it — that is
  * what carrying the key means. */
-async function restoreIdentity(plugin: HearthPlugin, onChanged: () => void): Promise<void> {
+async function restoreIdentity(plugin: ZeroHearthPlugin, onChanged: () => void): Promise<void> {
 	const strings = t().portable.exportModal;
 	// Pasting a key over one the user has never been shown destroys a handle
 	// nothing can bring back — the one irreversible thing in this whole feature,
@@ -429,8 +429,8 @@ async function restoreIdentity(plugin: HearthPlugin, onChanged: () => void): Pro
  * board whose text cards are part of the design is a real thing to publish.
  * What is not there on the publish side is the switch that turns the strip off.
  */
-class ShareDashboardModal extends HearthModal {
-	private plugin: HearthPlugin;
+class ShareDashboardModal extends ZeroHearthModal {
+	private plugin: ZeroHearthPlugin;
 	private dash: Dashboard;
 	private mode: ShareMode;
 	private opts: ExportDashboardOptions = { flatten: true, embedAssets: true };
@@ -463,7 +463,7 @@ class ShareDashboardModal extends HearthModal {
 	private details?: HTMLDetailsElement;
 
 	constructor(
-		plugin: HearthPlugin,
+		plugin: ZeroHearthPlugin,
 		dash: Dashboard,
 		mode: ShareMode,
 		listing?: PublishedListing,
@@ -509,7 +509,7 @@ class ShareDashboardModal extends HearthModal {
 	}
 
 	onOpen(): void {
-		this.modalEl.addClass("hearth-share-modal");
+		this.modalEl.addClass("zerohearth-share-modal");
 		this.render();
 		// Taken up front so it is there to look at, rather than one more thing
 		// to remember. Silent when it isn't possible: the row explains why.
@@ -532,14 +532,14 @@ class ShareDashboardModal extends HearthModal {
 		this.renderDestination(body);
 		body.createEl("p", {
 			text: this.publishing ? t().gallery.publish.intro : strings.intro,
-			cls: "hearth-modal-intro",
+			cls: "zerohearth-modal-intro",
 		});
 		// The one thing about publishing that is not undoable, said before the
 		// fields rather than beside the button: copies stay installed after an
 		// entry is withdrawn, and that is worth knowing while you are still
 		// deciding whether to fill the form in.
 		if (this.publishing) {
-			body.createDiv({ cls: "hearth-share-warning", text: t().gallery.publish.warning });
+			body.createDiv({ cls: "zerohearth-share-warning", text: t().gallery.publish.warning });
 		}
 
 		this.renderListingFields(body);
@@ -588,7 +588,7 @@ class ShareDashboardModal extends HearthModal {
 
 		if (!canSnapshot()) {
 			const note = new Setting(body).setDesc(strings.snapshotUnavailable);
-			note.settingEl.addClass("hearth-setting-warning");
+			note.settingEl.addClass("zerohearth-setting-warning");
 			return;
 		}
 		// `boardEl()` as well as the id check: a board can be the active one and
@@ -597,7 +597,7 @@ class ShareDashboardModal extends HearthModal {
 		// whatever is actually there.
 		if (!this.isActiveBoard() || !this.boardEl()) {
 			const note = new Setting(body).setDesc(strings.snapshotNotActive);
-			note.settingEl.addClass("hearth-setting-warning");
+			note.settingEl.addClass("zerohearth-setting-warning");
 			return;
 		}
 
@@ -613,7 +613,7 @@ class ShareDashboardModal extends HearthModal {
 
 		if (this.capturing) {
 			row.descEl.createDiv({
-				cls: "hearth-export-values-empty",
+				cls: "zerohearth-export-values-empty",
 				text: strings.snapshotWorking,
 			});
 			return;
@@ -623,14 +623,14 @@ class ShareDashboardModal extends HearthModal {
 		// Shown as an image element with a data URI this vault just produced —
 		// not a URL, not markup, and never anything that arrived from outside.
 		const src = `data:${this.snapshot.mime};base64,${this.snapshot.data}`;
-		const shot = body.createDiv("hearth-share-snapshot");
-		const img = shot.createEl("img", { cls: "hearth-share-snapshot-img" });
+		const shot = body.createDiv("zerohearth-share-snapshot");
+		const img = shot.createEl("img", { cls: "zerohearth-share-snapshot-img" });
 		img.src = src;
 		img.alt = strings.snapshot;
 		// Checking a redaction on a 560px-wide thumbnail is not checking it.
 		activate(img, () => openPictureViewer(src, strings.snapshot), strings.snapshotEnlarge);
 		shot.createDiv({
-			cls: "hearth-share-snapshot-note",
+			cls: "zerohearth-share-snapshot-note",
 			text: strings.snapshotTaken(Math.max(1, Math.round(this.snapshot.bytes / 1024))),
 		});
 		this.renderSnapshotConfirm(body);
@@ -667,20 +667,20 @@ class ShareDashboardModal extends HearthModal {
 					this.render();
 				}),
 			);
-		confirm.settingEl.addClass("hearth-share-snapshot-confirm");
+		confirm.settingEl.addClass("zerohearth-share-snapshot-confirm");
 
-		const leak = body.createDiv("hearth-share-snapshot-leak");
+		const leak = body.createDiv("zerohearth-share-snapshot-leak");
 		leak.createDiv({ text: strings.snapshotLeak });
 		// Icon and label as their own elements: `setButtonText` on a button that
 		// already has an icon wipes the icon, and a bare text node beside one is
 		// an anonymous flex item that orders by whatever the theme does.
-		const report = leak.createEl("button", { cls: "hearth-share-snapshot-report" });
-		setIcon(report.createSpan("hearth-share-snapshot-report-icon"), "bug");
+		const report = leak.createEl("button", { cls: "zerohearth-share-snapshot-report" });
+		setIcon(report.createSpan("zerohearth-share-snapshot-report-icon"), "bug");
 		report.createSpan({ text: strings.snapshotLeakReport });
 		report.addEventListener("click", () => {
 			window.open(
 				redactionReportGithubUrl({
-					hearthVersion: this.plugin.manifest.version,
+					zerohearthVersion: this.plugin.manifest.version,
 					obsidianVersion: apiVersion,
 					platform: Platform.isMobile ? "Mobile" : "Desktop",
 				}),
@@ -704,7 +704,7 @@ class ShareDashboardModal extends HearthModal {
 	 */
 	private boardEl(): HTMLElement | null {
 		for (const leaf of this.app.workspace.getLeavesOfType(VIEW_TYPE_HOME)) {
-			const el = leaf.view.containerEl.querySelector<HTMLElement>(".hearth-view");
+			const el = leaf.view.containerEl.querySelector<HTMLElement>(".zerohearth-view");
 			// A leaf in a collapsed sidebar or a background tab has no size, and
 			// photographing the window where it isn't would capture whatever is.
 			if (el && el.offsetWidth > 0 && el.offsetHeight > 0) return el;
@@ -759,18 +759,18 @@ class ShareDashboardModal extends HearthModal {
 	 * this is the same thumbnail a listing shows — so the preview is checked
 	 * here rather than discovered after the upload. */
 	private renderHero(body: HTMLElement): void {
-		const hero = body.createDiv("hearth-share-hero");
+		const hero = body.createDiv("zerohearth-share-hero");
 		// What a listing will show, which is the picture or nothing at all.
 		renderPreview(hero, {
 			snapshot: this.snapshot
 				? `data:${this.snapshot.mime};base64,${this.snapshot.data}`
 				: undefined,
 		});
-		const text = hero.createDiv("hearth-share-hero-text");
-		text.createDiv({ cls: "hearth-share-hero-name", text: this.meta.name || this.dash.name });
+		const text = hero.createDiv("zerohearth-share-hero-text");
+		text.createDiv({ cls: "zerohearth-share-hero-name", text: this.meta.name || this.dash.name });
 		const count = this.dash.cards.length;
 		text.createDiv({
-			cls: "hearth-share-hero-sub",
+			cls: "zerohearth-share-hero-sub",
 			text: t().gallery.browse.cardCount(count),
 		});
 	}
@@ -778,16 +778,16 @@ class ShareDashboardModal extends HearthModal {
 	/** Save a file, or publish. The switch that decides what the rest means. */
 	private renderDestination(body: HTMLElement): void {
 		const strings = t().portable.exportModal;
-		const row = body.createDiv("hearth-share-modes");
+		const row = body.createDiv("zerohearth-share-modes");
 		const configured = galleryConfigured(this.plugin);
 
 		const tab = (mode: ShareMode, label: string, icon: string, enabled: boolean): void => {
-			const btn = row.createEl("button", { cls: "hearth-share-mode" });
+			const btn = row.createEl("button", { cls: "zerohearth-share-mode" });
 			btn.toggleClass("is-active", this.mode === mode);
 			btn.setAttribute("aria-pressed", String(this.mode === mode));
 			btn.disabled = !enabled;
-			setIcon(btn.createSpan("hearth-share-mode-icon"), icon);
-			btn.createSpan({ cls: "hearth-share-mode-label", text: label });
+			setIcon(btn.createSpan("zerohearth-share-mode-icon"), icon);
+			btn.createSpan({ cls: "zerohearth-share-mode-label", text: label });
 			btn.addEventListener("click", () => {
 				if (this.mode === mode) return;
 				this.mode = mode;
@@ -807,7 +807,7 @@ class ShareDashboardModal extends HearthModal {
 		tab("publish", t().gallery.browse.publish, "upload", configured);
 		if (!configured) {
 			row.createDiv({
-				cls: "hearth-share-modes-note",
+				cls: "zerohearth-share-modes-note",
 				text: galleryBlockedByExternalCalls(this.plugin)
 					? t().gallery.errors.externalCallsOff
 					: t().gallery.errors.noHost,
@@ -917,15 +917,15 @@ class ShareDashboardModal extends HearthModal {
 			// and a paragraph into its two halves squeezed the list into a
 			// column four words wide beside the paragraph. This is prose about
 			// the whole publish, so it is laid out as prose.
-			const block = body.createDiv("hearth-share-removes");
+			const block = body.createDiv("zerohearth-share-removes");
 			block.createDiv({
-				cls: "hearth-share-removes-title",
+				cls: "zerohearth-share-removes-title",
 				text: strings.publishRemovesTitle,
 			});
-			const list = block.createEl("ul", { cls: "hearth-share-removes-list" });
+			const list = block.createEl("ul", { cls: "zerohearth-share-removes-list" });
 			for (const line of strings.publishRemoves) list.createEl("li", { text: line });
-			block.createDiv({ cls: "hearth-share-removes-kept", text: strings.publishKeeps });
-			block.createDiv({ cls: "hearth-share-removes-kept", text: strings.publishRemovesTune });
+			block.createDiv({ cls: "zerohearth-share-removes-kept", text: strings.publishKeeps });
+			block.createDiv({ cls: "zerohearth-share-removes-kept", text: strings.publishRemovesTune });
 			return;
 		}
 
@@ -970,7 +970,7 @@ class ShareDashboardModal extends HearthModal {
 			);
 		if (Platform.isMobile && !this.publishing) {
 			const note = new Setting(body).setDesc(t().settings.layout.exportMobileTooltip);
-			note.settingEl.addClass("hearth-setting-note");
+			note.settingEl.addClass("zerohearth-setting-note");
 		}
 	}
 
@@ -985,7 +985,7 @@ class ShareDashboardModal extends HearthModal {
 		const feeds = preview.byScope.privateUrl.length;
 		if (paths === 0 && feeds === 0) return null;
 		const note = new Setting(body).setDesc(strings.referenceNote(paths, feeds));
-		note.settingEl.addClass("hearth-setting-note");
+		note.settingEl.addClass("zerohearth-setting-note");
 		return note;
 	}
 
@@ -996,9 +996,9 @@ class ShareDashboardModal extends HearthModal {
 	 * not pay for that. */
 	private detailsSection(body: HTMLElement): void {
 		const strings = t().portable.exportModal;
-		const details = body.createEl("details", { cls: "hearth-export-details" });
+		const details = body.createEl("details", { cls: "zerohearth-export-details" });
 		details.createEl("summary", { text: strings.detailsSummary });
-		const inner = details.createDiv("hearth-export-details-body");
+		const inner = details.createDiv("zerohearth-export-details-body");
 		this.details = details;
 		details.addEventListener("toggle", () => {
 			if (!details.open) return;
@@ -1010,7 +1010,7 @@ class ShareDashboardModal extends HearthModal {
 	private redrawDetails(): void {
 		const details = this.details;
 		if (!details?.open) return;
-		const inner = details.querySelector<HTMLElement>(".hearth-export-details-body");
+		const inner = details.querySelector<HTMLElement>(".zerohearth-export-details-body");
 		if (inner) this.renderDetails(inner);
 	}
 
@@ -1041,9 +1041,9 @@ class ShareDashboardModal extends HearthModal {
 
 	/** With the switch on: one row per group, each saying exactly what it takes
 	 * out, and the values themselves underneath. */
-	private renderStripGroups(inner: HTMLElement, pkg: HearthPackage): void {
+	private renderStripGroups(inner: HTMLElement, pkg: ZeroHearthPackage): void {
 		const strings = t().portable.exportModal;
-		inner.createEl("p", { text: strings.stripIntro, cls: "hearth-modal-intro" });
+		inner.createEl("p", { text: strings.stripIntro, cls: "zerohearth-modal-intro" });
 
 		for (const group of STRIP_GROUPS) {
 			const values = previewStrip(pkg, { [group]: true }).map((v) => v.value);
@@ -1066,7 +1066,7 @@ class ShareDashboardModal extends HearthModal {
 			// looking like a choice somebody failed to make.
 			if (pinned) {
 				setting.descEl.createDiv({
-					cls: "hearth-export-values-empty",
+					cls: "zerohearth-export-values-empty",
 					text: strings.groupPinned,
 				});
 			}
@@ -1074,26 +1074,26 @@ class ShareDashboardModal extends HearthModal {
 			// offering a switch that would do nothing.
 			if (values.length === 0) {
 				setting.descEl.createDiv({
-					cls: "hearth-export-values-empty",
+					cls: "zerohearth-export-values-empty",
 					text: strings.groupEmpty,
 				});
 				continue;
 			}
 			if (!pinned && this.strip[group] !== true) continue;
-			const list = setting.descEl.createEl("ul", { cls: "hearth-export-values" });
+			const list = setting.descEl.createEl("ul", { cls: "zerohearth-export-values" });
 			for (const value of unique(values)) list.createEl("li", { text: value });
 		}
 
 		const total = previewStrip(pkg, this.effectiveStrip()).length;
 		const note = new Setting(inner).setDesc(strings.stripTotal(total));
-		note.settingEl.addClass("hearth-setting-note");
+		note.settingEl.addClass("zerohearth-setting-note");
 	}
 
 	/** With the switch off: everything the file will mention, listed by what
 	 * kind of thing it is. The same walk, read the other way round. */
-	private renderCarried(inner: HTMLElement, pkg: HearthPackage): void {
+	private renderCarried(inner: HTMLElement, pkg: ZeroHearthPackage): void {
 		const strings = t().portable.exportModal;
-		inner.createEl("p", { text: strings.carriedIntro, cls: "hearth-modal-intro" });
+		inner.createEl("p", { text: strings.carriedIntro, cls: "zerohearth-modal-intro" });
 
 		const report = describeReferences(pkg);
 		let anything = false;
@@ -1104,12 +1104,12 @@ class ShareDashboardModal extends HearthModal {
 			if (values.length === 0) continue;
 			anything = true;
 			const setting = new Setting(inner).setName(strings.groups[group]);
-			setting.settingEl.addClass("hearth-setting-note");
-			const list = setting.descEl.createEl("ul", { cls: "hearth-export-values" });
+			setting.settingEl.addClass("zerohearth-setting-note");
+			const list = setting.descEl.createEl("ul", { cls: "zerohearth-export-values" });
 			for (const value of values) list.createEl("li", { text: value });
 		}
 		if (!anything) {
-			inner.createEl("p", { text: strings.carriedNothing, cls: "hearth-modal-intro" });
+			inner.createEl("p", { text: strings.carriedNothing, cls: "zerohearth-modal-intro" });
 		}
 	}
 
@@ -1310,7 +1310,7 @@ class ShareDashboardModal extends HearthModal {
  * have it, or has it in another shape, means the toggle is simply not offered
  * rather than the dialog failing to draw.
  */
-function activeThemeName(plugin: HearthPlugin): string {
+function activeThemeName(plugin: ZeroHearthPlugin): string {
 	const theme = plugin.app.customCss?.theme;
 	return typeof theme === "string" ? theme.trim().slice(0, 60) : "";
 }
@@ -1324,15 +1324,15 @@ function unique(values: string[]): string[] {
  * counts shown are the counts the file will carry — but nothing is read from
  * disk and nothing is written. */
 function exportPreviewPackage(
-	plugin: HearthPlugin,
+	plugin: ZeroHearthPlugin,
 	dash: Dashboard,
 	opts: ExportDashboardOptions,
-): HearthPackage {
+): ZeroHearthPackage {
 	return captureDashboard(plugin.settings, dash, opts);
 }
 
 /** A filename from the board's name: lower case, words joined by hyphens, and
- * always recognisable as a Hearth dashboard. */
+ * always recognisable as a ZeroHearth dashboard. */
 export function dashboardFilename(name: string): string {
 	const slug = name
 		.trim()
@@ -1340,16 +1340,16 @@ export function dashboardFilename(name: string): string {
 		.replace(/[^a-z0-9]+/g, "-")
 		.replace(/^-+|-+$/g, "")
 		.slice(0, 48);
-	return slug ? `hearth-dashboard-${slug}.json` : PACKAGE_FILENAMES.dashboard;
+	return slug ? `zerohearth-dashboard-${slug}.json` : PACKAGE_FILENAMES.dashboard;
 }
 
 /** Pick a file and open the import dialog for it. */
-export async function pickAndImport(plugin: HearthPlugin): Promise<void> {
+export async function pickAndImport(plugin: ZeroHearthPlugin): Promise<void> {
 	const json = await pickTextFile();
 	if (json === null) return;
 	const outcome = readPackage(json);
 	if (!outcome.pkg) {
-		new Notice(t().notices.layoutImportError(t().layout.notAHearthLayout));
+		new Notice(t().notices.layoutImportError(t().layout.notAZeroHearthLayout));
 		return;
 	}
 	new ImportModal(plugin, json, outcome.pkg).open();
@@ -1364,10 +1364,10 @@ export async function pickAndImport(plugin: HearthPlugin): Promise<void> {
  * leaves every global setting alone; a package this vault has imported before
  * can be updated in place instead.
  */
-class ImportModal extends HearthModal {
-	private plugin: HearthPlugin;
+class ImportModal extends ZeroHearthModal {
+	private plugin: ZeroHearthPlugin;
 	private json: string;
-	private pkg: HearthPackage;
+	private pkg: ZeroHearthPackage;
 	private existing?: Dashboard;
 	private mode: "add" | "replaceBoard" | "replaceAll" = "add";
 	/** Checked once, before anything mutates the package: applying it rewrites
@@ -1375,7 +1375,7 @@ class ImportModal extends HearthModal {
 	private signature: SignatureState;
 	private busy = false;
 
-	constructor(plugin: HearthPlugin, json: string, pkg: HearthPackage) {
+	constructor(plugin: ZeroHearthPlugin, json: string, pkg: ZeroHearthPackage) {
 		super(plugin.app);
 		this.plugin = plugin;
 		this.json = json;
@@ -1411,7 +1411,7 @@ class ImportModal extends HearthModal {
 					.onClick(() => void this.run());
 				// A restore throws the vault's own settings away, so it reads as
 				// the destructive action it is.
-				if (this.mode === "replaceAll") b.buttonEl.addClass("hearth-danger-btn");
+				if (this.mode === "replaceAll") b.buttonEl.addClass("zerohearth-danger-btn");
 			});
 	}
 
@@ -1423,7 +1423,7 @@ class ImportModal extends HearthModal {
 
 		const kindLabel = strings.kinds[this.pkg.hearth.kind];
 		const name = meta?.name?.trim();
-		body.createEl("h3", { text: name || kindLabel, cls: "hearth-import-name" });
+		body.createEl("h3", { text: name || kindLabel, cls: "zerohearth-import-name" });
 		// An author is shown only when the file's signature checks out. The name
 		// in `meta.author` is never read: it is recomputed from the public key,
 		// and then only believed if the signature proves the holder of that key
@@ -1434,14 +1434,14 @@ class ImportModal extends HearthModal {
 			author ? strings.by(author) : "",
 			this.pkg.hearth.plugin ? strings.madeWith(this.pkg.hearth.plugin) : "",
 		].filter((part) => part !== "");
-		body.createEl("p", { text: byline.join(" · "), cls: "hearth-import-byline" });
+		body.createEl("p", { text: byline.join(" · "), cls: "zerohearth-import-byline" });
 		// A broken signature is worth saying out loud, because it means one of
 		// two specific things — the file was edited after it was signed, or
 		// somebody copied an author's handle without being able to sign for it.
 		if (this.signature === "invalid") {
 			body.createEl("p", {
 				text: strings.signatureInvalid,
-				cls: "hearth-setting-warning hearth-import-warning",
+				cls: "zerohearth-setting-warning zerohearth-import-warning",
 			});
 		}
 		if (meta?.description?.trim()) {
@@ -1457,7 +1457,7 @@ class ImportModal extends HearthModal {
 			facts.push(strings.needsPlugins(this.pkg.requires.plugins.join(", ")));
 		}
 		if (facts.length) {
-			const list = body.createEl("ul", { cls: "hearth-setting-note-list" });
+			const list = body.createEl("ul", { cls: "zerohearth-setting-note-list" });
 			for (const fact of facts) list.createEl("li", { text: fact });
 		}
 	}
@@ -1485,7 +1485,7 @@ class ImportModal extends HearthModal {
 
 		if (this.mode === "replaceAll") {
 			const note = new Setting(body).setDesc(strings.replaceAllWarning);
-			note.settingEl.addClass("hearth-setting-warning");
+			note.settingEl.addClass("zerohearth-setting-warning");
 		}
 	}
 
@@ -1512,8 +1512,8 @@ class ImportModal extends HearthModal {
 
 		const strings = t().portable.importModal;
 		const note = new Setting(body).setName(strings.heads).setHeading();
-		note.settingEl.addClass("hearth-setting-note");
-		const list = body.createEl("ul", { cls: "hearth-setting-note-list" });
+		note.settingEl.addClass("zerohearth-setting-note");
+		const list = body.createEl("ul", { cls: "zerohearth-setting-note-list" });
 		if (missingPlugins.length) {
 			list.createEl("li", { text: strings.missingPlugins(missingPlugins.join(", ")) });
 		}

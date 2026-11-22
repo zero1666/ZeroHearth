@@ -27,7 +27,7 @@ import { t } from "../i18n";
 import { noteSection, sectionSubpath } from "../notesection";
 import { openFile } from "../opener";
 import { FilePickerModal } from "../pickers";
-import { HearthFuzzySuggestModal } from "../uidesign";
+import { ZeroHearthFuzzySuggestModal } from "../uidesign";
 import {
 	type DashboardCard,
 	type EmbedImageFit,
@@ -91,7 +91,7 @@ export function renderEmbed(
 	const section = isMarkdown && !excalidraw ? card.section?.trim() : undefined;
 
 	// Editable Markdown notes are edited in place rather than rendered read-only —
-	// either in Obsidian's own Live Preview editor, or in Hearth's plain
+	// either in Obsidian's own Live Preview editor, or in ZeroHearth's plain
 	// raw-Markdown box (the fallback when hosting the real editor isn't possible).
 	// A section card (#396) is the exception: an editor edits a whole note, so
 	// the section wins and the card stays rendered (its checkboxes still write
@@ -102,17 +102,17 @@ export function renderEmbed(
 		return;
 	}
 
-	const host = body.createDiv("hearth-embed markdown-rendered");
+	const host = body.createDiv("zerohearth-embed markdown-rendered");
 	body.addClass("is-embed-host");
 	// A Bases view paints its own surfaces (the table view most of all), which
 	// hides the card's translucent background. This class scopes the CSS that
 	// makes those surfaces defer to the card's --card-opacity.
-	if (ext === "base") host.addClass("hearth-embed-base");
+	if (ext === "base") host.addClass("zerohearth-embed-base");
 	// Optionally hide the embedded Bases view's own toolbar/header (view switcher
 	// + filter/property controls) so only the results show. Scoped via a class on
 	// the host so it only affects this card's base embed.
-	if (ext === "base" && card.hideBaseHeader) host.addClass("hearth-embed-hide-base-header");
-	// A picture with a fit mode set is drawn by Hearth rather than transcluded,
+	if (ext === "base" && card.hideBaseHeader) host.addClass("zerohearth-embed-hide-base-header");
+	// A picture with a fit mode set is drawn by ZeroHearth rather than transcluded,
 	// so it can be sized against the card (see renderFormattedImage). Zoom is
 	// part of that sizing there, which is why the host zoom below skips it.
 	const fit = isImageFile(file) ? embedImageFit(card) : "natural";
@@ -123,7 +123,7 @@ export function renderEmbed(
 	const scale = embedImageScale(card.scale);
 	if (scale !== 1 && !framed) {
 		host.addClass("is-scaled");
-		host.style.setProperty("--hearth-embed-scale", String(scale));
+		host.style.setProperty("--zerohearth-embed-scale", String(scale));
 	}
 
 	if (framed) {
@@ -163,7 +163,7 @@ export function renderEmbed(
 		// A transclusion renders content that resolves its own links — a Bases
 		// table's note column, most of all. Left alone, those clicks go to
 		// Obsidian's default handler, which opens into the tab the click came
-		// from, i.e. this Hearth tab, whatever the open-behaviour setting says
+		// from, i.e. this ZeroHearth tab, whatever the open-behaviour setting says
 		// (#106). Delegated from the host, so it survives the async render above.
 		wireMarkdownLinks(view, host, target);
 
@@ -172,8 +172,8 @@ export function renderEmbed(
 		// instead of sitting in a small box inside a scrolling body, so their
 		// own pan gestures don't fight the card's scrollbar.
 		if (ext === "canvas" || excalidraw) {
-			host.addClass("hearth-embed-live");
-			body.addClass("hearth-card-body-live");
+			host.addClass("zerohearth-embed-live");
+			body.addClass("zerohearth-card-body-live");
 		}
 	}
 }
@@ -185,7 +185,7 @@ export function renderEmbed(
  * These are the modes where the picture is sized against the card rather than
  * against itself, and Obsidian's transclusion can't express them: it renders
  * into wrappers of its own with their own margins, so there is no element to
- * hang an `object-fit` on that reliably spans the card. Hearth therefore draws
+ * hang an `object-fit` on that reliably spans the card. ZeroHearth therefore draws
  * the `<img>` itself here — the picture gets the whole body, edge to edge, and
  * the CSS does the rest from the custom properties set below.
  *
@@ -205,12 +205,12 @@ function renderFormattedImage(
 	// The body stops scrolling and drops its padding, exactly as it does for a
 	// canvas embed: the picture is the card's whole surface now, and a gutter
 	// around a "fill the card" picture would be a visible lie.
-	body.addClass("hearth-card-body-image");
-	host.addClass("hearth-embed-image", `is-fit-${fit}`);
+	body.addClass("zerohearth-card-body-image");
+	host.addClass("zerohearth-embed-image", `is-fit-${fit}`);
 	for (const [prop, value] of Object.entries(embedImageStyle(fit, position, scale)))
 		host.style.setProperty(prop, value);
 
-	const img = host.createEl("img", { cls: "hearth-embed-img" });
+	const img = host.createEl("img", { cls: "zerohearth-embed-img" });
 	img.src = view.app.vault.getResourcePath(file);
 	img.alt = file.basename;
 	// The picture is the card's surface here, not something to drag out of it —
@@ -470,8 +470,8 @@ function setSection(ctx: CardEditorContext, value: string): void {
 }
 
 /** Pick one of a note's headings or blocks (#396), by the fuzzy search every
- * other Hearth picker uses. */
-class SectionPickerModal extends HearthFuzzySuggestModal<string> {
+ * other ZeroHearth picker uses. */
+class SectionPickerModal extends ZeroHearthFuzzySuggestModal<string> {
 	private readonly file: TFile;
 	private readonly onChoose: (subpath: string) => void;
 
@@ -542,7 +542,7 @@ export function embedEditor(ctx: CardEditorContext, containerEl: HTMLElement): v
 	if (section) {
 		// An editor edits a whole note, so a section is drawn rendered (its
 		// checkboxes still write back). Saying it beats a toggle that vanished.
-		containerEl.createDiv({ cls: "hearth-setting-note", text: t().editors.embed.sectionReadOnly });
+		containerEl.createDiv({ cls: "zerohearth-setting-note", text: t().editors.embed.sectionReadOnly });
 	} else {
 		new Setting(containerEl)
 			.setName(t().editors.embed.editable)

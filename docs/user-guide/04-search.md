@@ -1,17 +1,17 @@
 # 4. Search: modes, filters and the action button
 
-The **search section** sits under the title in Hearth's Home view. It is
+The **search section** sits under the title in ZeroHearth's Home view. It is
 keyboard-first: focus it, type, and results appear in a dropdown as you go.
 There is also a **Search bar** *card*, which puts the same field anywhere on the
 board — see [chapter 9](09-cards-vault-tools-and-fun.md).
 
-Everything in this chapter refers to Hearth's own search. It is a separate thing
-from Obsidian's built-in search pane, though Hearth can hand a query over to
+Everything in this chapter refers to ZeroHearth's own search. It is a separate thing
+from Obsidian's built-in search pane, though ZeroHearth can hand a query over to
 that pane when you want the full results.
 
 ## The four search modes
 
-Hearth's search field has four modes. You do not switch between them with a
+ZeroHearth's search field has four modes. You do not switch between them with a
 control: the mode is decided by what you type, which is why the guide calls them
 *transparent* modes.
 
@@ -24,7 +24,7 @@ control: the mode is decided by what you type, which is why the guide calls them
 
 ### Fuzzy plus full-text mode (the default)
 
-With no prefix, Hearth matches file names and paths first, and then — if *Search
+With no prefix, ZeroHearth matches file names and paths first, and then — if *Search
 note contents* is on, which it is by default — the text inside your notes. Name
 matches always rank above body matches, so a well-scored fuzzy match on a body
 can never displace a literal match on a file name. Body matches appear after
@@ -39,20 +39,20 @@ so a note carrying several tags tells you why it is in the list.
 
 ### Frontmatter mode
 
-Typing an identifier followed by a colon — `status:active`, `project:hearth`,
-`type:meeting` — searches frontmatter properties. Hearth recognises this shape
+Typing an identifier followed by a colon — `status:active`, `project:zerohearth`,
+`type:meeting` — searches frontmatter properties. ZeroHearth recognises this shape
 because a colon is not a legal filename character, so a property query can never
 be confused with a file-name search.
 
 ### Command mode
 
 A leading `>` turns the field into a command launcher. Every command registered
-in Obsidian — core, community plugin, or Hearth's own — can be found by name and
+in Obsidian — core, community plugin, or ZeroHearth's own — can be found by name and
 run with Enter. This is the same set of commands as Obsidian's command palette.
 
 ## Instant answers
 
-Some queries have an answer of their own. Hearth shows it at the top of the
+Some queries have an answer of their own. ZeroHearth shows it at the top of the
 results, above the notes:
 
 | What you type | Answer |
@@ -66,7 +66,7 @@ results, above the notes:
 | `days until 2026-12-24`, `today + 45 days`, `next friday` | **Dates** — a day count or a date |
 | `time in Tokyo`, `new york time` | **Time elsewhere** — the clock there and the offset from yours |
 
-The phrases are understood in the languages Hearth is translated into —
+The phrases are understood in the languages ZeroHearth is translated into —
 English, German (`Siemens Aktie`, `Wetter Berlin`, `Tage bis …`, `Zeit in
 Tokio`, `100 CHF nach EUR`), French (`LVMH en bourse`, `météo Paris`,
 `pile ou face`, `jours jusqu'au …`, `vendredi prochain`, `heure à Tokyo`,
@@ -91,7 +91,7 @@ external calls** on, they say so instead of fetching.
 
 ### Switching answers on and off
 
-- **Vault-wide**: **Settings → Hearth → Search → Search bar → Instant answers**
+- **Vault-wide**: **Settings → ZeroHearth → Search → Search bar → Instant answers**
   switches them all off, and the toggles under it switch single answers off.
 - **Per board**: *Dashboard settings → Header → Instant answers* switches
   answers off for that board's search bars.
@@ -107,8 +107,8 @@ Everything in this chapter is also one dialog away, with examples you can click
 to try:
 
 - type `?` into any search bar,
-- run the command **Hearth: Show search tips**, or
-- press *Show* beside *Search tips* in **Settings → Hearth → Search**.
+- run the command **ZeroHearth: Show search tips**, or
+- press *Show* beside *Search tips* in **Settings → ZeroHearth → Search**.
 
 After the update that brought instant answers, an empty search bar offers the
 tips once, above your recent files, until you open or dismiss them.
@@ -123,7 +123,7 @@ Images, Videos, Audio, PDF, Documents, Sheets, Slides, 3D and Other.
 Clicking a chip lists the items of that type. Clicking it again clears the
 filter.
 
-You can hide chips you never use. Vault-wide, that is **Settings → Hearth →
+You can hide chips you never use. Vault-wide, that is **Settings → ZeroHearth →
 Search → Filter chips**. Per dashboard, *Dashboard settings → Header → Filter
 chips* lets one board show a different set from the vault-wide choice; a board
 that has not been given its own set follows the vault, and the control tells you
@@ -147,8 +147,8 @@ hidden type cannot come back through any of them.
 ## Recent files
 
 Focusing the search field while it is empty lists the files you opened most
-recently through Hearth's search. This history holds the last six entries and
-lives in the vault's local storage rather than in Hearth's settings, so it never
+recently through ZeroHearth's search. This history holds the last six entries and
+lives in the vault's local storage rather than in ZeroHearth's settings, so it never
 appears in the settings UI and is never included in an export.
 
 ## Keyboard control
@@ -162,22 +162,22 @@ Inside the search field:
 - `Ctrl`-click (or `Cmd`-click on macOS) on a result always opens it in a new
   tab, whatever your *Open notes in* setting says.
 
-Optionally, Hearth can place the cursor in the search field whenever a Home view
-opens, so you can start typing straight away: **Settings → Hearth → Behaviour →
+Optionally, ZeroHearth can place the cursor in the search field whenever a Home view
+opens, so you can start typing straight away: **Settings → ZeroHearth → Behaviour →
 Startup & tabs → Focus search on open**. This is desktop-only.
 
 That setting only covers a Home view that is *opening*. To get into the field of
 a board that is already up, bind the command *Focus board search* to a hotkey
 under **Settings → Hotkeys**: pressing it while a board is in front only moves
-the cursor, pressing it elsewhere brings Hearth forward first, and with no
-Hearth tab open it opens one. A board with its search field switched off has
+the cursor, pressing it elsewhere brings ZeroHearth forward first, and with no
+ZeroHearth tab open it opens one. A board with its search field switched off has
 nothing to focus, and the command does nothing there.
 
 ## Where a search result opens
 
-Where a clicked result goes is governed by **Settings → Hearth → Behaviour →
+Where a clicked result goes is governed by **Settings → ZeroHearth → Behaviour →
 Opening notes**. There is a general *Open notes in* choice (a new tab, the
-current tab replacing Hearth, a split pane, or a new window) and a per-source
+current tab replacing ZeroHearth, a split pane, or a new window) and a per-source
 override for *Search results* specifically, which may also be set to follow the
 general choice. See [chapter 15](15-settings-reference.md).
 
@@ -187,7 +187,7 @@ Obsidian's core File explorer plugin.
 ## The action button beside the field
 
 By default a **New note** button sits beside the search field. It has two
-possible jobs, chosen with *Search-bar button* under **Settings → Hearth →
+possible jobs, chosen with *Search-bar button* under **Settings → ZeroHearth →
 Search → Search bar**:
 
 - **New note** — creates a note.
@@ -201,8 +201,8 @@ label says.
 ### Configuring what "New note" makes
 
 One set of settings drives the button beside the search bar, the button on a
-Search bar card, and Hearth's *Create new note (default location)* command.
-They are under **Settings → Hearth → Search → Search bar**, in a group headed
+Search bar card, and ZeroHearth's *Create new note (default location)* command.
+They are under **Settings → ZeroHearth → Search → Search bar**, in a group headed
 *The "New note" button*:
 
 | Setting | Meaning |
@@ -213,7 +213,7 @@ They are under **Settings → Hearth → Search → Search bar**, in a group hea
 | *Filename* | The name, without the extension. Supports `{{date}}`, `{{date:FMT}}`, `{{time}}`, `{{time:FMT}}` and `{{prompt}}`. `{{prompt}}` asks you for the name on each click. Empty means "Untitled". |
 
 If the button is set to use a Templater template but Templater is not enabled,
-Hearth makes a blank note and tells you why.
+ZeroHearth makes a blank note and tells you why.
 
 ### Naming the note from the search field
 
@@ -235,7 +235,7 @@ When the button is set to *Search online*, pressing it opens your chosen engine
 with the current contents of the search field.
 
 The engine the button itself uses is *Online search engine* under **Settings →
-Hearth → Search → Search bar**. The available engines are **DuckDuckGo** (the
+ZeroHearth → Search → Search bar**. The available engines are **DuckDuckGo** (the
 default), **DuckDuckGo without AI**, **Brave**, **Kagi**, **Google**,
 **Mojeek**, **Ecosia** and **Qwant**.
 
@@ -248,17 +248,17 @@ the text you typed.
 
 ## Using Omnisearch as the engine
 
-Hearth can hand the whole job over to the
+ZeroHearth can hand the whole job over to the
 [Omnisearch](https://github.com/scambier/obsidian-omnisearch) community plugin,
 which maintains its own fuzzy full-text index.
 
-Set *Search engine* to **Omnisearch** under **Settings → Hearth → Search →
-Search bar**. Omnisearch must be installed and enabled; if it is not, Hearth
+Set *Search engine* to **Omnisearch** under **Settings → ZeroHearth → Search →
+Search bar**. Omnisearch must be installed and enabled; if it is not, ZeroHearth
 says so and offers a link to it in Obsidian's community plugin browser. The
-choice only sticks while Omnisearch is enabled — disable the plugin and Hearth
+choice only sticks while Omnisearch is enabled — disable the plugin and ZeroHearth
 falls back to its built-in engine rather than showing you an empty search.
 
-Tag, frontmatter and command modes are Hearth's own and continue to work the
+Tag, frontmatter and command modes are ZeroHearth's own and continue to work the
 same way; it is the plain-text query that is handed to Omnisearch.
 
 ## Matching like the Quick switcher
@@ -275,23 +275,23 @@ Obsidian's own Quick switcher (Ctrl/Cmd+O) does:
   and *Show all file types* options.
 
 Note bodies are not searched in this mode, even with body search switched on.
-Tag, frontmatter and command modes, and the *Folders* chip, keep using Hearth's
+Tag, frontmatter and command modes, and the *Folders* chip, keep using ZeroHearth's
 own engine.
 
 ## File icons in results
 
 If you use the [Iconic](https://obsidian.md/plugins?id=iconic) or
 [Iconize](https://obsidian.md/plugins?id=obsidian-icon-folder) community plugins
-to give individual files their own icons, Hearth shows those icons in search
+to give individual files their own icons, ZeroHearth shows those icons in search
 results, and in the Recent, Favorites and saved-query cards.
 
-This is on by default and lives at **Settings → Hearth → Integrations → File
+This is on by default and lives at **Settings → ZeroHearth → Integrations → File
 icons / Iconic / Iconize**. Lucide icons and emoji are shown; a file using an
-icon from a downloaded icon pack keeps Hearth's own file-type icon. If you have
-renamed Iconize's frontmatter property, tell Hearth the new name there — Iconize's
+icon from a downloaded icon pack keeps ZeroHearth's own file-type icon. If you have
+renamed Iconize's frontmatter property, tell ZeroHearth the new name there — Iconize's
 own default is `icon`.
 
-Turning the setting off makes every file show Hearth's file-type icon. Leaving it
+Turning the setting off makes every file show ZeroHearth's file-type icon. Leaving it
 on in a vault with neither plugin installed changes nothing, and it starts
 working the moment you install one.
 
@@ -299,7 +299,7 @@ working the moment you install one.
 
 The search section can be turned off entirely.
 
-- Vault-wide: **Settings → Hearth → Appearance → Home → Show search section**.
+- Vault-wide: **Settings → ZeroHearth → Appearance → Home → Show search section**.
 - Per dashboard: *Dashboard settings → Header → Search visibility*, which can
   follow the vault-wide default or override it to show or hide on that board.
 

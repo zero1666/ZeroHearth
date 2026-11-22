@@ -27,7 +27,7 @@ import { confirmRemoveCard, mountCardBody, openCardSettings, persistAndRender } 
 import { ensureFreeform, ensureLayout, GRID_GAP, ROW_HEIGHT } from "../grid";
 import { moveStacked, stackedCards, stackedHeight } from "../narrow";
 import { t } from "../i18n";
-import { hearthMenu } from "../uidesign";
+import { zerohearthMenu } from "../uidesign";
 import {
 	activeCards,
 	type DashboardCard,
@@ -113,9 +113,9 @@ export class TuiBoard {
 		private container: HTMLElement,
 		private component: Component,
 	) {
-		this.boardEl = container.createDiv({ cls: "hearth-tui-board", attr: { tabindex: "0", role: "application" } });
+		this.boardEl = container.createDiv({ cls: "zerohearth-tui-board", attr: { tabindex: "0", role: "application" } });
 		this.boardEl.setAttribute("aria-label", t().tui.boardLabel);
-		this.framesEl = this.boardEl.createDiv("hearth-tui-frames");
+		this.framesEl = this.boardEl.createDiv("zerohearth-tui-frames");
 		this.boardEl.addEventListener("pointerdown", (e) => this.onPointerDown(e));
 		this.boardEl.addEventListener("pointermove", (e) => this.onPointerMove(e));
 		this.boardEl.addEventListener("pointerup", (e) => this.onPointerUp(e));
@@ -256,7 +256,7 @@ export class TuiBoard {
 		// A card with views draws the one on show (#385); the frame, focus and
 		// geometry stay the card's.
 		const shown = activeViewCard(card);
-		const el = this.boardEl.createDiv({ cls: "hearth-tui-body", attr: { "data-card": card.id } });
+		const el = this.boardEl.createDiv({ cls: "zerohearth-tui-body", attr: { "data-card": card.id } });
 		el.dataset.kind = shown.kind;
 		this.placeBody(el, rect);
 		this.bodies.set(card.id, el);
@@ -269,9 +269,9 @@ export class TuiBoard {
 			// No text renderer: the kind's graphical body, inside the frame. It
 			// gets the element structure its own CSS and helpers expect.
 			el.addClass("is-graphical");
-			const shell = el.createDiv("hearth-card hearth-tui-guicard");
+			const shell = el.createDiv("zerohearth-card zerohearth-tui-guicard");
 			shell.dataset.kind = shown.kind;
-			const body = shell.createDiv("hearth-card-body");
+			const body = shell.createDiv("zerohearth-card-body");
 			mountCardBody(this.view, shown, body, this.bodyComponent, this.events);
 			return;
 		}
@@ -511,7 +511,7 @@ export class TuiBoard {
 	private revealCard(id: string): void {
 		const r = this.rects.get(id);
 		if (!r) return;
-		const scroller = this.boardEl.closest(".hearth-scroll");
+		const scroller = this.boardEl.closest(".zerohearth-scroll");
 		if (!(scroller instanceof HTMLElement)) return;
 		const boardTop = this.boardEl.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop;
 		const top = boardTop + r.row * this.cell.lh;
@@ -765,7 +765,7 @@ export class TuiBoard {
 
 	private onContextMenu(evt: MouseEvent): void {
 		if (!(evt.target instanceof HTMLElement)) return;
-		const bodyEl = evt.target.closest<HTMLElement>(".hearth-tui-body");
+		const bodyEl = evt.target.closest<HTMLElement>(".zerohearth-tui-body");
 		const id = bodyEl?.dataset.card ?? null;
 		if (id) {
 			const card = this.cards.find((c) => c.id === id);
@@ -792,7 +792,7 @@ export class TuiBoard {
 	openCardMenu(card: DashboardCard, evt?: MouseEvent | KeyboardEvent): void {
 		const renderer = tuiRenderer(activeViewCard(card), this.view);
 		const host = this.hosts.get(card.id);
-		const menu = hearthMenu();
+		const menu = zerohearthMenu();
 		if (renderer?.menu && host) {
 			renderer.menu(host.context(new Component()), menu);
 			menu.addSeparator();

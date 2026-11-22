@@ -41,10 +41,10 @@ export function applyBackground(
 ): void {
 	const bg = effectiveBackground(view.plugin.settings);
 	// Nothing to paint: no background, a kind with no value, or a picture from
-	// the web that "Disable external calls" won't let Hearth fetch (#281).
+	// the web that "Disable external calls" won't let ZeroHearth fetch (#281).
 	if (!backgroundPaintable(bg, view.plugin.settings.disableExternalCalls)) return;
 
-	paintBackground(view, root.createDiv("hearth-bg"), bg, component);
+	paintBackground(view, root.createDiv("zerohearth-bg"), bg, component);
 }
 
 /**
@@ -69,18 +69,18 @@ export function renderBanner(
 	if (bg.layout !== "banner") return null;
 	if (!backgroundPaintable(bg, view.plugin.settings.disableExternalCalls)) return null;
 
-	const banner = parent.createDiv("hearth-banner");
+	const banner = parent.createDiv("zerohearth-banner");
 	banner.style.height = `${bg.bannerHeight}px`;
 	banner.toggleClass("is-faded", bg.bannerFade);
 	// Full width means "as wide as the pane"; otherwise the banner lines up with
-	// the content column, which is the same max-width `.hearth-inner` uses — and
+	// the content column, which is the same max-width `.zerohearth-inner` uses — and
 	// so is uncapped exactly when the column is, keeping the two in line.
 	banner.toggleClass("is-full-width", bg.bannerFullWidth);
 	if (!bg.bannerFullWidth && !effectiveFullWidth(view.plugin.settings)) {
 		banner.style.maxWidth = `${effectiveMaxWidth(view.plugin.settings)}px`;
 	}
 
-	const layer = banner.createDiv("hearth-bg");
+	const layer = banner.createDiv("zerohearth-bg");
 	// A blurred layer goes soft at its own edges. Behind a whole view that is
 	// barely visible; cropped into a strip it is a pale halo down all four
 	// sides, so grow the layer past the crop and let the softness fall outside.
@@ -94,7 +94,7 @@ export function renderBanner(
  * Paint a resolved background into `layer`. Shared by the wallpaper and the
  * banner: the two differ only in where that layer sits and how big it is, so
  * everything about *what* is drawn — the opacity, the blur, the colour, the
- * image URL, the live sky, Hearth's own wallpaper — lives here once.
+ * image URL, the live sky, ZeroHearth's own wallpaper — lives here once.
  */
 function paintBackground(
 	view: HomeView,
@@ -115,7 +115,7 @@ function paintBackground(
 		return;
 	}
 
-	// Hearth's own wallpaper is drawn, not fetched, in the same design the
+	// ZeroHearth's own wallpaper is drawn, not fetched, in the same design the
 	// weather sky uses (see wallpaper.ts).
 	if (bg.kind === "default") {
 		drawWallpaper(layer, effectiveSkyDesign(view.plugin.settings));
@@ -150,7 +150,7 @@ function paintBackground(
 
 	if (url) {
 		// Escape characters that would break out of the CSS url("...") literal.
-		// cover/center sizing lives in styles.css (.hearth-bg).
+		// cover/center sizing lives in styles.css (.zerohearth-bg).
 		const safe = url.replace(/["\\]/g, "\\$&");
 		layer.style.backgroundImage = `url("${safe}")`;
 	}
@@ -162,7 +162,7 @@ function paintBackground(
  * Video rather than an animated image because the decode moves off the main
  * thread — an animated GIF or WEBP is re-decoded there frame by frame, which is
  * what makes those backdrops stutter on a slow machine. It is still the most
- * expensive backdrop Hearth paints, so it is gated harder than any other kind:
+ * expensive backdrop ZeroHearth paints, so it is gated harder than any other kind:
  * only the `full` performance tier lets it play (see
  * {@link videoBackgroundPlays}), and even there it holds still while the window
  * is not the one being used. Every other case leaves it paused on its first
@@ -190,7 +190,7 @@ function applyVaultVideo(
 	// Autoplay with no sound: a wallpaper that talks is a bug. `muted` plus
 	// `playsinline` is also what a mobile webview requires before it will start
 	// a video at all.
-	const video = layer.createEl("video", { cls: "hearth-bg-video" });
+	const video = layer.createEl("video", { cls: "zerohearth-bg-video" });
 	video.muted = true;
 	video.loop = true;
 	video.playsInline = true;

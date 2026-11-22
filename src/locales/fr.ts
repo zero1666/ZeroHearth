@@ -1,5 +1,5 @@
 /**
- * Traduction française de Hearth.
+ * Traduction française de ZeroHearth.
  * Typée contre `Translations` (voir `src/locales/index.ts`) : toute clé
  * manquante ou mal orthographiée fait échouer `npm run typecheck`.
  *
@@ -17,7 +17,7 @@ export const fr: Translations = {
 		newDrawing: "Créer un dessin Excalidraw",
 		recordVoice: "Démarrer/arrêter l'enregistrement vocal",
 		openDailyNote: "Ouvrir la note quotidienne du jour",
-		runSetup: "Configurer Hearth (assistant de démarrage)",
+		runSetup: "Configurer ZeroHearth (assistant de démarrage)",
 		searchTips: "Afficher les astuces de recherche",
 		switchDashboard: (n: number) => `Passer au tableau de bord ${n}`,
 		openDashboard: (n: number) => `Ouvrir le tableau de bord ${n}`,
@@ -25,68 +25,68 @@ export const fr: Translations = {
 		previousDashboard: "Tableau de bord précédent",
 	},
 	ribbon: {
-		openHome: "Ouvrir l'accueil Hearth",
+		openHome: "Ouvrir l'accueil ZeroHearth",
 	},
 
 	// ---- Notices (transient toasts) ------------------------------------
 	notices: {
-		couldNotCreateNote: "Hearth : impossible de créer une nouvelle note.",
+		couldNotCreateNote: "ZeroHearth : impossible de créer une nouvelle note.",
 		operonTaskMissing:
-			"Hearth : la note de cette tâche Operon n'est plus dans le coffre.",
-		operonRechecked: "Hearth : connexion Operon revérifiée.",
-		operonWriteFailed: (reason: string) => `Hearth : Operon a refusé la modification — ${reason}`,
+			"ZeroHearth : la note de cette tâche Operon n'est plus dans le coffre.",
+		operonRechecked: "ZeroHearth : connexion Operon revérifiée.",
+		operonWriteFailed: (reason: string) => `ZeroHearth : Operon a refusé la modification — ${reason}`,
 		operonCreateFailed: (reason: string, where: string) =>
-			`Hearth : Operon a refusé de créer la tâche — ${reason} ${where} ` +
+			`ZeroHearth : Operon a refusé de créer la tâche — ${reason} ${where} ` +
 			"Modifiez-le dans les paramètres d'Operon, ou choisissez une autre cible sous « Nouvelles tâches » " +
 			"dans les paramètres de cette carte.",
 		operonWriteUnknown: (reason: string) =>
-			`Hearth : Operon n'a pas pu confirmer si la modification a été appliquée (${reason}). ` +
+			`ZeroHearth : Operon n'a pas pu confirmer si la modification a été appliquée (${reason}). ` +
 			"La carte a été relue — vérifiez la tâche avant de réessayer.",
 		enableExcalidraw:
-			"Hearth : activez le plugin Excalidraw pour créer des dessins.",
+			"ZeroHearth : activez le plugin Excalidraw pour créer des dessins.",
 		excalidrawCommandMissing:
-			"Hearth : commande « nouveau dessin » d'Excalidraw introuvable.",
-		enableAudioRecorder: "Hearth : activez le module principal Enregistreur audio.",
-		couldNotRecordVoice: "Hearth : impossible de démarrer l'enregistrement vocal.",
-		enableDailyNotes: "Hearth : activez le module principal Notes quotidiennes.",
-		couldNotOpenDaily: "Hearth : impossible d'ouvrir la note quotidienne du jour.",
-		couldNotOpenPeriodic: "Hearth : Periodic Notes n'a pas pu créer cette note.",
-		couldNotCreateJournalNote: "Hearth : Journals n'a pas pu créer cette note.",
-		commandNotFound: (id: string) => `Hearth : commande introuvable : ${id}`,
+			"ZeroHearth : commande « nouveau dessin » d'Excalidraw introuvable.",
+		enableAudioRecorder: "ZeroHearth : activez le module principal Enregistreur audio.",
+		couldNotRecordVoice: "ZeroHearth : impossible de démarrer l'enregistrement vocal.",
+		enableDailyNotes: "ZeroHearth : activez le module principal Notes quotidiennes.",
+		couldNotOpenDaily: "ZeroHearth : impossible d'ouvrir la note quotidienne du jour.",
+		couldNotOpenPeriodic: "ZeroHearth : Periodic Notes n'a pas pu créer cette note.",
+		couldNotCreateJournalNote: "ZeroHearth : Journals n'a pas pu créer cette note.",
+		commandNotFound: (id: string) => `ZeroHearth : commande introuvable : ${id}`,
 		couldNotCreateNoteForDay: (day: string) =>
-			`Hearth : impossible de créer une note pour le ${day}.`,
-		couldNotCreateEventNote: "Hearth : impossible de créer une note pour cet événement.",
-		taskNotesCreateFailed: "Hearth : impossible d'exécuter TaskNotes : Créer une tâche.",
-		tasksPluginCreateFailed: "Hearth : impossible d'ouvrir la boîte de création du plugin Tasks.",
-		tasksPluginNoTarget: "Hearth : choisissez où vont les nouvelles tâches dans les réglages de cette carte.",
+			`ZeroHearth : impossible de créer une note pour le ${day}.`,
+		couldNotCreateEventNote: "ZeroHearth : impossible de créer une note pour cet événement.",
+		taskNotesCreateFailed: "ZeroHearth : impossible d'exécuter TaskNotes : Créer une tâche.",
+		tasksPluginCreateFailed: "ZeroHearth : impossible d'ouvrir la boîte de création du plugin Tasks.",
+		tasksPluginNoTarget: "ZeroHearth : choisissez où vont les nouvelles tâches dans les réglages de cette carte.",
 		tasksPluginNoDailyNotes:
-			"Hearth : activez le plugin principal Notes quotidiennes, ou choisissez une note pour les nouvelles tâches dans les réglages de cette carte.",
+			"ZeroHearth : activez le plugin principal Notes quotidiennes, ou choisissez une note pour les nouvelles tâches dans les réglages de cette carte.",
 		tasksPluginNoteMissing: (path: string) =>
-			`Hearth : aucune note à « ${path} » pour les nouvelles tâches — choisissez-en une autre dans les réglages de cette carte.`,
-		taskChangedOnDisk: "Hearth : cette tâche a changé sur le disque — actualisée.",
-		couldNotOpenTaskNote: "Hearth : impossible d'ouvrir la note de cette tâche.",
-		couldNotUpdateTaskStatus: "Hearth : impossible de mettre à jour le statut de la tâche.",
+			`ZeroHearth : aucune note à « ${path} » pour les nouvelles tâches — choisissez-en une autre dans les réglages de cette carte.`,
+		taskChangedOnDisk: "ZeroHearth : cette tâche a changé sur le disque — actualisée.",
+		couldNotOpenTaskNote: "ZeroHearth : impossible d'ouvrir la note de cette tâche.",
+		couldNotUpdateTaskStatus: "ZeroHearth : impossible de mettre à jour le statut de la tâche.",
 		couldNotCompleteRecurring:
-			"Hearth : impossible de marquer l'occurrence de la tâche récurrente comme terminée.",
+			"ZeroHearth : impossible de marquer l'occurrence de la tâche récurrente comme terminée.",
 		couldNotUndoRecurring:
-			"Hearth : impossible d'annuler l'achèvement de la tâche récurrente.",
-		couldNotAddKanbanCard: "Hearth : impossible d'ajouter la carte au Kanban.",
-		couldNotConvertCard: "Hearth : impossible de convertir la carte en note.",
+			"ZeroHearth : impossible d'annuler l'achèvement de la tâche récurrente.",
+		couldNotAddKanbanCard: "ZeroHearth : impossible d'ajouter la carte au Kanban.",
+		couldNotConvertCard: "ZeroHearth : impossible de convertir la carte en note.",
 		templaterNoTemplate: (path: string) =>
-			`Hearth : modèle introuvable : ${path}`,
+			`ZeroHearth : modèle introuvable : ${path}`,
 		templaterFailed: (name: string) =>
-			`Hearth : Templater n'a pas créé de note à partir de ${name}.`,
-		templaterCreated: (path: string) => `Hearth : ${path} créé`,
+			`ZeroHearth : Templater n'a pas créé de note à partir de ${name}.`,
+		templaterCreated: (path: string) => `ZeroHearth : ${path} créé`,
 		newNoteTemplaterMissing:
-			"Hearth : le bouton « Nouvelle note » utilise un modèle Templater, mais " +
+			"ZeroHearth : le bouton « Nouvelle note » utilise un modèle Templater, mais " +
 			"Templater n'est pas activé — une note vide est créée à la place.",
-		exported: "Hearth : exporté.",
-		layoutExported: "Hearth : disposition exportée.",
-		layoutImported: "Hearth : disposition importée.",
-		layoutImportError: (error: string) => `Hearth : ${error}`,
+		exported: "ZeroHearth : exporté.",
+		layoutExported: "ZeroHearth : disposition exportée.",
+		layoutImported: "ZeroHearth : disposition importée.",
+		layoutImportError: (error: string) => `ZeroHearth : ${error}`,
 		exportedToVault: (file: string) =>
-			`Hearth : ${file} enregistré à la racine de votre coffre.`,
-		exportFailed: "Hearth : impossible d'enregistrer le fichier d'export.",
+			`ZeroHearth : ${file} enregistré à la racine de votre coffre.`,
+		exportFailed: "ZeroHearth : impossible d'enregistrer le fichier d'export.",
 		cardCopied: "Carte copiée dans le tableau de bord.",
 	},
 
@@ -110,7 +110,7 @@ export const fr: Translations = {
 		noMatchingCommands: "Aucune commande correspondante",
 		tips: {
 			title: "Ce que la barre de recherche sait faire",
-			intro: "Tapez l'un de ces exemples dans une barre de recherche Hearth.",
+			intro: "Tapez l'un de ces exemples dans une barre de recherche ZeroHearth.",
 			introTry: "Cliquez sur un exemple pour l'essayer.",
 			findHeading: "Trouver des notes",
 			answersHeading: "Réponses instantanées",
@@ -192,7 +192,7 @@ export const fr: Translations = {
 			loading: "Chargement…",
 			invalid: "Expression non valide",
 			noQuote: (query: string) => `Aucune donnée de marché pour « ${query} »`,
-			externalOff: "Les appels externes sont désactivés dans les paramètres de Hearth",
+			externalOff: "Les appels externes sont désactivés dans les paramètres de ZeroHearth",
 			rate: (from: string, rate: string, to: string) => `1 ${from} = ${rate} ${to}`,
 			days: (n: number) => (Math.abs(n) <= 1 ? `${n} jour` : `${n} jours`),
 			today: "Aujourd'hui",
@@ -220,7 +220,7 @@ export const fr: Translations = {
 
 	// ---- "What's new" release-notes dialog -----------------------------
 	whatsNew: {
-		title: "Quoi de neuf dans Hearth",
+		title: "Quoi de neuf dans ZeroHearth",
 		intro: "Merci pour la mise à jour ! Voici ce qui a changé depuis votre dernière visite.",
 		introHint:
 			"Merci pour la mise à jour ! Voici ce qui a changé depuis votre dernière visite — " +
@@ -259,7 +259,7 @@ export const fr: Translations = {
 		},
 		stepDescs: {
 			purpose:
-				"Choisissez-en autant que vous voulez et Hearth choisit les cartes. Trois étapes rapides, " +
+				"Choisissez-en autant que vous voulez et ZeroHearth choisit les cartes. Trois étapes rapides, " +
 				"et tout reste modifiable ensuite.",
 			look: "Pour le tableau en cours de création. Les autres tableaux gardent leur propre apparence.",
 			finish: "Rien n'a encore été modifié. Voici ce qui sera créé.",
@@ -278,7 +278,7 @@ export const fr: Translations = {
 			titleIcon: "Icône du titre",
 			titleIconDesc:
 				"Un emoji, un ou deux caractères, un identifiant d'icône Lucide, le chemin d'une image du coffre ou " +
-				"l'URL d'une image, affiché à côté du titre. Laissez vide pour le cristal Hearth.",
+				"l'URL d'une image, affiché à côté du titre. Laissez vide pour le cristal ZeroHearth.",
 			themeColor: "Suivre la couleur d'accent du thème",
 			themeColorDesc: "Quelles parties du logo prennent la couleur de votre thème.",
 			themeColorOptions: {
@@ -292,8 +292,8 @@ export const fr: Translations = {
 		},
 		look: {
 			designHeading: "Design",
-			designNote: "Ce choix s'applique à tout Hearth, pas seulement à ce tableau. Modifiable à tout moment dans Paramètres → Hearth → Apparence.",
-			terminalNote: "Le mode Terminal s'applique à tout Hearth et à tous les tableaux. Il ne dessine ni fond d'écran ni surfaces de cartes, il n'y a donc rien d'autre à choisir ici. Il est expérimental : désactivez-le à tout moment dans Paramètres → Hearth → Apparence, et les tableaux reviennent dans le design d'origine.",
+			designNote: "Ce choix s'applique à tout ZeroHearth, pas seulement à ce tableau. Modifiable à tout moment dans Paramètres → ZeroHearth → Apparence.",
+			terminalNote: "Le mode Terminal s'applique à tout ZeroHearth et à tous les tableaux. Il ne dessine ni fond d'écran ni surfaces de cartes, il n'y a donc rien d'autre à choisir ici. Il est expérimental : désactivez-le à tout moment dans Paramètres → ZeroHearth → Apparence, et les tableaux reviennent dans le design d'origine.",
 			surfaceHeading: "Cartes",
 			backgroundHeading: "Arrière-plan",
 			color: "Couleur",
@@ -333,12 +333,12 @@ export const fr: Translations = {
 			classic: {
 				icon: "square",
 				name: "Classique",
-				desc: "Hearth tel qu'il a toujours été : surfaces discrètes, bordures fines.",
+				desc: "ZeroHearth tel qu'il a toujours été : surfaces discrètes, bordures fines.",
 			},
 			expressive: {
 				icon: "shapes",
 				name: "Expressif",
-				desc: "Material 3 Expressive dans tout Hearth — cartes, boutons, menus, dialogues et paramètres — dans les tons de votre couleur d'accent.",
+				desc: "Material 3 Expressive dans tout ZeroHearth — cartes, boutons, menus, dialogues et paramètres — dans les tons de votre couleur d'accent.",
 			},
 			terminal: {
 				icon: "terminal",
@@ -349,8 +349,8 @@ export const fr: Translations = {
 		backgrounds: {
 			default: {
 				icon: "image",
-				name: "Le fond d'écran Hearth",
-				desc: "Des collines dessinées par Hearth, de jour ou de nuit selon votre thème.",
+				name: "Le fond d'écran ZeroHearth",
+				desc: "Des collines dessinées par ZeroHearth, de jour ou de nuit selon votre thème.",
 			},
 			harbour: {
 				icon: "anchor",
@@ -436,7 +436,7 @@ export const fr: Translations = {
 				git: "Ajouter une carte Git affichant l'état de votre dépôt, avec boutons commit et synchro.",
 				operon:
 					"Ajouter une carte de tâches Operon, lue via l'API développeur d'Operon. " +
-					"Il vous sera demandé d'approuver Hearth dans les paramètres d'Operon au premier " +
+					"Il vous sera demandé d'approuver ZeroHearth dans les paramètres d'Operon au premier " +
 					"chargement de la carte ; d'ici là, elle indique ce qu'elle attend.",
 				bases: "Ajouter une carte intégrant une base de votre coffre.",
 				dailyNotes: "Ajouter une carte affichant la note du jour, modifiable sur place.",
@@ -447,7 +447,7 @@ export const fr: Translations = {
 			taskNotesDue: "Champ d'échéance",
 			taskNotesPriority: "Champ de priorité",
 			taskNotesDone: "Considéré comme terminé",
-			taskNotesDoneNone: "aucun défini — Hearth utilisera \"done\"",
+			taskNotesDoneNone: "aucun défini — ZeroHearth utilisera \"done\"",
 		},
 		finish: {
 			empty:
@@ -467,7 +467,7 @@ export const fr: Translations = {
 			calloutTitle: "Un point de départ, pas un modèle figé",
 			calloutHint:
 				"Chaque carte peut être déplacée, redimensionnée, reconfigurée ou supprimée avec Organiser " +
-				"(en haut à droite du tableau) ; Paramètres → Hearth s'occupe du reste. Vous pouvez relancer cet " +
+				"(en haut à droite du tableau) ; Paramètres → ZeroHearth s'occupe du reste. Vous pouvez relancer cet " +
 				"assistant à tout moment depuis Paramètres → À propos.",
 			clock: "Horloge",
 			clockDesc: "Une petite horloge et un message d'accueil en haut de la colonne latérale.",
@@ -527,8 +527,8 @@ export const fr: Translations = {
 		notice: {
 			done: (n: number) =>
 				n <= 1
-					? `Hearth : votre tableau de bord est prêt — ${n} carte ajoutée.`
-					: `Hearth : votre tableau de bord est prêt — ${n} cartes ajoutées.`,
+					? `ZeroHearth : votre tableau de bord est prêt — ${n} carte ajoutée.`
+					: `ZeroHearth : votre tableau de bord est prêt — ${n} cartes ajoutées.`,
 		},
 	},
 
@@ -615,7 +615,7 @@ export const fr: Translations = {
 			name: "Nom",
 			mode: "Type de tableau",
 			modeDesc:
-				"Un tableau de cartes Hearth, une seule carte Hearth occupant tout le tableau, ou tout le tableau confié à la vue d'un plugin. Changer de type conserve les cartes de ce tableau — revenez en arrière et elles réapparaissent.",
+				"Un tableau de cartes ZeroHearth, une seule carte ZeroHearth occupant tout le tableau, ou tout le tableau confié à la vue d'un plugin. Changer de type conserve les cartes de ce tableau — revenez en arrière et elles réapparaissent.",
 			modeOptions: {
 				cards: "Cartes",
 				single: "Carte unique",
@@ -661,7 +661,7 @@ export const fr: Translations = {
 			linkedWorkspaceNone: "Aucun",
 			mobileDefault: "Par défaut sur mobile",
 			mobileDefaultDesc:
-				"Ouvrir ce tableau quand Hearth se charge sur téléphone ou tablette. Un seul tableau peut être le tableau mobile par défaut ; l'activer le retire des autres.",
+				"Ouvrir ce tableau quand ZeroHearth se charge sur téléphone ou tablette. Un seul tableau peut être le tableau mobile par défaut ; l'activer le retire des autres.",
 			titleVisibility: "Visibilité du titre",
 			titleVisibilityDesc:
 				"Afficher ou masquer uniquement le bloc de titre de ce tableau. Remplace le paramètre global.",
@@ -744,7 +744,7 @@ export const fr: Translations = {
 			skyDesignDesc:
 				"Le ciel peint classique, ou le ciel plat Material 3 Expressive, sur ce tableau.",
 			wallpaperDesignDesc:
-				"Le fond d'écran Hearth sur ce tableau : collines classiques, ou formes plates Material 3 Expressive dans votre couleur d'accent.",
+				"Le fond d'écran ZeroHearth sur ce tableau : collines classiques, ou formes plates Material 3 Expressive dans votre couleur d'accent.",
 			visibilityDefaultPlugin: (state: string) =>
 				`Par défaut sur un tableau de plugin (${state})`,
 			visibilityDefaultSingle: (state: string) =>
@@ -757,7 +757,7 @@ export const fr: Translations = {
 			titleTextDesc: "Remplacer le titre global pour ce tableau.",
 			titleIcon: "Icône du titre",
 			titleIconDesc:
-				"Le symbole à côté du titre de ce tableau : un id d'icône Lucide, un emoji ou un texte court, le chemin d'une image du coffre ou l'URL d'une image. Videz-le pour afficher le cristal Hearth sur ce seul tableau.",
+				"Le symbole à côté du titre de ce tableau : un id d'icône Lucide, un emoji ou un texte court, le chemin d'une image du coffre ou l'URL d'une image. Videz-le pour afficher le cristal ZeroHearth sur ce seul tableau.",
 			titleAlign: "Alignement du titre",
 			titleAlignDesc:
 				"Aligner uniquement le bloc de titre. La barre de recherche garde sa propre disposition.",
@@ -790,7 +790,7 @@ export const fr: Translations = {
 				"Un tableau à carte unique occupe toujours tout le volet — la carte le remplit et défile elle-même.",
 			themeColorTarget: "Couleur d'accent sur le titre",
 			themeColorTargetDesc:
-				"Quelles parties du logo de ce tableau suivent la couleur d'icône du thème. Remplace le paramètre global pour ce tableau ; les icônes d'onglet et du ruban de Hearth suivent toujours le paramètre global.",
+				"Quelles parties du logo de ce tableau suivent la couleur d'icône du thème. Remplace le paramètre global pour ce tableau ; les icônes d'onglet et du ruban de ZeroHearth suivent toujours le paramètre global.",
 			themeColorTargetDefault: (state: string) => `Paramètre global (${state})`,
 			themeColorTargetOptions: {
 				none: "Aucune",
@@ -834,7 +834,7 @@ export const fr: Translations = {
 		backgroundOptions: {
 			default: "Paramètre global",
 			none: "Aucun",
-			hdefault: "Hearth par défaut",
+			hdefault: "ZeroHearth par défaut",
 			harbour: "Village portuaire",
 			color: "Couleur unie",
 			image: "Image du coffre",
@@ -868,7 +868,7 @@ export const fr: Translations = {
 			dashboard: "Grille, surface des cartes et contrôles autour du tableau.",
 			behaviour: "Démarrage, ouverture des notes et confidentialité.",
 			mobile: "La disposition empilée sur téléphone et la barre d'actions.",
-			integrations: "TaskNotes, icônes de fichiers et tous les plugins que Hearth lit.",
+			integrations: "TaskNotes, icônes de fichiers et tous les plugins que ZeroHearth lit.",
 			backup: "Exporter et importer votre disposition et vos paramètres.",
 			about: "Version, nouveautés et où signaler un problème.",
 		},
@@ -904,19 +904,19 @@ export const fr: Translations = {
 			startup: "Démarrage et onglets",
 			startupDesc: "Quand et où la vue d'accueil s'ouvre.",
 			opening: "Ouverture des notes",
-			openingDesc: "Où une note s'ouvre quand vous cliquez dessus dans Hearth.",
+			openingDesc: "Où une note s'ouvre quand vous cliquez dessus dans ZeroHearth.",
 			mobileMode: "Disposition",
 			mobileModeDesc:
 				"La disposition du tableau quand l'écran est trop étroit pour sa propre disposition.",
 			privacy: "Confidentialité et réseau",
-			privacyDesc: "Contrôler les requêtes sortantes que Hearth peut effectuer.",
+			privacyDesc: "Contrôler les requêtes sortantes que ZeroHearth peut effectuer.",
 		},
 		about: {
-			heading: "À propos de Hearth",
+			heading: "À propos de ZeroHearth",
 			headingDesc: "Liens du projet, soutien et version.",
-			setup: "Configurer Hearth",
+			setup: "Configurer ZeroHearth",
 			setupDesc:
-				"Répondez à quelques questions sur votre façon de travailler et ce qui est installé, et Hearth " +
+				"Répondez à quelques questions sur votre façon de travailler et ce qui est installé, et ZeroHearth " +
 				"crée un tableau de bord adapté. Il est ajouté comme nouveau tableau — rien de ce que " +
 				"vous avez déjà n'est modifié.",
 			setupAgain: "Créer un tableau de bord",
@@ -936,13 +936,11 @@ export const fr: Translations = {
 			reportIssueDesc:
 				"Un bug ou une idée de fonctionnalité ? Ouvrez un ticket sur GitHub.",
 			reportIssueButton: "Signaler",
-			kofi: "Soutenir Hearth",
-			kofiDesc:
-				"Hearth est gratuit et le restera. S'il a gagné sa place sur votre écran " +
-				"d'accueil, vous pouvez laisser un pourboire — totalement facultatif, aucune fonction n'est bloquée.",
-			kofiButton: "Un pourboire sur Ko-fi",
+			kofi: "Soutenir le projet d’origine",
+			kofiDesc: "Les pourboires vont à l’auteur de Hearth, le projet dont ZeroHearth est dérivé.",
+			kofiButton: "Soutenir l’auteur sur Ko-fi",
 			version: (v: string) => `Version ${v}`,
-			versionDesc: "La version de Hearth que vous utilisez.",
+			versionDesc: "La version de ZeroHearth que vous utilisez.",
 		},
 		appearance: {
 			heading: "Apparence",
@@ -960,12 +958,12 @@ export const fr: Translations = {
 				"Le symbole dessiné à côté du titre. Accepte : un id d'icône Lucide " +
 				"(parcourez la collection avec le bouton 🔍), un emoji ou un ou deux " +
 				"caractères, le chemin d'une image du coffre (bouton 📷), ou l'URL d'une " +
-				"image sur le web. Laissez vide pour le cristal Hearth. Chaque " +
+				"image sur le web. Laissez vide pour le cristal ZeroHearth. Chaque " +
 				"tableau peut le remplacer dans ses propres paramètres.",
 			tabIcon: "Icône de l'onglet",
 			tabIconDesc:
-				"Une icône Lucide pour l'en-tête d'onglet et le bouton du ruban de Hearth, à la place " +
-				"du cristal Hearth. Parcourez la collection ou tapez un id ; laissez vide pour le cristal.",
+				"Une icône Lucide pour l'en-tête d'onglet et le bouton du ruban de ZeroHearth, à la place " +
+				"du cristal ZeroHearth. Parcourez la collection ou tapez un id ; laissez vide pour le cristal.",
 			themeColorTarget: "Suivre la couleur d'icône du thème",
 			themeColorTargetDesc:
 				"Dessiner le cristal et/ou le titre dans la couleur d'icône de votre " +
@@ -997,7 +995,7 @@ export const fr: Translations = {
 				"comme celui d’Obsidian : fichiers uniquement, alias compris. " +
 				"Omnisearch nécessite que le module complémentaire Omnisearch soit " +
 				"installé et activé.",
-			searchEngineBuiltin: "Hearth (intégré)",
+			searchEngineBuiltin: "ZeroHearth (intégré)",
 			searchEngineOmnisearch: "Omnisearch",
 			searchEngineQuickSwitcher: "Sélecteur rapide",
 			numberFormat: "Format des nombres",
@@ -1025,7 +1023,7 @@ export const fr: Translations = {
 			newNoteHeadingDesc:
 				"Ce que crée le bouton, et où. Les mêmes paramètres pilotent le " +
 				"bouton à côté de la barre de recherche, celui d'une carte barre de recherche, et " +
-				"la commande « Créer une note » de Hearth.",
+				"la commande « Créer une note » de ZeroHearth.",
 			newNoteButtonLabel: "Texte du bouton",
 			newNoteButtonLabelDesc:
 				"Texte du bouton. Laissez vide pour « Nouvelle note ».",
@@ -1092,7 +1090,7 @@ export const fr: Translations = {
 			pauseWhenUnfocused: "Mettre en pause quand Obsidian n'est pas au premier plan",
 			pauseWhenUnfocusedDesc:
 				"Suspendre toutes les animations quand vous travaillez dans une autre application ou " +
-				"une autre fenêtre. Un onglet Hearth caché derrière un autre onglet ne coûte " +
+				"une autre fenêtre. Un onglet ZeroHearth caché derrière un autre onglet ne coûte " +
 				"déjà rien ; ceci couvre un tableau visible dans une fenêtre que vous n'utilisez " +
 				"pas — à côté d'un navigateur, ou sur un second écran. Désactivez si vous " +
 				"laissez le tableau tourner sur un second écran.",
@@ -1132,7 +1130,7 @@ export const fr: Translations = {
 			valueUrlDesc: "Une URL d'image directe.",
 			valueVideoDesc: "Le chemin d'une vidéo du coffre, ex. Pièces jointes/boucle.mp4. Elle est lue en boucle, sans son.",
 			videoNote:
-				"Une vidéo en fond est ce que Hearth peut peindre de plus coûteux — elle décode image après image tant que le tableau est ouvert. Elle ne se lit qu'au niveau de performance Complet ; à Équilibré et en dessous, elle reste figée sur sa première image.",
+				"Une vidéo en fond est ce que ZeroHearth peut peindre de plus coûteux — elle décode image après image tant que le tableau est ouvert. Elle ne se lit qu'au niveau de performance Complet ; à Équilibré et en dessous, elle reste figée sur sa première image.",
 			externalCallsDisabled:
 				"Non affiché tant que « Désactiver les appels externes » est actif dans Comportement : " +
 				"cet arrière-plan vient du web. Choisissez plutôt une image du coffre, " +
@@ -1161,7 +1159,7 @@ export const fr: Translations = {
 			bannerFullWidthDesc:
 				"Étendre la bannière d'un bord à l'autre au lieu de l'aligner sur le contenu.",
 			labels: {
-				default: "Hearth par défaut",
+				default: "ZeroHearth par défaut",
 				harbour: "Village portuaire",
 				none: "Aucun",
 				color: "Couleur unie",
@@ -1199,7 +1197,7 @@ export const fr: Translations = {
 				"Le ciel peint classique, ou un ciel plat Material 3 Expressive avec des collines, des nuages ronds et un soleil qui tourne.",
 			wallpaperDesignDesc:
 				"Collines classiques avec une cabane — un matin en thème clair, une nuit au clair de lune en thème sombre — " +
-				"ou des formes plates Material 3 Expressive dans les tons de votre couleur d'accent. Dessiné par Hearth, " +
+				"ou des formes plates Material 3 Expressive dans les tons de votre couleur d'accent. Dessiné par ZeroHearth, " +
 				"donc rien n'est téléchargé.",
 			skyDesignClassic: "Classique (peint)",
 			skyDesignExpressive: "Expressif (plat)",
@@ -1207,7 +1205,7 @@ export const fr: Translations = {
 		behaviour: {
 			heading: "Comportement",
 			headingDesc:
-				"Quand et où Hearth s'ouvre, et le mode recherche seule sur téléphone/tablette.",
+				"Quand et où ZeroHearth s'ouvre, et le mode recherche seule sur téléphone/tablette.",
 			openOnStartup: "Ouvrir au démarrage",
 			openOnStartupDesc: "Ouvrir la vue d'accueil au chargement du coffre.",
 			replaceNewTabs: "Remplacer les nouveaux onglets",
@@ -1220,7 +1218,7 @@ export const fr: Translations = {
 			liveRefreshDesc:
 				"Garder la vue d'accueil à jour quand le coffre change — les cartes Récents, Signets " +
 				"et requêtes enregistrées se mettent à jour sans rouvrir l'onglet. Revenir sur " +
-				"l'onglet Hearth l'actualise toujours, quel que soit ce paramètre.",
+				"l'onglet ZeroHearth l'actualise toujours, quel que soit ce paramètre.",
 			liveSettingsSync: "Prendre en compte les changements synchronisés",
 			liveSettingsSyncDesc:
 				"Appliquer les modifications de tableaux faites sur un autre appareil dès que la synchro " +
@@ -1258,18 +1256,18 @@ export const fr: Translations = {
 			mobileTierMatch: "Comme sur ordinateur",
 			disableExternalCalls: "Désactiver les appels externes",
 			disableExternalCallsDesc:
-				"Bloquer toutes les requêtes réseau sortantes de Hearth, y compris Jira, " +
+				"Bloquer toutes les requêtes réseau sortantes de ZeroHearth, y compris Jira, " +
 				"calendriers externes, flux RSS, taux de change de la calculatrice, " +
 				"et arrière-plans et icônes de titre donnés par une adresse web — ceux-ci " +
-				"sont remplacés par aucune image et le cristal Hearth.",
+				"sont remplacés par aucune image et le cristal ZeroHearth.",
 			openIn: "Ouvrir les notes dans",
 			openInDesc:
-				"Où va une note ouverte depuis Hearth. « Onglet actuel » remplace " +
-				"la vue d'accueil, Hearth se comporte alors comme un onglet normal. Ctrl/Cmd-clic " +
+				"Où va une note ouverte depuis ZeroHearth. « Onglet actuel » remplace " +
+				"la vue d'accueil, ZeroHearth se comporte alors comme un onglet normal. Ctrl/Cmd-clic " +
 				"ouvre toujours un nouvel onglet.",
 			openInModes: {
 				tab: "Un nouvel onglet",
-				same: "L'onglet actuel (remplace Hearth)",
+				same: "L'onglet actuel (remplace ZeroHearth)",
 				split: "Un panneau divisé",
 				window: "Une nouvelle fenêtre",
 			},
@@ -1283,18 +1281,18 @@ export const fr: Translations = {
 				cardDesc:
 					"Notes listées par les cartes Récents, Signets, Favoris, Calendrier, Carte d'activité et " +
 					"Tâches, et par les boutons d'action mobiles.",
-				newNote: "Notes créées par Hearth",
+				newNote: "Notes créées par ZeroHearth",
 				newNoteDesc: "Nouvelles notes, notes quotidiennes et notes d'événement, ouvertes à leur création.",
 			},
-			openFromOutside: "Notes ouvertes hors de Hearth",
+			openFromOutside: "Notes ouvertes hors de ZeroHearth",
 			openFromOutsideDesc:
 				"L'explorateur de fichiers, le changement rapide, le graphe — et tout ce qu'une carte " +
 				"intègre et qui ouvre des liens lui-même. Obsidian les envoie à l'onglet " +
-				"actif, donc un onglet Hearth est remplacé. Choisissez « un nouvel onglet » pour garder " +
-				"l'onglet Hearth ; l'explorateur de fichiers ne suit alors plus ce que vous ouvrez.",
+				"actif, donc un onglet ZeroHearth est remplacé. Choisissez « un nouvel onglet » pour garder " +
+				"l'onglet ZeroHearth ; l'explorateur de fichiers ne suit alors plus ce que vous ouvrez.",
 			openFromOutsideModes: {
-				same: "L'onglet actuel (remplace Hearth)",
-				tab: "Un nouvel onglet (garde Hearth ouvert)",
+				same: "L'onglet actuel (remplace ZeroHearth)",
+				tab: "Un nouvel onglet (garde ZeroHearth ouvert)",
 			},
 		},
 		mobileActions: {
@@ -1320,12 +1318,12 @@ export const fr: Translations = {
 		integrations: {
 			heading: "Toutes les intégrations",
 			headingDesc:
-				"Tout ce avec quoi Hearth peut fonctionner, installé ou non. " +
+				"Tout ce avec quoi ZeroHearth peut fonctionner, installé ou non. " +
 				"La plupart des intégrations ne demandent aucune configuration — les autres indiquent où se " +
 				"trouvent leurs paramètres.",
 			groups: {
 				plugin: "Modules complémentaires",
-				pluginDesc: "Hearth les détecte automatiquement dès qu'ils sont activés.",
+				pluginDesc: "ZeroHearth les détecte automatiquement dès qu'ils sont activés.",
 				core: "Modules principaux d'Obsidian",
 				coreDesc:
 					"Intégrés à Obsidian. Activez-les dans Paramètres → Modules principaux si une " +
@@ -1343,9 +1341,9 @@ export const fr: Translations = {
 				always: "Toujours disponible",
 			},
 			statusTooltip: {
-				enabled: "Installé et activé — Hearth l'utilise.",
-				disabled: "Installé mais désactivé, Hearth ne peut donc pas l'utiliser pour l'instant.",
-				missing: "Non installé. Tout le reste de Hearth fonctionne sans.",
+				enabled: "Installé et activé — ZeroHearth l'utilise.",
+				disabled: "Installé mais désactivé, ZeroHearth ne peut donc pas l'utiliser pour l'instant.",
+				missing: "Non installé. Tout le reste de ZeroHearth fonctionne sans.",
 				external: "Une requête sortante, pas un plugin.",
 				always: "Rien à installer.",
 			},
@@ -1353,7 +1351,7 @@ export const fr: Translations = {
 				section: "Paramètres plus bas dans cet onglet.",
 				tab: (tab: string) => `Paramètres dans ${tab}.`,
 				card: "Se configure sur la carte elle-même, dans votre tableau de bord.",
-				pluginSettings: "Utilise les paramètres de ce plugin — rien à régler dans Hearth.",
+				pluginSettings: "Utilise les paramètres de ce plugin — rien à régler dans ZeroHearth.",
 				none: "Rien à configurer.",
 			},
 			install: "Installer",
@@ -1370,7 +1368,7 @@ export const fr: Translations = {
 					desc:
 						"Une carte Tâches peut lire les tâches du plugin Tasks lui-même — " +
 						"ses statuts (y compris personnalisés) et son format — dessinées " +
-						"par Hearth avec filtre, tri et champs, et cocher, modifier et " +
+						"par ZeroHearth avec filtre, tri et champs, et cocher, modifier et " +
 						"créer via le plugin dans la note du jour ou la note de votre choix.",
 				},				stereo: {
 					name: "Stereo",
@@ -1383,7 +1381,7 @@ export const fr: Translations = {
 					name: "Omnisearch",
 					desc:
 						"Fait passer la barre de recherche sur l'index plein texte approximatif d'Omnisearch " +
-						"au lieu du moteur intégré de Hearth. Choisissez le moteur dans " +
+						"au lieu du moteur intégré de ZeroHearth. Choisissez le moteur dans " +
 						"Recherche → Barre de recherche ; ce choix ne tient que tant qu'Omnisearch est activé.",
 				},
 				tasknotes: {
@@ -1442,12 +1440,12 @@ export const fr: Translations = {
 						"Les cartes Operon — tâches, tableau, agenda et minuteur — lisent via " +
 						"l'API développeur d'Operon, donc ses statuts, priorités et " +
 						"récurrences restent définis par Operon. Ordinateur uniquement, nécessite Obsidian 1.12.2 " +
-						"ou plus récent, et Operon doit approuver la demande de lecture de Hearth.",
+						"ou plus récent, et Operon doit approuver la demande de lecture de ZeroHearth.",
 				},
 				iconic: {
 					name: "Iconic",
 					desc:
-						"Les icônes par fichier définies avec Iconic apparaissent partout où Hearth liste un fichier — " +
+						"Les icônes par fichier définies avec Iconic apparaissent partout où ZeroHearth liste un fichier — " +
 						"Récents, Favoris, recherches enregistrées et résultats de recherche.",
 				},
 				iconize: {
@@ -1469,7 +1467,7 @@ export const fr: Translations = {
 						"La carte Vault Pet accueille le plugin sur votre tableau — soit sa " +
 						"carte de compagnon, vivante et cliquable, soit toute sa maison avec " +
 						"quêtes, index, badges et statistiques. Le compagnon, son XP et tout " +
-						"ce qu'il débloque restent à Vault Pet ; Hearth ne fait que lui donner la place.",
+						"ce qu'il débloque restent à Vault Pet ; ZeroHearth ne fait que lui donner la place.",
 				},
 				excalidraw: {
 					name: "Excalidraw",
@@ -1503,7 +1501,7 @@ export const fr: Translations = {
 				},
 				fileExplorer: {
 					name: "Explorateur de fichiers",
-					desc: "Permet « Afficher dans l'explorateur de fichiers » sur les résultats de recherche de Hearth.",
+					desc: "Permet « Afficher dans l'explorateur de fichiers » sur les résultats de recherche de ZeroHearth.",
 				},
 				workspaces: {
 					name: "Espaces de travail",
@@ -1577,7 +1575,7 @@ export const fr: Translations = {
 			heading: "Tâches / TaskNotes",
 			headingDesc:
 				"Noms des champs lus par les cartes Tâches en mode TaskNotes. TaskNotes n'a pas " +
-				"d'API stable pour les autres plugins, donc Hearth lit directement son frontmatter " +
+				"d'API stable pour les autres plugins, donc ZeroHearth lit directement son frontmatter " +
 				"— faites-les correspondre aux champs définis dans les paramètres de TaskNotes " +
 				"(les valeurs par défaut ci-dessous sont celles de TaskNotes).",
 			statusField: "Champ de statut",
@@ -1592,7 +1590,7 @@ export const fr: Translations = {
 			fieldsEnable: "Personnaliser les champs de tâche",
 			fieldsEnableDesc:
 				"Remplacer les métadonnées fixes des cartes Tâches par des champs que vous définissez " +
-				"vous-même — n'importe quelle propriété de frontmatter ou donnée lue par Hearth, nommée, " +
+				"vous-même — n'importe quelle propriété de frontmatter ou donnée lue par ZeroHearth, nommée, " +
 				"colorée et ordonnée à votre guise. Désactivé par défaut, les tâches gardent " +
 				"leur apparence habituelle tant que vous ne l'activez pas. L'activer part d'une " +
 				"page blanche : les tâches n'affichent que les champs que vous ajoutez.",
@@ -1605,16 +1603,16 @@ export const fr: Translations = {
 			heading: "Icônes de fichiers / Iconic / Iconize",
 			headingDesc:
 				"Utiliser les icônes par fichier définies avec les plugins Iconic ou Iconize " +
-				"partout où Hearth affiche un fichier — Récents, Favoris, recherches " +
+				"partout où ZeroHearth affiche un fichier — Récents, Favoris, recherches " +
 				"enregistrées et barre de recherche. Les icônes Lucide et les emojis sont affichés ; " +
 				"les fichiers utilisant une icône d'un pack téléchargé gardent l'icône " +
-				"de type de fichier de Hearth.",
+				"de type de fichier de ZeroHearth.",
 			enable: "Utiliser les icônes d'Iconic / Iconize",
 			enableDesc:
-				"Désactivé : l'icône de type de fichier de Hearth pour tous les fichiers, en ignorant les deux plugins.",
+				"Désactivé : l'icône de type de fichier de ZeroHearth pour tous les fichiers, en ignorant les deux plugins.",
 			enableDescNoPlugin:
 				"Ni Iconic ni Iconize n'est activé pour l'instant, donc tous les fichiers " +
-				"affichent l'icône de type de Hearth, sauf si l'option de frontmatter " +
+				"affichent l'icône de type de ZeroHearth, sauf si l'option de frontmatter " +
 				"ci-dessous est activée. Vous pouvez laisser activé — cela prendra effet " +
 				"dès que l'un d'eux sera installé.",
 			property: "Propriété de frontmatter d'Iconize",
@@ -1631,7 +1629,7 @@ export const fr: Translations = {
 				"propriété courant, et un coffre qui l'utilise pour autre chose verrait ces " +
 				"valeurs dessinées comme des icônes. Seuls les emojis et les identifiants " +
 				"d'icônes connus d'Obsidian sont affichés ; le reste garde l'icône de type de " +
-				"fichier de Hearth.",
+				"fichier de ZeroHearth.",
 		},
 		frontMatterTitle: {
 			heading: "Front Matter Title",
@@ -1654,10 +1652,10 @@ export const fr: Translations = {
 			headingDesc:
 				"Lire les tâches, tableaux, agendas et le minuteur en cours depuis le plugin " +
 				"Operon via sa propre API développeur — Operon reste la source de " +
-				"vérité sur ce qu'est une tâche, Hearth n'affiche que ce qu'il renvoie.",
+				"vérité sur ce qu'est une tâche, ZeroHearth n'affiche que ce qu'il renvoie.",
 			enable: "Se connecter à Operon",
 			enableDesc:
-				"Désactivé = coupure totale : les cartes Operon ne lisent plus et Hearth ne " +
+				"Désactivé = coupure totale : les cartes Operon ne lisent plus et ZeroHearth ne " +
 				"demande jamais l'accès à Operon. Rien n'est demandé tant qu'aucune carte Operon " +
 				"n'est sur un tableau.",
 			status: "Connexion",
@@ -1667,15 +1665,15 @@ export const fr: Translations = {
 			statusBooting: "Operon fonctionne mais démarre encore.",
 			statusPending:
 				"En attente d'approbation. Ouvrez Paramètres → Operon → Core → General → " +
-				"Developer API Integrations et approuvez Hearth.",
+				"Developer API Integrations et approuvez ZeroHearth.",
 			statusSuspended:
-				"Accès suspendu. Vérifiez la demande d'accès en attente de Hearth dans les " +
+				"Accès suspendu. Vérifiez la demande d'accès en attente de ZeroHearth dans les " +
 				"Developer API Integrations d'Operon.",
 			statusRevoked:
 				"Accès révoqué. Accordez-le à nouveau dans les Developer API Integrations d'Operon.",
 			statusReady: "Connecté — les cartes Operon peuvent lire les tâches.",
 			statusIdle: "Pas encore connecté. Ajoutez une carte Operon pour ouvrir une session.",
-			statusOff: "L'intégration est désactivée, Hearth ne lit donc rien depuis Operon.",
+			statusOff: "L'intégration est désactivée, ZeroHearth ne lit donc rien depuis Operon.",
 			statusError: "Operon a refusé la connexion.",
 			detail: "Operon a indiqué",
 			install: "Ouvrir Operon dans les modules complémentaires",
@@ -1683,16 +1681,16 @@ export const fr: Translations = {
 			writesDesc:
 				"Permet à la carte Kanban de changer le statut d'une tâche par glisser-déposer, et " +
 				"ajoute un « + » pour en créer une. Operon décide où va une nouvelle tâche et " +
-				"si un déplacement est autorisé ; Hearth ne fait que demander. L'activer élargit ce que " +
-				"Hearth demande, vous devrez donc l'approuver à nouveau dans les " +
-				"Developer API Integrations d'Operon. Désactivé = Hearth ne peut que lire.",
+				"si un déplacement est autorisé ; ZeroHearth ne fait que demander. L'activer élargit ce que " +
+				"ZeroHearth demande, vous devrez donc l'approuver à nouveau dans les " +
+				"Developer API Integrations d'Operon. Désactivé = ZeroHearth ne peut que lire.",
 			writesPending:
 				"La lecture fonctionne, mais les droits de modification ne sont pas encore accordés — " +
-				"approuvez à nouveau Hearth dans les Developer API Integrations d'Operon. D'ici là, " +
+				"approuvez à nouveau ZeroHearth dans les Developer API Integrations d'Operon. D'ici là, " +
 				"les cartes restent en lecture seule.",
 			capabilities: "Accès demandés",
 			capabilitiesDesc:
-				"Hearth demande tout en même temps car Operon n'ouvre pas une " +
+				"ZeroHearth demande tout en même temps car Operon n'ouvre pas une " +
 				"session partiellement approuvée. Lecture seule sauf si « Autoriser les modifications » est actif, ce qui " +
 				"ajoute les droits de changement de statut et de création de tâches.",
 			missing: (names: string) => `Pas encore accordé : ${names}`,
@@ -1756,8 +1754,8 @@ export const fr: Translations = {
 				"Les cartes Expressives reposent sur une surface tonale opaque aux grands coins arrondis : opacité, flou, arrondi et bordure ne s'appliquent donc qu'aux cartes Classiques.",
 			cardDesign: "Design",
 			cardDesignDesc:
-				"Comment Hearth est dessiné : Classique, ou Material 3 Expressive — conteneurs tonals dans votre couleur d'accent, pastilles et formes douces, typographie plus marquée. Expressive s'applique à toute l'interface de Hearth : les cartes, les boutons du tableau, chaque dialogue et menu, et ce panneau de paramètres. Un tableau ou une carte peut toujours choisir pour lui-même ; les cartes dont le contenu vous appartient (notes, intégrations, pages web) gardent ce contenu tel quel et ne prennent que le cadre Expressive.",
-			designClassicDesc: "Surfaces discrètes et bordures fines — Hearth tel qu'il a toujours été.",
+				"Comment ZeroHearth est dessiné : Classique, ou Material 3 Expressive — conteneurs tonals dans votre couleur d'accent, pastilles et formes douces, typographie plus marquée. Expressive s'applique à toute l'interface de ZeroHearth : les cartes, les boutons du tableau, chaque dialogue et menu, et ce panneau de paramètres. Un tableau ou une carte peut toujours choisir pour lui-même ; les cartes dont le contenu vous appartient (notes, intégrations, pages web) gardent ce contenu tel quel et ne prennent que le cadre Expressive.",
+			designClassicDesc: "Surfaces discrètes et bordures fines — ZeroHearth tel qu'il a toujours été.",
 			designExpressiveDesc: "Material 3 Expressive partout : couleurs tonales issues de votre accent, pastilles et formes douces, typographie grasse.",
 			designInUse: "Utilisé",
 			cards: "Cartes",
@@ -1776,7 +1774,7 @@ export const fr: Translations = {
 			exportDashboardButton: "Exporter le tableau…",
 			importAny: "Importer",
 			importAnyDesc:
-				"Ouvrir un fichier Hearth — un tableau de bord, une disposition ou une sauvegarde complète. Son contenu vous est présenté avant tout changement, et un tableau seul est ajouté à côté des vôtres sans rien remplacer.",
+				"Ouvrir un fichier ZeroHearth — un tableau de bord, une disposition ou une sauvegarde complète. Son contenu vous est présenté avant tout changement, et un tableau seul est ajouté à côté des vôtres sans rien remplacer.",
 			export: "Exporter la disposition",
 			exportDesc:
 				"Télécharger tous les tableaux de bord ainsi que les paramètres de grille et de disposition en fichier JSON.",
@@ -1786,7 +1784,7 @@ export const fr: Translations = {
 			importButton: "Importer un fichier",
 			exportSettings: "Exporter les paramètres",
 			exportSettingsDesc:
-				"Télécharger tous les paramètres de Hearth — la disposition complète plus l'en-tête, l'arrière-plan, " +
+				"Télécharger tous les paramètres de ZeroHearth — la disposition complète plus l'en-tête, l'arrière-plan, " +
 				"le comportement, l'apparence et les options TaskNotes — en fichier de sauvegarde JSON.",
 		},
 	},
@@ -2178,7 +2176,7 @@ export const fr: Translations = {
 			count: "Nombre de fichiers",
 			countDesc: (max: number) =>
 				`Combien de fichiers récemment ouverts lister — au maximum ${max}, soit ` +
-				`toute l'étendue de l'historique récent de Hearth.`,
+				`toute l'étendue de l'historique récent de ZeroHearth.`,
 			types: "Types de fichiers",
 			typesDesc: "Ne lister que les fichiers des types sélectionnés. Toute combinaison est possible ; aucune sélection = tous les types.",
 		},
@@ -2186,7 +2184,7 @@ export const fr: Translations = {
 			heading: "Signets de dossier",
 			folderTarget: "Ouverture d'un signet de dossier",
 			folderTargetDesc:
-				"Dans le navigateur de dossiers de Hearth, ou dans " +
+				"Dans le navigateur de dossiers de ZeroHearth, ou dans " +
 				"l'explorateur de fichiers d'Obsidian dans la barre latérale.",
 		},
 		folder: {
@@ -2196,7 +2194,7 @@ export const fr: Translations = {
 			pickFolder: "Choisir un dossier",
 			sort: "Ordre",
 			sortDesc:
-				"L'ordre du contenu. Avec les ordres propres à Hearth, les dossiers viennent en premier " +
+				"L'ordre du contenu. Avec les ordres propres à ZeroHearth, les dossiers viennent en premier " +
 				"et sont triés par nom, comme dans l'explorateur de fichiers.",
 			sorts: {
 				explorer: "Comme l'explorateur de fichiers",
@@ -2276,7 +2274,7 @@ export const fr: Translations = {
 			operonTasksDesc:
 				"Marquer les jours ayant une tâche Operon à échéance, et lister ces tâches dans " +
 				"l'agenda. Lit via l'API développeur d'Operon, il faut donc qu'Operon " +
-				"soit approuvé dans Paramètres → Hearth → Intégrations. Les tâches seulement " +
+				"soit approuvé dans Paramètres → ZeroHearth → Intégrations. Les tâches seulement " +
 				"planifiées (sans échéance) ne sont pas incluses.",
 			operonTaskColor: "Couleur des tâches Operon",
 			operonTaskColorDesc: "Couleur des marqueurs de tâches. Par défaut, la couleur d'accent.",
@@ -2360,7 +2358,7 @@ export const fr: Translations = {
 				`${count} événement${count <= 1 ? "" : "s"} chargé${count <= 1 ? "" : "s"}.`,
 			taskNotesSubPending: "Pas encore chargé — actualisez ci-dessous.",
 			taskNotesSubDisabled: "Désactivé dans TaskNotes.",
-			taskNotesSubBlocked: "Non récupéré : les appels externes sont désactivés dans les paramètres de Hearth.",
+			taskNotesSubBlocked: "Non récupéré : les appels externes sont désactivés dans les paramètres de ZeroHearth.",
 			taskNotesSubFailed: (reason: string) => `Chargement impossible : ${reason}`,
 			taskNotesSubNotCalendar: "la réponse n'était pas un flux iCalendar.",
 			taskNotesSubMissingFile: "ce fichier n'est pas dans le coffre.",
@@ -2631,7 +2629,7 @@ export const fr: Translations = {
 			targetFolder: "Cible (chemin de dossier)",
 			folderTarget: "Ouverture d'un bouton dossier",
 			folderTargetDesc:
-				"Dans le navigateur de dossiers de Hearth, ou dans " +
+				"Dans le navigateur de dossiers de ZeroHearth, ou dans " +
 				"l'explorateur de fichiers d'Obsidian dans la barre latérale.",
 			moveUp: "Monter",
 			moveDown: "Descendre",
@@ -2731,10 +2729,10 @@ export const fr: Translations = {
 			sourceDesc:
 				"Les cases à cocher Markdown fonctionnent partout. TaskNotes lit les notes de tâches " +
 				"de ce plugin via le frontmatter (noms de champs configurables dans Paramètres → " +
-				"Hearth, car TaskNotes n'a pas d'API interrogeable par d'autres plugins). " +
+				"ZeroHearth, car TaskNotes n'a pas d'API interrogeable par d'autres plugins). " +
 				"Kanban lit une seule note du plugin Kanban, une colonne par titre. " +
 				"Le plugin Tasks lit les tâches de ce plugin — ses statuts et son format — " +
-				"dessinées par Hearth, avec cocher, modifier et créer du plugin.",
+				"dessinées par ZeroHearth, avec cocher, modifier et créer du plugin.",
 			sourceCheckbox: "Cases à cocher Markdown",
 			sourceTaskNotes: "Plugin TaskNotes",
 			sourceKanban: "Plugin Kanban",
@@ -2882,12 +2880,12 @@ export const fr: Translations = {
 			doneStatusesDesc:
 				"Source TaskNotes : quelles valeurs de statut sont considérées comme terminées (masquées " +
 				"sauf si « Afficher les terminées » est actif, et barrées si affichées), une par " +
-				"ligne. Laissez vide pour n'utiliser que la valeur « terminé » de Paramètres → Hearth. " +
+				"ligne. Laissez vide pour n'utiliser que la valeur « terminé » de Paramètres → ZeroHearth. " +
 				"Ajoutez par ex. « canceled » pour compter aussi les tâches annulées comme terminées.",
 			doneStatusesPlaceholder: "done\ncanceled",
 			fields: "Champs",
 			fieldsFollowGlobal:
-				"Suit les champs de Paramètres → Hearth → Intégrations. Activez " +
+				"Suit les champs de Paramètres → ZeroHearth → Intégrations. Activez " +
 				"pour donner à cette carte ses propres champs.",
 			fieldsOwnDesc:
 				"Cette source ne suit pas la liste TaskNotes du coffre. Activez pour " +
@@ -2952,15 +2950,15 @@ export const fr: Translations = {
 			fieldNoKeys: "Aucune clé",
 			fieldAddKey: "Ajouter une clé",
 			fieldAddKeyDesc:
-				"Les valeurs propres à Hearth couvrent la priorité d'une case à cocher, une colonne Kanban " +
+				"Les valeurs propres à ZeroHearth couvrent la priorité d'une case à cocher, une colonne Kanban " +
 				"et les dates analysées ; une propriété lit n'importe quoi dans votre frontmatter.",
-			fieldAddBuiltin: "Ce que Hearth lit",
+			fieldAddBuiltin: "Ce que ZeroHearth lit",
 			fieldAddProperty: "Propriété de frontmatter",
 			fieldAddKeyTyped: "Taper un nom de propriété…",
 			fieldAddKeyPlaceholder: "Nom de la propriété",
 			fieldRemoveKey: "Retirer la clé",
 			fieldPickProperty: "Propriétés trouvées dans vos notes",
-			fieldPickBuiltin: "Valeurs analysées par Hearth",
+			fieldPickBuiltin: "Valeurs analysées par ZeroHearth",
 			fieldKeyAlreadyAdded: (key: string) => `« ${key} » est déjà une clé de ce champ.`,
 			fieldMapValues: "Valeurs et couleurs",
 			fieldMappedValues: (n: number) => `${n} valeur(s) associée(s)`,
@@ -3138,7 +3136,7 @@ export const fr: Translations = {
 			languageTs: "Script (TS)",
 			query: "Requête",
 			queryDesc:
-				"Une requête Datacore, ex. @page and #projet. Hearth affiche les résultats en " +
+				"Une requête Datacore, ex. @page and #projet. ZeroHearth affiche les résultats en " +
 				"liste dynamique de liens. S'exécute sans « note courante » : les requêtes globales fonctionnent " +
 				"pleinement mais celles relatives à un fichier n'ont pas de fichier de référence.",
 			queryPlaceholder: "@page and #projet",
@@ -3370,7 +3368,7 @@ export const fr: Translations = {
 			removeFeed: "Retirer le flux",
 			github: "Ajouter depuis GitHub",
 			githubDesc:
-				"Saisissez un dépôt sous la forme propriétaire/dépôt (ou collez son URL) et choisissez quoi suivre — Hearth crée le flux Atom pour vous.",
+				"Saisissez un dépôt sous la forme propriétaire/dépôt (ou collez son URL) et choisissez quoi suivre — ZeroHearth crée le flux Atom pour vous.",
 			githubPlaceholder: "propriétaire/dépôt",
 			githubReleases: "Versions",
 			githubCommits: "Commits",
@@ -3400,7 +3398,7 @@ export const fr: Translations = {
 			showDateDesc: "Afficher l'heure de publication de chaque élément.",
 			reading: "Lecture",
 			openIn: "Ouvrir les articles dans",
-			openInDesc: "Où mène un clic sur un article. Un article sans page web — une lettre d'information, par exemple — s'ouvre toujours dans le lecteur de Hearth.",
+			openInDesc: "Où mène un clic sur un article. Un article sans page web — une lettre d'information, par exemple — s'ouvre toujours dans le lecteur de ZeroHearth.",
 			openInBrowser: "Navigateur",
 			openInDialog: "Lecteur (fenêtre)",
 			openInTab: "Lecteur (onglet)",
@@ -3512,11 +3510,11 @@ export const fr: Translations = {
 			location: "Lieu",
 			search: "Trouver un lieu",
 			searchDesc:
-				"Recherche par nom — Hearth enregistre les coordonnées sur la carte, cette " +
+				"Recherche par nom — ZeroHearth enregistre les coordonnées sur la carte, cette " +
 				"recherche n'a donc lieu qu'une fois.",
 			searchDisabled:
 				"La recherche de lieu est indisponible tant que les appels externes sont désactivés dans les paramètres " +
-				"de Hearth. Vous pouvez toujours saisir des coordonnées ci-dessous.",
+				"de ZeroHearth. Vous pouvez toujours saisir des coordonnées ci-dessous.",
 			searchPlaceholder: "Paris, Lyon, Marseille…",
 			searchButton: "Chercher",
 			searchEmpty: "Tapez un nom de lieu à rechercher.",
@@ -3604,7 +3602,7 @@ export const fr: Translations = {
 			hostDesc: "L'origine du site Jira. HTTPS est obligatoire pour envoyer un jeton d'accès personnel.",
 			hostPlaceholder: "https://jira.example.com",
 			pat: "Jeton d'accès personnel",
-			patDesc: "Jeton PAT (Bearer) utilisé pour cette carte. Stocké dans les données du plugin Hearth.",
+			patDesc: "Jeton PAT (Bearer) utilisé pour cette carte. Stocké dans les données du plugin ZeroHearth.",
 			apiBase: "Chemin de base de l'API",
 			apiBaseDesc: "Un chemin REST Jira relatif. Les URL complètes sont refusées.",
 			apiBasePlaceholder: "/rest/api/latest",
@@ -3616,7 +3614,7 @@ export const fr: Translations = {
 			noFavoriteFilters: "Jira n'a renvoyé aucun filtre favori.",
 			loadFailed: "Impossible de charger les filtres Jira. Vérifiez l'hôte, le chemin de l'API et le jeton.",
 			externalCallsDisabled:
-				"Les filtres favoris ne peuvent pas être chargés tant que les appels externes sont désactivés dans les paramètres de Hearth.",
+				"Les filtres favoris ne peuvent pas être chargés tant que les appels externes sont désactivés dans les paramètres de ZeroHearth.",
 			controls: "Contrôles de filtre",
 			maxResults: "Résultats max",
 			maxResultsDesc: "Le nombre maximal de tickets filtrés à afficher, jusqu'à 200.",
@@ -3647,7 +3645,7 @@ export const fr: Translations = {
 				"précédent/suivant et son menu. Pratique quand la carte affiche un seul fichier.",
 			perfLabel: "Performance",
 			perfNote:
-				"C'est de loin la carte la plus lourde de Hearth. Elle exécute la vue complète " +
+				"C'est de loin la carte la plus lourde de ZeroHearth. Elle exécute la vue complète " +
 				"d'un autre plugin en direct dans le tableau, et maintient donc les minuteurs, " +
 				"écouteurs et le rendu de ce plugin tant que " +
 				"le tableau est ouvert — chacune de ces cartes coûte à nouveau. Utilisez-en une " +
@@ -3932,13 +3930,13 @@ export const fr: Translations = {
 			taskChuteNoData: "Aucun enregistrement TaskChute pour l'instant — lancez une tâche puis revenez",
 			operonEnable: "Activez le plugin Operon pour afficher ses tâches",
 			operonDisabled:
-				"L'intégration Operon est désactivée — activez-la dans Paramètres → Hearth → Intégrations",
+				"L'intégration Operon est désactivée — activez-la dans Paramètres → ZeroHearth → Intégrations",
 			operonUnsupported:
 				"L'API développeur d'Operon est réservée à l'ordinateur et nécessite Obsidian 1.12.2 ou plus récent",
 			operonPending:
-				"Approuvez Hearth dans Paramètres → Operon → Core → General → Developer API Integrations",
+				"Approuvez ZeroHearth dans Paramètres → Operon → Core → General → Developer API Integrations",
 			operonSuspended:
-				"Operon a suspendu l'accès de Hearth — vérifiez-le dans les Developer API Integrations d'Operon",
+				"Operon a suspendu l'accès de ZeroHearth — vérifiez-le dans les Developer API Integrations d'Operon",
 			operonRevoked:
 				"L'accès à Operon a été révoqué — accordez-le à nouveau dans les Developer API Integrations d'Operon",
 			operonBooting: "Operon démarre encore",
@@ -4068,7 +4066,7 @@ export const fr: Translations = {
 			markAllRead: "Tout marquer comme lu",
 			markRead: "Marquer comme lu",
 			markUnread: "Marquer comme non lu",
-			readHere: "Lire dans Hearth",
+			readHere: "Lire dans ZeroHearth",
 			openTab: "Lire dans un nouvel onglet",
 			openBrowser: "Ouvrir dans le navigateur",
 			saveNote: "Enregistrer en note",
@@ -4796,7 +4794,7 @@ export const fr: Translations = {
 		journal: "La note actuelle d'un journal, via le plugin Journals",
 		web: "Une page web dans une iframe, actualisée avec un minuteur",
 		bookmarks: "Vos signets Obsidian, à un clic",
-		favorites: "Les notes mises en favori dans Hearth",
+		favorites: "Les notes mises en favori dans ZeroHearth",
 		recent: "Les fichiers ouverts le plus récemment",
 		folder: "Le contenu d'un dossier, sur un niveau, avec un navigateur derrière",
 		links: "Un lanceur de liens, notes, commandes et dossiers",
@@ -4854,7 +4852,7 @@ export const fr: Translations = {
 			railLabel: "Demander une carte",
 			heading: "Demander une carte",
 			intro:
-				"Il vous manque quelque chose ? Décrivez la carte que vous aimeriez dans Hearth — ce " +
+				"Il vous manque quelque chose ? Décrivez la carte que vous aimeriez dans ZeroHearth — ce " +
 				"qu'elle afficherait et d'où viendraient ses données.",
 			footPrompt: "Pas ce que vous cherchiez ?",
 			footLink: "Demander une carte",
@@ -4866,7 +4864,7 @@ export const fr: Translations = {
 			emailDesc: "Directement au mainteneur, si vous préférez ne pas utiliser GitHub. Ouvre votre application de messagerie.",
 			emailAction: "Ouvrir l'e-mail",
 			prefilledNote:
-				"Les deux s'ouvrent pré-remplis avec quelques questions et vos versions de Hearth et d'Obsidian — modifiez ce que vous voulez avant l'envoi.",
+				"Les deux s'ouvrent pré-remplis avec quelques questions et vos versions de ZeroHearth et d'Obsidian — modifiez ce que vous voulez avant l'envoi.",
 		},
 	},
 
@@ -4929,13 +4927,13 @@ export const fr: Translations = {
 			snapshotLeak:
 				"Si quelque chose de personnel y est lisible, ne publiez pas ce tableau : l'image ne peut pas être retirée une fois installée par d'autres. Signalez-le plutôt — c'est un bug du masquage, et il vaut la peine d'être corrigé avant que cela n'arrive à quelqu'un d'autre.",
 			snapshotLeakReport: "Le signaler sur GitHub",
-			snapshotFailed: "Hearth n'a pas pu capturer le tableau.",
+			snapshotFailed: "ZeroHearth n'a pas pu capturer le tableau.",
 			snapshotRequired:
 				"Une entrée de galerie nécessite une image du tableau. Prenez-en une d'abord — vous pourrez la regarder avant l'envoi.",
 			snapshotUnavailable:
 				"La publication nécessite une image du tableau, et cette version ne peut pas en prendre — les captures nécessitent l'application de bureau. Vous pouvez quand même enregistrer le tableau dans un fichier et le publier depuis un coffre sur ordinateur.",
 			snapshotNotActive:
-				"La publication nécessite une image du tableau, et Hearth ne peut photographier que le tableau ouvert. Passez d'abord sur ce tableau, puis publiez-le.",
+				"La publication nécessite une image du tableau, et ZeroHearth ne peut photographier que le tableau ouvert. Passez d'abord sur ce tableau, puis publiez-le.",
 			theme: "Recommandé avec mon thème",
 			themeDesc: (name: string) =>
 				`Indiquer que le tableau est conçu pour ${name}, le thème que vous utilisez. C'est une indication pour qui l'installe — rien n'est installé ni modifié de son côté.`,
@@ -4973,7 +4971,7 @@ export const fr: Translations = {
 			identityReplaceConfirm: "La remplacer",
 			identityRestoreLabel: "Clé de récupération",
 			identityRestored: (name: string) => `Vous publiez désormais sous ${name}.`,
-			identityRestoreFailed: "Ce n'est pas une clé de récupération Hearth.",
+			identityRestoreFailed: "Ce n'est pas une clé de récupération ZeroHearth.",
 
 			// ---- What travels ----
 			contents: "Quoi inclure",
@@ -5047,7 +5045,7 @@ export const fr: Translations = {
 				"Ce fichier indique un auteur, mais sa signature n'est pas valide — il a été modifié " +
 				"après signature, ou quelqu'un y a mis le pseudonyme d'un autre créateur. Il est affiché sans " +
 				"auteur. Le reste de l'import n'est pas affecté.",
-			madeWith: (version: string) => `Hearth ${version}`,
+			madeWith: (version: string) => `ZeroHearth ${version}`,
 			cardCount: (n: number) => (n <= 1 ? `${n} type de carte` : `${n} types de cartes`),
 			assetCount: (n: number) =>
 				n <= 1 ? `Apporte ${n} image` : `Apporte ${n} images`,
@@ -5061,7 +5059,7 @@ export const fr: Translations = {
 			modeReplaceBoard: (name: string) => `Mettre à jour « ${name} » sur place`,
 			modeReplaceAll: "Remplacer tous mes paramètres",
 			replaceAllWarning:
-				"Cela remplace vos tableaux et tous les paramètres de Hearth par ceux de ce fichier. Action irréversible.",
+				"Cela remplace vos tableaux et tous les paramètres de ZeroHearth par ceux de ce fichier. Action irréversible.",
 			heads: "Bon à savoir",
 			missingPlugins: (plugins: string) =>
 				`Non installés ou non activés ici : ${plugins}. Ces cartes seront vides tant qu'ils ne le seront pas.`,
@@ -5086,7 +5084,7 @@ export const fr: Translations = {
 				`${n} plugin${n <= 1 ? " requis n'est" : "s requis ne sont"} pas activé${n <= 1 ? "" : "s"}.`,
 			warnTaskFields:
 				"Ses cartes de tâches utilisent des champs personnalisés — activez la personnalisation des champs de tâche dans Paramètres → Intégrations pour les voir.",
-			warnUnknownCards: "Certaines cartes nécessitent une version plus récente de Hearth et ont été exclues.",
+			warnUnknownCards: "Certaines cartes nécessitent une version plus récente de ZeroHearth et ont été exclues.",
 			warnAssets: "Certaines de ses images manquaient dans le fichier.",
 		},
 	},
@@ -5137,9 +5135,9 @@ export const fr: Translations = {
 			pluginBoard: "Héberge une vue de plugin",
 			noPicture: "Pas d'image",
 			needsIdentity:
-				"Vous pouvez parcourir et installer sans pseudonyme, mais voter et publier en nécessitent un. Hearth vous en crée un anonyme à partir d'une clé qui ne quitte jamais ce coffre.",
+				"Vous pouvez parcourir et installer sans pseudonyme, mais voter et publier en nécessitent un. ZeroHearth vous en crée un anonyme à partir d'une clé qui ne quitte jamais ce coffre.",
 			needsIdentityVote:
-				"Voter nécessite un pseudonyme. Hearth vous en créera un anonyme à partir d'une clé qui ne quitte jamais ce coffre — pas de compte, et rien sur qui vous êtes. En créer un maintenant ?",
+				"Voter nécessite un pseudonyme. ZeroHearth vous en créera un anonyme à partir d'une clé qui ne quitte jamais ce coffre — pas de compte, et rien sur qui vous êtes. En créer un maintenant ?",
 		},
 		detail: {
 			install: "Installer",
@@ -5153,13 +5151,13 @@ export const fr: Translations = {
 			updated: (when: string) => `Mis à jour ${when}`,
 			version: (v: string) => `Version de l'auteur ${v}`,
 			theme: (name: string) => `Recommandé avec le thème ${name}`,
-			madeWith: (v: string) => `Créé avec Hearth ${v}`,
+			madeWith: (v: string) => `Créé avec ZeroHearth ${v}`,
 			contents: "Contenu de ce tableau",
 			requires: "Ce qu'il nécessite",
 			requiresPlugins: "Plugins",
 			requiresViews: "Vues hébergées",
 			requiresSettings: "Paramètres",
-			nothingRequired: "Rien d'autre que Hearth.",
+			nothingRequired: "Rien d'autre que ZeroHearth.",
 			size: (kb: number) => `${kb} Ko`,
 			remote: (n: number) =>
 				n <= 1
@@ -5192,7 +5190,7 @@ export const fr: Translations = {
 		publish: {
 			title: "Publier dans la galerie",
 			intro:
-				"Place ce tableau dans la galerie, où toute personne utilisant cette galerie Hearth peut le trouver et l'installer.",
+				"Place ce tableau dans la galerie, où toute personne utilisant cette galerie ZeroHearth peut le trouver et l'installer.",
 			category: "Catégorie",
 			categoryDesc: "À quoi sert ce tableau. C'est ainsi qu'on le trouve.",
 			button: "Publier",
@@ -5212,7 +5210,7 @@ export const fr: Translations = {
 			updateMissing:
 				"Ce coffre n'a pas le tableau d'où cette entrée a été publiée — il a été supprimé, ou il se trouve dans un autre coffre. Publier d'ici créerait une seconde entrée, il n'y a donc rien à mettre à jour.",
 			updateUnknown:
-				"Hearth ne sait pas encore à quel tableau correspond cette entrée. Cliquez sur Mettre à jour et il lira l'entrée pour le découvrir.",
+				"ZeroHearth ne sait pas encore à quel tableau correspond cette entrée. Cliquez sur Mettre à jour et il lira l'entrée pour le découvrir.",
 			unpublish: "Retirer de la galerie",
 			unpublishConfirm: (name: string) =>
 				`Retirer « ${name} » de la galerie ? Ceux qui l'ont déjà installé gardent leur copie ; personne d'autre ne pourra le trouver.`,
@@ -5222,9 +5220,9 @@ export const fr: Translations = {
 			heading: "Galerie de tableaux",
 			host: "Adresse de la galerie",
 			hostDesc:
-				"La galerie que Hearth parcourt et où il publie. Rien n'est récupéré avant que vous l'ouvriez et rien n'est envoyé avant que vous publiiez. Videz ce champ pour désactiver complètement la galerie — elle reste désactivée. https uniquement (ou http sur localhost, pour une galerie hébergée par vous-même).",
+				"La galerie que ZeroHearth parcourt et où il publie. Rien n'est récupéré avant que vous l'ouvriez et rien n'est envoyé avant que vous publiiez. Videz ce champ pour désactiver complètement la galerie — elle reste désactivée. https uniquement (ou http sur localhost, pour une galerie hébergée par vous-même).",
 			hostPlaceholder: "https://galerie.example.com",
-			hostInvalid: "Hearth ne communiquera pas avec cette adresse. Utilisez https, ou http sur localhost.",
+			hostInvalid: "ZeroHearth ne communiquera pas avec cette adresse. Utilisez https, ou http sur localhost.",
 			hostCleared: "Galerie désactivée.",
 			hostSet: (host: string) => `Galerie définie sur ${host}.`,
 			browse: "Parcourir la galerie",
@@ -5233,11 +5231,11 @@ export const fr: Translations = {
 		},
 		errors: {
 			noHost:
-				"Aucune galerie n'est configurée. Indiquez une adresse de galerie dans les paramètres de Hearth, section Galerie de tableaux.",
+				"Aucune galerie n'est configurée. Indiquez une adresse de galerie dans les paramètres de ZeroHearth, section Galerie de tableaux.",
 			externalCallsOff:
 				"La galerie est un serveur sur internet, et ce coffre a « Désactiver les appels externes » activé. Désactivez-le pour parcourir ou publier.",
 			offline: "Impossible de joindre la galerie. Elle est peut-être hors service, ou cet appareil hors ligne.",
-			badResponse: "Cette adresse a répondu, mais pas comme une galerie Hearth.",
+			badResponse: "Cette adresse a répondu, mais pas comme une galerie ZeroHearth.",
 			unauthorized: "La galerie n'a pas accepté l'identité de ce coffre.",
 			forbidden: "La galerie n'autorise pas l'identité de ce coffre à faire cela.",
 			rateLimited: "La galerie vous demande de ralentir. Réessayez dans quelques minutes.",
@@ -5246,7 +5244,7 @@ export const fr: Translations = {
 			notFound: "La galerie n'a pas cet élément.",
 			server: "La galerie a rencontré un problème avec cette requête.",
 			unsigned:
-				"Hearth n'a pas pu signer le fichier, il n'a donc pas été publié — un tableau non signé n'a pas d'auteur vérifiable.",
+				"ZeroHearth n'a pas pu signer le fichier, il n'a donc pas été publié — un tableau non signé n'a pas d'auteur vérifiable.",
 		},
 	},
 
@@ -5256,10 +5254,10 @@ export const fr: Translations = {
 		notAnObject: "La disposition doit être un objet JSON.",
 		noValidDashboards: "La disposition ne contient aucun tableau valide.",
 		noValidCards: "La disposition ne contient aucune carte valide.",
-		notAHearthLayout:
-			"Pas une disposition Hearth — aucun tableau \"dashboards\" ou \"cards\" trouvé.",
-		notHearthSettings:
-			"Pas une sauvegarde de paramètres Hearth — aucun marqueur \"hearthSettings\" ni disposition trouvé.",
+		notAZeroHearthLayout:
+			"Pas une disposition ZeroHearth — aucun tableau \"dashboards\" ou \"cards\" trouvé.",
+		notZeroHearthSettings:
+			"Pas une sauvegarde de paramètres ZeroHearth — aucun marqueur \"hearthSettings\" ni disposition trouvé.",
 	},
 
 	// ---- Cartes à plusieurs vues (#385, src/cardviews.ts) ------------------
@@ -5413,13 +5411,13 @@ export const fr: Translations = {
 		schemes: {
 			theme: "Thème Obsidian",
 			htop: "Htop",
-			hearth: "Hearth",
+			zerohearth: "ZeroHearth",
 			amber: "Ambre",
 			paper: "Papier",
 		},
 		quitTitle: "Quitter le mode Terminal ?",
 		quitMessage:
-			"Hearth revient à son design graphique. Le mode Terminal peut être réactivé dans Paramètres → Hearth → Apparence.",
+			"ZeroHearth revient à son design graphique. Le mode Terminal peut être réactivé dans Paramètres → ZeroHearth → Apparence.",
 		quitConfirm: "Quitter le mode Terminal",
 		fn: {
 			help: "Aide",
@@ -5517,7 +5515,7 @@ export const fr: Translations = {
 		settings: {
 			name: "Terminal",
 			experimental: "Expérimental",
-			desc: "Tout Hearth en texte : une grille de caractères, des cartes en cadres et des raccourcis pour tout, à la manière d'un outil de terminal. Assez léger pour n'importe quelle machine.",
+			desc: "Tout ZeroHearth en texte : une grille de caractères, des cartes en cadres et des raccourcis pour tout, à la manière d'un outil de terminal. Assez léger pour n'importe quelle machine.",
 			heading: "Mode Terminal",
 			headingDesc: "L'apparence de l'interface texte. Tous les tableaux y sont dessinés tant qu'il est actif.",
 			scheme: "Palette",

@@ -4,7 +4,7 @@
  *
  * Deliberately the same shape as the add-card picker (`src/cardpicker.ts`), and
  * for the same reason — a rail of categories beside a grid of tiles is how
- * Hearth already asks "which of these do you want", and a second layout for the
+ * ZeroHearth already asks "which of these do you want", and a second layout for the
  * same question would be a second thing to learn.
  *
  * Three things about how it fetches, all of them consequences of the server
@@ -21,8 +21,8 @@
 
 import { Notice, Platform } from "obsidian";
 import { setIcon } from "./glyphs";
-import { HearthModal } from "./uidesign";
-import type HearthPlugin from "./main";
+import { ZeroHearthModal } from "./uidesign";
+import type ZeroHearthPlugin from "./main";
 import { t } from "./i18n";
 import { activeDashboard } from "./types";
 import { leaveArrangeMode } from "./view";
@@ -47,8 +47,8 @@ import {
 type BrowseScope = "all" | "mine" | GalleryCategory;
 
 /** localStorage keys, so the gallery reopens where it was left. */
-const SCOPE_KEY = "hearth-gallery-scope";
-const SORT_KEY = "hearth-gallery-sort";
+const SCOPE_KEY = "zerohearth-gallery-scope";
+const SORT_KEY = "zerohearth-gallery-sort";
 
 /** Entries per request. Enough to fill the grid twice over on a desktop pane. */
 const PAGE_SIZE = 24;
@@ -63,7 +63,7 @@ const SEARCH_DEBOUNCE_MS = 350;
  * clearing the address is how somebody turns the gallery off, so "there is no
  * gallery" is a normal state with an answer, not an error.
  */
-export function openGallery(plugin: HearthPlugin): void {
+export function openGallery(plugin: ZeroHearthPlugin): void {
 	const client = galleryClient(plugin);
 	if (!client) {
 		new Notice(
@@ -77,8 +77,8 @@ export function openGallery(plugin: HearthPlugin): void {
 	new GalleryBrowseModal(plugin, client).open();
 }
 
-class GalleryBrowseModal extends HearthModal {
-	private plugin: HearthPlugin;
+class GalleryBrowseModal extends ZeroHearthModal {
+	private plugin: ZeroHearthPlugin;
 	private client: GalleryClient;
 
 	/** Named `browseScope`, not `scope`: `Modal` already has a `scope` (its
@@ -104,7 +104,7 @@ class GalleryBrowseModal extends HearthModal {
 	private resultsEl: HTMLElement | null = null;
 	private searchEl: HTMLInputElement | null = null;
 
-	constructor(plugin: HearthPlugin, client: GalleryClient) {
+	constructor(plugin: ZeroHearthPlugin, client: GalleryClient) {
 		super(plugin.app);
 		this.plugin = plugin;
 		this.client = client;
@@ -126,17 +126,17 @@ class GalleryBrowseModal extends HearthModal {
 
 		this.titleEl.setText(t().gallery.browse.title);
 		const { contentEl, modalEl } = this;
-		modalEl.addClass("hearth-gallery-modal");
+		modalEl.addClass("zerohearth-gallery-modal");
 		contentEl.empty();
-		contentEl.addClass("hearth-gallery");
+		contentEl.addClass("zerohearth-gallery");
 
 		this.renderTopBar(contentEl);
 		this.identityBar = contentEl.createDiv();
 		this.renderIdentityBar();
-		this.scopeBar = contentEl.createDiv("hearth-gallery-scopebar");
-		const body = contentEl.createDiv("hearth-gallery-body");
-		this.railEl = body.createDiv("hearth-gallery-rail");
-		this.resultsEl = body.createDiv("hearth-gallery-results");
+		this.scopeBar = contentEl.createDiv("zerohearth-gallery-scopebar");
+		const body = contentEl.createDiv("zerohearth-gallery-body");
+		this.railEl = body.createDiv("zerohearth-gallery-rail");
+		this.resultsEl = body.createDiv("zerohearth-gallery-results");
 		this.renderRail();
 		void this.load({ reset: true });
 
@@ -162,12 +162,12 @@ class GalleryBrowseModal extends HearthModal {
 
 	private renderTopBar(parent: HTMLElement): void {
 		const strings = t().gallery.browse;
-		const bar = parent.createDiv("hearth-gallery-topbar");
+		const bar = parent.createDiv("zerohearth-gallery-topbar");
 
-		const search = bar.createDiv("hearth-gallery-search");
-		setIcon(search.createSpan("hearth-gallery-search-icon"), "search");
+		const search = bar.createDiv("zerohearth-gallery-search");
+		setIcon(search.createSpan("zerohearth-gallery-search-icon"), "search");
 		const input = search.createEl("input", {
-			cls: "hearth-gallery-search-input",
+			cls: "zerohearth-gallery-search-input",
 			attr: {
 				type: "text",
 				placeholder: strings.searchPlaceholder,
@@ -193,7 +193,7 @@ class GalleryBrowseModal extends HearthModal {
 		});
 
 		const sort = bar.createEl("select", {
-			cls: "dropdown hearth-gallery-sort",
+			cls: "dropdown zerohearth-gallery-sort",
 			attr: { "aria-label": strings.sortLabel },
 		});
 		for (const key of GALLERY_SORTS) {
@@ -207,7 +207,7 @@ class GalleryBrowseModal extends HearthModal {
 		});
 
 		const refresh = bar.createEl("button", {
-			cls: "hearth-gallery-icon-btn",
+			cls: "zerohearth-gallery-icon-btn",
 			attr: { "aria-label": strings.refresh },
 		});
 		setIcon(refresh, "refresh-cw");
@@ -229,12 +229,12 @@ class GalleryBrowseModal extends HearthModal {
 		if (vaultIdentity(this.plugin)) {
 			// The class carries the border and the padding, so leaving it on an
 			// emptied bar leaves an empty framed strip above the results.
-			bar.removeClass("hearth-gallery-identity-bar");
+			bar.removeClass("zerohearth-gallery-identity-bar");
 			return;
 		}
 		const strings = t().gallery.browse;
-		bar.addClass("hearth-gallery-identity-bar");
-		bar.createDiv({ cls: "hearth-gallery-identity-text", text: strings.needsIdentity });
+		bar.addClass("zerohearth-gallery-identity-bar");
+		bar.createDiv({ cls: "zerohearth-gallery-identity-text", text: strings.needsIdentity });
 		const button = bar.createEl("button", {
 			cls: "mod-cta",
 			text: t().portable.exportModal.identityCreate,
@@ -286,14 +286,14 @@ class GalleryBrowseModal extends HearthModal {
 			if (scope !== "mine") this.railButton(rail, scope, label, icon);
 		}
 		// "Published by me" is the reader's own shelf, not a category.
-		rail.createDiv("hearth-gallery-rail-sep");
+		rail.createDiv("zerohearth-gallery-rail-sep");
 		const mine = scopes.find(({ scope }) => scope === "mine");
 		if (mine) this.railButton(rail, mine.scope, mine.label, mine.icon);
 
-		const publish = rail.createEl("button", { cls: "hearth-gallery-rail-publish" });
-		setIcon(publish.createSpan("hearth-gallery-rail-icon"), "upload");
+		const publish = rail.createEl("button", { cls: "zerohearth-gallery-rail-publish" });
+		setIcon(publish.createSpan("zerohearth-gallery-rail-icon"), "upload");
 		publish.createSpan({
-			cls: "hearth-gallery-rail-label",
+			cls: "zerohearth-gallery-rail-label",
 			text: t().gallery.browse.publish,
 		});
 		publish.addEventListener("click", () => this.publish());
@@ -313,7 +313,7 @@ class GalleryBrowseModal extends HearthModal {
 		bar.empty();
 		const strings = t().gallery.browse;
 		const select = bar.createEl("select", {
-			cls: "dropdown hearth-gallery-scope",
+			cls: "dropdown zerohearth-gallery-scope",
 			attr: { "aria-label": strings.scopeLabel },
 		});
 		for (const { scope, label } of scopes) {
@@ -325,7 +325,7 @@ class GalleryBrowseModal extends HearthModal {
 		});
 
 		const publish = bar.createEl("button", {
-			cls: "hearth-gallery-icon-btn",
+			cls: "zerohearth-gallery-icon-btn",
 			attr: { "aria-label": strings.publish },
 		});
 		setIcon(publish, "upload");
@@ -343,11 +343,11 @@ class GalleryBrowseModal extends HearthModal {
 		label: string,
 		icon: string,
 	): void {
-		const btn = rail.createEl("button", { cls: "hearth-gallery-rail-btn" });
+		const btn = rail.createEl("button", { cls: "zerohearth-gallery-rail-btn" });
 		btn.toggleClass("is-active", this.browseScope === scope);
 		btn.setAttribute("aria-pressed", String(this.browseScope === scope));
-		setIcon(btn.createSpan("hearth-gallery-rail-icon"), icon);
-		btn.createSpan({ cls: "hearth-gallery-rail-label", text: label });
+		setIcon(btn.createSpan("zerohearth-gallery-rail-icon"), icon);
+		btn.createSpan({ cls: "zerohearth-gallery-rail-label", text: label });
 		btn.addEventListener("click", () => this.setScope(scope));
 	}
 
@@ -416,7 +416,7 @@ class GalleryBrowseModal extends HearthModal {
 		if (this.error) {
 			renderEmpty(results, "cloud-off", this.error);
 			const retry = results.createEl("button", {
-				cls: "hearth-gallery-retry",
+				cls: "zerohearth-gallery-retry",
 				text: strings.refresh,
 			});
 			retry.addEventListener("click", () => void this.load({ reset: true }));
@@ -441,11 +441,11 @@ class GalleryBrowseModal extends HearthModal {
 		}
 
 		results.createDiv({
-			cls: "hearth-gallery-count",
+			cls: "zerohearth-gallery-count",
 			text: strings.results(this.entries.length, this.total),
 		});
 
-		const grid = results.createDiv("hearth-gallery-grid");
+		const grid = results.createDiv("zerohearth-gallery-grid");
 		for (const entry of this.entries) {
 			renderEntryCard(grid, entry, {
 				wallpaper: entry.hasWallpaper ? this.client.wallpaperUrl(entry.id, entry.updatedAt) : undefined,
@@ -457,7 +457,7 @@ class GalleryBrowseModal extends HearthModal {
 
 		if (this.entries.length < this.total) {
 			const more = results.createEl("button", {
-				cls: "hearth-gallery-more",
+				cls: "zerohearth-gallery-more",
 				text: this.loading ? strings.loading : strings.more,
 			});
 			more.disabled = this.loading;

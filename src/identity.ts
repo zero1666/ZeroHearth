@@ -5,11 +5,11 @@
  * a second export from the same person reads as the same person, and so a
  * gallery can group a maker's work. The obvious way to get that is to ask for a
  * name, and the obvious way is wrong twice over — a typed name is both a small
- * piece of personal data Hearth has no business collecting and a label anyone
+ * piece of personal data ZeroHearth has no business collecting and a label anyone
  * can type, so the first person to publish as somebody else's name is the last
  * one anybody trusts.
  *
- * So nothing is asked. Hearth mints one secret when identity is first needed —
+ * So nothing is asked. ZeroHearth mints one secret when identity is first needed —
  * the **recovery key**, which never leaves the vault — and everything else
  * follows from it:
  *
@@ -78,8 +78,7 @@ const ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
 const KEY_GROUPS = 4;
 const KEY_GROUP_LENGTH = 5;
 
-/** The prefix every recovery key carries, so one is recognisable on sight in a
- * password manager or a note. */
+/** The shared gallery protocol uses this prefix for existing recovery keys. */
 const KEY_PREFIX = "HEARTH";
 
 /**

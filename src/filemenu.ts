@@ -1,7 +1,7 @@
 import { Notice, TFile, TFolder, type App, type Menu, type OpenViewState, type TAbstractFile } from "obsidian";
 import { t } from "./i18n";
 import { promptForText } from "./ui";
-import { hearthMenu } from "./uidesign";
+import { zerohearthMenu } from "./uidesign";
 
 /**
  * The `source` the file explorer gives `file-menu` handlers. Core plugins
@@ -42,7 +42,7 @@ export function showFileMenu(
 	opts: FileMenuOptions,
 ): void {
 	const { app } = opts;
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	// Not public API; without it the sections fall in the order they were
 	// first used, which still groups them.
 	(menu as Menu & { addSections?: (sections: string[]) => Menu }).addSections?.(SECTIONS);

@@ -89,23 +89,23 @@ export const moment: MomentFn = createMoment as unknown as MomentFn;
 
 
 export function emptyState(body: HTMLElement, icon: string, text: string): void {
-	const empty = body.createDiv("hearth-card-empty");
-	setIcon(empty.createDiv("hearth-card-empty-icon"), icon);
-	empty.createDiv({ cls: "hearth-card-empty-text", text });
+	const empty = body.createDiv("zerohearth-card-empty");
+	setIcon(empty.createDiv("zerohearth-card-empty-icon"), icon);
+	empty.createDiv({ cls: "zerohearth-card-empty-text", text });
 }
 
 
 /** The floating overlay a card's action buttons live in. Named here because
  * two things need to agree on it: what {@link cardOverlayButton} creates, and
  * what {@link resetCardBody} clears away before the next draw. */
-const CARD_OVERLAY_CLASS = "hearth-card-actions-overlay";
+const CARD_OVERLAY_CLASS = "zerohearth-card-actions-overlay";
 
 /**
  * A small action button floated over the card — the "open this file" affordance
  * the daily, embed and slideshow cards each offer. It is attached to the card
  * *element* rather than the body, so it takes no part in the body's scroll or
  * flow, and falls back to the body when the card element can't be found (the
- * card settings preview has no `.hearth-card` ancestor).
+ * card settings preview has no `.zerohearth-card` ancestor).
  *
  * Because it sits outside the body, emptying the body doesn't remove it — the
  * redraw does, through {@link resetCardBody}.
@@ -116,10 +116,10 @@ export function cardOverlayButton(
 	label: string,
 	onClick: (evt: MouseEvent) => void,
 ): HTMLButtonElement {
-	const cardEl = body.closest(".hearth-card");
+	const cardEl = body.closest(".zerohearth-card");
 	const overlay = (cardEl ?? body).createDiv(CARD_OVERLAY_CLASS);
 	const button = overlay.createEl("button", {
-		cls: "hearth-open-btn",
+		cls: "zerohearth-open-btn",
 		attr: { "aria-label": label },
 	});
 	setIcon(button, icon);
@@ -137,11 +137,11 @@ export function cardOverlayButton(
  * event, or on the embed card's view switcher.
  *
  * - **Classes.** A render marks the body with what it drew (`is-embed-host`,
- *   `is-jot-host`, `hearth-card-body-image`, `hearth-card-body-live`,
- *   `hearth-slideshow-host` …) and several of those zero the body's padding.
+ *   `is-jot-host`, `zerohearth-card-body-image`, `zerohearth-card-body-live`,
+ *   `zerohearth-slideshow-host` …) and several of those zero the body's padding.
  *   `empty()` takes away children, not classes, so the marks accumulated: an
  *   embed card switched from its picture view to a note kept
- *   `hearth-card-body-image` and drew the note flush against the card's edges.
+ *   `zerohearth-card-body-image` and drew the note flush against the card's edges.
  *   Restoring the mount-time list (the body's own class, plus `has-bg`) rather
  *   than naming the render-added ones means a kind can mark the body however it
  *   likes without this having to know.
@@ -155,10 +155,10 @@ export function cardOverlayButton(
 export function resetCardBody(body: HTMLElement, baseClasses: string): void {
 	body.empty();
 	if (body.className !== baseClasses) body.className = baseClasses;
-	const cardEl = body.closest(".hearth-card");
+	const cardEl = body.closest(".zerohearth-card");
 	if (!cardEl) return;
 	// Direct children only, and read into an array first: a "leaf" card hosts
-	// another plugin's view, whose contents are none of Hearth's business, and
+	// another plugin's view, whose contents are none of ZeroHearth's business, and
 	// removing while iterating a live HTMLCollection skips elements.
 	for (const child of Array.from(cardEl.children)) {
 		if (child.classList.contains(CARD_OVERLAY_CLASS)) child.remove();
@@ -255,7 +255,7 @@ export function wireMarkdownLinks(
 			const anchor = (evt.target as HTMLElement | null)?.closest("a");
 			if (!(anchor instanceof HTMLAnchorElement) || !host.contains(anchor)) return;
 
-			/** Take the click for Hearth: never the browser's default, and — in
+			/** Take the click for ZeroHearth: never the browser's default, and — in
 			 * capture mode — never the anchor's own handler either. */
 			const claim = () => {
 				evt.preventDefault();
@@ -283,7 +283,7 @@ export function wireMarkdownLinks(
 			// Not gated on the `internal-link` class: an embedded Bases view (and
 			// other plugin-rendered content) draws note links without it, and those
 			// clicks would otherwise fall through to Obsidian's own handler, which
-			// always takes over the tab the click came from — the Hearth tab (#106).
+			// always takes over the tab the click came from — the ZeroHearth tab (#106).
 			const linktext = internalLinkText(
 				anchor.getAttribute("data-href"),
 				anchor.getAttribute("href"),
@@ -455,14 +455,14 @@ export function renderLivePreviewEmbed(
 	body: HTMLElement,
 	component: Component,
 ): boolean {
-	// `hearth-leaf-host` carries the transparency rules that let a hosted view
-	// show the card's own translucent surface; `hearth-leaf-hide-header` drops the
+	// `zerohearth-leaf-host` carries the transparency rules that let a hosted view
+	// show the card's own translucent surface; `zerohearth-leaf-hide-header` drops the
 	// breadcrumb/kebab bar, which is pure noise on a single-file card.
-	const host = body.createDiv("hearth-leaf-host hearth-leaf-hide-header hearth-jot-live");
-	body.addClass("hearth-card-body-live");
+	const host = body.createDiv("zerohearth-leaf-host zerohearth-leaf-hide-header zerohearth-jot-live");
+	body.addClass("zerohearth-card-body-live");
 	if (mountMarkdownEditor(view.app, file, host, component)) return true;
 	host.remove();
-	body.removeClass("hearth-card-body-live");
+	body.removeClass("zerohearth-card-body-live");
 	return false;
 }
 
@@ -481,16 +481,16 @@ export function renderEditableEmbed(
 	body: HTMLElement,
 	component: Component,
 ): void {
-	const wrap = body.createDiv("hearth-jot");
+	const wrap = body.createDiv("zerohearth-jot");
 	body.addClass("is-jot-host");
-	const preview = wrap.createDiv("hearth-embed markdown-rendered hearth-jot-preview");
+	const preview = wrap.createDiv("zerohearth-embed markdown-rendered zerohearth-jot-preview");
 	preview.setAttribute("title", t().cards.embed.editHint);
 	wireMarkdownLinks(view, preview, file.path);
 	// Registered before the dblclick-to-edit handler below, so ticking two boxes
 	// in quick succession doesn't drop the card into the raw editor.
 	wireMarkdownCheckboxes(preview, processFile(view, file));
 	const area = wrap.createEl("textarea", {
-		cls: "hearth-text hearth-embed-edit hearth-jot-edit",
+		cls: "zerohearth-text zerohearth-embed-edit zerohearth-jot-edit",
 		attr: { placeholder: t().cards.embed.emptyNotePlaceholder },
 	});
 	area.hide();
@@ -826,25 +826,25 @@ export function createTileGrid(
 	body: HTMLElement,
 ): { grid: HTMLElement; spec: TileSpec } {
 	const spec = tileSpec(card);
-	const grid = body.createDiv("hearth-links hearth-tiles-sized");
+	const grid = body.createDiv("zerohearth-links zerohearth-tiles-sized");
 	if (spec.sizing === "scale") {
 		grid.addClass("is-tile-scaled");
-		grid.style.setProperty("--hearth-tile-cols", String(spec.cols));
+		grid.style.setProperty("--zerohearth-tile-cols", String(spec.cols));
 		// The grid itself is drawn at half-cell resolution, so a button can be
 		// half a cell wide or tall (see TILE_SUBDIV): its tracks are the card's
 		// columns split in two, and a whole-cell button spans two of them.
-		grid.style.setProperty("--hearth-tile-tracks", String(gridTracks(spec)));
-		grid.style.setProperty("--hearth-tile-min", `${spec.min}px`);
+		grid.style.setProperty("--zerohearth-tile-tracks", String(gridTracks(spec)));
+		grid.style.setProperty("--zerohearth-tile-min", `${spec.min}px`);
 		// The cell size is a fraction of the body's width, which CSS can only
 		// read from a container — so the body becomes one. (Set here rather than
 		// in the stylesheet so no other card pays for the containment.)
-		body.addClass("hearth-tiles-scaled");
+		body.addClass("zerohearth-tiles-scaled");
 	} else {
-		grid.style.setProperty("--hearth-tile", `${spec.baseTile}px`);
+		grid.style.setProperty("--zerohearth-tile", `${spec.baseTile}px`);
 	}
 	// Flag the card body so CSS can disable the card drag overlay over tiles in
 	// arrange mode (tiles are self-contained widgets with their own resize).
-	if (view.arrangeMode) body.addClass("hearth-tiles-arrange");
+	if (view.arrangeMode) body.addClass("zerohearth-tiles-arrange");
 	return { grid, spec };
 }
 
@@ -855,16 +855,16 @@ export function createTileGrid(
  * being governed by the tallest tile. */
 export function applyTileSize(tile: HTMLElement, item: TileGeometry, spec: TileSpec): void {
 	const spans = tileSpans(item, spec);
-	tile.style.setProperty("--hearth-tile-cs", String(spans.cs));
-	tile.style.setProperty("--hearth-tile-rs", String(spans.rs));
+	tile.style.setProperty("--zerohearth-tile-cs", String(spans.cs));
+	tile.style.setProperty("--zerohearth-tile-rs", String(spans.rs));
 	applyTileIconOnly(tile, spans, spec);
 	// Free-form position: pin to a grid line (1-based). When either is missing
 	// the tile auto-flows into the next available cell.
 	const { col, row } = tilePlacement(item, spans, spec);
-	if (col != null) tile.style.setProperty("--hearth-tile-col", String(col));
-	else tile.style.removeProperty("--hearth-tile-col");
-	if (row != null) tile.style.setProperty("--hearth-tile-row", String(row));
-	else tile.style.removeProperty("--hearth-tile-row");
+	if (col != null) tile.style.setProperty("--zerohearth-tile-col", String(col));
+	else tile.style.removeProperty("--zerohearth-tile-col");
+	if (row != null) tile.style.setProperty("--zerohearth-tile-row", String(row));
+	else tile.style.removeProperty("--zerohearth-tile-row");
 }
 
 
@@ -895,7 +895,7 @@ export function makeTileResizable(
 	item: TileGeometry,
 	spec: TileSpec,
 ): void {
-	const handle = tile.createDiv("hearth-tile-resize");
+	const handle = tile.createDiv("zerohearth-tile-resize");
 	handle.setAttribute("aria-hidden", "true");
 
 	const stop = (e: PointerEvent) => {
@@ -923,7 +923,7 @@ export function makeTileResizable(
 		startY = e.clientY;
 		handle.setPointerCapture(e.pointerId);
 		tile.addClass("is-tile-resizing");
-		tile.closest(".hearth-card")?.addClass("has-tile-gesture");
+		tile.closest(".zerohearth-card")?.addClass("has-tile-gesture");
 	});
 
 	handle.addEventListener("pointermove", (e) => {
@@ -939,8 +939,8 @@ export function makeTileResizable(
 		);
 		// Convert the live size to grid spans so the tile grows in the steps its
 		// style allows — small and precise, or half a cell at a time.
-		tile.style.setProperty("--hearth-tile-cs", String(spans.cs));
-		tile.style.setProperty("--hearth-tile-rs", String(spans.rs));
+		tile.style.setProperty("--zerohearth-tile-cs", String(spans.cs));
+		tile.style.setProperty("--zerohearth-tile-rs", String(spans.rs));
 		applyTileIconOnly(tile, spans, spec);
 	});
 
@@ -953,7 +953,7 @@ export function makeTileResizable(
 			// pointer already released
 		}
 		tile.removeClass("is-tile-resizing");
-		tile.closest(".hearth-card")?.removeClass("has-tile-gesture");
+		tile.closest(".zerohearth-card")?.removeClass("has-tile-gesture");
 		void view.plugin.saveData(view.plugin.settings);
 	};
 	handle.addEventListener("pointerup", end);
@@ -963,7 +963,7 @@ export function makeTileResizable(
 
 /** The metrics of the grid a tile sits in, measured from the DOM. */
 function gridMetrics(tile: HTMLElement, spec: TileSpec): TileMetrics {
-	const grid = tile.closest<HTMLElement>(".hearth-links");
+	const grid = tile.closest<HTMLElement>(".zerohearth-links");
 	if (!grid) return tileMetrics(0, spec);
 	return measureGrid(grid, spec);
 }
@@ -1065,7 +1065,7 @@ function onTileGrab(view: CardHost, tile: HTMLElement, grab: (e: PointerEvent) =
 	};
 
 	tile.addEventListener("pointerdown", (e) => {
-		if ((e.target as HTMLElement).closest(".hearth-tile-resize")) return;
+		if ((e.target as HTMLElement).closest(".zerohearth-tile-resize")) return;
 		e.stopPropagation();
 		release();
 		pointerId = e.pointerId;
@@ -1154,13 +1154,13 @@ function makeTileFreeFormDrag<T extends TileGeometry & { id: string }>(
 		if (!moved) {
 			moved = true;
 			tile.addClass("is-tile-dragging");
-			tile.closest(".hearth-card")?.addClass("has-tile-gesture");
+			tile.closest(".zerohearth-card")?.addClass("has-tile-gesture");
 			// Insert a dashed ghost outline that will follow the pointer.
-			ghost = container.createDiv("hearth-tile-ghost");
-			const cs = tile.style.getPropertyValue("--hearth-tile-cs") || "1";
-			const rs = tile.style.getPropertyValue("--hearth-tile-rs") || "1";
-			ghost.style.setProperty("--hearth-tile-cs", cs);
-			ghost.style.setProperty("--hearth-tile-rs", rs);
+			ghost = container.createDiv("zerohearth-tile-ghost");
+			const cs = tile.style.getPropertyValue("--zerohearth-tile-cs") || "1";
+			const rs = tile.style.getPropertyValue("--zerohearth-tile-rs") || "1";
+			ghost.style.setProperty("--zerohearth-tile-cs", cs);
+			ghost.style.setProperty("--zerohearth-tile-rs", rs);
 		}
 		// Float the tile by the pointer delta — no position/size changes, so
 		// there's no offset or jump. The grid slot stays reserved.
@@ -1169,8 +1169,8 @@ function makeTileFreeFormDrag<T extends TileGeometry & { id: string }>(
 		if (ghost) {
 			const cell = pickGridCell(container, e.clientX, e.clientY, tile, spec);
 			if (cell) {
-				ghost.style.setProperty("--hearth-tile-col", String(cell.col));
-				ghost.style.setProperty("--hearth-tile-row", String(cell.row));
+				ghost.style.setProperty("--zerohearth-tile-col", String(cell.col));
+				ghost.style.setProperty("--zerohearth-tile-row", String(cell.row));
 			}
 		}
 		// Live-flag tiles the dragged tile is covering so overlaps are visible
@@ -1189,7 +1189,7 @@ function makeTileFreeFormDrag<T extends TileGeometry & { id: string }>(
 			ghost.remove();
 			ghost = null;
 		}
-		tile.closest(".hearth-card")?.removeClass("has-tile-gesture");
+		tile.closest(".zerohearth-card")?.removeClass("has-tile-gesture");
 		try {
 			tile.releasePointerCapture(e.pointerId);
 		} catch {
@@ -1262,7 +1262,7 @@ function makeTileAutoFlowDrag<T extends TileGeometry & { id: string }>(
 		if (!moved) {
 			moved = true;
 			tile.addClass("is-tile-dragging");
-			tile.closest(".hearth-card")?.addClass("has-tile-gesture");
+			tile.closest(".zerohearth-card")?.addClass("has-tile-gesture");
 			// Measure the tile's position relative to the container BEFORE
 			// removing it from flow, so we can place it absolutely at the
 			// same spot (then move by the pointer delta — no jump).
@@ -1277,24 +1277,24 @@ function makeTileAutoFlowDrag<T extends TileGeometry & { id: string }>(
 				col: pinned.col ?? 1,
 				row: pinned.row ?? 1,
 			};
-			placeholder = container.createDiv("hearth-tile-placeholder");
-			const cs = tile.style.getPropertyValue("--hearth-tile-cs") || "1";
-			const rs = tile.style.getPropertyValue("--hearth-tile-rs") || "1";
-			placeholder.style.setProperty("--hearth-tile-cs", cs);
-			placeholder.style.setProperty("--hearth-tile-rs", rs);
-			placeholder.style.setProperty("--hearth-tile-col", String(placeholderPos.col));
-			placeholder.style.setProperty("--hearth-tile-row", String(placeholderPos.row));
+			placeholder = container.createDiv("zerohearth-tile-placeholder");
+			const cs = tile.style.getPropertyValue("--zerohearth-tile-cs") || "1";
+			const rs = tile.style.getPropertyValue("--zerohearth-tile-rs") || "1";
+			placeholder.style.setProperty("--zerohearth-tile-cs", cs);
+			placeholder.style.setProperty("--zerohearth-tile-rs", rs);
+			placeholder.style.setProperty("--zerohearth-tile-col", String(placeholderPos.col));
+			placeholder.style.setProperty("--zerohearth-tile-row", String(placeholderPos.row));
 			// Freeze every sibling tile to its current cell so a swap with the
 			// placeholder moves exactly one tile.
 			const siblings = Array.from(
-				container.querySelectorAll<HTMLElement>(".hearth-link-tile"),
+				container.querySelectorAll<HTMLElement>(".zerohearth-link-tile"),
 			);
 			for (const sib of siblings) {
 				if (sib === tile) continue;
 				const cell = getTileCell(sib, container, spec);
 				if (cell) {
-					sib.style.setProperty("--hearth-tile-col", String(cell.col));
-					sib.style.setProperty("--hearth-tile-row", String(cell.row));
+					sib.style.setProperty("--zerohearth-tile-col", String(cell.col));
+					sib.style.setProperty("--zerohearth-tile-row", String(cell.row));
 				}
 			}
 			// Take the tile out of flow and immediately pin it to its current
@@ -1320,17 +1320,17 @@ function makeTileAutoFlowDrag<T extends TileGeometry & { id: string }>(
 		if (other) {
 			const otherPos = getTileCell(other, container, spec);
 			if (otherPos) {
-				other.style.setProperty("--hearth-tile-col", String(placeholderPos.col));
-				other.style.setProperty("--hearth-tile-row", String(placeholderPos.row));
-				placeholder.style.setProperty("--hearth-tile-col", String(otherPos.col));
-				placeholder.style.setProperty("--hearth-tile-row", String(otherPos.row));
+				other.style.setProperty("--zerohearth-tile-col", String(placeholderPos.col));
+				other.style.setProperty("--zerohearth-tile-row", String(placeholderPos.row));
+				placeholder.style.setProperty("--zerohearth-tile-col", String(otherPos.col));
+				placeholder.style.setProperty("--zerohearth-tile-row", String(otherPos.row));
 				placeholderPos = otherPos;
 			}
 		} else {
 			const cell = pickGridCell(container, e.clientX, e.clientY, tile, spec);
 			if (cell) {
-				placeholder.style.setProperty("--hearth-tile-col", String(cell.col));
-				placeholder.style.setProperty("--hearth-tile-row", String(cell.row));
+				placeholder.style.setProperty("--zerohearth-tile-col", String(cell.col));
+				placeholder.style.setProperty("--zerohearth-tile-row", String(cell.row));
 				placeholderPos = cell;
 			}
 		}
@@ -1343,19 +1343,19 @@ function makeTileAutoFlowDrag<T extends TileGeometry & { id: string }>(
 		moved = false;
 		tile.removeClass("is-tile-dragging");
 		tile.setCssStyles({});
-		tile.closest(".hearth-card")?.removeClass("has-tile-gesture");
+		tile.closest(".zerohearth-card")?.removeClass("has-tile-gesture");
 		const dropPos = placeholderPos;
 		if (placeholder) {
 			placeholder.remove();
 			placeholder = null;
 		}
 		const siblings = Array.from(
-			container.querySelectorAll<HTMLElement>(".hearth-link-tile"),
+			container.querySelectorAll<HTMLElement>(".zerohearth-link-tile"),
 		);
 		for (const sib of siblings) {
 			if (sib === tile) continue;
-			sib.style.removeProperty("--hearth-tile-col");
-			sib.style.removeProperty("--hearth-tile-row");
+			sib.style.removeProperty("--zerohearth-tile-col");
+			sib.style.removeProperty("--zerohearth-tile-row");
 		}
 		try {
 			tile.releasePointerCapture(e.pointerId);
@@ -1383,7 +1383,7 @@ function makeTileAutoFlowDrag<T extends TileGeometry & { id: string }>(
  *  actively-dragged tile is skipped (it's on top, so it can't be "obscured"),
  *  but a tile it covers IS flagged. Only runs in arrange mode. */
 export function markOverlappingTiles(container: HTMLElement): void {
-	const tiles = Array.from(container.querySelectorAll<HTMLElement>(".hearth-link-tile"));
+	const tiles = Array.from(container.querySelectorAll<HTMLElement>(".zerohearth-link-tile"));
 	for (const t of tiles) t.removeClass("is-obscured");
 	const rects = tiles.map((t) => ({
 		t,
@@ -1413,7 +1413,7 @@ export function markOverlappingTiles(container: HTMLElement): void {
 
 
 /** Read a tile's current grid cell from the DOM. Prefers the inline
- *  `--hearth-tile-col/row` (set for pinned tiles), falling back to the tile's
+ *  `--zerohearth-tile-col/row` (set for pinned tiles), falling back to the tile's
  *  rendered position mapped onto the grid's metrics. Returns null when the
  *  metrics can't be measured reliably. */
 function getTileCell(
@@ -1421,8 +1421,8 @@ function getTileCell(
 	container: HTMLElement,
 	spec: TileSpec,
 ): { col: number; row: number } | null {
-	const colAttr = tile.style.getPropertyValue("--hearth-tile-col");
-	const rowAttr = tile.style.getPropertyValue("--hearth-tile-row");
+	const colAttr = tile.style.getPropertyValue("--zerohearth-tile-col");
+	const rowAttr = tile.style.getPropertyValue("--zerohearth-tile-row");
 	if (colAttr && rowAttr) {
 		const col = parseInt(colAttr, 10);
 		const row = parseInt(rowAttr, 10);
@@ -1440,7 +1440,7 @@ function getTileCell(
 }
 
 
-/** Find the `.hearth-link-tile` under a pointer, excluding the dragged tile
+/** Find the `.zerohearth-link-tile` under a pointer, excluding the dragged tile
  *  (and anything inside it, like its resize handle). The dragged tile has
  *  pointer-events: none while dragging, so elementFromPoint already skips it,
  *  but we also guard against its descendants in case a child overrides. */
@@ -1453,14 +1453,14 @@ function findTileUnderPointer(
 	const el = activeDocument.elementFromPoint(clientX, clientY) as HTMLElement | null;
 	if (!el) return null;
 	if (except.contains(el)) return null;
-	const tile = el.closest<HTMLElement>(".hearth-link-tile");
+	const tile = el.closest<HTMLElement>(".zerohearth-link-tile");
 	if (!tile || tile === except || !container.contains(tile)) return null;
 	return tile;
 }
 
 
 /** Work out the (col, row) grid cell under a pointer, relative to the card's
- *  tile grid. `container` is the `.hearth-links` grid element. Returns null
+ *  tile grid. `container` is the `.zerohearth-links` grid element. Returns null
  *  when the metrics can't be measured reliably. Clamps to the grid's bounds
  *  so a tile dropped near the edge lands on the last valid cell, not off-board.
  *  `tile` is the dragged element (its span is used so the drop keeps the tile
@@ -1479,7 +1479,7 @@ function pickGridCell(
 	// the scaled style's are the card's own and its rows share the card's height.
 	const { columns, colW, rowH } = measureGrid(container, spec);
 	// The dragged tile's column span, so we keep its start within bounds.
-	const cs = parseInt(tile.style.getPropertyValue("--hearth-tile-cs"), 10) || 1;
+	const cs = parseInt(tile.style.getPropertyValue("--zerohearth-tile-cs"), 10) || 1;
 	// Pointer relative to the grid's content box, in cells (1-based lines).
 	const relX = clientX - rect.left;
 	const relY = clientY - rect.top;

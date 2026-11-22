@@ -1,6 +1,6 @@
 import { App, Modal, Setting } from "obsidian";
 import { t } from "./i18n";
-import { applyModalDesign, HearthModal } from "./uidesign";
+import { applyModalDesign, ZeroHearthModal } from "./uidesign";
 
 /**
  * Write `text` into `el` with the character ranges in `matches` wrapped in
@@ -21,7 +21,7 @@ export function renderHighlighted(
 	for (const [start, end] of matches) {
 		if (start >= text.length) break;
 		if (start > cursor) el.appendText(text.slice(cursor, start));
-		el.createEl("mark", { cls: "hearth-result-mark", text: text.slice(start, end) });
+		el.createEl("mark", { cls: "zerohearth-result-mark", text: text.slice(start, end) });
 		cursor = Math.min(end, text.length);
 	}
 	if (cursor < text.length) el.appendText(text.slice(cursor));
@@ -45,7 +45,7 @@ export function makeClickable(el: HTMLElement, onActivate: () => void, label?: s
 }
 
 /** A minimal yes/no confirmation dialog used before destructive actions. */
-export class ConfirmModal extends HearthModal {
+export class ConfirmModal extends ZeroHearthModal {
 	private message: string;
 	private confirmText: string;
 	private onConfirm: () => void;
@@ -116,7 +116,7 @@ export function confirmAction(app: App, opts: ConfirmOptions): void {
 /**
  * Put a dialog in the design of the card it was opened from, so a task, an
  * event or a folder opens looking like the card it came from — overriding the
- * design a Hearth dialog otherwise takes from wherever it was opened (see
+ * design a ZeroHearth dialog otherwise takes from wherever it was opened (see
  * src/uidesign.ts). styles.css keys everything off the one class on `modalEl`
  * (which the Modal constructor has already built). Returns the modal, to chain
  * `open()`.
@@ -130,7 +130,7 @@ export function dressModal<M extends Modal>(modal: M, expressive: boolean): M {
  * opened from something the card drew, where the element is the one thing at
  * hand that knows. */
 export function inExpressiveCard(el: Element | null | undefined): boolean {
-	return el?.closest(".hearth-card.is-expressive") != null;
+	return el?.closest(".zerohearth-card.is-expressive") != null;
 }
 
 /**
@@ -141,7 +141,7 @@ export function inExpressiveCard(el: Element | null | undefined): boolean {
  * the typed text, or `null` when the user cancelled, so "" (an empty answer the
  * user did confirm) stays distinguishable from "never mind".
  */
-export class PromptModal extends HearthModal {
+export class PromptModal extends ZeroHearthModal {
 	private label: string;
 	private initial: string;
 	private placeholder: string;
@@ -193,7 +193,7 @@ export class PromptModal extends HearthModal {
 				txt.inputEl.select();
 			}, 0);
 		});
-		field.settingEl.addClass("hearth-prompt-field");
+		field.settingEl.addClass("zerohearth-prompt-field");
 
 		new Setting(this.contentEl)
 			.addButton((b) => b.setButtonText(t().confirm.cancel).onClick(() => this.close()))

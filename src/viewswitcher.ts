@@ -4,7 +4,7 @@ import { setIcon } from "./glyphs";
 import { cardDefinition } from "./cards";
 import { activeViewIndex, cardViews, resolveViewSwitcher, type ResolvedViewSwitcher } from "./cardviews";
 import { t } from "./i18n";
-import { hearthMenu } from "./uidesign";
+import { zerohearthMenu } from "./uidesign";
 import { showMenuFor } from "./filemenu";
 import type { DashboardCard } from "./types";
 
@@ -93,8 +93,8 @@ export function mountViewSwitcher(host: ViewSwitcherHost): ViewSwitcherHandle | 
 
 	const el =
 		settings.placement === "header"
-			? head.createDiv("hearth-view-switch is-header")
-			: cardEl.createDiv(`hearth-view-switch is-floating is-${settings.placement}`);
+			? head.createDiv("zerohearth-view-switch is-header")
+			: cardEl.createDiv(`zerohearth-view-switch is-floating is-${settings.placement}`);
 	el.addClass(`is-style-${settings.style}`);
 	el.toggleClass("is-reveal-hover", settings.reveal === "hover");
 	// Nothing on the switcher may start a card drag, or reach the card's own
@@ -114,7 +114,7 @@ export function mountViewSwitcher(host: ViewSwitcherHost): ViewSwitcherHandle | 
 		views.forEach((v, index) => {
 			const id = viewIdentity(view, v);
 			const btn = el.createEl("button", {
-				cls: "hearth-view-switch-btn",
+				cls: "zerohearth-view-switch-btn",
 				attr: {
 					type: "button",
 					role: "tab",
@@ -129,8 +129,8 @@ export function mountViewSwitcher(host: ViewSwitcherHost): ViewSwitcherHandle | 
 			if (settings.style === "dots") {
 				btn.addClass("is-dot");
 			} else {
-				if (label !== "label") setIcon(btn.createSpan("hearth-view-switch-icon"), id.icon);
-				if (label !== "icon") btn.createSpan({ cls: "hearth-view-switch-label", text: id.label });
+				if (label !== "label") setIcon(btn.createSpan("zerohearth-view-switch-icon"), id.icon);
+				if (label !== "icon") btn.createSpan({ cls: "zerohearth-view-switch-label", text: id.label });
 			}
 			btn.addEventListener("click", () => {
 				if (index !== activeViewIndex(card)) host.select(index);
@@ -138,12 +138,12 @@ export function mountViewSwitcher(host: ViewSwitcherHost): ViewSwitcherHandle | 
 		});
 		// Keep the tab on show in sight when the row is wider than the card.
 		// The row scrolls sideways and only sideways (`overflow-x: auto` on
-		// `.hearth-view-switch`), so the row itself is moved. Asking the
+		// `.zerohearth-view-switch`), so the row itself is moved. Asking the
 		// browser instead (`scrollIntoView`) scrolls every scrollable parent
 		// in both axes, so a card below the fold pulled the board down to
 		// itself — and a board at the top has no restore running to undo that,
 		// so the jump was saved as the user's own position (#440).
-		const shown = el.querySelector<HTMLElement>(".hearth-view-switch-btn.is-active");
+		const shown = el.querySelector<HTMLElement>(".zerohearth-view-switch-btn.is-active");
 		if (shown) {
 			const left = revealScrollLeft(
 				el.scrollLeft,
@@ -163,7 +163,7 @@ export function mountViewSwitcher(host: ViewSwitcherHost): ViewSwitcherHandle | 
 		const count = views.length;
 		const next = (activeViewIndex(card) + (e.key === "ArrowRight" ? 1 : -1) + count) % count;
 		host.select(next);
-		el.querySelector<HTMLElement>(".hearth-view-switch-btn.is-active")?.focus();
+		el.querySelector<HTMLElement>(".zerohearth-view-switch-btn.is-active")?.focus();
 	});
 
 	draw();
@@ -177,15 +177,15 @@ function drawDropdown(el: HTMLElement, host: ViewSwitcherHost, active: number): 
 	const views = cardViews(host.card);
 	const current = viewIdentity(host.view, views[active]);
 	const btn = el.createEl("button", {
-		cls: "hearth-view-switch-btn is-active is-dropdown",
+		cls: "zerohearth-view-switch-btn is-active is-dropdown",
 		attr: { type: "button", "aria-haspopup": "menu", "aria-label": t().views.chooseView },
 	});
 	btn.setAttribute("title", current.label);
-	setIcon(btn.createSpan("hearth-view-switch-icon"), current.icon);
-	btn.createSpan({ cls: "hearth-view-switch-label", text: current.label });
-	setIcon(btn.createSpan("hearth-view-switch-chevron"), "chevron-down");
+	setIcon(btn.createSpan("zerohearth-view-switch-icon"), current.icon);
+	btn.createSpan({ cls: "zerohearth-view-switch-label", text: current.label });
+	setIcon(btn.createSpan("zerohearth-view-switch-chevron"), "chevron-down");
 	btn.addEventListener("click", (evt) => {
-		const menu = hearthMenu();
+		const menu = zerohearthMenu();
 		views.forEach((v, index) => {
 			const id = viewIdentity(host.view, v);
 			menu.addItem((item) =>

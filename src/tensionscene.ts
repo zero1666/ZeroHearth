@@ -16,7 +16,7 @@
  * The scene is built as plain data (a tree of {@link SceneNode}s) with no DOM
  * and no Obsidian import, so it can be unit-tested and rendered outside the app;
  * {@link mountScene} turns it into SVG. Colours live in styles.css
- * (`.hearth-tension-scene.is-<band>`), keyed by the `ts-*` classes here, the
+ * (`.zerohearth-tension-scene.is-<band>`), keyed by the `ts-*` classes here, the
  * same way the weather card's painted sky keeps its palettes in CSS.
  *
  * Two designs share the geometry: "classic" paints gradients, glows and soft
@@ -571,7 +571,7 @@ export function buildScene(opts: SceneOptions): SceneNode {
 
 	return el(
 		"svg",
-		["hearth-tension-art"],
+		["zerohearth-tension-art"],
 		{
 			viewBox: `0 0 ${SCENE_W} ${SCENE_H}`,
 			// Keep the ground on the card's bottom edge and crop the sky or the

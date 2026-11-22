@@ -1,5 +1,5 @@
 /**
- * What terminal mode remembers about one Hearth tab between renders.
+ * What terminal mode remembers about one ZeroHearth tab between renders.
  *
  * A board is rebuilt from scratch on every settings save, and a card body on
  * every vault change, so anything the user did to a card that isn't a setting

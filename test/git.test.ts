@@ -66,7 +66,7 @@ describe("gitChangeKind", () => {
 	});
 
 	it("reads obsidian-git's 'U' as untracked", () => {
-		// Both backends rewrite git's "?" to "U" before Hearth ever sees it.
+		// Both backends rewrite git's "?" to "U" before ZeroHearth ever sees it.
 		expect(gitChangeKind(file("new.md", "U", "U"), new Set())).toBe("untracked");
 	});
 
@@ -259,7 +259,7 @@ describe("section and action normalization", () => {
 	});
 
 	it("drops ids this build doesn't know", () => {
-		// A layout exported by a newer Hearth, or hand-edited.
+		// A layout exported by a newer ZeroHearth, or hand-edited.
 		expect(gitActions(["push", "teleport"])).toEqual(["push"]);
 		expect(gitSections(["changes", "graph"])).toEqual(["changes"]);
 	});

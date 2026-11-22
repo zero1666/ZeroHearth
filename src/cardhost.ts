@@ -1,5 +1,5 @@
 import type { App } from "obsidian";
-import type HearthPlugin from "./main";
+import type ZeroHearthPlugin from "./main";
 
 /**
  * What a card is allowed to ask of the thing drawing it (#491).
@@ -12,7 +12,7 @@ import type HearthPlugin from "./main";
  */
 export interface CardHost {
 	readonly app: App;
-	readonly plugin: HearthPlugin;
+	readonly plugin: ZeroHearthPlugin;
 	/** The element this host draws into, and its container — what the search
 	 * section inside a search-bar card positions itself against. */
 	readonly contentEl: HTMLElement;

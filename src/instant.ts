@@ -17,7 +17,7 @@
  * | `today + 45 days`, `vendredi prochain` | the date                              |
  * | `=…`                                   | forces the calculator                 |
  *
- * Phrases are understood in the languages Hearth has a translation for —
+ * Phrases are understood in the languages ZeroHearth has a translation for —
  * English, German, French and Chinese.
  *
  * This file only decides which of those a query is. It is pure — no DOM, no
@@ -93,7 +93,7 @@ export const CALC_PREFIX = "=";
 const CURRENCIES = new Set(CURRENCY_CODES);
 
 /** Places whose zone isn't named after them, or is named in another of the
- * languages Hearth speaks (English, German, French, Chinese). Keys are
+ * languages ZeroHearth speaks (English, German, French, Chinese). Keys are
  * folded (see fold below): lower case, no accents. */
 const ZONE_ALIASES: Record<string, string> = {
 	utc: "UTC",

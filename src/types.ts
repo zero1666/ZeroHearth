@@ -179,7 +179,7 @@ export interface TemplaterConfig {
 	items?: TemplaterItem[];
 }
 
-/** The Tasks-plugin metadata Hearth's Kanban editor reads and writes on a card.
+/** The Tasks-plugin metadata ZeroHearth's Kanban editor reads and writes on a card.
  * Dates are YYYY-MM-DD or ""; `priority` is a key ("highest".."lowest") or "";
  * `recurrence` is the raw text written after 🔁 (e.g. "every week") or "". */
 export interface TaskMeta {
@@ -273,7 +273,7 @@ export interface TaskValueMap {
 }
 
 /** One source a field reads. `source` is either `fm:<property>` for a
- * frontmatter property or `builtin:<id>` for something Hearth parses itself
+ * frontmatter property or `builtin:<id>` for something ZeroHearth parses itself
  * (see `TASK_BUILTIN_SOURCES`). Every key with a value renders. */
 export interface TaskFieldKey {
 	source: string;
@@ -286,7 +286,7 @@ export interface TaskFieldKey {
 	/** Treat this key's value as a date: show it as a relative label
 	 * ("Tomorrow"), colour it by its relation to today, and edit it with a
 	 * calendar rather than a list. Implied for the built-in date sources; a
-	 * frontmatter property has to say so, since Hearth can't know a property
+	 * frontmatter property has to say so, since ZeroHearth can't know a property
 	 * holds a date rather than text that looks like one. */
 	isDate?: boolean;
 }
@@ -350,17 +350,17 @@ export interface TasksConfig {
 	/** "checkbox" (default) scans plain Markdown `- [ ]` checkboxes anywhere
 	 * in scope. "tasknotes" reads frontmatter from the TaskNotes community
 	 * plugin's task notes instead, using the field-name mapping configured in
-	 * Settings → Hearth (TaskNotes has no stable public API to query, so this
+	 * Settings → ZeroHearth (TaskNotes has no stable public API to query, so this
 	 * reads its files the same way TaskNotes itself does: frontmatter).
 	 * "kanban" reads a single Kanban-plugin board note, where each `##` heading
 	 * is a column and the checkbox items beneath it are that column's cards.
 	 * "obsidian-tasks" reads the same checkbox lines through the obsidian-tasks
 	 * community plugin's own notion of a task — its status registry (built-ins
-	 * plus custom statuses) and the vault's task format — drawn by Hearth like
+	 * plus custom statuses) and the vault's task format — drawn by ZeroHearth like
 	 * every other source. Ticking, editing and creating go through the plugin,
 	 * so the note is never converted. */
 	source?: "checkbox" | "tasknotes" | "kanban" | "obsidian-tasks";
-	/** Kanban source: path to the board note. When empty, Hearth auto-detects
+	/** Kanban source: path to the board note. When empty, ZeroHearth auto-detects
 	 * the first note in scope whose frontmatter carries `kanban-plugin`. */
 	kanbanFile?: string;
 	/** Kanban source: when true, parse the Tasks-plugin emoji metadata written
@@ -425,10 +425,10 @@ export interface TasksConfig {
 	/** TaskNotes source: the status values counted as "complete" (case-insensitive).
 	 * When set and non-empty, a task is done when its status is in this list — so,
 	 * e.g., both "done" and "canceled" can be treated as complete. When unset, the
-	 * single global `taskNotesDoneValue` from Settings → Hearth is used. */
+	 * single global `taskNotesDoneValue` from Settings → ZeroHearth is used. */
 	taskNotesDoneStatuses?: string[];
 	/** TaskNotes source: this card's own frontmatter field names, overriding the
-	 * global mapping in Settings → Hearth. Set by the setup wizard, which reads
+	 * global mapping in Settings → ZeroHearth. Set by the setup wizard, which reads
 	 * them from TaskNotes itself — a vault that renamed its fields gets a card
 	 * that works on the first render without the wizard reaching into a global
 	 * setting every other card and board also follows. Undefined = follow the
@@ -451,7 +451,7 @@ export interface TasksConfig {
 	 * card without them draws exactly as before. */
 	tabRows?: TaskTabRow[];
 	/** Give this card its own field list. For TaskNotes cards, opting in
-	 * replaces the global list from Settings → Hearth → Integrations (and is
+	 * replaces the global list from Settings → ZeroHearth → Integrations (and is
 	 * only consulted while that global `taskFieldsEnabled` master switch is
 	 * on). For every other source the card's fields are always its own,
 	 * independent of the vault-wide setting. Off by default. */
@@ -485,7 +485,7 @@ export interface TasksConfig {
 	kanbanDoneColumns?: string[];
 	/** Obsidian-tasks source: legacy extra Tasks query instructions, kept so old
 	 * cards still load. No longer read: the card filters, sorts and caps
-	 * Hearth's own way, over the tasks the plugin says exist. */
+	 * ZeroHearth's own way, over the tasks the plugin says exist. */
 	tasksQuery?: string;
 	/** Obsidian-tasks source: the note new tasks are appended to, as a vault
 	 * path ("Notes/Tasks" with or without ".md"). When empty (the default),
@@ -1141,7 +1141,7 @@ export interface DatacoreConfig {
  * Per-card configuration for a "git" card, which shows the state of the vault's
  * repository and runs git operations through the obsidian-git community plugin.
  *
- * Hearth performs no git work of its own — every button is a call into that
+ * ZeroHearth performs no git work of its own — every button is a call into that
  * plugin, so its remote, credentials and commit-message template all apply. See
  * `src/git.ts`. Only offered by the "Add card" picker when obsidian-git is
  * installed and enabled.
@@ -1200,14 +1200,14 @@ export interface LeafViewConfig {
 /**
  * What a dashboard *is*.
  *
- * `"cards"` is the board Hearth has always had: a grid of Hearth's own cards.
+ * `"cards"` is the board ZeroHearth has always had: a grid of ZeroHearth's own cards.
  * `"plugin"` gives the whole board over to a single registered view — the RSS
  * reader, a Kanban board, a Canvas — hosted the way the "leaf" card hosts one,
  * but at full size. The dashboard switcher, the header and the background stay
  * exactly where they are, so a plugin board is one click away from every other
  * board rather than a tab of its own.
  *
- * `"single"` sits between the two: the whole board is one of Hearth's own
+ * `"single"` sits between the two: the whole board is one of ZeroHearth's own
  * cards — an RSS reader, a task list — drawn at full size the way a plugin
  * board draws its hosted view. The card is one of the board's own cards (see
  * {@link Dashboard.singleCardId}), so switching back to `"cards"` puts it back
@@ -1248,7 +1248,7 @@ export interface PluginBoardConfig extends LeafViewConfig {
 	 *
 	 * Off by default, and experimental: an active leaf is also where Obsidian
 	 * puts a note you open, so with this on a link click can replace the hosted
-	 * view with the note. Hearth hands the active leaf back to its own when the
+	 * view with the note. ZeroHearth hands the active leaf back to its own when the
 	 * board goes away, so the effect never outlives the board.
 	 */
 	focusable?: boolean;
@@ -1291,7 +1291,7 @@ export interface RssConfig {
 	/** Add a leading "All" tab that merges every source, newest first. Default false. */
 	mergeAll?: boolean;
 	/** Where a click on an entry goes: its page in the browser (the default;
-	 * an entry with no link still opens in the reader dialog), or Hearth's
+	 * an entry with no link still opens in the reader dialog), or ZeroHearth's
 	 * reader as a dialog or in a tab of its own. */
 	openIn?: RssOpenIn;
 	/** Whether the reader loads an entry's pictures: only on request (the
@@ -1698,7 +1698,7 @@ export type VaultPetDisplay = "pet" | "house";
  * Deliberately thin. Everything that makes the pet a pet — its species, name,
  * XP, quests, badges, wardrobe, sounds and language — belongs to the Vault Pet
  * plugin and is set in *its* settings; a copy of any of it here could only go
- * stale or, worse, disagree. What is left is Hearth's half of the arrangement:
+ * stale or, worse, disagree. What is left is ZeroHearth's half of the arrangement:
  * which surface to show, and how much chrome to put around it. */
 export interface VaultPetConfig {
 	/** Which surface the card shows. Default "pet". */
@@ -1724,7 +1724,7 @@ export interface TaskChuteConfig {
 
 /** A single button in the mobile action bar (shown under the search bar and
  * filters in Mobile mode). Like a launchpad tile, a button can run an Obsidian
- * command, open a vault note/file, or open a URL — chosen by `type`. Hearth's
+ * command, open a vault note/file, or open a URL — chosen by `type`. ZeroHearth's
  * own defaults (new note, new drawing, record voice, open daily note) are
  * registered as ordinary commands too, so any button can be replaced with any
  * command from any plugin. */
@@ -1875,7 +1875,7 @@ export type SlideshowFit = "cover" | "contain";
  * freshly added card runs with. */
 /** What a Periodic note card shows: always the *current* note of one period,
  * resolved through the Periodic Notes plugin (issue #116). Which folder, name
- * and template that note has is Periodic Notes' business, not Hearth's. */
+ * and template that note has is Periodic Notes' business, not ZeroHearth's. */
 /** Which plugin the Periodic note card asks for its note (#318). Omitted means
  * Periodic Notes, which is the only source the card had before Journals. */
 export type PeriodicSource = "periodic-notes" | "journals";
@@ -1989,7 +1989,7 @@ export interface LinkItem extends TileGeometry {
 	/** Vault path, URL, or command id depending on type. */
 	target: string;
 	/** `"folder"` is a vault folder rather than a note (#448): clicking the
-	 * tile opens it the way a folder bookmark does, in Hearth's browser. */
+	 * tile opens it the way a folder bookmark does, in ZeroHearth's browser. */
 	type: "note" | "url" | "command" | "folder";
 }
 
@@ -2041,7 +2041,7 @@ export interface DashboardCard {
 	links?: LinkItem[];
 	/** kind === "templater": the new-note-from-template tiles. */
 	templater?: TemplaterConfig;
-	/** kind === "recent": how many recent files to show. Clamped to what Hearth's
+	/** kind === "recent": how many recent files to show. Clamped to what ZeroHearth's
 	 * own recent-file history can hold (see RECENT_HISTORY_MAX); ignored when
 	 * `recentAuto` is on. */
 	count?: number;
@@ -2057,7 +2057,7 @@ export interface DashboardCard {
 	folder?: FolderCardConfig;
 	/** Where a folder opens, for the kinds that can open one from a click:
 	 * a bookmarks card's folder bookmark and a launchpad's folder button
-	 * (#448). Undefined — the default — is Hearth's folder browser, which is
+	 * (#448). Undefined — the default — is ZeroHearth's folder browser, which is
 	 * what both did before the choice existed; "explorer" reveals the folder in
 	 * Obsidian's own file explorer, in the sidebar. */
 	folderTarget?: "explorer";
@@ -2166,7 +2166,7 @@ export interface DashboardCard {
 	editable?: boolean;
 
 	/** kind === "embed" / "daily" / "periodic": when editing in place, use Obsidian's own
-	 * Live Preview editor (hosted in the card) instead of Hearth's plain
+	 * Live Preview editor (hosted in the card) instead of ZeroHearth's plain
 	 * raw-Markdown box. Only meaningful together with `editable`. */
 	livePreview?: boolean;
 
@@ -2244,7 +2244,7 @@ export interface DashboardCard {
 	pinned?: boolean;
 
 	/** Give this card a command of its own (#491), so it can be run from the
-	 * command palette, from Obsidian's `/` menu, or from Hearth's `>` mode and
+	 * command palette, from Obsidian's `/` menu, or from ZeroHearth's `>` mode and
 	 * opens in a floating dialog. Off unless the user asks for it: a board of
 	 * thirty cards would otherwise put thirty commands in the palette. */
 	command?: boolean;
@@ -2357,7 +2357,7 @@ export interface MobileCardOptions {
 	collapsed?: boolean;
 }
 
-/** Background mode for the home view. "default" draws Hearth's own wallpaper
+/** Background mode for the home view. "default" draws ZeroHearth's own wallpaper
  * and "harbour" its harbour town (both in wallpaper.ts); "weather" paints the
  * live sky for a place (see sky.ts); "video" plays a clip from the vault behind
  * the board; the other kinds use the user's own value. */
@@ -2372,7 +2372,7 @@ export type BackgroundKind =
 	| "weather";
 
 /** The flat backdrop the `minimal` tier paints instead of the wallpaper: a muted
- * grey-purple that sits close to Hearth's brand colour without any image
+ * grey-purple that sits close to ZeroHearth's brand colour without any image
  * decode, opacity layer or blur behind it. */
 export const LOW_POWER_BACKGROUND = "#4a4459";
 
@@ -2412,7 +2412,7 @@ export const PERFORMANCE_TIERS: readonly PerformanceTier[] = [
 /**
  * Where the background is painted.
  *
- * "full" is the classic Hearth board: the backdrop fills the whole view and the
+ * "full" is the classic ZeroHearth board: the backdrop fills the whole view and the
  * cards float on top of it. "banner" turns the same backdrop into a strip
  * across the top of the content — a cover image, the way a note's banner works
  * — and leaves the rest of the board on the theme's own surface, so the cards
@@ -2502,12 +2502,12 @@ export interface DashboardHeaderConfig {
 	title?: string;
 	/** Override the global title icon for this dashboard: a Lucide id, an emoji
 	 * or short text, a vault image path, or an image URL (see `titleicon.ts`).
-	 * An empty string is a real override meaning "the Hearth crystal on this
+	 * An empty string is a real override meaning "the ZeroHearth crystal on this
 	 * board"; undefined follows {@link HomeSettings.titleIcon}. */
 	titleIcon?: string;
 	/** Override which parts of this board's brand mark follow the theme's icon
 	 * colour (undefined = use the global {@link HomeSettings.themeColorTarget}).
-	 * Scoped to the board's own title block; Hearth's tab and ribbon icons are
+	 * Scoped to the board's own title block; ZeroHearth's tab and ribbon icons are
 	 * app-level and keep following the global setting. */
 	themeColorTarget?: HomeSettings["themeColorTarget"];
 	/** Align only the title block; the search section below has its own
@@ -2547,7 +2547,7 @@ export const BOARD_DENSITIES: readonly BoardDensity[] = ["roomy", "compact", "fl
 export interface Dashboard extends BannerOverrides {
 	id: string;
 	name: string;
-	/** What this board is: a grid of Hearth cards (the default, and what
+	/** What this board is: a grid of ZeroHearth cards (the default, and what
 	 * undefined means) or a single hosted plugin view filling the board. See
 	 * {@link DashboardMode}. */
 	mode?: DashboardMode;
@@ -2644,7 +2644,7 @@ export interface Dashboard extends BannerOverrides {
 	 * performance tier and the reader's reduced-motion preference both still
 	 * override it downwards; this can ask for motion, never insist on it. */
 	backgroundSkyAnimate?: boolean;
-	/** Override how the drawn backgrounds (the weather sky, Hearth's own
+	/** Override how the drawn backgrounds (the weather sky, ZeroHearth's own
 	 * wallpaper) are drawn on this board (undefined = follow
 	 * {@link HomeSettings.backgroundSkyDesign}). Beside {@link background} for
 	 * the same reason as {@link backgroundSkyAnimate}. */
@@ -2672,7 +2672,7 @@ export interface Dashboard extends BannerOverrides {
 	/** Name of a core-Workspace; loading that workspace auto-switches to this
 	 * dashboard (one-way, workspace → dashboard). Undefined = not linked. */
 	linkedWorkspace?: string;
-	/** Marks this board as the one to open on phones/tablets. When Hearth loads
+	/** Marks this board as the one to open on phones/tablets. When ZeroHearth loads
 	 * on mobile it switches to the first dashboard with this flag, so a board
 	 * tuned for a small screen can be the mobile default without being the
 	 * desktop default. Undefined/false = not a mobile default. */
@@ -2682,9 +2682,9 @@ export interface Dashboard extends BannerOverrides {
 export type ChromeVisibility = "always" | "hover";
 
 /**
- * Where Hearth puts a note when you open one from the home view.
+ * Where ZeroHearth puts a note when you open one from the home view.
  *
- * `"same"` reuses the tab Hearth itself is in, so the note replaces the home
+ * `"same"` reuses the tab ZeroHearth itself is in, so the note replaces the home
  * view exactly like clicking a link inside a normal editor tab (#106). The
  * other three map straight onto Obsidian's own pane types — a new tab (the
  * historical behaviour, and still the default), a split beside the current
@@ -2703,7 +2703,7 @@ export const OPEN_IN_MODES: readonly OpenIn[] = ["tab", "same", "split", "window
  * - `search` — a result from the search bar or the Search card
  * - `card` — a note listed by a card (Recent, Bookmarks, Favourites, Calendar,
  *   Heatmap, Tasks) or by a mobile action button
- * - `newNote` — a note Hearth has just created (new note, daily note, event
+ * - `newNote` — a note ZeroHearth has just created (new note, daily note, event
  *   note), which is opened for editing straight away
  */
 export type OpenSource = "link" | "search" | "card" | "newNote";
@@ -2716,17 +2716,17 @@ export const OPEN_SOURCES: readonly OpenSource[] = ["link", "search", "card", "n
 export type OpenInRule = OpenIn | "default";
 
 /**
- * What happens to a focused Hearth tab when a note is opened by something
- * Hearth doesn't control — the file explorer, the quick switcher, the graph, or
+ * What happens to a focused ZeroHearth tab when a note is opened by something
+ * ZeroHearth doesn't control — the file explorer, the quick switcher, the graph, or
  * a view embedded in a card that opens links itself (an embedded Bases table).
  *
- * Obsidian makes that call, not Hearth: it reuses the focused tab when the view
+ * Obsidian makes that call, not ZeroHearth: it reuses the focused tab when the view
  * in it reports itself navigable, so this is expressed by flipping
  * `View.navigation` rather than by picking a leaf. Only two outcomes are
- * possible — Hearth is taken over (`"same"`) or it is left alone and the note
+ * possible — ZeroHearth is taken over (`"same"`) or it is left alone and the note
  * goes to another tab (`"tab"`) — plus `"default"` to follow
  * {@link HomeSettings.openIn}, where anything but "same tab" counts as leaving
- * Hearth alone.
+ * ZeroHearth alone.
  */
 export type OpenOutsideRule = "default" | "same" | "tab";
 
@@ -2739,12 +2739,12 @@ export interface HomeSettings {
 	showTitle: boolean;
 	/** The mark drawn beside the title. One field holding any of five things —
 	 * a Lucide id (`"flame"`), an emoji or short text, a vault image path, an
-	 * image URL, or empty for the Hearth crystal; `titleicon.ts` decides which
+	 * image URL, or empty for the ZeroHearth crystal; `titleicon.ts` decides which
 	 * a value is. Each dashboard can override it — see
 	 * {@link DashboardHeaderConfig.titleIcon}. */
 	titleIcon: string;
-	/** A Lucide icon id used for Hearth's tab header and ribbon button instead of
-	 * the Hearth crystal. Empty = the crystal. */
+	/** A Lucide icon id used for ZeroHearth's tab header and ribbon button instead of
+	 * the ZeroHearth crystal. Empty = the crystal. */
 	tabIcon: string;
 	/** What follows the theme's icon color: nothing (brand-purple crystal and
 	 * normal title text, the historical look), the crystal icon, the title
@@ -2783,12 +2783,12 @@ export interface HomeSettings {
 	 * in instant.ts). A board and a search-bar card can only switch more off,
 	 * so an imported board can't turn on an answer the vault has off. */
 	hiddenInstantAnswers: string[];
-	/** Which engine powers the search bar: Hearth's built-in vault search, the
+	/** Which engine powers the search bar: ZeroHearth's built-in vault search, the
 	 * Omnisearch community plugin (only usable when Omnisearch is installed and
-	 * enabled — Hearth falls back to the built-in engine otherwise), or matching
+	 * enabled — ZeroHearth falls back to the built-in engine otherwise), or matching
 	 * the way Obsidian's own Quick switcher does (see quickswitcher.ts). */
 	searchEngine: "builtin" | "omnisearch" | "quickswitcher";
-	/** How Hearth writes a number wherever it prints one — the calculator card
+	/** How ZeroHearth writes a number wherever it prints one — the calculator card
 	 * and the search bars' instant answers: a dot with comma-grouped thousands
 	 * (`1,234.5`) or a comma with space-grouped thousands (`1 234,5`). A
 	 * calculator card may override it for itself. */
@@ -2819,7 +2819,7 @@ export interface HomeSettings {
 	 * power mode replaces the whole background anyway, and a reader who has
 	 * asked their OS for reduced motion gets a still sky regardless. */
 	backgroundSkyAnimate?: boolean;
-	/** How the drawn backgrounds — the "weather" sky and Hearth's own "default"
+	/** How the drawn backgrounds — the "weather" sky and ZeroHearth's own "default"
 	 * wallpaper — are drawn: classic, or flat Material 3 Expressive. Default
 	 * "classic". */
 	backgroundSkyDesign?: "classic" | "expressive";
@@ -2828,7 +2828,7 @@ export interface HomeSettings {
 	openOnStartup: boolean;
 	replaceNewTabs: boolean;
 	/** Place keyboard focus in the search field whenever a home view opens, so a
-	 * new Hearth tab can be typed into straight away without reaching for the
+	 * new ZeroHearth tab can be typed into straight away without reaching for the
 	 * mouse. Desktop only — auto-focusing on mobile would pop the on-screen
 	 * keyboard on every open. */
 	focusSearchOnOpen: boolean;
@@ -2838,7 +2838,7 @@ export interface HomeSettings {
 	 * board is being arranged. Off by default; a home view already refreshes
 	 * whenever the user switches back to its tab regardless of this setting. */
 	liveRefresh: boolean;
-	/** Adopt settings written to Hearth's `data.json` by something other than
+	/** Adopt settings written to ZeroHearth's `data.json` by something other than
 	 * this window — Obsidian Sync landing another device's dashboards, a git
 	 * pull, an external editor — as they arrive, instead of only at the next
 	 * Obsidian restart. On by default: without it this window keeps showing the
@@ -2867,26 +2867,26 @@ export interface HomeSettings {
 	stackOnNarrow: boolean;
 	/** The board width, in pixels, at or below which the narrow layout takes
 	 * over. Customizable because the width at which a board stops working is a
-	 * property of the board, not of Hearth: a dense six-card grid is unreadable
+	 * property of the board, not of ZeroHearth: a dense six-card grid is unreadable
 	 * long before a two-card one is, and someone who works in a half-screen
 	 * window wants the stacked layout at a width a phone would call generous
 	 * (#316). Clamped to [{@link NARROW_WIDTH_MIN}, {@link NARROW_WIDTH_MAX}]. */
 	narrowWidth: number;
-	/** Block all outbound network requests Hearth would otherwise make. The only
+	/** Block all outbound network requests ZeroHearth would otherwise make. The only
 	 * requests are configured live-content cards (including Jira) and the
 	 * calculator's key-less, ECB-backed currency-rate fetch. */
 	disableExternalCalls: boolean;
 
 	// ---- Opening notes ----
-	/** Where every note Hearth opens goes by default (#106). `"tab"` is the
+	/** Where every note ZeroHearth opens goes by default (#106). `"tab"` is the
 	 * historical behaviour. */
 	openIn: OpenIn;
 	/** Per-source exceptions to {@link openIn}. Every source defaults to
 	 * `"default"` (follow the global choice), so the single dropdown above is
 	 * enough for anyone who doesn't want the detail. */
 	openInOverrides: Record<OpenSource, OpenInRule>;
-	/** Whether a note opened from outside Hearth may take over a focused Hearth
-	 * tab. Defaults to `"same"` — the behaviour Hearth has had since #84, where
+	/** Whether a note opened from outside ZeroHearth may take over a focused ZeroHearth
+	 * tab. Defaults to `"same"` — the behaviour ZeroHearth has had since #84, where
 	 * the dashboard acts like an ordinary tab and the file explorer's selection
 	 * tracks what you open. Deliberately *not* `"default"`: following the global
 	 * choice would flip this for everyone on upgrade. */
@@ -2912,8 +2912,8 @@ export interface HomeSettings {
 	 *
 	 * Separate because the trade-off genuinely differs by device rather than by
 	 * taste: the animated sky and the frosted glass are the two most expensive
-	 * things Hearth draws, and a phone pays for them out of a battery while
-	 * showing them on the smallest screen Hearth runs on. Defaults to
+	 * things ZeroHearth draws, and a phone pays for them out of a battery while
+	 * showing them on the smallest screen ZeroHearth runs on. Defaults to
 	 * `"balanced"`, which thins the sky and changes nothing else.
 	 */
 	mobilePerformanceTier: PerformanceTier | "match";
@@ -2923,9 +2923,9 @@ export interface HomeSettings {
 	/**
 	 * Hold every animation while the Obsidian window is not the one being used.
 	 *
-	 * A Hearth tab the workspace has hidden already costs nothing — Obsidian
+	 * A ZeroHearth tab the workspace has hidden already costs nothing — Obsidian
 	 * takes an inactive leaf out of layout, and the browser stops animating a
-	 * subtree that isn't laid out. A *visible* Hearth tab in an unfocused window
+	 * subtree that isn't laid out. A *visible* ZeroHearth tab in an unfocused window
 	 * is the gap this closes: side by side with a browser, or on a second
 	 * monitor, the board keeps animating at the full frame rate for nobody.
 	 *
@@ -3018,7 +3018,7 @@ export interface HomeSettings {
 
 	// ---- File icons / Iconic / Iconize ----
 	/** Show the per-file icons set with the Iconic or Iconize community plugins
-	 * wherever Hearth draws a file icon, instead of Hearth's file-type icon.
+	 * wherever ZeroHearth draws a file icon, instead of ZeroHearth's file-type icon.
 	 * Harmless with neither plugin installed — there is simply nothing to read,
 	 * and every file keeps its type icon. */
 	customFileIcons: boolean;
@@ -3035,21 +3035,21 @@ export interface HomeSettings {
 
 	// ---- Front Matter Title ----
 	/** Show the titles the Front Matter Title plugin gives notes in the file
-	 * explorer wherever Hearth lists a folder's contents, instead of the file
+	 * explorer wherever ZeroHearth lists a folder's contents, instead of the file
 	 * names. Inert without the plugin, or while its explorer feature is off. */
 	frontMatterTitles: boolean;
 
 	// ---- Operon ----
-	/** Let Hearth talk to the Operon plugin's Developer API. Turning this off
+	/** Let ZeroHearth talk to the Operon plugin's Developer API. Turning this off
 	 * is a kill switch: Operon cards stop reading and no capability grant is
 	 * ever requested. On by default, but nothing happens until an Operon card
 	 * is added — the session is only opened when one renders. */
 	operonIntegration: boolean;
 
-	/** Let Hearth *change* Operon tasks: dragging a card between board columns,
+	/** Let ZeroHearth *change* Operon tasks: dragging a card between board columns,
 	 * and the card's "+". Off by default, and separate from the switch above
 	 * because Operon's grant is all-or-nothing — turning this on widens what
-	 * Hearth asks for and needs a fresh approval in Operon's settings, so it is
+	 * ZeroHearth asks for and needs a fresh approval in Operon's settings, so it is
 	 * never done on a vault's behalf. */
 	operonWrites: boolean;
 
@@ -3143,7 +3143,7 @@ export interface HomeSettings {
  *   (see `migrateSettings`): an existing dashboard must never be interrupted by
  *   a wizard offering to rebuild it.
  * - `skipped` — the wizard was offered and dismissed. Behaves like `done`, but
- *   is kept distinct so "Set up Hearth" in settings can still read as an
+ *   is kept distinct so "Set up ZeroHearth" in settings can still read as an
  *   invitation rather than a redo.
  */
 export type SetupStatus = "pending" | "done" | "skipped";
@@ -3151,9 +3151,9 @@ export type SetupStatus = "pending" | "done" | "skipped";
 export const DEFAULT_SETTINGS: HomeSettings = {
 	title: "Obsidian",
 	showTitle: true,
-	// Empty => the Hearth crystal icon is shown as the brand mark.
+	// Empty => the ZeroHearth crystal icon is shown as the brand mark.
 	titleIcon: "",
-	// Empty => the Hearth crystal is the tab and ribbon icon.
+	// Empty => the ZeroHearth crystal is the tab and ribbon icon.
 	tabIcon: "",
 	themeColorTarget: "none",
 	showSearch: true,
@@ -3174,14 +3174,14 @@ export const DEFAULT_SETTINGS: HomeSettings = {
 
 	backgroundKind: "default",
 	backgroundValue: "",
-	/* Tuned for Hearth's own wallpaper, the default kind: a flat, already muted
+	/* Tuned for ZeroHearth's own wallpaper, the default kind: a flat, already muted
 	 * drawing that needs no dimming and has no detail for a blur to soften —
 	 * the cards' own surfaces carry the contrast. A little of the theme still
 	 * shows through, so it sits with a custom theme's colours. A photo is
 	 * dimmed on the way in instead (see {@link retuneBackground}). */
 	backgroundOpacity: 0.8,
 	backgroundBlur: 0,
-	/* The wallpaper board is what Hearth has always been, so it stays the
+	/* The wallpaper board is what ZeroHearth has always been, so it stays the
 	 * default; the banner is a choice, not an upgrade. */
 	backgroundLayout: "full",
 	bannerHeight: BANNER_HEIGHT_DEFAULT,
@@ -3207,7 +3207,7 @@ export const DEFAULT_SETTINGS: HomeSettings = {
 	narrowWidth: 700,
 	disableExternalCalls: false,
 
-	// A new tab is what Hearth has always done; existing vaults must not change
+	// A new tab is what ZeroHearth has always done; existing vaults must not change
 	// behaviour on upgrade, so both the global default and every per-source rule
 	// start out as "open a new tab".
 	openIn: "tab",
@@ -3363,15 +3363,15 @@ function starterCards(): DashboardCard[] {
 	];
 }
 
-/** The mobile action bar's default buttons. Each `target` is a command Hearth
+/** The mobile action bar's default buttons. Each `target` is a command ZeroHearth
  * registers itself, so replacing one via the command picker works exactly like
  * swapping in any other plugin's command. */
 export function defaultMobileActionButtons(): MobileActionButton[] {
 	return [
-		{ id: "action-new-note", label: "New note", icon: "plus", type: "command", target: "hearth:new-note" },
-		{ id: "action-new-drawing", label: "New drawing", icon: "pen-tool", type: "command", target: "hearth:new-drawing" },
-		{ id: "action-record-voice", label: "Record voice", icon: "mic", type: "command", target: "hearth:record-voice" },
-		{ id: "action-daily-note", label: "Daily note", icon: "calendar", type: "command", target: "hearth:open-daily-note" },
+		{ id: "action-new-note", label: "New note", icon: "plus", type: "command", target: "zerohearth:new-note" },
+		{ id: "action-new-drawing", label: "New drawing", icon: "pen-tool", type: "command", target: "zerohearth:new-drawing" },
+		{ id: "action-record-voice", label: "Record voice", icon: "mic", type: "command", target: "zerohearth:record-voice" },
+		{ id: "action-daily-note", label: "Daily note", icon: "calendar", type: "command", target: "zerohearth:open-daily-note" },
 	];
 }
 
@@ -3629,10 +3629,10 @@ export type CardDesign = "classic" | "expressive";
  * Obsidian theme, so the terminal looks like the vault it lives in; the others
  * are fixed palettes named for what they imitate.
  */
-export type TerminalScheme = "theme" | "htop" | "hearth" | "amber" | "paper";
+export type TerminalScheme = "theme" | "htop" | "zerohearth" | "amber" | "paper";
 
 /** Every terminal scheme, in the order the settings dropdown offers them. */
-export const TERMINAL_SCHEMES: readonly TerminalScheme[] = ["theme", "htop", "hearth", "amber", "paper"];
+export const TERMINAL_SCHEMES: readonly TerminalScheme[] = ["theme", "htop", "zerohearth", "amber", "paper"];
 
 export const TERMINAL_FONT_SIZE_DEFAULT = 13;
 export const TERMINAL_FONT_SIZE_MIN = 10;
@@ -3655,6 +3655,7 @@ export function graphicalBoardsInUse(s: HomeSettings): boolean {
 /** The terminal scheme in force, repaired on read so a hand-edited or
  * newer-version value falls back to the theme's colours. */
 export function effectiveTerminalScheme(s: HomeSettings): TerminalScheme {
+	if ((s.terminalScheme as string | undefined) === "hearth") return "zerohearth";
 	return TERMINAL_SCHEMES.includes(s.terminalScheme as TerminalScheme)
 		? (s.terminalScheme as TerminalScheme)
 		: "theme";
@@ -3676,7 +3677,7 @@ export function effectiveCardDesign(s: HomeSettings, own: CardDesign | undefined
 	return own ?? activeDashboard(s)?.cardDesign ?? s.cardDesign ?? "classic";
 }
 
-/** How the drawn backgrounds (weather sky, Hearth's own wallpaper) are drawn
+/** How the drawn backgrounds (weather sky, ZeroHearth's own wallpaper) are drawn
  * on the active board: its own choice, else the vault's, else classic. */
 export function effectiveSkyDesign(s: HomeSettings): "classic" | "expressive" {
 	return activeDashboard(s).backgroundSkyDesign ?? s.backgroundSkyDesign ?? "classic";
@@ -3724,7 +3725,7 @@ export function effectiveTitle(s: HomeSettings): string {
 }
 
 /** The title icon for the active board — a Lucide id, emoji/text, a vault image
- * path or an image URL; `titleicon.ts` decides which. Empty = the Hearth
+ * path or an image URL; `titleicon.ts` decides which. Empty = the ZeroHearth
  * crystal, and a board's own empty string wins over a global icon: that is how
  * a single board opts back out of it. */
 export function effectiveTitleIcon(s: HomeSettings): string {
@@ -3863,7 +3864,7 @@ function tierRank(s: HomeSettings): number {
  * transition and hover lift.
  *
  * False from `reduced` down. This is the predicate that matters for power —
- * animation is the single most expensive thing Hearth does.
+ * animation is the single most expensive thing ZeroHearth does.
  */
 export function motionAllowed(s: HomeSettings): boolean {
 	return tierRank(s) < PERFORMANCE_TIERS.indexOf("reduced");
@@ -3872,7 +3873,7 @@ export function motionAllowed(s: HomeSettings): boolean {
 /**
  * Whether the backdrop's video may play, or has to stay on its first frame.
  *
- * A looping clip is the most expensive backdrop Hearth can paint: a decoder
+ * A looping clip is the most expensive backdrop ZeroHearth can paint: a decoder
  * running for as long as the board is up, behind a full-screen layer that is
  * dimmed and possibly blurred every frame. It is therefore the one background
  * kind gated on the *top* rung rather than on the motion ladder — only `full`
@@ -3919,7 +3920,7 @@ export function frostAllowed(s: HomeSettings): boolean {
  * `is-translucent` on `body`.
  *
  * Read from the DOM rather than from settings because it is Obsidian's switch
- * and not Hearth's — there is nothing in HomeSettings to consult, and the class
+ * and not ZeroHearth's — there is nothing in HomeSettings to consult, and the class
  * goes on and comes off live as the user flips it. `document` is resolved at
  * call time (never at import), so this stays safe to load in a DOM-less test.
  */
@@ -4026,7 +4027,7 @@ export const CARD_BORDER_WIDTH_MAX = 8;
 
 /** Effective card corner radius (px) for the active board (per-dashboard
  * override or global), clamped to [0, CARD_RADIUS_MAX]. Applied board-wide via
- * the --hearth-card-radius CSS variable so every card (and the frost mask)
+ * the --zerohearth-card-radius CSS variable so every card (and the frost mask)
  * rounds by the same amount. */
 export function effectiveCardRadius(s: HomeSettings): number {
 	const v = activeDashboard(s).cardRadius ?? s.cardRadius;
@@ -4135,7 +4136,7 @@ const PHOTO_TUNING = { opacity: 0.35, blur: 2 };
  *
  * The two numbers mean different things to different backdrops. A photo is
  * busy, so it is dimmed and softened until text reads over it. A drawn one —
- * the weather sky, Hearth's own wallpaper — is flat and already calm: dimmed
+ * the weather sky, ZeroHearth's own wallpaper — is flat and already calm: dimmed
  * that far it is a grey slab, and its contrast comes from the card surfaces
  * instead. So a switch between the two families moves the numbers once, and
  * only from values that belong to the other family; the sliders are right
@@ -4174,7 +4175,7 @@ export function backgroundIsRemote(kind: BackgroundKind): boolean {
  * "default" draws its own wallpaper so it needs no value; every other kind but
  * "none" needs one. `externalCallsDisabled` — the vault's **Disable external
  * calls** setting — takes the remote kind out: a wallpaper the switch will
- * not let Hearth fetch is a wallpaper that isn't there, and saying so here is
+ * not let ZeroHearth fetch is a wallpaper that isn't there, and saying so here is
  * what keeps the banner strip from being reserved for a picture that never
  * arrives.
  */
@@ -4540,7 +4541,7 @@ export function legacyTitleIcon(
  * reaches it.
  *
  * This does NOT round-trip: downgrading below 2.2.0 after it has run shows the
- * Hearth crystal again until the logo fields are set anew. See CHANGELOG.
+ * ZeroHearth crystal again until the logo fields are set anew. See CHANGELOG.
  */
 function migrateTitleIcon(s: HomeSettings, raw: Record<string, unknown>): boolean {
 	let migrated = false;

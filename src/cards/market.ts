@@ -1,7 +1,7 @@
 import { type App, Component, Notice, Setting } from "obsidian";
 import type { CardHost } from "../cardhost";
 import { setIcon } from "../glyphs";
-import { HearthModal } from "../uidesign";
+import { ZeroHearthModal } from "../uidesign";
 import { emptyState } from "../cardbodies";
 import { cachedRates, CURRENCY_CODES, loadRates } from "../currency";
 import { detectLanguage, t } from "../i18n";
@@ -186,27 +186,27 @@ export function seriesMove(series: MarketSeries): number | null {
  * The Expressive hero badge: the trend glyph on a nine-lobed cookie in the
  * move's container tone, the way the weather card sets its big glyph.
  */
-function trendBadge(parent: HTMLElement, value: number | null, cls = "hearth-market-badge"): void {
+function trendBadge(parent: HTMLElement, value: number | null, cls = "zerohearth-market-badge"): void {
 	const badge = parent.createDiv(`${cls} ${dirClass(value)}`);
 	const svg = badge.createSvg("svg", { attr: { viewBox: "0 0 48 48", "aria-hidden": "true" } });
-	svg.createSvg("path", { cls: "hearth-market-badge-shape", attr: { d: shapePath(24, 24, 22, 9, 0.06) } });
-	setIcon(badge.createDiv("hearth-market-badge-icon"), trendIcon(value));
+	svg.createSvg("path", { cls: "zerohearth-market-badge-shape", attr: { d: shapePath(24, 24, 22, 9, 0.06) } });
+	setIcon(badge.createDiv("zerohearth-market-badge-icon"), trendIcon(value));
 }
 
 /** The price, and its currency as a small tag beside it. */
-function priceLine(parent: HTMLElement, quote: MarketQuote, cls = "hearth-market-price"): HTMLElement {
+function priceLine(parent: HTMLElement, quote: MarketQuote, cls = "zerohearth-market-price"): HTMLElement {
 	const el = parent.createDiv(cls);
-	el.createSpan({ cls: "hearth-market-price-value", text: formatPrice(quote.price, quote.type, quote.currency) });
+	el.createSpan({ cls: "zerohearth-market-price-value", text: formatPrice(quote.price, quote.type, quote.currency) });
 	if (quote.currency && quote.type !== "index") {
-		el.createSpan({ cls: "hearth-market-ccy", text: quote.currency });
+		el.createSpan({ cls: "zerohearth-market-ccy", text: quote.currency });
 	}
 	return el;
 }
 
 /** The move: coloured text in Classic, a tonal pill in Expressive (CSS). */
-function changeLine(parent: HTMLElement, quote: MarketQuote, r: Resolved, cls = "hearth-market-change"): HTMLElement {
+function changeLine(parent: HTMLElement, quote: MarketQuote, r: Resolved, cls = "zerohearth-market-change"): HTMLElement {
 	const el = parent.createDiv(`${cls} ${dirClass(quote.change ?? quote.changePct)}`);
-	if (r.expressive) setIcon(el.createSpan("hearth-market-change-icon"), trendIcon(quote.change ?? quote.changePct));
+	if (r.expressive) setIcon(el.createSpan("zerohearth-market-change-icon"), trendIcon(quote.change ?? quote.changePct));
 	el.createSpan({ text: formatMove(quote, r.change) });
 	return el;
 }
@@ -214,15 +214,15 @@ function changeLine(parent: HTMLElement, quote: MarketQuote, r: Resolved, cls = 
 /** "Open" / "Closed", with a dot. */
 function stateChip(parent: HTMLElement, quote: MarketQuote, r: Resolved): void {
 	if (!r.showState || !quote.state) return;
-	const chip = parent.createDiv(`hearth-market-state is-${quote.state}`);
-	chip.createSpan("hearth-market-state-dot");
+	const chip = parent.createDiv(`zerohearth-market-state is-${quote.state}`);
+	chip.createSpan("zerohearth-market-state-dot");
 	chip.createSpan({ text: stateLabel(quote.state) });
 }
 
 /** Stand-in for a row whose quote hasn't arrived (or can't). */
 function missingQuote(parent: HTMLElement, loading: boolean): void {
 	parent.createDiv({
-		cls: "hearth-market-missing",
+		cls: "zerohearth-market-missing",
 		text: loading ? t().cards.market.loadingShort : t().cards.market.unavailable,
 	});
 }
@@ -243,7 +243,7 @@ interface ChartOptions {
  * the way every broker draws a multi-day chart.
  */
 export function drawChart(parent: HTMLElement, series: MarketSeries, opts: ChartOptions): HTMLElement {
-	const box = parent.createDiv(`hearth-market-chart ${opts.cls} ${dirClass(seriesMove(series))}`);
+	const box = parent.createDiv(`zerohearth-market-chart ${opts.cls} ${dirClass(seriesMove(series))}`);
 	const pts = series.points;
 	if (pts.length < 2) return box;
 
@@ -260,31 +260,31 @@ export function drawChart(parent: HTMLElement, series: MarketSeries, opts: Chart
 	const y = (v: number): number => (max === min ? height / 2 : height - pad - ((v - min) / span) * (height - pad * 2));
 
 	const svg = box.createSvg("svg", {
-		cls: "hearth-market-chart-svg",
+		cls: "zerohearth-market-chart-svg",
 		attr: { viewBox: `0 0 ${width} ${height}`, preserveAspectRatio: "none", "aria-hidden": "true" },
 	});
 	const line = pts.map((p, i) => `${x(i).toFixed(2)},${y(p.v).toFixed(2)}`).join(" ");
 	svg.createSvg("polygon", {
-		cls: "hearth-market-chart-fill",
+		cls: "zerohearth-market-chart-fill",
 		attr: { points: `0,${height} ${line} ${width},${height}` },
 	});
 	if (base !== null) {
 		const by = y(base).toFixed(2);
 		svg.createSvg("line", {
-			cls: "hearth-market-chart-base",
+			cls: "zerohearth-market-chart-base",
 			attr: { x1: "0", x2: String(width), y1: by, y2: by, "vector-effect": "non-scaling-stroke" },
 		});
 	}
 	svg.createSvg("polyline", {
-		cls: "hearth-market-chart-line",
+		cls: "zerohearth-market-chart-line",
 		attr: { points: line, "vector-effect": "non-scaling-stroke" },
 	});
 
 	if (opts.interactive) {
 		const { range, quote } = opts.interactive;
-		const cursor = box.createDiv("hearth-market-chart-cursor");
-		const dot = box.createDiv("hearth-market-chart-dot");
-		const readout = box.createDiv("hearth-market-chart-readout");
+		const cursor = box.createDiv("zerohearth-market-chart-cursor");
+		const dot = box.createDiv("zerohearth-market-chart-dot");
+		const readout = box.createDiv("zerohearth-market-chart-readout");
 		const hide = (): void => box.removeClass("is-tracking");
 		box.addEventListener("pointermove", (e: PointerEvent) => {
 			const rect = box.getBoundingClientRect();
@@ -314,15 +314,15 @@ function sparkline(parent: HTMLElement, row: Row, r: Resolved): void {
 	if (!r.showSparkline) return;
 	const series = cachedSeries(row.targets, r.range);
 	if (!series || series.points.length < 2) return;
-	drawChart(parent, series, { cls: "hearth-market-spark", baseline: r.range === "1d" });
+	drawChart(parent, series, { cls: "zerohearth-market-spark", baseline: r.range === "1d" });
 }
 
 /** The range switcher: one chip per span, the current one filled. */
 export function rangeChips(parent: HTMLElement, current: MarketRange, onPick: (range: MarketRange) => void): void {
-	const row = parent.createDiv("hearth-market-ranges");
+	const row = parent.createDiv("zerohearth-market-ranges");
 	for (const range of MARKET_RANGES) {
 		const chip = row.createEl("button", {
-			cls: "hearth-market-range",
+			cls: "zerohearth-market-range",
 			text: rangeLabel(range),
 			attr: { type: "button", "aria-pressed": String(range === current) },
 		});
@@ -339,25 +339,25 @@ export function rangeChips(parent: HTMLElement, current: MarketRange, onPick: (r
 function rangeBar(parent: HTMLElement, label: string, low: number | null, high: number | null, quote: MarketQuote): void {
 	const pos = rangePosition(quote.price, low, high);
 	if (pos === null) return;
-	const el = parent.createDiv("hearth-market-rangebar");
-	el.createDiv({ cls: "hearth-market-rangebar-label", text: label });
-	const line = el.createDiv("hearth-market-rangebar-line");
-	line.createSpan({ cls: "hearth-market-rangebar-end", text: formatPrice(low, quote.type, quote.currency) });
-	const track = line.createDiv("hearth-market-rangebar-track");
-	track.createDiv("hearth-market-rangebar-fill").setCssStyles({ width: `${pos * 100}%` });
-	track.createDiv("hearth-market-rangebar-mark").setCssStyles({ left: `${pos * 100}%` });
-	line.createSpan({ cls: "hearth-market-rangebar-end", text: formatPrice(high, quote.type, quote.currency) });
+	const el = parent.createDiv("zerohearth-market-rangebar");
+	el.createDiv({ cls: "zerohearth-market-rangebar-label", text: label });
+	const line = el.createDiv("zerohearth-market-rangebar-line");
+	line.createSpan({ cls: "zerohearth-market-rangebar-end", text: formatPrice(low, quote.type, quote.currency) });
+	const track = line.createDiv("zerohearth-market-rangebar-track");
+	track.createDiv("zerohearth-market-rangebar-fill").setCssStyles({ width: `${pos * 100}%` });
+	track.createDiv("zerohearth-market-rangebar-mark").setCssStyles({ left: `${pos * 100}%` });
+	line.createSpan({ cls: "zerohearth-market-rangebar-end", text: formatPrice(high, quote.type, quote.currency) });
 }
 
 /** Label/value facts: the spotlight's stats and the dialog's. */
-function facts(parent: HTMLElement, items: { label: string; value: string }[], cls = "hearth-market-facts"): void {
+function facts(parent: HTMLElement, items: { label: string; value: string }[], cls = "zerohearth-market-facts"): void {
 	const shown = items.filter((f) => f.value && f.value !== "—");
 	if (!shown.length) return;
 	const grid = parent.createDiv(cls);
 	for (const f of shown) {
-		const cell = grid.createDiv("hearth-market-fact");
-		cell.createDiv({ cls: "hearth-market-fact-label", text: f.label });
-		cell.createDiv({ cls: "hearth-market-fact-value", text: f.value });
+		const cell = grid.createDiv("zerohearth-market-fact");
+		cell.createDiv({ cls: "zerohearth-market-fact-label", text: f.label });
+		cell.createDiv({ cls: "zerohearth-market-fact-value", text: f.value });
 	}
 }
 
@@ -400,29 +400,29 @@ function opens(el: HTMLElement, row: Row, ctx: PaintContext, label: string): voi
 function paintMinimal(wrap: HTMLElement, ctx: PaintContext): void {
 	const row = ctx.rows[Math.min(ctx.selected, ctx.rows.length - 1)];
 	const quote = cachedQuote(row.targets);
-	const box = wrap.createDiv("hearth-market-hero");
+	const box = wrap.createDiv("zerohearth-market-hero");
 	opens(box, row, ctx, rowName(row, quote));
 	if (ctx.r.expressive && quote) trendBadge(box, quote.change ?? quote.changePct);
 	const { title } = identity(row, quote, ctx.r);
-	box.createDiv({ cls: "hearth-market-title", text: title });
+	box.createDiv({ cls: "zerohearth-market-title", text: title });
 	if (!quote) {
 		missingQuote(box, ctx.loading);
 		return;
 	}
-	priceLine(box, quote, "hearth-market-price hearth-market-price-hero");
+	priceLine(box, quote, "zerohearth-market-price zerohearth-market-price-hero");
 	changeLine(box, quote, ctx.r);
 	stateChip(box, quote, ctx.r);
-	if (ctx.r.showUpdated) box.createDiv({ cls: "hearth-market-updated", text: updatedText(quote.fetched) });
+	if (ctx.r.showUpdated) box.createDiv({ cls: "zerohearth-market-updated", text: updatedText(quote.fetched) });
 }
 
 /** The switcher over a spotlight with more than one instrument. */
 function switcher(wrap: HTMLElement, ctx: PaintContext): void {
 	if (ctx.rows.length < 2) return;
-	const bar = wrap.createDiv("hearth-market-switcher");
+	const bar = wrap.createDiv("zerohearth-market-switcher");
 	ctx.rows.forEach((row, i) => {
 		const quote = cachedQuote(row.targets);
 		const chip = bar.createEl("button", {
-			cls: `hearth-market-switch ${dirClass(quote?.changePct ?? null)}`,
+			cls: `zerohearth-market-switch ${dirClass(quote?.changePct ?? null)}`,
 			text: rowSymbol(row),
 			attr: { type: "button", "aria-pressed": String(i === ctx.selected) },
 		});
@@ -445,46 +445,46 @@ function paintSpotlight(wrap: HTMLElement, ctx: PaintContext): void {
 /** The spotlight's body, shared with the lookup's picked result. */
 function spotlightBody(wrap: HTMLElement, row: Row, quote: MarketQuote | null, ctx: PaintContext): void {
 	const r = ctx.r;
-	const head = wrap.createDiv("hearth-market-head");
+	const head = wrap.createDiv("zerohearth-market-head");
 	opens(head, row, ctx, rowName(row, quote));
 	if (r.expressive && quote) trendBadge(head, quote.change ?? quote.changePct);
-	const text = head.createDiv("hearth-market-headtext");
+	const text = head.createDiv("zerohearth-market-headtext");
 	const { title, sub } = identity(row, quote, r);
-	text.createDiv({ cls: "hearth-market-title", text: title });
+	text.createDiv({ cls: "zerohearth-market-title", text: title });
 	const subLine = [sub, quote ? typeLabel(quote.type) : ""].filter(Boolean).join(" · ");
-	if (subLine) text.createDiv({ cls: "hearth-market-sub", text: subLine });
+	if (subLine) text.createDiv({ cls: "zerohearth-market-sub", text: subLine });
 	if (quote) stateChip(head, quote, r);
 
 	if (!quote) {
 		missingQuote(wrap, ctx.loading);
 		return;
 	}
-	const numbers = wrap.createDiv("hearth-market-numbers");
-	priceLine(numbers, quote, "hearth-market-price hearth-market-price-big");
+	const numbers = wrap.createDiv("zerohearth-market-numbers");
+	priceLine(numbers, quote, "zerohearth-market-price zerohearth-market-price-big");
 	changeLine(numbers, quote, r);
 
 	const series = cachedSeries(row.targets, ctx.range);
 	if (series && series.points.length > 1) {
 		drawChart(wrap, series, {
-			cls: "hearth-market-chart-main",
+			cls: "zerohearth-market-chart-main",
 			baseline: ctx.range === "1d",
 			interactive: { range: ctx.range, quote },
 		});
 	} else {
 		wrap.createDiv({
-			cls: "hearth-market-chart-main hearth-market-chart-empty",
+			cls: "zerohearth-market-chart-main zerohearth-market-chart-empty",
 			text: ctx.loading ? t().cards.market.loadingShort : t().cards.market.noChart,
 		});
 	}
 	rangeChips(wrap, ctx.range, ctx.setRange);
 
 	if (r.showStats) {
-		const stats = wrap.createDiv("hearth-market-stats");
+		const stats = wrap.createDiv("zerohearth-market-stats");
 		rangeBar(stats, t().cards.market.dayRange, quote.dayLow, quote.dayHigh, quote);
 		rangeBar(stats, t().cards.market.yearRange, quote.yearLow, quote.yearHigh, quote);
 		facts(stats, quoteFacts(quote));
 	}
-	if (r.showUpdated) wrap.createDiv({ cls: "hearth-market-updated", text: updatedText(quote.fetched) });
+	if (r.showUpdated) wrap.createDiv({ cls: "zerohearth-market-updated", text: updatedText(quote.fetched) });
 }
 
 /** Chart: the chart edge to edge, the price over it. */
@@ -494,35 +494,35 @@ function paintChart(wrap: HTMLElement, ctx: PaintContext): void {
 	const series = cachedSeries(row.targets, ctx.range);
 	if (series && series.points.length > 1) {
 		drawChart(wrap, series, {
-			cls: "hearth-market-chart-full",
+			cls: "zerohearth-market-chart-full",
 			baseline: ctx.range === "1d",
 			interactive: { range: ctx.range, quote },
 		});
 	}
-	const over = wrap.createDiv("hearth-market-over");
+	const over = wrap.createDiv("zerohearth-market-over");
 	opens(over, row, ctx, rowName(row, quote));
-	over.createDiv({ cls: "hearth-market-title", text: identity(row, quote, ctx.r).title });
+	over.createDiv({ cls: "zerohearth-market-title", text: identity(row, quote, ctx.r).title });
 	if (!quote) {
 		missingQuote(over, ctx.loading);
 	} else {
-		priceLine(over, quote, "hearth-market-price hearth-market-price-big");
+		priceLine(over, quote, "zerohearth-market-price zerohearth-market-price-big");
 		changeLine(over, quote, ctx.r);
 	}
-	const foot = wrap.createDiv("hearth-market-foot");
+	const foot = wrap.createDiv("zerohearth-market-foot");
 	rangeChips(foot, ctx.range, ctx.setRange);
 }
 
 /** One watchlist row. */
 function listRow(parent: HTMLElement, row: Row, ctx: PaintContext): void {
 	const quote = cachedQuote(row.targets);
-	const el = parent.createDiv(`hearth-market-row ${dirClass(quote?.changePct ?? null)}`);
+	const el = parent.createDiv(`zerohearth-market-row ${dirClass(quote?.changePct ?? null)}`);
 	opens(el, row, ctx, rowName(row, quote));
-	const id = el.createDiv("hearth-market-id");
+	const id = el.createDiv("zerohearth-market-id");
 	const { title, sub } = identity(row, quote, ctx.r);
-	id.createDiv({ cls: "hearth-market-title", text: title });
-	if (sub) id.createDiv({ cls: "hearth-market-sub", text: sub });
+	id.createDiv({ cls: "zerohearth-market-title", text: title });
+	if (sub) id.createDiv({ cls: "zerohearth-market-sub", text: sub });
 	sparkline(el, row, ctx.r);
-	const right = el.createDiv("hearth-market-quote");
+	const right = el.createDiv("zerohearth-market-quote");
 	if (!quote) {
 		missingQuote(right, ctx.loading);
 		return;
@@ -533,21 +533,21 @@ function listRow(parent: HTMLElement, row: Row, ctx: PaintContext): void {
 
 /** List: a watchlist, one row each. */
 function paintList(wrap: HTMLElement, ctx: PaintContext): void {
-	const list = wrap.createDiv("hearth-market-list");
+	const list = wrap.createDiv("zerohearth-market-list");
 	for (const row of ctx.rows) listRow(list, row, ctx);
 }
 
 /** Tiles: a grid of them. */
 function paintTiles(wrap: HTMLElement, ctx: PaintContext): void {
-	const grid = wrap.createDiv("hearth-market-tiles");
+	const grid = wrap.createDiv("zerohearth-market-tiles");
 	for (const row of ctx.rows) {
 		const quote = cachedQuote(row.targets);
-		const tile = grid.createDiv(`hearth-market-tile ${dirClass(quote?.changePct ?? null)}`);
+		const tile = grid.createDiv(`zerohearth-market-tile ${dirClass(quote?.changePct ?? null)}`);
 		opens(tile, row, ctx, rowName(row, quote));
 		const { title } = identity(row, quote, ctx.r);
-		tile.createDiv({ cls: "hearth-market-title", text: title });
+		tile.createDiv({ cls: "zerohearth-market-title", text: title });
 		if (ctx.r.showName && title !== rowSymbol(row)) {
-			tile.createDiv({ cls: "hearth-market-sub", text: rowSymbol(row) });
+			tile.createDiv({ cls: "zerohearth-market-sub", text: rowSymbol(row) });
 		}
 		if (!quote) {
 			missingQuote(tile, ctx.loading);
@@ -562,30 +562,30 @@ function paintTiles(wrap: HTMLElement, ctx: PaintContext): void {
 /** Ticker: a tape that scrolls, or sits still and scrolls by hand when motion
  * is off. The items are drawn twice so the loop has no seam. */
 function paintTicker(wrap: HTMLElement, ctx: PaintContext): void {
-	const tape = wrap.createDiv("hearth-market-tape");
+	const tape = wrap.createDiv("zerohearth-market-tape");
 	tape.toggleClass("is-moving", ctx.r.animate && ctx.rows.length > 0);
-	const track = tape.createDiv("hearth-market-tape-track");
-	track.setCssProps({ "--hearth-tape-duration": `${Math.max(18, ctx.rows.length * 6)}s` });
+	const track = tape.createDiv("zerohearth-market-tape-track");
+	track.setCssProps({ "--zerohearth-tape-duration": `${Math.max(18, ctx.rows.length * 6)}s` });
 	const copies = ctx.r.animate ? 2 : 1;
 	for (let copy = 0; copy < copies; copy++) {
-		const run = track.createDiv("hearth-market-tape-run");
+		const run = track.createDiv("zerohearth-market-tape-run");
 		if (copy > 0) run.setAttribute("aria-hidden", "true");
 		for (const row of ctx.rows) {
 			const quote = cachedQuote(row.targets);
-			const item = run.createDiv(`hearth-market-tape-item ${dirClass(quote?.changePct ?? null)}`);
+			const item = run.createDiv(`zerohearth-market-tape-item ${dirClass(quote?.changePct ?? null)}`);
 			if (copy === 0) opens(item, row, ctx, rowName(row, quote));
 			else item.addEventListener("click", () => ctx.open(row));
-			item.createSpan({ cls: "hearth-market-title", text: identity(row, quote, ctx.r).title });
+			item.createSpan({ cls: "zerohearth-market-title", text: identity(row, quote, ctx.r).title });
 			if (!quote) {
-				item.createSpan({ cls: "hearth-market-missing", text: "—" });
+				item.createSpan({ cls: "zerohearth-market-missing", text: "—" });
 				continue;
 			}
 			item.createSpan({
-				cls: "hearth-market-price",
+				cls: "zerohearth-market-price",
 				text: formatPrice(quote.price, quote.type, quote.currency),
 			});
-			const change = item.createSpan(`hearth-market-change ${dirClass(quote.changePct)}`);
-			setIcon(change.createSpan("hearth-market-change-icon"), trendIcon(quote.changePct));
+			const change = item.createSpan(`zerohearth-market-change ${dirClass(quote.changePct)}`);
+			setIcon(change.createSpan("zerohearth-market-change-icon"), trendIcon(quote.changePct));
 			change.createSpan({ text: formatMove(quote, ctx.r.change) });
 		}
 	}
@@ -611,36 +611,36 @@ function paintPortfolio(wrap: HTMLElement, ctx: PaintContext): void {
 		cachedRates(),
 	);
 
-	const summary = wrap.createDiv("hearth-market-summary");
-	summary.createDiv({ cls: "hearth-market-summary-label", text: s.totalValue });
+	const summary = wrap.createDiv("zerohearth-market-summary");
+	summary.createDiv({ cls: "zerohearth-market-summary-label", text: s.totalValue });
 	if (!priced.length) {
 		summary.createDiv({
-			cls: "hearth-market-summary-value",
+			cls: "zerohearth-market-summary-value",
 			text: held.length && ctx.loading ? s.loadingShort : "—",
 		});
-		if (!held.length) summary.createDiv({ cls: "hearth-market-sub", text: s.noHoldings });
+		if (!held.length) summary.createDiv({ cls: "zerohearth-market-sub", text: s.noHoldings });
 	} else {
-		summary.createDiv({ cls: "hearth-market-summary-value", text: formatMoney(totals.value, base) });
-		const chips = summary.createDiv("hearth-market-summary-chips");
+		summary.createDiv({ cls: "zerohearth-market-summary-value", text: formatMoney(totals.value, base) });
+		const chips = summary.createDiv("zerohearth-market-summary-chips");
 		const chip = (label: string, value: number | null, pct: number | null): void => {
 			if (value === null) return;
-			const el = chips.createDiv(`hearth-market-summary-chip ${dirClass(value)}`);
-			el.createSpan({ cls: "hearth-market-summary-chip-label", text: label });
+			const el = chips.createDiv(`zerohearth-market-summary-chip ${dirClass(value)}`);
+			el.createSpan({ cls: "zerohearth-market-summary-chip-label", text: label });
 			el.createSpan({ text: `${formatSigned(value)} (${formatPct(pct)})` });
 		};
 		chip(s.today, totals.day, totals.dayPct);
 		chip(s.totalGain, totals.gain, totals.gainPct);
 		if (totals.missing) {
-			summary.createDiv({ cls: "hearth-market-note", text: s.notConverted(totals.missing) });
+			summary.createDiv({ cls: "zerohearth-market-note", text: s.notConverted(totals.missing) });
 		}
 
 		// Allocation: each holding's share of the converted total.
 		if (totals.value > 0 && totals.values.filter((v) => v !== null && v > 0).length > 1) {
-			const bar = wrap.createDiv("hearth-market-alloc");
+			const bar = wrap.createDiv("zerohearth-market-alloc");
 			priced.forEach((h, i) => {
 				const v = totals.values[i];
 				if (v === null || v <= 0) return;
-				const seg = bar.createDiv("hearth-market-alloc-seg");
+				const seg = bar.createDiv("zerohearth-market-alloc-seg");
 				seg.setCssProps({
 					"--seg-share": `${(v / totals.value) * 100}%`,
 					"--seg-color": `var(--color-${ALLOCATION_VARS[i % ALLOCATION_VARS.length]})`,
@@ -650,7 +650,7 @@ function paintPortfolio(wrap: HTMLElement, ctx: PaintContext): void {
 		}
 	}
 
-	const list = wrap.createDiv("hearth-market-list hearth-market-holdings");
+	const list = wrap.createDiv("zerohearth-market-list zerohearth-market-holdings");
 	const heldIndex = new Map(priced.map((h, i) => [h.row.index, i]));
 	for (const row of ctx.rows) {
 		const quote = cachedQuote(row.targets);
@@ -659,29 +659,29 @@ function paintPortfolio(wrap: HTMLElement, ctx: PaintContext): void {
 			listRow(list, row, ctx);
 			continue;
 		}
-		const el = list.createDiv(`hearth-market-row ${dirClass(quote?.changePct ?? null)}`);
+		const el = list.createDiv(`zerohearth-market-row ${dirClass(quote?.changePct ?? null)}`);
 		opens(el, row, ctx, rowName(row, quote));
 		const i = heldIndex.get(row.index);
 		if (i !== undefined) {
-			el.createDiv("hearth-market-swatch").setCssProps({
+			el.createDiv("zerohearth-market-swatch").setCssProps({
 				"--seg-color": `var(--color-${ALLOCATION_VARS[i % ALLOCATION_VARS.length]})`,
 			});
 		}
-		const id = el.createDiv("hearth-market-id");
-		id.createDiv({ cls: "hearth-market-title", text: identity(row, quote, ctx.r).title });
-		const right = el.createDiv("hearth-market-quote");
+		const id = el.createDiv("zerohearth-market-id");
+		id.createDiv({ cls: "zerohearth-market-title", text: identity(row, quote, ctx.r).title });
+		const right = el.createDiv("zerohearth-market-quote");
 		if (!quote) {
-			id.createDiv({ cls: "hearth-market-sub", text: s.units(quantity) });
+			id.createDiv({ cls: "zerohearth-market-sub", text: s.units(quantity) });
 			missingQuote(right, ctx.loading);
 			continue;
 		}
 		id.createDiv({
-			cls: "hearth-market-sub",
+			cls: "zerohearth-market-sub",
 			text: `${quantity.toLocaleString()} × ${formatPrice(quote.price, quote.type, quote.currency)}`,
 		});
 		const v = holdingValue(quote, quantity, row.item.cost);
-		right.createDiv({ cls: "hearth-market-price", text: formatMoney(v.value, quote.currency) });
-		const line = right.createDiv(`hearth-market-change ${dirClass(v.gain ?? v.day)}`);
+		right.createDiv({ cls: "zerohearth-market-price", text: formatMoney(v.value, quote.currency) });
+		const line = right.createDiv(`zerohearth-market-change ${dirClass(v.gain ?? v.day)}`);
 		line.setText(
 			v.gain !== null ? `${formatSigned(v.gain)} (${formatPct(v.gainPct)})` : formatPct(quote.changePct),
 		);
@@ -742,8 +742,8 @@ export function renderMarket(view: CardHost, card: DashboardCard, body: HTMLElem
 
 	const disabled = view.plugin.settings.disableExternalCalls;
 	const ttlMs = Math.max(r.refreshMin, 1) * 60_000;
-	body.addClass("hearth-market-host");
-	if (r.style === "chart") body.addClass("hearth-market-flush");
+	body.addClass("zerohearth-market-host");
+	if (r.style === "chart") body.addClass("zerohearth-market-flush");
 
 	let destroyed = false;
 	component.register(() => {
@@ -753,7 +753,7 @@ export function renderMarket(view: CardHost, card: DashboardCard, body: HTMLElem
 	let range = r.range;
 	let selected = 0;
 
-	const wrap = body.createDiv(`hearth-market is-${r.style}`);
+	const wrap = body.createDiv(`zerohearth-market is-${r.style}`);
 	wrap.toggleClass("is-expressive", r.expressive);
 	wrap.toggleClass("is-red-up", r.redUp);
 
@@ -882,10 +882,10 @@ function renderLookup(
 	let version = 0;
 	let loading = false;
 
-	const bar = wrap.createDiv("hearth-market-searchbar");
-	setIcon(bar.createSpan("hearth-market-search-icon"), "search");
+	const bar = wrap.createDiv("zerohearth-market-searchbar");
+	setIcon(bar.createSpan("zerohearth-market-search-icon"), "search");
 	const input = bar.createEl("input", {
-		cls: "hearth-market-search-input",
+		cls: "zerohearth-market-search-input",
 		attr: {
 			type: "search",
 			placeholder: disabled ? s.searchDisabled : s.searchPlaceholder,
@@ -895,7 +895,7 @@ function renderLookup(
 		},
 	});
 	input.disabled = disabled;
-	const content = wrap.createDiv("hearth-market-lookup");
+	const content = wrap.createDiv("zerohearth-market-lookup");
 
 	const isOnCard = (target: MarketTarget): boolean =>
 		rows.some((row) => row.targets.some((t2) => targetKey(t2) === targetKey(target)));
@@ -940,9 +940,9 @@ function renderLookup(
 		content.empty();
 		if (picked) {
 			const row = picked;
-			const top = content.createDiv("hearth-market-lookup-top");
+			const top = content.createDiv("zerohearth-market-lookup-top");
 			const back = top.createEl("button", {
-				cls: "hearth-market-icon-button",
+				cls: "zerohearth-market-icon-button",
 				attr: { type: "button", "aria-label": s.back },
 			});
 			setIcon(back, "arrow-left");
@@ -952,7 +952,7 @@ function renderLookup(
 			});
 			const onCard = isOnCard(row.targets[0]);
 			const add = top.createEl("button", {
-				cls: "hearth-market-add mod-cta",
+				cls: "zerohearth-market-add mod-cta",
 				text: onCard ? s.onCard : s.addToCard,
 				attr: { type: "button" },
 			});
@@ -979,30 +979,30 @@ function renderLookup(
 			return;
 		}
 		if (searching) {
-			content.createDiv({ cls: "hearth-market-hint", text: s.searching });
+			content.createDiv({ cls: "zerohearth-market-hint", text: s.searching });
 			return;
 		}
 		if (searched) {
 			if (!results.length) {
-				content.createDiv({ cls: "hearth-market-hint", text: s.noResults });
+				content.createDiv({ cls: "zerohearth-market-hint", text: s.noResults });
 				return;
 			}
-			const list = content.createDiv("hearth-market-results");
+			const list = content.createDiv("zerohearth-market-results");
 			for (const result of results) {
-				const el = list.createDiv("hearth-market-result");
+				const el = list.createDiv("zerohearth-market-result");
 				makeClickable(el, () => pick(result), result.name);
 				el.addEventListener("click", () => pick(result));
-				const id = el.createDiv("hearth-market-id");
-				id.createDiv({ cls: "hearth-market-title", text: result.name });
+				const id = el.createDiv("zerohearth-market-id");
+				id.createDiv({ cls: "zerohearth-market-title", text: result.name });
 				id.createDiv({
-					cls: "hearth-market-sub",
+					cls: "zerohearth-market-sub",
 					text: [result.display, result.exchange].filter(Boolean).join(" · "),
 				});
 				const tag = typeLabel(result.type);
-				if (tag) el.createDiv({ cls: "hearth-market-tag", text: tag });
+				if (tag) el.createDiv({ cls: "zerohearth-market-tag", text: tag });
 				if (!isOnCard(result.target)) {
 					const add = el.createEl("button", {
-						cls: "hearth-market-icon-button",
+						cls: "zerohearth-market-icon-button",
 						attr: { type: "button", "aria-label": s.addToCard },
 					});
 					setIcon(add, "plus");
@@ -1015,7 +1015,7 @@ function renderLookup(
 			return;
 		}
 		if (!rows.length) {
-			content.createDiv({ cls: "hearth-market-hint", text: s.lookupHint });
+			content.createDiv({ cls: "zerohearth-market-hint", text: s.lookupHint });
 			return;
 		}
 		paintList(content, {
@@ -1108,7 +1108,7 @@ interface DetailOptions {
  * range with a crosshair, the day's and the year's range, the stats — and the
  * position, when the card holds some.
  */
-export class MarketDetailModal extends HearthModal {
+export class MarketDetailModal extends ZeroHearthModal {
 	private range: MarketRange;
 	private host!: HTMLElement;
 	private closed = false;
@@ -1119,8 +1119,8 @@ export class MarketDetailModal extends HearthModal {
 	}
 
 	onOpen(): void {
-		this.modalEl.addClass("hearth-market-modal");
-		this.host = this.contentEl.createDiv("hearth-market-detail hearth-market");
+		this.modalEl.addClass("zerohearth-market-modal");
+		this.host = this.contentEl.createDiv("zerohearth-market-detail zerohearth-market");
 		this.host.toggleClass("is-expressive", this.opts.r.expressive);
 		this.host.toggleClass("is-red-up", this.opts.r.redUp);
 		this.draw();
@@ -1146,26 +1146,26 @@ export class MarketDetailModal extends HearthModal {
 		this.host.empty();
 
 		const sub = [rowSymbol(row), quote?.exchange, quote ? typeLabel(quote.type) : ""].filter(Boolean).join(" · ");
-		const head = this.host.createDiv("hearth-market-detail-head");
-		head.createDiv({ cls: "hearth-market-sub", text: sub });
+		const head = this.host.createDiv("zerohearth-market-detail-head");
+		head.createDiv({ cls: "zerohearth-market-sub", text: sub });
 		if (!quote) {
 			missingQuote(this.host, false);
 			return;
 		}
-		const numbers = this.host.createDiv("hearth-market-numbers");
-		priceLine(numbers, quote, "hearth-market-price hearth-market-price-big");
+		const numbers = this.host.createDiv("zerohearth-market-numbers");
+		priceLine(numbers, quote, "zerohearth-market-price zerohearth-market-price-big");
 		changeLine(numbers, quote, { ...r, change: "both" });
 		stateChip(numbers, quote, { ...r, showState: true });
 
 		const series = cachedSeries(row.targets, this.range);
 		if (series && series.points.length > 1) {
 			drawChart(this.host, series, {
-				cls: "hearth-market-chart-detail",
+				cls: "zerohearth-market-chart-detail",
 				baseline: this.range === "1d",
 				interactive: { range: this.range, quote },
 			});
 		} else {
-			this.host.createDiv({ cls: "hearth-market-chart-detail hearth-market-chart-empty", text: s.noChart });
+			this.host.createDiv({ cls: "zerohearth-market-chart-detail zerohearth-market-chart-empty", text: s.noChart });
 		}
 		rangeChips(this.host, this.range, (next) => {
 			this.range = next;
@@ -1173,7 +1173,7 @@ export class MarketDetailModal extends HearthModal {
 			void this.loadChart(false);
 		});
 
-		const stats = this.host.createDiv("hearth-market-stats");
+		const stats = this.host.createDiv("zerohearth-market-stats");
 		rangeBar(stats, s.dayRange, quote.dayLow, quote.dayHigh, quote);
 		rangeBar(stats, s.yearRange, quote.yearLow, quote.yearHigh, quote);
 		facts(stats, [
@@ -1186,7 +1186,7 @@ export class MarketDetailModal extends HearthModal {
 		const quantity = row.item.quantity ?? 0;
 		if (quantity > 0) {
 			const v = holdingValue(quote, quantity, row.item.cost);
-			this.host.createDiv({ cls: "hearth-market-detail-heading", text: s.position });
+			this.host.createDiv({ cls: "zerohearth-market-detail-heading", text: s.position });
 			facts(this.host, [
 				{ label: s.unitsLabel, value: quantity.toLocaleString() },
 				{ label: s.value, value: formatMoney(v.value, quote.currency) },
@@ -1203,7 +1203,7 @@ export class MarketDetailModal extends HearthModal {
 			]);
 		}
 
-		const actions = this.host.createDiv("hearth-market-detail-actions");
+		const actions = this.host.createDiv("zerohearth-market-detail-actions");
 		const web = actions.createEl("button", { text: s.openInBrowser, attr: { type: "button" } });
 		web.addEventListener("click", () => window.open(quotePageUrl(quote.target), "_blank"));
 		if (!this.opts.disabled) {
@@ -1257,13 +1257,13 @@ function itemsSection(ctx: CardEditorContext, containerEl: HTMLElement, cfg: Mar
 	new Setting(containerEl).setName(strings.symbols).setDesc(strings.symbolsDesc).setHeading();
 
 	if (!items.length) {
-		containerEl.createDiv({ cls: "setting-item-description hearth-market-editor-empty", text: strings.noSymbols });
+		containerEl.createDiv({ cls: "setting-item-description zerohearth-market-editor-empty", text: strings.noSymbols });
 	}
 	items.forEach((item, i) => {
 		const row = new Setting(containerEl)
 			.setName(item.name?.trim() || item.symbol)
 			.setDesc([item.symbol, sourceLabel(item)].filter(Boolean).join(" · "))
-			.setClass("hearth-market-editor-item");
+			.setClass("zerohearth-market-editor-item");
 		row.addExtraButton((b) =>
 			b.setIcon("arrow-up").setTooltip(strings.moveUp).setDisabled(i === 0).onClick(() => {
 				moveItem(ctx, items, i, i - 1);
@@ -1289,7 +1289,7 @@ function itemsSection(ctx: CardEditorContext, containerEl: HTMLElement, cfg: Mar
 			}),
 		);
 		if (portfolio) {
-			const holding = new Setting(containerEl).setName(strings.holding).setClass("hearth-market-editor-holding");
+			const holding = new Setting(containerEl).setName(strings.holding).setClass("zerohearth-market-editor-holding");
 			holding.addText((txt) => {
 				txt
 					.setPlaceholder(strings.quantity)
@@ -1322,7 +1322,7 @@ function itemsSection(ctx: CardEditorContext, containerEl: HTMLElement, cfg: Mar
 	const search = new Setting(containerEl)
 		.setName(strings.search)
 		.setDesc(disabled ? strings.searchDisabled : strings.searchDesc)
-		.setClass("hearth-market-editor-search");
+		.setClass("zerohearth-market-editor-search");
 	search.addText((txt) => {
 		txt
 			.setPlaceholder(strings.searchPlaceholder)
@@ -1379,7 +1379,7 @@ function itemsSection(ctx: CardEditorContext, containerEl: HTMLElement, cfg: Mar
 
 	const results = (ctx.session[RESULTS] as MarketSearchResult[] | undefined) ?? [];
 	if (ctx.session[SEARCHED] && !results.length) {
-		containerEl.createDiv({ cls: "setting-item-description hearth-market-editor-empty", text: strings.noResults });
+		containerEl.createDiv({ cls: "setting-item-description zerohearth-market-editor-empty", text: strings.noResults });
 	}
 	for (const result of results) {
 		const already = items.some(
@@ -1392,7 +1392,7 @@ function itemsSection(ctx: CardEditorContext, containerEl: HTMLElement, cfg: Mar
 					.filter(Boolean)
 					.join(" · "),
 			)
-			.setClass("hearth-market-editor-result")
+			.setClass("zerohearth-market-editor-result")
 			.addButton((b) =>
 				b
 					.setButtonText(already ? strings.added : strings.add)

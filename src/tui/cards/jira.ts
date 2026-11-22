@@ -22,7 +22,7 @@ import {
 	type JiraOptions,
 } from "../../jira";
 import { effectiveAutoRefreshMinutes, type JiraConfig, type JiraControl } from "../../types";
-import { hearthMenu } from "../../uidesign";
+import { zerohearthMenu } from "../../uidesign";
 import type { TuiContext, TuiItem, TuiRenderer } from "../card";
 import { asciify, fit, padEnd, truncate, type Line, type TuiStyle } from "../text";
 import { message, showMenuFor, tableHeader, tag } from "./common";
@@ -98,7 +98,7 @@ function controlMenu(ctx: TuiContext, config: JiraConfig, control: JiraControl, 
 	const st = jiraState(ctx);
 	const selections = (config.selections ??= {});
 	const values = st.options[control];
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	if (!values.length) menu.addItem((i) => i.setTitle(t().cards.jira.noOptions).setDisabled(true));
 	for (const value of values) {
 		const on = (selections[control] ?? []).includes(value);

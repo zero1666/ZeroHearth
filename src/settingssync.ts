@@ -4,7 +4,7 @@ import type { HomeSettings } from "./types";
 /**
  * Picking up settings another device wrote.
  *
- * Hearth keeps everything — dashboards, cards, card contents — in the plugin's
+ * ZeroHearth keeps everything — dashboards, cards, card contents — in the plugin's
  * own `data.json`, and reads it exactly once, at load. That is fine on one
  * machine, where this window is the only writer. It is not fine with sync: a
  * board edited on the desktop lands on the laptop's disk while the laptop is
@@ -33,7 +33,7 @@ export function isPluginDataPath(dataPath: string, changed: string): boolean {
 }
 
 /**
- * Whether parsed JSON looks like a settings file Hearth actually saved, rather
+ * Whether parsed JSON looks like a settings file ZeroHearth actually saved, rather
  * than something it must not act on.
  *
  * This is the guard against the dangerous case. A sync client writes a file
@@ -52,7 +52,7 @@ export function looksLikeSavedSettings(raw: unknown): raw is Record<string, unkn
 }
 
 /** Key-order-independent serialisation, so settings that differ only in the
- * order two versions of Hearth happened to write their keys don't read as a
+ * order two versions of ZeroHearth happened to write their keys don't read as a
  * change. Only the shapes `data.json` can hold — JSON — are handled. */
 function stableJson(value: unknown): string {
 	if (value === undefined) return "null";

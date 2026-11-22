@@ -26,13 +26,13 @@ function modal(): Modal {
 describe("dressModal", () => {
 	it("marks a dialog from an Expressive card, and leaves a Classic one alone", () => {
 		const x = dressModal(modal(), true);
-		expect(x.modalEl.classList.contains("hearth-x-modal")).toBe(true);
-		expect(dressModal(modal(), false).modalEl.classList.contains("hearth-x-modal")).toBe(false);
+		expect(x.modalEl.classList.contains("zerohearth-x-modal")).toBe(true);
+		expect(dressModal(modal(), false).modalEl.classList.contains("zerohearth-x-modal")).toBe(false);
 	});
 
 	it("states the design, so a dialog opened from this one inherits it", () => {
-		expect(dressModal(modal(), true).modalEl.getAttribute("data-hearth-design")).toBe("expressive");
-		expect(dressModal(modal(), false).modalEl.getAttribute("data-hearth-design")).toBe("classic");
+		expect(dressModal(modal(), true).modalEl.getAttribute("data-zerohearth-design")).toBe("expressive");
+		expect(dressModal(modal(), false).modalEl.getAttribute("data-zerohearth-design")).toBe("classic");
 	});
 
 	it("returns the modal, so open() chains", () => {
@@ -43,14 +43,14 @@ describe("dressModal", () => {
 
 describe("inExpressiveCard", () => {
 	it("is true inside an Expressive card, however deep", () => {
-		const card = document.body.createDiv("hearth-card");
+		const card = document.body.createDiv("zerohearth-card");
 		card.addClass("is-expressive");
-		const row = card.createDiv("hearth-card-body").createDiv().createDiv("hearth-list-item");
+		const row = card.createDiv("zerohearth-card-body").createDiv().createDiv("zerohearth-list-item");
 		expect(inExpressiveCard(row)).toBe(true);
 	});
 
 	it("is false inside a Classic card, outside any card, or with nothing", () => {
-		const row = document.body.createDiv("hearth-card").createDiv("hearth-list-item");
+		const row = document.body.createDiv("zerohearth-card").createDiv("zerohearth-list-item");
 		expect(inExpressiveCard(row)).toBe(false);
 		expect(inExpressiveCard(document.body.createDiv())).toBe(false);
 		expect(inExpressiveCard(null)).toBe(false);

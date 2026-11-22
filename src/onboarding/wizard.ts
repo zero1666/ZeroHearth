@@ -1,7 +1,7 @@
 /**
  * The first-run setup wizard.
  *
- * A new Hearth install used to drop the user straight onto a five-card starter
+ * A new ZeroHearth install used to drop the user straight onto a five-card starter
  * board with a wallpaper they didn't choose and no indication that the plugin
  * can read their tasks, their calendar or their git repository. Everything was
  * configurable; nothing was offered. This asks instead — a handful of questions
@@ -20,10 +20,10 @@
  */
 import { Notice, Setting } from "obsidian";
 import { setIcon } from "../glyphs";
-import { applyModalDesign, HearthModal } from "../uidesign";
+import { applyModalDesign, ZeroHearthModal } from "../uidesign";
 import type { CardDesign } from "../types";
 import { t } from "../i18n";
-import type HearthPlugin from "../main";
+import type ZeroHearthPlugin from "../main";
 import { configuredPlaces, renderPlacePicker, renderSkySource } from "../placepicker";
 import {
 	daylightFromHour,
@@ -123,8 +123,8 @@ export interface SetupWizardOptions {
 	forceNewDashboard?: boolean;
 }
 
-export class SetupWizardModal extends HearthModal {
-	private readonly plugin: HearthPlugin;
+export class SetupWizardModal extends ZeroHearthModal {
+	private readonly plugin: ZeroHearthPlugin;
 	private readonly detection: SetupDetection;
 	private readonly options: SetupWizardOptions;
 	private answers: SetupAnswers;
@@ -139,7 +139,7 @@ export class SetupWizardModal extends HearthModal {
 	 * trigger. Dropped with the modal. */
 	private readonly placeSession: Record<string, unknown> = {};
 
-	constructor(plugin: HearthPlugin, options: SetupWizardOptions = {}) {
+	constructor(plugin: ZeroHearthPlugin, options: SetupWizardOptions = {}) {
 		super(plugin.app);
 		this.plugin = plugin;
 		this.options = options;
@@ -177,7 +177,7 @@ export class SetupWizardModal extends HearthModal {
 	}
 
 	onOpen(): void {
-		this.modalEl.addClass("hearth-setup-modal");
+		this.modalEl.addClass("zerohearth-setup-modal");
 		this.renderWizard();
 	}
 
@@ -213,44 +213,44 @@ export class SetupWizardModal extends HearthModal {
 		const step = this.currentStep();
 		const keepTop =
 			step === this.renderedStep
-				? (contentEl.querySelector<HTMLElement>(".hearth-setup-body")?.scrollTop ?? 0)
+				? (contentEl.querySelector<HTMLElement>(".zerohearth-setup-body")?.scrollTop ?? 0)
 				: 0;
 		this.renderedStep = step;
 		contentEl.empty();
-		contentEl.addClass("hearth-setup");
+		contentEl.addClass("zerohearth-setup");
 
 		const steps = this.wizardSteps();
 		const strings = t().setup;
 
 		this.renderRail(contentEl, steps, step);
 
-		const head = contentEl.createDiv("hearth-setup-head");
-		head.createDiv({ cls: "hearth-setup-title", text: strings.stepTitles[step] });
-		head.createDiv({ cls: "hearth-setup-subtitle", text: strings.stepDescs[step] });
+		const head = contentEl.createDiv("zerohearth-setup-head");
+		head.createDiv({ cls: "zerohearth-setup-title", text: strings.stepTitles[step] });
+		head.createDiv({ cls: "zerohearth-setup-subtitle", text: strings.stepDescs[step] });
 
-		const body = contentEl.createDiv("hearth-setup-body");
+		const body = contentEl.createDiv("zerohearth-setup-body");
 		// Per-step backstop, the #52 lesson: a throw while building one step
 		// shows an inline message instead of a blank modal, and the footer below
 		// still lets the user move on or leave.
 		try {
 			this.renderStepBody(body, step);
 		} catch (err) {
-			console.error(`Hearth: the "${step}" setup step failed to render`, err);
+			console.error(`ZeroHearth: the "${step}" setup step failed to render`, err);
 			body.empty();
-			const box = body.createDiv("hearth-settings-error");
-			setIcon(box.createSpan("hearth-settings-error-icon"), "alert-triangle");
-			const text = box.createDiv("hearth-settings-error-text");
+			const box = body.createDiv("zerohearth-settings-error");
+			setIcon(box.createSpan("zerohearth-settings-error-icon"), "alert-triangle");
+			const text = box.createDiv("zerohearth-settings-error-text");
 			text.createDiv({
-				cls: "hearth-settings-error-title",
+				cls: "zerohearth-settings-error-title",
 				text: t().settings.sectionError(strings.stepTitles[step]),
 			});
 			text.createDiv({
-				cls: "hearth-settings-error-hint",
+				cls: "zerohearth-settings-error-hint",
 				text: t().settings.sectionErrorHint,
 			});
 		}
 
-		this.renderFooter(contentEl.createDiv("hearth-setup-foot"), steps);
+		this.renderFooter(contentEl.createDiv("zerohearth-setup-foot"), steps);
 		body.scrollTop = keepTop;
 	}
 
@@ -263,17 +263,17 @@ export class SetupWizardModal extends HearthModal {
 		active: SetupStepId,
 	): void {
 		const strings = t().setup;
-		const rail = parent.createDiv("hearth-setup-rail");
+		const rail = parent.createDiv("zerohearth-setup-rail");
 		const activeIndex = steps.indexOf(active);
 		steps.forEach((step, index) => {
-			const pill = rail.createDiv("hearth-setup-rail-step");
+			const pill = rail.createDiv("zerohearth-setup-rail-step");
 			pill.toggleClass("is-active", index === activeIndex);
 			pill.toggleClass("is-done", index < activeIndex);
 			setIcon(
-				pill.createSpan("hearth-setup-rail-icon"),
+				pill.createSpan("zerohearth-setup-rail-icon"),
 				index < activeIndex ? "check" : STEP_ICONS[step],
 			);
-			pill.createSpan({ cls: "hearth-setup-rail-label", text: strings.stepNames[step] });
+			pill.createSpan({ cls: "zerohearth-setup-rail-label", text: strings.stepNames[step] });
 			if (index < activeIndex) {
 				const go = () => {
 					this.stepIndex = index;
@@ -290,24 +290,24 @@ export class SetupWizardModal extends HearthModal {
 		const strings = t().setup;
 		const last = this.stepIndex >= steps.length - 1;
 
-		const left = footer.createDiv("hearth-setup-foot-left");
+		const left = footer.createDiv("zerohearth-setup-foot-left");
 		if (this.stepIndex === 0) {
 			const skip = left.createEl("button", {
-				cls: "hearth-setup-skip",
+				cls: "zerohearth-setup-skip",
 				text: strings.nav.skip,
 			});
 			skip.addEventListener("click", () => this.close());
 		}
 
-		const right = footer.createDiv("hearth-setup-foot-right");
+		const right = footer.createDiv("zerohearth-setup-foot-right");
 		// On the first step only, and beside Next rather than instead of it:
-		// somebody setting Hearth up for the first time is exactly who might
+		// somebody setting ZeroHearth up for the first time is exactly who might
 		// rather start from a board somebody else built than answer five
 		// questions — and exactly who has nothing yet that installing one would
 		// overwrite, since importing adds a board and touches no global setting.
 		if (this.stepIndex === 0 && galleryConfigured(this.plugin)) {
 			const gallery = right.createEl("button", {
-				cls: "hearth-setup-gallery",
+				cls: "zerohearth-setup-gallery",
 				text: t().gallery.browse.openLabel,
 			});
 			gallery.setAttribute("aria-label", t().gallery.browse.openAria);
@@ -355,7 +355,7 @@ export class SetupWizardModal extends HearthModal {
 	 *
 	 * The first step is the one that decides the board, so it comes first —
 	 * there used to be a welcome page and a page of title fields in front of
-	 * it, two screens of reading and typing before a new user had told Hearth
+	 * it, two screens of reading and typing before a new user had told ZeroHearth
 	 * anything that mattered. The detected plugins sit here too: they add cards
 	 * exactly the way a purpose does, so they belong beside the purposes.
 	 */
@@ -379,7 +379,7 @@ export class SetupWizardModal extends HearthModal {
 			"is-multi",
 		);
 
-		const count = body.createDiv("hearth-setup-note");
+		const count = body.createDiv("zerohearth-setup-note");
 		const refreshCount = (): void => {
 			const n = planCards(a, this.detection, (i) => `preview-${i}`).length;
 			count.setText(t().setup.purpose.count(n));
@@ -403,8 +403,8 @@ export class SetupWizardModal extends HearthModal {
 		const strings = t().setup.purpose;
 		const a = this.answers;
 		const setting = new Setting(body).setName(strings.feed).setDesc(strings.feedDesc);
-		setting.settingEl.addClass("hearth-setup-followup");
-		const hint = setting.descEl.createDiv("hearth-setup-followup-hint");
+		setting.settingEl.addClass("zerohearth-setup-followup");
+		const hint = setting.descEl.createDiv("zerohearth-setup-followup-hint");
 		const refreshHint = (): void => {
 			hint.setText(feedUrl(a) ? "" : strings.feedMissing);
 			refreshCount();
@@ -425,8 +425,8 @@ export class SetupWizardModal extends HearthModal {
 	private renderWeatherPlace(body: HTMLElement): void {
 		const strings = t().setup.purpose;
 		const a = this.answers;
-		const box = body.createDiv("hearth-setup-followup-box");
-		box.createDiv({ cls: "hearth-setup-grouplabel", text: strings.weatherPlace });
+		const box = body.createDiv("zerohearth-setup-followup-box");
+		box.createDiv({ cls: "zerohearth-setup-grouplabel", text: strings.weatherPlace });
 		renderPlacePicker(box, {
 			current: weatherPlace(a),
 			onPick: (place) => {
@@ -439,7 +439,7 @@ export class SetupWizardModal extends HearthModal {
 			suggestions: configuredPlaces(this.plugin.settings),
 		});
 		if (!weatherPlace(a)) {
-			box.createDiv({ cls: "hearth-setup-followup-hint", text: strings.weatherMissing });
+			box.createDiv({ cls: "zerohearth-setup-followup-hint", text: strings.weatherMissing });
 		}
 	}
 
@@ -448,10 +448,10 @@ export class SetupWizardModal extends HearthModal {
 		const a = this.answers;
 
 		body.createDiv({
-			cls: "hearth-setup-grouplabel",
+			cls: "zerohearth-setup-grouplabel",
 			text: t().setup.purpose.integrationsHeading,
 		});
-		body.createDiv({ cls: "hearth-setup-lead is-small", text: strings.lead });
+		body.createDiv({ cls: "zerohearth-setup-lead is-small", text: strings.lead });
 
 		for (const found of this.detection.integrations) {
 			const setting = new Setting(body)
@@ -467,10 +467,10 @@ export class SetupWizardModal extends HearthModal {
 						this.renderWizard();
 					}),
 				);
-			setting.settingEl.addClass("hearth-setup-integration");
+			setting.settingEl.addClass("zerohearth-setup-integration");
 			if (found.recommended) {
 				setting.nameEl.createSpan({
-					cls: "hearth-setup-badge",
+					cls: "zerohearth-setup-badge",
 					text: strings.recommended,
 				});
 			}
@@ -481,13 +481,13 @@ export class SetupWizardModal extends HearthModal {
 		// up empty, so say what was read rather than merely that something was.
 		const taskNotes = this.detection.taskNotes;
 		if (taskNotes && a.integrations.includes("tasknotes")) {
-			const box = body.createDiv("hearth-setup-detected");
-			box.createDiv({ cls: "hearth-setup-detected-title", text: strings.taskNotesTitle });
-			const fields = box.createDiv("hearth-setup-detected-list");
+			const box = body.createDiv("zerohearth-setup-detected");
+			box.createDiv({ cls: "zerohearth-setup-detected-title", text: strings.taskNotesTitle });
+			const fields = box.createDiv("zerohearth-setup-detected-list");
 			const row = (label: string, value: string): void => {
-				const line = fields.createDiv("hearth-setup-detected-row");
-				line.createSpan({ cls: "hearth-setup-detected-key", text: label });
-				line.createSpan({ cls: "hearth-setup-detected-value", text: value });
+				const line = fields.createDiv("zerohearth-setup-detected-row");
+				line.createSpan({ cls: "zerohearth-setup-detected-key", text: label });
+				line.createSpan({ cls: "zerohearth-setup-detected-value", text: value });
 			};
 			row(strings.taskNotesStatus, taskNotes.fields.status);
 			row(strings.taskNotesDue, taskNotes.fields.due);
@@ -514,7 +514,7 @@ export class SetupWizardModal extends HearthModal {
 		const strings = t().setup.look;
 		const a = this.answers;
 
-		body.createDiv({ cls: "hearth-setup-grouplabel", text: strings.designHeading });
+		body.createDiv({ cls: "zerohearth-setup-grouplabel", text: strings.designHeading });
 		this.optionGrid(
 			body,
 			DESIGNS,
@@ -537,7 +537,7 @@ export class SetupWizardModal extends HearthModal {
 				a.terminal = design === "terminal";
 				if (design !== "terminal") {
 					a.design = design;
-					// The wizard is Hearth's interface too, so it shows the choice
+					// The wizard is ZeroHearth's interface too, so it shows the choice
 					// at once rather than after the board is built.
 					applyModalDesign(this, design);
 				}
@@ -548,16 +548,16 @@ export class SetupWizardModal extends HearthModal {
 			// Terminal mode draws no wallpaper and no card surfaces, and spaces
 			// the board by its character grid, so the rest of this step would
 			// change nothing — it stands aside for a line saying what it is.
-			body.createDiv({ cls: "hearth-setup-note is-quiet", text: strings.terminalNote });
+			body.createDiv({ cls: "zerohearth-setup-note is-quiet", text: strings.terminalNote });
 			return;
 		}
 		// Only the first setup makes the choice vault-wide (see applyDesign), so
 		// only that one says so.
 		if (this.plugin.settings.setupStatus !== "done") {
-			body.createDiv({ cls: "hearth-setup-note is-quiet", text: strings.designNote });
+			body.createDiv({ cls: "zerohearth-setup-note is-quiet", text: strings.designNote });
 		}
 
-		body.createDiv({ cls: "hearth-setup-grouplabel", text: strings.backgroundHeading });
+		body.createDiv({ cls: "zerohearth-setup-grouplabel", text: strings.backgroundHeading });
 		this.swatchGrid(
 			body,
 			SETUP_BACKGROUNDS,
@@ -583,7 +583,7 @@ export class SetupWizardModal extends HearthModal {
 					// Repaint the swatches in place: redrawing the step would
 					// throw the picker away mid-drag.
 					body
-						.querySelectorAll<HTMLElement>(".hearth-setup-scene-bg.is-color")
+						.querySelectorAll<HTMLElement>(".zerohearth-setup-scene-bg.is-color")
 						.forEach((el) => (el.style.background = v));
 				}),
 			);
@@ -591,7 +591,7 @@ export class SetupWizardModal extends HearthModal {
 
 		if (a.background === "weather") {
 			const sky = parseSkyValue(a.skyValue);
-			body.createDiv({ cls: "hearth-setup-note is-quiet", text: strings.weatherDesc });
+			body.createDiv({ cls: "zerohearth-setup-note is-quiet", text: strings.weatherDesc });
 			renderSkySource(body, {
 				current: sky,
 				onChange: (next) => {
@@ -607,7 +607,7 @@ export class SetupWizardModal extends HearthModal {
 		// Frosted, solid or minimal are Classic's frames. Expressive has one
 		// frame of its own, so there is nothing to choose (see applyLook).
 		if (a.design === "classic") {
-			body.createDiv({ cls: "hearth-setup-grouplabel", text: strings.surfaceHeading });
+			body.createDiv({ cls: "zerohearth-setup-grouplabel", text: strings.surfaceHeading });
 			this.swatchGrid(
 				body,
 				SETUP_SURFACES,
@@ -675,7 +675,7 @@ export class SetupWizardModal extends HearthModal {
 
 		const titleEl = this.renderBoardPreview(body, planned);
 		if (planned.length === 0) {
-			body.createDiv({ cls: "hearth-setup-note", text: strings.empty });
+			body.createDiv({ cls: "zerohearth-setup-note", text: strings.empty });
 		}
 
 		new Setting(body)
@@ -749,7 +749,7 @@ export class SetupWizardModal extends HearthModal {
 		if (this.options.forceNewDashboard) {
 			// No dropdown at all: an option that is never selectable is noise, and
 			// stating the guarantee outright is the reassurance this run needs.
-			body.createDiv({ cls: "hearth-setup-note is-safe", text: strings.targetForcedNew });
+			body.createDiv({ cls: "zerohearth-setup-note is-safe", text: strings.targetForcedNew });
 		} else {
 			new Setting(body)
 				.setName(strings.target)
@@ -777,30 +777,30 @@ export class SetupWizardModal extends HearthModal {
 
 		if (planned.length > 0) {
 			const why = this.fold(body, strings.why);
-			const list = why.createDiv("hearth-setup-plan");
+			const list = why.createDiv("zerohearth-setup-plan");
 			for (const entry of planned) {
-				const row = list.createDiv("hearth-setup-plan-row");
-				row.createSpan({ cls: "hearth-setup-plan-name", text: plannedName(entry) });
-				row.createSpan({ cls: "hearth-setup-plan-why", text: plannedReason(entry) });
+				const row = list.createDiv("zerohearth-setup-plan-row");
+				row.createSpan({ cls: "zerohearth-setup-plan-name", text: plannedName(entry) });
+				row.createSpan({ cls: "zerohearth-setup-plan-why", text: plannedReason(entry) });
 			}
 		}
 
 		// The board is a starting point, and the one place that says so is the
 		// last thing before the button.
-		const callout = body.createDiv("hearth-setup-callout");
-		const head = callout.createDiv("hearth-setup-callout-head");
-		setIcon(head.createSpan("hearth-setup-callout-icon"), "sliders-horizontal");
-		head.createSpan({ cls: "hearth-setup-callout-title", text: strings.calloutTitle });
-		callout.createDiv({ cls: "hearth-setup-callout-text", text: strings.calloutHint });
+		const callout = body.createDiv("zerohearth-setup-callout");
+		const head = callout.createDiv("zerohearth-setup-callout-head");
+		setIcon(head.createSpan("zerohearth-setup-callout-icon"), "sliders-horizontal");
+		head.createSpan({ cls: "zerohearth-setup-callout-title", text: strings.calloutTitle });
+		callout.createDiv({ cls: "zerohearth-setup-callout-text", text: strings.calloutHint });
 	}
 
 	/** A collapsed group of rows under a one-line summary. */
 	private fold(parent: HTMLElement, label: string): HTMLElement {
-		const details = parent.createEl("details", { cls: "hearth-setup-fold" });
-		const summary = details.createEl("summary", { cls: "hearth-setup-fold-summary" });
-		setIcon(summary.createSpan("hearth-setup-fold-chevron"), "chevron-right");
+		const details = parent.createEl("details", { cls: "zerohearth-setup-fold" });
+		const summary = details.createEl("summary", { cls: "zerohearth-setup-fold-summary" });
+		setIcon(summary.createSpan("zerohearth-setup-fold-chevron"), "chevron-right");
 		summary.createSpan({ text: label });
-		return details.createDiv("hearth-setup-fold-body");
+		return details.createDiv("zerohearth-setup-fold-body");
 	}
 
 	/** The header title the board will show. */
@@ -821,13 +821,13 @@ export class SetupWizardModal extends HearthModal {
 		// boxes on the theme's own background, in a monospaced face.
 		const banner = !a.terminal && a.backgroundLayout === "banner" && a.background !== "none";
 
-		const frame = body.createDiv("hearth-setup-board");
+		const frame = body.createDiv("zerohearth-setup-board");
 		frame.toggleClass("is-terminal", a.terminal);
-		const scene = frame.createDiv("hearth-setup-board-scene");
+		const scene = frame.createDiv("zerohearth-setup-board-scene");
 		scene.toggleClass("is-banner", banner);
 		this.paintScene(scene, a.terminal ? { ...a, background: "none" } : a);
 
-		const page = scene.createDiv("hearth-setup-board-page");
+		const page = scene.createDiv("zerohearth-setup-board-page");
 		// Flush keeps the compact model and only drops the page's side and bottom
 		// padding, exactly like the real board (see styles.css).
 		page.toggleClass("is-compact", a.density !== "roomy");
@@ -835,49 +835,49 @@ export class SetupWizardModal extends HearthModal {
 
 		let titleEl: HTMLElement | null = null;
 		if (a.showTitle || a.showSearch) {
-			const header = page.createDiv("hearth-setup-board-header");
+			const header = page.createDiv("zerohearth-setup-board-header");
 			if (a.showTitle) {
 				titleEl = header.createDiv({
-					cls: "hearth-setup-board-title",
+					cls: "zerohearth-setup-board-title",
 					text: this.previewTitle(),
 				});
 			}
 			if (a.showSearch) {
-				const search = header.createDiv("hearth-setup-board-search");
-				setIcon(search.createSpan("hearth-setup-board-search-icon"), "search");
+				const search = header.createDiv("zerohearth-setup-board-search");
+				setIcon(search.createSpan("zerohearth-setup-board-search-icon"), "search");
 			}
 		}
 
 		const rows = planned.reduce((max, p) => Math.max(max, p.card.y + p.card.h), 0);
-		const grid = page.createDiv("hearth-setup-board-grid");
+		const grid = page.createDiv("zerohearth-setup-board-grid");
 		grid.style.gridTemplateColumns = `repeat(${PREVIEW_COLUMNS}, 1fr)`;
 		grid.style.gridTemplateRows = `repeat(${Math.max(1, rows)}, minmax(0, 1fr))`;
 		for (const entry of planned) {
-			const cell = grid.createDiv("hearth-setup-board-card");
+			const cell = grid.createDiv("zerohearth-setup-board-card");
 			if (!a.terminal) styleSampleCard(cell, surface, banner);
 			cell.toggleClass("is-x-frame", !a.terminal && a.design === "expressive");
 			cell.style.gridColumn = `${entry.card.x + 1} / span ${entry.card.w}`;
 			cell.style.gridRow = `${entry.card.y + 1} / span ${entry.card.h}`;
-			const head = cell.createDiv("hearth-setup-board-card-head");
-			setIcon(head.createSpan("hearth-setup-board-card-icon"), PLAN_ICONS[entry.id] ?? "square");
-			head.createSpan({ cls: "hearth-setup-board-card-name", text: plannedName(entry) });
+			const head = cell.createDiv("zerohearth-setup-board-card-head");
+			setIcon(head.createSpan("zerohearth-setup-board-card-icon"), PLAN_ICONS[entry.id] ?? "square");
+			head.createSpan({ cls: "zerohearth-setup-board-card-name", text: plannedName(entry) });
 			// A few lines of stand-in content, as many as the card is tall.
-			const lines = cell.createDiv("hearth-setup-board-card-lines");
+			const lines = cell.createDiv("zerohearth-setup-board-card-lines");
 			for (let i = 0; i < Math.min(4, entry.card.h - 1); i++) lines.createDiv();
 		}
 		return titleEl;
 	}
 
 	/**
-	 * Paint a background into `scene` the way the board will: Hearth's own
+	 * Paint a background into `scene` the way the board will: ZeroHearth's own
 	 * wallpaper and the harbour are the real drawings, the sky is the real sky
 	 * (a clear one until a condition or place is picked), a colour is that
 	 * colour, and "none" is the theme's own surface.
 	 */
 	private paintScene(scene: HTMLElement, a: SetupAnswers): void {
-		scene.addClass("hearth-setup-scene");
+		scene.addClass("zerohearth-setup-scene");
 		const bg = scenePaint(a);
-		const layer = scene.createDiv("hearth-setup-scene-bg");
+		const layer = scene.createDiv("zerohearth-setup-scene-bg");
 		layer.addClass(`is-${a.background}`);
 		layer.style.opacity = String(bg.opacity);
 		switch (a.background) {
@@ -900,13 +900,13 @@ export class SetupWizardModal extends HearthModal {
 
 	/** One or two stand-in cards over a swatch's scene, in `surface`. */
 	private sampleCards(scene: HTMLElement, surface: SetupSurface, count: number): void {
-		const stack = scene.createDiv("hearth-setup-sample");
+		const stack = scene.createDiv("zerohearth-setup-sample");
 		for (let i = 0; i < count; i++) {
-			const card = stack.createDiv("hearth-setup-sample-card");
+			const card = stack.createDiv("zerohearth-setup-sample-card");
 			styleSampleCard(card, SURFACE_PRESETS[surface], false);
 			card.toggleClass("is-x-frame", this.answers.design === "expressive");
-			card.createDiv("hearth-setup-sample-line is-strong");
-			card.createDiv("hearth-setup-sample-line");
+			card.createDiv("zerohearth-setup-sample-line is-strong");
+			card.createDiv("zerohearth-setup-sample-line");
 		}
 	}
 
@@ -931,20 +931,20 @@ export class SetupWizardModal extends HearthModal {
 		onPick: (option: T) => void,
 		extraClass?: string,
 	): void {
-		const grid = parent.createDiv("hearth-setup-options");
+		const grid = parent.createDiv("zerohearth-setup-options");
 		if (extraClass) grid.addClass(extraClass);
 		for (const option of options) {
 			const info = describe(option);
-			const tile = grid.createDiv("hearth-setup-option");
+			const tile = grid.createDiv("zerohearth-setup-option");
 			tile.toggleClass("is-selected", info.selected);
-			setIcon(tile.createSpan("hearth-setup-option-icon"), info.icon);
-			const text = tile.createDiv("hearth-setup-option-text");
-			const name = text.createDiv({ cls: "hearth-setup-option-name", text: info.name });
+			setIcon(tile.createSpan("zerohearth-setup-option-icon"), info.icon);
+			const text = tile.createDiv("zerohearth-setup-option-text");
+			const name = text.createDiv({ cls: "zerohearth-setup-option-name", text: info.name });
 			if (info.badge) {
-				const badge = name.createSpan({ cls: "hearth-setup-badge", text: info.badge });
+				const badge = name.createSpan({ cls: "zerohearth-setup-badge", text: info.badge });
 				badge.toggleClass("is-experimental", info.experimental === true);
 			}
-			text.createDiv({ cls: "hearth-setup-option-desc", text: info.desc });
+			text.createDiv({ cls: "zerohearth-setup-option-desc", text: info.desc });
 			const pick = () => onPick(option);
 			makeClickable(tile, pick, info.name);
 			tile.setAttribute("aria-pressed", String(info.selected));
@@ -965,13 +965,13 @@ export class SetupWizardModal extends HearthModal {
 		},
 		onPick: (option: T) => void,
 	): void {
-		const grid = parent.createDiv("hearth-setup-swatches");
+		const grid = parent.createDiv("zerohearth-setup-swatches");
 		for (const option of options) {
 			const info = describe(option);
-			const tile = grid.createDiv("hearth-setup-swatch");
+			const tile = grid.createDiv("zerohearth-setup-swatch");
 			tile.toggleClass("is-selected", info.selected);
-			info.paint(tile.createDiv("hearth-setup-swatch-scene"));
-			tile.createDiv({ cls: "hearth-setup-swatch-name", text: info.name });
+			info.paint(tile.createDiv("zerohearth-setup-swatch-scene"));
+			tile.createDiv({ cls: "zerohearth-setup-swatch-name", text: info.name });
 			tile.setAttribute("title", info.desc);
 			const pick = () => onPick(option);
 			makeClickable(tile, pick, info.name);
@@ -1060,18 +1060,18 @@ function plannedReason(entry: PlannedCard): string {
  * prompt all come through here, so there is one place that decides what
  * "running setup" means.
  */
-export function openSetupWizard(plugin: HearthPlugin, options: SetupWizardOptions = {}): void {
+export function openSetupWizard(plugin: ZeroHearthPlugin, options: SetupWizardOptions = {}): void {
 	new SetupWizardModal(plugin, options).open();
 }
 
 /**
  * Offer the wizard on a genuinely fresh install, once.
  *
- * `setupStatus` is `pending` only for a vault with no persisted Hearth settings
+ * `setupStatus` is `pending` only for a vault with no persisted ZeroHearth settings
  * at all (see `migrateSettings`), and the modal itself moves it off `pending`
  * whether it is completed or dismissed — so this can never nag.
  */
-export function maybeRunSetup(plugin: HearthPlugin): boolean {
+export function maybeRunSetup(plugin: ZeroHearthPlugin): boolean {
 	if (plugin.settings.setupStatus !== "pending") return false;
 	openSetupWizard(plugin);
 	return true;

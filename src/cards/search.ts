@@ -71,14 +71,14 @@ export function renderSavedSearch(view: CardHost, card: DashboardCard, body: HTM
 }
 
 function renderQueryList(view: CardHost, body: HTMLElement, list: QueryHit[]): void {
-	const el = body.createDiv("hearth-list");
+	const el = body.createDiv("zerohearth-list");
 	const icons = fileIconOptions(view.plugin.settings);
 	for (const hit of list) {
-		const row = el.createDiv("hearth-list-item");
+		const row = el.createDiv("zerohearth-list-item");
 		// A badge icon describes *why* the file matched (tag, property, body), so
 		// it outranks the file's own icon.
 		applyFileIcon(
-			row.createDiv("hearth-list-icon"),
+			row.createDiv("zerohearth-list-icon"),
 			hit.badge?.icon ?? resolveFileIcon(view.app, hit.file, icons),
 		);
 		const name = hit.file instanceof TFile ? hit.file.basename : hit.file.name;
@@ -86,16 +86,16 @@ function renderQueryList(view: CardHost, body: HTMLElement, list: QueryHit[]): v
 			// A body excerpt is a sentence, not a chip: it goes on its own line
 			// under the file name, muted, with the matched words picked out.
 			row.addClass("has-excerpt");
-			const text = row.createDiv("hearth-list-text");
-			text.createDiv({ cls: "hearth-list-label", text: name });
+			const text = row.createDiv("zerohearth-list-text");
+			text.createDiv({ cls: "zerohearth-list-label", text: name });
 			renderHighlighted(
-				text.createDiv("hearth-list-excerpt"),
+				text.createDiv("zerohearth-list-excerpt"),
 				hit.badge.label,
 				hit.badge.matches,
 			);
 		} else {
-			row.createDiv({ cls: "hearth-list-label", text: name });
-			if (hit.badge) row.createDiv({ cls: "hearth-task-status", text: hit.badge.label });
+			row.createDiv({ cls: "zerohearth-list-label", text: name });
+			if (hit.badge) row.createDiv({ cls: "zerohearth-task-status", text: hit.badge.label });
 		}
 		const open = () => {
 			if (hit.file instanceof TFile) void openSearchHit(view, hit, "search");
@@ -106,18 +106,18 @@ function renderQueryList(view: CardHost, body: HTMLElement, list: QueryHit[]): v
 }
 
 function renderQueryTiles(view: CardHost, body: HTMLElement, list: QueryHit[]): void {
-	const grid = body.createDiv("hearth-links hearth-tiles-sized");
+	const grid = body.createDiv("zerohearth-links zerohearth-tiles-sized");
 	const baseTile = 90;
-	grid.style.setProperty("--hearth-tile", `${baseTile}px`);
+	grid.style.setProperty("--zerohearth-tile", `${baseTile}px`);
 	const icons = fileIconOptions(view.plugin.settings);
 	for (const hit of list) {
-		const tile = grid.createDiv("hearth-link-tile");
+		const tile = grid.createDiv("zerohearth-link-tile");
 		applyFileIcon(
-			tile.createDiv("hearth-link-icon"),
+			tile.createDiv("zerohearth-link-icon"),
 			hit.badge?.icon ?? resolveFileIcon(view.app, hit.file, icons),
 		);
 		const name = hit.file instanceof TFile ? hit.file.basename : hit.file.name;
-		tile.createDiv({ cls: "hearth-link-label", text: name });
+		tile.createDiv({ cls: "zerohearth-link-label", text: name });
 		const open = () => {
 			if (hit.file instanceof TFile) void openSearchHit(view, hit, "search");
 		};
@@ -135,14 +135,14 @@ function renderQueryVariables(
 	strings: { variables: string; variablesHint: string; vars: Record<QueryVariable, string> },
 	field: () => HTMLInputElement | null,
 ): void {
-	const ref = containerEl.createDiv("hearth-clip-ref");
-	ref.createDiv({ cls: "hearth-clip-ref-head", text: strings.variables });
-	ref.createDiv({ cls: "hearth-clip-ref-hint", text: strings.variablesHint });
-	const row = ref.createDiv("hearth-clip-vars");
+	const ref = containerEl.createDiv("zerohearth-clip-ref");
+	ref.createDiv({ cls: "zerohearth-clip-ref-head", text: strings.variables });
+	ref.createDiv({ cls: "zerohearth-clip-ref-hint", text: strings.variablesHint });
+	const row = ref.createDiv("zerohearth-clip-vars");
 	for (const name of QUERY_VARIABLES) {
-		const chip = row.createEl("button", { cls: "hearth-clip-chip", attr: { type: "button" } });
-		chip.createSpan({ cls: "hearth-clip-chip-code", text: `{{${name}}}` });
-		chip.createSpan({ cls: "hearth-clip-chip-desc", text: strings.vars[name] });
+		const chip = row.createEl("button", { cls: "zerohearth-clip-chip", attr: { type: "button" } });
+		chip.createSpan({ cls: "zerohearth-clip-chip-code", text: `{{${name}}}` });
+		chip.createSpan({ cls: "zerohearth-clip-chip-desc", text: strings.vars[name] });
 		// Keep the field's focus and selection: insert where the cursor is.
 		chip.addEventListener("mousedown", (e) => e.preventDefault());
 		chip.addEventListener("click", () => {
@@ -199,7 +199,7 @@ export function savedSearchEditor(ctx: CardEditorContext, containerEl: HTMLEleme
 			ctx.opts.save();
 		});
 		t.inputEl.type = "number";
-		t.inputEl.addClass("hearth-count-input");
+		t.inputEl.addClass("zerohearth-count-input");
 	});
 	addResetButton(ctx, maxResults, t().settings.resetField, () => {
 		cfg.count = undefined;

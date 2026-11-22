@@ -136,7 +136,7 @@ export const LAYOUT_SCHEMA = 2;
 
 /** Current full-settings export schema version. A settings export is a superset
  * of a layout export: it embeds the whole layout (so it imports cleanly through
- * `importLayout` too) plus every other configurable Hearth setting. */
+ * `importLayout` too) plus every other configurable ZeroHearth setting. */
 export const SETTINGS_SCHEMA = 1;
 
 /** The portable subset of settings that describes the whole dashboard setup. */
@@ -218,7 +218,7 @@ export function exportLayout(s: HomeSettings): string {
 	return JSON.stringify(layoutPayload(s), null, 2);
 }
 
-/** Serialize every configurable Hearth setting — the full layout plus header,
+/** Serialize every configurable ZeroHearth setting — the full layout plus header,
  * background, behaviour, appearance, filters and TaskNotes field mappings — to a
  * pretty JSON string. Internal bookkeeping (e.g. `lastSeenVersion`) is omitted
  * so a shared backup can't rewind another vault's "What's new" state. */
@@ -368,7 +368,7 @@ function sanitizeBaseViewName(raw: unknown): string | undefined {
 	return isEmbeddableBaseViewName(name) ? name : undefined;
 }
 
-/** An embed's picture-fit mode, or undefined when the import names one Hearth
+/** An embed's picture-fit mode, or undefined when the import names one ZeroHearth
  * doesn't have (a newer file, or a hand-edited one). */
 function sanitizeImageFit(raw: unknown): EmbedImageFit | undefined {
 	return EMBED_IMAGE_FITS.includes(raw as EmbedImageFit)
@@ -1771,7 +1771,7 @@ function sanitizeDatacore(r: Record<string, unknown>): DatacoreConfig {
 }
 
 /** An imported Git card. The section and action lists are run through the same
- * normalizers the card uses, so an unknown id from a newer Hearth (or a hand
+ * normalizers the card uses, so an unknown id from a newer ZeroHearth (or a hand
  * edit) is dropped rather than rendered as a dead button. */
 function sanitizeGit(r: Record<string, unknown>): GitConfig {
 	const cfg: GitConfig = {};
@@ -1828,7 +1828,7 @@ function sanitizeBackground(raw: unknown): BackgroundConfig | undefined {
 	if (!raw || typeof raw !== "object") return undefined;
 	const r = raw as Record<string, unknown>;
 	const kinds: BackgroundKind[] = ["none", "default", "harbour", "color", "image", "url", "video", "weather"];
-	// "hdefault" is what the board settings once stored for "Hearth default" —
+	// "hdefault" is what the board settings once stored for "ZeroHearth default" —
 	// the dropdown's key for it rather than the kind — so read it as that.
 	const kind = r.kind === "hdefault" ? "default" : r.kind;
 	if (!kinds.includes(kind as BackgroundKind)) return undefined;
@@ -1950,7 +1950,7 @@ export function sanitizeDashboard(
 		dash.backgroundSkyDesign = r.backgroundSkyDesign;
 	if (r.cardDesign === "classic" || r.cardDesign === "expressive") dash.cardDesign = r.cardDesign;
 	// Only "plugin" is carried: anything else — including a mode from a newer
-	// Hearth this build can't render — is left off, so the board imports as the
+	// ZeroHearth this build can't render — is left off, so the board imports as the
 	// cards board it also is. Its `cards` came through above either way.
 	if (r.mode === "plugin") dash.mode = "plugin";
 	const rawPluginView = r.pluginView;
@@ -1985,7 +1985,7 @@ export function sanitizeDashboard(
 		const title = str(h.title);
 		if (title !== undefined) header.title = title;
 		// Kept even when empty: an empty override is a board that deliberately
-		// wears the Hearth crystal, which is not the same as no override. An
+		// wears the ZeroHearth crystal, which is not the same as no override. An
 		// export taken before 2.2.0 carries the old `logo`/`logoIcon` pair
 		// instead, folded here the same way the settings migration folds it.
 		const hadLegacy = typeof h.logo === "string" || typeof h.logoIcon === "string";
@@ -2138,7 +2138,7 @@ export function applyLayout(
 		return null;
 	}
 
-	return t().layout.notAHearthLayout;
+	return t().layout.notAZeroHearthLayout;
 }
 
 /**
@@ -2162,7 +2162,7 @@ export function importSettings(s: HomeSettings, json: string): string | null {
 
 	const hasLayout = Array.isArray(data.dashboards) || Array.isArray(data.cards);
 	if (!hasLayout && typeof data.hearthSettings !== "number") {
-		return t().layout.notHearthSettings;
+		return t().layout.notZeroHearthSettings;
 	}
 
 	// Apply the embedded layout first so any malformed dashboards abort before we
@@ -2502,7 +2502,7 @@ export function applySettings(s: HomeSettings, data: Record<string, unknown>): v
 	if (typeof data.operonIntegration === "boolean") {
 		s.operonIntegration = data.operonIntegration;
 	}
-	// Restored faithfully, both ways. The flag only decides what Hearth *asks*
+	// Restored faithfully, both ways. The flag only decides what ZeroHearth *asks*
 	// Operon for — the capability itself is granted or refused in Operon's own
 	// settings — so a restore cannot widen access on its own, and a backup that
 	// silently dropped the setting would be the worse failure.

@@ -50,7 +50,7 @@ export function createVaultEventHub(
 			try {
 				listener(ev);
 			} catch (err) {
-				console.error("Hearth card event listener error", err);
+				console.error("ZeroHearth card event listener error", err);
 			}
 		}
 	};

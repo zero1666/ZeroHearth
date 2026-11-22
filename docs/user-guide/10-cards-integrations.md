@@ -1,6 +1,6 @@
 # 10. Integration cards
 
-This chapter documents the cards in the **Integrations** category of Hearth's
+This chapter documents the cards in the **Integrations** category of ZeroHearth's
 Add card picker. Each one is a window onto another plugin or another service:
 Templater, Dataview, Datacore, Git, Jira, RSS, Weather, Markets, World tension,
 Operon (four cards) and
@@ -10,7 +10,7 @@ A card whose plugin is not installed is still listed in the picker, marked
 *Needs Dataview* (or Git, Operon, and so on) with a one-click link to install
 it. You can add the card anyway; it shows a prompt until the dependency arrives.
 
-For the full catalogue of what Hearth integrates with, including things that are
+For the full catalogue of what ZeroHearth integrates with, including things that are
 not cards, see [chapter 14](14-integrations.md).
 
 ---
@@ -108,7 +108,7 @@ community plugin. Datacore is Dataview's successor.
 | Setting | Meaning |
 | --- | --- |
 | *Query type* | **Datacore query**, or a script in **JSX**, **JS**, **TSX** or **TS** |
-| *Query* | A Datacore query such as `@page and #project`. Hearth renders the matches as a live list of links |
+| *Query* | A Datacore query such as `@page and #project`. ZeroHearth renders the matches as a live list of links |
 | *Script* | A Datacore script, as inside a `datacorejsx` block without the fences. The `dc` API is in scope and the script returns the view to render |
 | *Rows per page* | Page the generated list at this many rows. 0 shows every match at once |
 
@@ -174,7 +174,7 @@ personal access token.
 | Setting | Meaning |
 | --- | --- |
 | *Jira host* | The Jira site origin, for example `https://jira.example.com`. HTTPS is required when sending a personal access token |
-| *Personal access token* | A bearer PAT used for this card. Stored in Hearth's plugin data |
+| *Personal access token* | A bearer PAT used for this card. Stored in ZeroHearth's plugin data |
 | *API base path* | A relative Jira REST path such as `/rest/api/latest`. Full URLs are rejected |
 | *Saved filter* | Load your favourite Jira filters, then choose one |
 | *Filter controls* | Which controls the card offers for narrowing the list |
@@ -204,7 +204,7 @@ Obsidian.
 
 Each feed has an optional name and a URL. There is also an **Add from GitHub**
 helper: enter a repository as `owner/repo`, or paste its URL, choose
-**Releases**, **Commits** or both, and Hearth builds the Atom feed URLs for you.
+**Releases**, **Commits** or both, and ZeroHearth builds the Atom feed URLs for you.
 
 *Combined "All" tab* adds a leading tab that merges every feed into one stream,
 newest first.
@@ -231,17 +231,17 @@ carry a dot, and each feed's tab says how many it has. Above the list:
 - the **filter** button lists only unread entries (also *Unread only* in the
   card's settings);
 - **mark all as read** clears the feed shown;
-- right-click an entry for every other action: read it in Hearth or in a new
+- right-click an entry for every other action: read it in ZeroHearth or in a new
   tab, open it in the browser, mark it read or unread, save it as a note, copy
   its link.
 
-What has been read is kept in Hearth's settings, so it syncs with them.
+What has been read is kept in ZeroHearth's settings, so it syncs with them.
 
-### Reading in Hearth
+### Reading in ZeroHearth
 
 Clicking an entry opens its web page by default. An entry with no web page —
 an email newsletter brought into a feed by LetterFeed, Kill the Newsletter or
-FreshRSS, say — opens in Hearth's **reader** instead, showing the full text the
+FreshRSS, say — opens in ZeroHearth's **reader** instead, showing the full text the
 feed carried. *Open entries in* can send every entry there: **Reader (dialog)**
 over the board, or **Reader (tab)** in a tab of its own.
 
@@ -289,7 +289,7 @@ coordinates you pick are ever sent.
 
 ### Location
 
-You can find a place by name — Hearth stores the coordinates on the card, so the
+You can find a place by name — ZeroHearth stores the coordinates on the card, so the
 lookup happens once — or type latitude and longitude in decimal degrees
 yourself. There is also a *Reuse a location* picker offering places already set
 on your other weather cards, and a *Label* for what the card calls the place.
@@ -515,7 +515,7 @@ approval step inside Operon. See [chapter 14](14-integrations.md) for the
 connection setup, which is the one integration that needs an action from you.
 
 All four read through Operon's own in-process Developer API, so recurrence,
-statuses, priorities and completion stay Operon's to define. Hearth never parses
+statuses, priorities and completion stay Operon's to define. ZeroHearth never parses
 Operon's notes.
 
 ### Common settings
@@ -552,7 +552,7 @@ Clicking a task opens its note at the exact line.
 
 ### Making changes
 
-Reading is the default. Writing is a choice, switched on at **Settings → Hearth
+Reading is the default. Writing is a choice, switched on at **Settings → ZeroHearth
 → Integrations → Operon → Allow changes**.
 
 With changes allowed:
@@ -562,7 +562,7 @@ With changes allowed:
 - every card grows a **+** that creates a task where Operon's own settings say
   new tasks go.
 
-Hearth previews the change, Operon rates it and applies it, and anything more
+ZeroHearth previews the change, Operon rates it and applies it, and anything more
 than routine is confirmed with you first, in Operon's own words. A move carries
 the status the board was drawn from, so a drag onto a stale board is refused
 rather than quietly undoing someone else's change.
@@ -577,9 +577,9 @@ answer — the card tells you to choose *Its own note* instead.
 
 The Operon cards are unusually explicit about why they are not showing anything:
 *Enable the Operon plugin*, *The Operon integration is off*, *Operon's developer
-API is desktop-only and needs Obsidian 1.12.2 or newer*, *Approve Hearth in
+API is desktop-only and needs Obsidian 1.12.2 or newer*, *Approve ZeroHearth in
 Settings → Operon → Core → General → Developer API Integrations*, *Operon
-suspended Hearth's access*, *Operon access was revoked*, *Operon is still
+suspended ZeroHearth's access*, *Operon access was revoked*, *Operon is still
 starting up*, and *Operon refused the connection*, with Operon's own error text
 shown underneath.
 
@@ -618,7 +618,7 @@ covers the day: add, start, stop, organise.
 
 The task list keeps one TaskChute view mounted off-screen as its data source.
 That is how starting and stopping a task stays the plugin's job rather than
-Hearth writing TaskChute's files itself; the overview and heatmap only read the
+ZeroHearth writing TaskChute's files itself; the overview and heatmap only read the
 plugin's monthly snapshot and mount nothing. TaskChute Plus has no public API,
 so the list depends on the members its view exposes — a release that renames
 them leaves the card saying so instead of showing a stale list.
@@ -643,13 +643,13 @@ specific drawing or PDF.
 
 ### The performance warning, in full
 
-This is by far the heaviest card Hearth has. It runs another plugin's full view
+This is by far the heaviest card ZeroHearth has. It runs another plugin's full view
 live inside the dashboard, so it keeps that plugin's own timers, listeners and
 rendering going for as long as the board is open, and **every one of these cards
 costs again**. Use one or two at most, and expect a slower dashboard on modest
 hardware.
 
-Hearth's performance tier cannot slow this card down, because a hosted view
+ZeroHearth's performance tier cannot slow this card down, because a hosted view
 manages itself. If you have stepped the tier down and the dashboard still feels
 heavy, this is the one card worth removing.
 

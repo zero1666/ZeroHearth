@@ -1,6 +1,6 @@
 /**
  * English base locale — the source of truth for every user-facing string in
- * Hearth. All other locales are typed against `typeof en` (see
+ * ZeroHearth. All other locales are typed against `typeof en` (see
  * `src/locales/index.ts`), so this file defines the complete set of keys a
  * translation must provide.
  *
@@ -22,7 +22,7 @@ export const en = {
 		newDrawing: "Create new Excalidraw drawing",
 		recordVoice: "Start/stop voice recording",
 		openDailyNote: "Open today's daily note",
-		runSetup: "Set up Hearth (first-run wizard)",
+		runSetup: "Set up ZeroHearth (first-run wizard)",
 		searchTips: "Show search tips",
 		switchDashboard: (n: number) => `Switch to dashboard ${n}`,
 		openDashboard: (n: number) => `Open dashboard ${n}`,
@@ -30,73 +30,73 @@ export const en = {
 		previousDashboard: "Previous dashboard",
 	},
 	ribbon: {
-		openHome: "Open Hearth home",
+		openHome: "Open ZeroHearth home",
 	},
 
 	// ---- Notices (transient toasts) ------------------------------------
 	notices: {
-		couldNotCreateNote: "Hearth: could not create a new note.",
+		couldNotCreateNote: "ZeroHearth: could not create a new note.",
 		operonTaskMissing:
-			"Hearth: that Operon task's note is no longer in the vault.",
-		operonRechecked: "Hearth: rechecked the Operon connection.",
-		operonWriteFailed: (reason: string) => `Hearth: Operon refused the change — ${reason}`,
+			"ZeroHearth: that Operon task's note is no longer in the vault.",
+		operonRechecked: "ZeroHearth: rechecked the Operon connection.",
+		operonWriteFailed: (reason: string) => `ZeroHearth: Operon refused the change — ${reason}`,
 		/** A refused create, with the Operon setting that decided the target —
 		 * the error alone names a configured target without saying which one. */
 		operonCreateFailed: (reason: string, where: string) =>
-			`Hearth: Operon refused to create the task — ${reason} ${where} ` +
+			`ZeroHearth: Operon refused to create the task — ${reason} ${where} ` +
 			"Change it in Operon's settings, or pick a different target under “New tasks” " +
 			"in this card's settings.",
-		/** The mutation may have landed. Hearth has already spent its one legal
+		/** The mutation may have landed. ZeroHearth has already spent its one legal
 		 * recovery attempt, so the honest report is "unknown", not "failed" —
 		 * and never an offer to retry, which could apply the change twice. */
 		operonWriteUnknown: (reason: string) =>
-			`Hearth: Operon couldn't confirm whether the change was applied (${reason}). ` +
+			`ZeroHearth: Operon couldn't confirm whether the change was applied (${reason}). ` +
 			"The card has been re-read — check the task before trying again.",
 		enableExcalidraw:
-			"Hearth: enable the Excalidraw plugin to create drawings.",
+			"ZeroHearth: enable the Excalidraw plugin to create drawings.",
 		excalidrawCommandMissing:
-			"Hearth: couldn't find Excalidraw's \"new drawing\" command.",
-		enableAudioRecorder: "Hearth: enable the core Audio recorder plugin.",
-		couldNotRecordVoice: "Hearth: couldn't start voice recording.",
-		enableDailyNotes: "Hearth: enable the core Daily notes plugin.",
-		couldNotOpenDaily: "Hearth: couldn't open today's daily note.",
-		couldNotOpenPeriodic: "Hearth: Periodic Notes couldn't make that note.",
-		couldNotCreateJournalNote: "Hearth: Journals couldn't make that note.",
-		commandNotFound: (id: string) => `Hearth: command not found: ${id}`,
+			"ZeroHearth: couldn't find Excalidraw's \"new drawing\" command.",
+		enableAudioRecorder: "ZeroHearth: enable the core Audio recorder plugin.",
+		couldNotRecordVoice: "ZeroHearth: couldn't start voice recording.",
+		enableDailyNotes: "ZeroHearth: enable the core Daily notes plugin.",
+		couldNotOpenDaily: "ZeroHearth: couldn't open today's daily note.",
+		couldNotOpenPeriodic: "ZeroHearth: Periodic Notes couldn't make that note.",
+		couldNotCreateJournalNote: "ZeroHearth: Journals couldn't make that note.",
+		commandNotFound: (id: string) => `ZeroHearth: command not found: ${id}`,
 		couldNotCreateNoteForDay: (day: string) =>
-			`Hearth: couldn't create a note for ${day}.`,
-		couldNotCreateEventNote: "Hearth: couldn't create a note for that event.",
-		taskNotesCreateFailed: "Hearth: couldn't run TaskNotes: Create new task.",
-		tasksPluginCreateFailed: "Hearth: couldn't run the Tasks plugin's create-task dialog.",
-		tasksPluginNoTarget: "Hearth: pick where new tasks go in this card's settings.",
+			`ZeroHearth: couldn't create a note for ${day}.`,
+		couldNotCreateEventNote: "ZeroHearth: couldn't create a note for that event.",
+		taskNotesCreateFailed: "ZeroHearth: couldn't run TaskNotes: Create new task.",
+		tasksPluginCreateFailed: "ZeroHearth: couldn't run the Tasks plugin's create-task dialog.",
+		tasksPluginNoTarget: "ZeroHearth: pick where new tasks go in this card's settings.",
 		tasksPluginNoDailyNotes:
-			"Hearth: enable the core Daily notes plugin, or pick a note for new tasks in this card's settings.",
+			"ZeroHearth: enable the core Daily notes plugin, or pick a note for new tasks in this card's settings.",
 		tasksPluginNoteMissing: (path: string) =>
-			`Hearth: no note at "${path}" for new tasks — pick another in this card's settings.`,
-		taskChangedOnDisk: "Hearth: that task changed on disk — refreshed.",
-		couldNotOpenTaskNote: "Hearth: couldn't open that task's note.",
-		couldNotUpdateTaskStatus: "Hearth: couldn't update the task status.",
+			`ZeroHearth: no note at "${path}" for new tasks — pick another in this card's settings.`,
+		taskChangedOnDisk: "ZeroHearth: that task changed on disk — refreshed.",
+		couldNotOpenTaskNote: "ZeroHearth: couldn't open that task's note.",
+		couldNotUpdateTaskStatus: "ZeroHearth: couldn't update the task status.",
 		couldNotCompleteRecurring:
-			"Hearth: couldn't mark the recurring task instance complete.",
+			"ZeroHearth: couldn't mark the recurring task instance complete.",
 		couldNotUndoRecurring:
-			"Hearth: couldn't undo the recurring task completion.",
-		couldNotAddKanbanCard: "Hearth: couldn't add the card to the Kanban board.",
-		couldNotConvertCard: "Hearth: couldn't convert the card into a note.",
+			"ZeroHearth: couldn't undo the recurring task completion.",
+		couldNotAddKanbanCard: "ZeroHearth: couldn't add the card to the Kanban board.",
+		couldNotConvertCard: "ZeroHearth: couldn't convert the card into a note.",
 		templaterNoTemplate: (path: string) =>
-			`Hearth: template not found: ${path}`,
+			`ZeroHearth: template not found: ${path}`,
 		templaterFailed: (name: string) =>
-			`Hearth: Templater didn't create a note from ${name}.`,
-		templaterCreated: (path: string) => `Hearth: created ${path}`,
+			`ZeroHearth: Templater didn't create a note from ${name}.`,
+		templaterCreated: (path: string) => `ZeroHearth: created ${path}`,
 		newNoteTemplaterMissing:
-			"Hearth: the “New note” button is set to a Templater template, but " +
+			"ZeroHearth: the “New note” button is set to a Templater template, but " +
 			"Templater isn’t enabled — making a blank note instead.",
-		exported: "Hearth: exported.",
-		layoutExported: "Hearth: layout exported.",
-		layoutImported: "Hearth: layout imported.",
-		layoutImportError: (error: string) => `Hearth: ${error}`,
+		exported: "ZeroHearth: exported.",
+		layoutExported: "ZeroHearth: layout exported.",
+		layoutImported: "ZeroHearth: layout imported.",
+		layoutImportError: (error: string) => `ZeroHearth: ${error}`,
 		exportedToVault: (file: string) =>
-			`Hearth: saved ${file} to your vault's root folder.`,
-		exportFailed: "Hearth: couldn't save the export file.",
+			`ZeroHearth: saved ${file} to your vault's root folder.`,
+		exportFailed: "ZeroHearth: couldn't save the export file.",
 		cardCopied: "Card copied to the dashboard.",
 	},
 
@@ -120,7 +120,7 @@ export const en = {
 		noMatchingCommands: "No matching commands",
 		tips: {
 			title: "What the search bar can do",
-			intro: "Type any of these into a Hearth search bar.",
+			intro: "Type any of these into a ZeroHearth search bar.",
 			introTry: "Click an example to try it.",
 			findHeading: "Find notes",
 			answersHeading: "Instant answers",
@@ -202,7 +202,7 @@ export const en = {
 			loading: "Loading…",
 			invalid: "Not a valid expression",
 			noQuote: (query: string) => `No market data for “${query}”`,
-			externalOff: "External calls are disabled in Hearth's settings",
+			externalOff: "External calls are disabled in ZeroHearth's settings",
 			rate: (from: string, rate: string, to: string) => `1 ${from} = ${rate} ${to}`,
 			days: (n: number) => (Math.abs(n) === 1 ? `${n} day` : `${n} days`),
 			today: "Today",
@@ -230,7 +230,7 @@ export const en = {
 
 	// ---- "What's new" release-notes dialog -----------------------------
 	whatsNew: {
-		title: "What's new in Hearth",
+		title: "What's new in ZeroHearth",
 		intro: "Thanks for updating! Here's what's changed since you last checked.",
 		/** Shown instead of {@link intro} when there are headlines to click. */
 		introHint:
@@ -277,7 +277,7 @@ export const en = {
 		/** The line under each heading. */
 		stepDescs: {
 			purpose:
-				"Pick as many as you like and Hearth picks the cards. Three quick steps, " +
+				"Pick as many as you like and ZeroHearth picks the cards. Three quick steps, " +
 				"and all of it can be changed later.",
 			look: "For the board being built. Every other board keeps its own look.",
 			finish: "Nothing has been changed yet. This is what will be built.",
@@ -296,7 +296,7 @@ export const en = {
 			titleIcon: "Title icon",
 			titleIconDesc:
 				"An emoji, a couple of characters, a Lucide icon id, a vault image path or " +
-				"an image URL, shown beside the title. Leave empty for the Hearth crystal.",
+				"an image URL, shown beside the title. Leave empty for the ZeroHearth crystal.",
 			themeColor: "Follow the theme's accent colour",
 			themeColorDesc: "Which parts of the brand mark take your theme's colour.",
 			themeColorOptions: {
@@ -310,8 +310,8 @@ export const en = {
 		},
 		look: {
 			designHeading: "Design",
-			designNote: "This one applies to all of Hearth, not just this board. Change it any time in Settings → Hearth → Appearance.",
-			terminalNote: "Terminal mode applies to all of Hearth and every board. It draws no wallpaper or card surfaces, so there is nothing more to pick here. It is experimental: switch it off any time in Settings → Hearth → Appearance, and the boards come back in the design underneath.",
+			designNote: "This one applies to all of ZeroHearth, not just this board. Change it any time in Settings → ZeroHearth → Appearance.",
+			terminalNote: "Terminal mode applies to all of ZeroHearth and every board. It draws no wallpaper or card surfaces, so there is nothing more to pick here. It is experimental: switch it off any time in Settings → ZeroHearth → Appearance, and the boards come back in the design underneath.",
 			surfaceHeading: "Cards",
 			backgroundHeading: "Background",
 			color: "Colour",
@@ -351,12 +351,12 @@ export const en = {
 			classic: {
 				icon: "square",
 				name: "Classic",
-				desc: "Hearth as it has always looked: quiet surfaces, fine borders.",
+				desc: "ZeroHearth as it has always looked: quiet surfaces, fine borders.",
 			},
 			expressive: {
 				icon: "shapes",
 				name: "Expressive",
-				desc: "Material 3 Expressive across all of Hearth — cards, buttons, menus, dialogs and settings — in tones of your accent colour.",
+				desc: "Material 3 Expressive across all of ZeroHearth — cards, buttons, menus, dialogs and settings — in tones of your accent colour.",
 			},
 			terminal: {
 				icon: "terminal",
@@ -367,8 +367,8 @@ export const en = {
 		backgrounds: {
 			default: {
 				icon: "image",
-				name: "Hearth's wallpaper",
-				desc: "Hills drawn by Hearth, by day or by night with your theme.",
+				name: "ZeroHearth's wallpaper",
+				desc: "Hills drawn by ZeroHearth, by day or by night with your theme.",
 			},
 			harbour: {
 				icon: "anchor",
@@ -437,7 +437,7 @@ export const en = {
 		},
 		integrations: {
 			lead:
-				"Each one Hearth turns on here adds a card to this board, configured for " +
+				"Each one ZeroHearth turns on here adds a card to this board, configured for " +
 				"you — nothing is installed or changed in the other plugin, and nothing " +
 				"outside this dashboard is touched.",
 			recommended: "Recommended",
@@ -454,7 +454,7 @@ export const en = {
 				git: "Add a Git card showing your repository's status, with commit and sync buttons.",
 				operon:
 					"Add an Operon tasks card, reading through Operon's Developer API. " +
-					"You'll be asked to approve Hearth in Operon's own settings the first " +
+					"You'll be asked to approve ZeroHearth in Operon's own settings the first " +
 					"time the card loads; until then it says what it's waiting for.",
 				bases: "Add a card embedding a base from your vault.",
 				dailyNotes: "Add a card showing today's daily note, editable in place.",
@@ -465,7 +465,7 @@ export const en = {
 			taskNotesDue: "Due field",
 			taskNotesPriority: "Priority field",
 			taskNotesDone: "Counts as done",
-			taskNotesDoneNone: "none defined — Hearth will use \"done\"",
+			taskNotesDoneNone: "none defined — ZeroHearth will use \"done\"",
 		},
 		finish: {
 			empty:
@@ -486,7 +486,7 @@ export const en = {
 			calloutTitle: "A starting point, not a preset",
 			calloutHint:
 				"Every card can be moved, resized, reconfigured or removed with Arrange " +
-				"(top-right of the board); Settings → Hearth has the rest. You can run this " +
+				"(top-right of the board); Settings → ZeroHearth has the rest. You can run this " +
 				"wizard again any time from Settings → About.",
 			clock: "Clock",
 			clockDesc: "A small clock and greeting at the top of the side column.",
@@ -549,8 +549,8 @@ export const en = {
 		notice: {
 			done: (n: number) =>
 				n === 1
-					? "Hearth: your dashboard is ready — 1 card added."
-					: `Hearth: your dashboard is ready — ${n} cards added.`,
+					? "ZeroHearth: your dashboard is ready — 1 card added."
+					: `ZeroHearth: your dashboard is ready — ${n} cards added.`,
 		},
 	},
 
@@ -638,7 +638,7 @@ export const en = {
 			name: "Name",
 			mode: "Dashboard type",
 			modeDesc:
-				"A board of Hearth cards, a single Hearth card filling the whole board, or the whole board given over to one plugin's view. Switching type keeps this board's cards — switch back and they return.",
+				"A board of ZeroHearth cards, a single ZeroHearth card filling the whole board, or the whole board given over to one plugin's view. Switching type keeps this board's cards — switch back and they return.",
 			modeOptions: {
 				cards: "Cards",
 				single: "Single card",
@@ -684,7 +684,7 @@ export const en = {
 			linkedWorkspaceNone: "None",
 			mobileDefault: "Default on mobile",
 			mobileDefaultDesc:
-				"Open this dashboard when Hearth loads on a phone or tablet. Only one board can be the mobile default; enabling this clears it on the others.",
+				"Open this dashboard when ZeroHearth loads on a phone or tablet. Only one board can be the mobile default; enabling this clears it on the others.",
 			titleVisibility: "Title visibility",
 			titleVisibilityDesc:
 				"Show or hide only the title block for this dashboard. Overrides the global setting.",
@@ -767,7 +767,7 @@ export const en = {
 			skyDesignDesc:
 				"The classic painted sky, or the flat Material 3 Expressive one, on this board.",
 			wallpaperDesignDesc:
-				"Hearth's wallpaper on this board: classic hills, or flat Material 3 Expressive shapes in your accent colour.",
+				"ZeroHearth's wallpaper on this board: classic hills, or flat Material 3 Expressive shapes in your accent colour.",
 			visibilityDefaultPlugin: (state: string) =>
 				`Default on a plugin board (${state})`,
 			visibilityDefaultSingle: (state: string) =>
@@ -780,7 +780,7 @@ export const en = {
 			titleTextDesc: "Override the global title text for this dashboard.",
 			titleIcon: "Title icon",
 			titleIconDesc:
-				"The mark beside this dashboard's title: a Lucide icon id, an emoji or short text, a vault image path, or an image URL. Clear it to wear the Hearth crystal on this board alone.",
+				"The mark beside this dashboard's title: a Lucide icon id, an emoji or short text, a vault image path, or an image URL. Clear it to wear the ZeroHearth crystal on this board alone.",
 			titleAlign: "Title alignment",
 			titleAlignDesc:
 				"Align only the title block. The search bar keeps its own layout.",
@@ -813,7 +813,7 @@ export const en = {
 				"A single-card board always fits the pane — the card fills it and scrolls itself.",
 			themeColorTarget: "Accent colour on the title",
 			themeColorTargetDesc:
-				"Which parts of this board's brand mark follow the theme's icon colour. Overrides the global setting for this board; Hearth's tab and ribbon icons keep following the global one.",
+				"Which parts of this board's brand mark follow the theme's icon colour. Overrides the global setting for this board; ZeroHearth's tab and ribbon icons keep following the global one.",
 			themeColorTargetDefault: (state: string) => `Use global default (${state})`,
 			themeColorTargetOptions: {
 				none: "Neither",
@@ -857,7 +857,7 @@ export const en = {
 		backgroundOptions: {
 			default: "Use global default",
 			none: "None",
-			hdefault: "Hearth default",
+			hdefault: "ZeroHearth default",
 			harbour: "Harbour town",
 			color: "Solid color",
 			image: "Vault image",
@@ -899,7 +899,7 @@ export const en = {
 			dashboard: "Grid, card surface, and the controls around the board.",
 			behaviour: "Startup, how notes open, and privacy.",
 			mobile: "The stacked layout on a phone, and the action bar.",
-			integrations: "TaskNotes, file icons, and every plugin Hearth reads.",
+			integrations: "TaskNotes, file icons, and every plugin ZeroHearth reads.",
 			backup: "Export and import your layout and settings.",
 			about: "Version, what's new, and where to report things.",
 		},
@@ -939,19 +939,19 @@ export const en = {
 			startup: "Startup & tabs",
 			startupDesc: "When and where the home view opens.",
 			opening: "Opening notes",
-			openingDesc: "Where a note opens when you click it in Hearth.",
+			openingDesc: "Where a note opens when you click it in ZeroHearth.",
 			mobileMode: "Layout",
 			mobileModeDesc:
 				"How the board is laid out when the screen is too narrow for its own layout.",
 			privacy: "Privacy & network",
-			privacyDesc: "Control the outbound requests Hearth is allowed to make.",
+			privacyDesc: "Control the outbound requests ZeroHearth is allowed to make.",
 		},
 		about: {
-			heading: "About Hearth",
+			heading: "About ZeroHearth",
 			headingDesc: "Project links, support and version.",
-			setup: "Set up Hearth",
+			setup: "Set up ZeroHearth",
 			setupDesc:
-				"Answer a few questions about how you work and what's installed, and Hearth " +
+				"Answer a few questions about how you work and what's installed, and ZeroHearth " +
 				"builds a dashboard to match. It's added as a new board — nothing you " +
 				"already have is changed.",
 			setupAgain: "Build a dashboard",
@@ -971,15 +971,11 @@ export const en = {
 			reportIssueDesc:
 				"Hit a bug or have a feature idea? Open an issue on GitHub.",
 			reportIssueButton: "Report issue",
-			kofi: "Support Hearth",
-			kofiDesc:
-				"Hearth is free and always will be. If it's earned a spot on your home " +
-				"screen, you can leave a tip — completely optional, no features are locked.",
-			/** Shared by every surface that shows the tip button: this row, the
-			 * "What's new" dialog and the card picker's request page. */
-			kofiButton: "Tip me on Ko-fi",
+			kofi: "Support the upstream author",
+			kofiDesc: "Tips go to the author of Hearth, the project ZeroHearth is based on.",
+			kofiButton: "Support the upstream author on Ko-fi",
 			version: (v: string) => `Version ${v}`,
-			versionDesc: "The Hearth build you're running.",
+			versionDesc: "The ZeroHearth build you're running.",
 		},
 		appearance: {
 			heading: "Appearance",
@@ -997,12 +993,12 @@ export const en = {
 				"The mark drawn next to the title. It takes any of: a Lucide icon id " +
 				"(browse the set with the 🔍 button), an emoji or a couple of " +
 				"characters, the vault path of an image (📷 button), or the URL of an " +
-				"image on the web. Leave it empty for the Hearth crystal. Each " +
+				"image on the web. Leave it empty for the ZeroHearth crystal. Each " +
 				"dashboard can override it in its own settings.",
 			tabIcon: "Tab icon",
 			tabIconDesc:
-				"A Lucide icon for Hearth's tab header and ribbon button, in place of " +
-				"the Hearth crystal. Browse the set or type an id; leave empty for the crystal.",
+				"A Lucide icon for ZeroHearth's tab header and ribbon button, in place of " +
+				"the ZeroHearth crystal. Browse the set or type an id; leave empty for the crystal.",
 			themeColorTarget: "Follow theme icon color",
 			themeColorTargetDesc:
 				"Draw the crystal icon and/or the title text in your theme's icon " +
@@ -1034,7 +1030,7 @@ export const en = {
 				"Obsidian’s Quick switcher does: files only, aliases included. " +
 				"Omnisearch requires the Omnisearch community plugin to be installed " +
 				"and enabled.",
-			searchEngineBuiltin: "Hearth (built-in)",
+			searchEngineBuiltin: "ZeroHearth (built-in)",
 			searchEngineOmnisearch: "Omnisearch",
 			searchEngineQuickSwitcher: "Quick switcher",
 			numberFormat: "Number format",
@@ -1062,7 +1058,7 @@ export const en = {
 			newNoteHeadingDesc:
 				"What the button makes, and where. The same settings drive the " +
 				"button beside the search bar, the one on a search-bar card, and " +
-				"Hearth’s “Create new note” command.",
+				"ZeroHearth’s “Create new note” command.",
 			newNoteButtonLabel: "Button text",
 			newNoteButtonLabelDesc:
 				"Text on the button. Leave empty for “New note”.",
@@ -1130,7 +1126,7 @@ export const en = {
 			pauseWhenUnfocused: "Pause animation when Obsidian isn't in front",
 			pauseWhenUnfocusedDesc:
 				"Hold every animation while you are working in another app or " +
-				"another window. A Hearth tab hidden behind another tab already " +
+				"another window. A ZeroHearth tab hidden behind another tab already " +
 				"costs nothing; this covers a visible board in a window you are not " +
 				"using — beside a browser, or on a second screen. Turn it off if you " +
 				"keep the dashboard running on a second display.",
@@ -1174,7 +1170,7 @@ export const en = {
 			valueUrlDesc: "A direct image URL.",
 			valueVideoDesc: "A video path in your vault, e.g. Attachments/loop.mp4. It plays muted on a loop.",
 			videoNote:
-				"A video backdrop is the heaviest thing Hearth can paint — it decodes a frame for as long as the board is open. It plays on the Full performance tier only; from Balanced down it stays frozen on its first frame.",
+				"A video backdrop is the heaviest thing ZeroHearth can paint — it decodes a frame for as long as the board is open. It plays on the Full performance tier only; from Balanced down it stays frozen on its first frame.",
 			externalCallsDisabled:
 				"Not shown while \u201cDisable external calls\u201d is on in Behaviour: " +
 				"this background is fetched from the web. Pick a vault image instead, " +
@@ -1203,7 +1199,7 @@ export const en = {
 			bannerFullWidthDesc:
 				"Run the banner edge to edge instead of lining it up with the content below.",
 			labels: {
-				default: "Hearth default",
+				default: "ZeroHearth default",
 				harbour: "Harbour town",
 				none: "None",
 				color: "Solid color",
@@ -1241,7 +1237,7 @@ export const en = {
 				"The classic painted sky, or a flat Material 3 Expressive one with hills, bubbly clouds and a turning sun.",
 			wallpaperDesignDesc:
 				"Classic hills with a cabin — a morning in a light theme, a moonlit night in a dark one — " +
-				"or flat Material 3 Expressive shapes in tones of your accent colour. Drawn by Hearth, " +
+				"or flat Material 3 Expressive shapes in tones of your accent colour. Drawn by ZeroHearth, " +
 				"so nothing is downloaded.",
 			skyDesignClassic: "Classic (painted)",
 			skyDesignExpressive: "Expressive (flat)",
@@ -1249,7 +1245,7 @@ export const en = {
 		behaviour: {
 			heading: "Behaviour",
 			headingDesc:
-				"When and where Hearth opens, and the phone/tablet search-only mode.",
+				"When and where ZeroHearth opens, and the phone/tablet search-only mode.",
 			openOnStartup: "Open on startup",
 			openOnStartupDesc: "Open the home view when the vault loads.",
 			replaceNewTabs: "Replace new tabs",
@@ -1262,7 +1258,7 @@ export const en = {
 			liveRefreshDesc:
 				"Keep an open home view current as the vault changes — Recent, Bookmarks " +
 				"and saved-query cards update without reopening the tab. Switching back to " +
-				"the Hearth tab always refreshes it regardless of this setting.",
+				"the ZeroHearth tab always refreshes it regardless of this setting.",
 			liveSettingsSync: "Pick up synced changes",
 			liveSettingsSyncDesc:
 				"Apply dashboard changes made on another device as soon as sync brings " +
@@ -1300,18 +1296,18 @@ export const en = {
 			mobileTierMatch: "Match desktop",
 			disableExternalCalls: "Disable external calls",
 			disableExternalCallsDesc:
-				"Block all outbound network requests Hearth makes, including Jira, " +
+				"Block all outbound network requests ZeroHearth makes, including Jira, " +
 				"external calendars, RSS feeds, the calculator's currency-rate lookup, " +
 				"and background images and title icons given as a web address — those " +
-				"fall back to no picture and the Hearth crystal.",
+				"fall back to no picture and the ZeroHearth crystal.",
 			openIn: "Open notes in",
 			openInDesc:
-				"Where a note goes when you open one from Hearth. \"Current tab\" replaces " +
-				"the home view, so Hearth behaves like any other tab. Ctrl/Cmd-click always " +
+				"Where a note goes when you open one from ZeroHearth. \"Current tab\" replaces " +
+				"the home view, so ZeroHearth behaves like any other tab. Ctrl/Cmd-click always " +
 				"opens a new tab regardless.",
 			openInModes: {
 				tab: "A new tab",
-				same: "The current tab (replace Hearth)",
+				same: "The current tab (replace ZeroHearth)",
 				split: "A split pane",
 				window: "A new window",
 			},
@@ -1327,18 +1323,18 @@ export const en = {
 				cardDesc:
 					"Notes listed by Recent, Bookmarks, Favourites, Calendar, Heatmap and " +
 					"Tasks cards, and by mobile action buttons.",
-				newNote: "Notes Hearth creates",
+				newNote: "Notes ZeroHearth creates",
 				newNoteDesc: "New notes, daily notes and event notes, opened as they're made.",
 			},
-			openFromOutside: "Notes opened from outside Hearth",
+			openFromOutside: "Notes opened from outside ZeroHearth",
 			openFromOutsideDesc:
 				"The file explorer, the quick switcher, the graph — and anything a card " +
 				"embeds that opens links itself. Obsidian hands those to whichever tab " +
-				"is focused, so a Hearth tab gets taken over. Choose \"a new tab\" to keep " +
-				"the Hearth tab; the file explorer then stops following what you open.",
+				"is focused, so a ZeroHearth tab gets taken over. Choose \"a new tab\" to keep " +
+				"the ZeroHearth tab; the file explorer then stops following what you open.",
 			openFromOutsideModes: {
-				same: "The current tab (replace Hearth)",
-				tab: "A new tab (keep Hearth open)",
+				same: "The current tab (replace ZeroHearth)",
+				tab: "A new tab (keep ZeroHearth open)",
 			},
 		},
 		mobileActions: {
@@ -1367,12 +1363,12 @@ export const en = {
 		integrations: {
 			heading: "All integrations",
 			headingDesc:
-				"Everything Hearth can work with, listed whether or not it's installed. " +
+				"Everything ZeroHearth can work with, listed whether or not it's installed. " +
 				"Most integrations need no setup — the ones that do say where their " +
 				"settings live.",
 			groups: {
 				plugin: "Community plugins",
-				pluginDesc: "Hearth picks these up automatically once they're enabled.",
+				pluginDesc: "ZeroHearth picks these up automatically once they're enabled.",
 				core: "Obsidian core plugins",
 				coreDesc:
 					"Built into Obsidian. Enable them in Settings → Core plugins if a " +
@@ -1389,11 +1385,11 @@ export const en = {
 				external: "Network",
 				always: "Always available",
 			},
-			/** Tooltip on the status pill, spelling out what it means for Hearth. */
+			/** Tooltip on the status pill, spelling out what it means for ZeroHearth. */
 			statusTooltip: {
-				enabled: "Installed and enabled — Hearth is using it.",
-				disabled: "Installed but turned off, so Hearth can't use it right now.",
-				missing: "Not installed. Everything else in Hearth works without it.",
+				enabled: "Installed and enabled — ZeroHearth is using it.",
+				disabled: "Installed but turned off, so ZeroHearth can't use it right now.",
+				missing: "Not installed. Everything else in ZeroHearth works without it.",
 				external: "An outbound request, not a plugin.",
 				always: "Nothing to install.",
 			},
@@ -1402,7 +1398,7 @@ export const en = {
 				section: "Settings below on this tab.",
 				tab: (tab: string) => `Settings under ${tab}.`,
 				card: "Configured on the card itself, on your dashboard.",
-				pluginSettings: "Uses that plugin's own settings — nothing to set in Hearth.",
+				pluginSettings: "Uses that plugin's own settings — nothing to set in ZeroHearth.",
 				none: "Nothing to configure.",
 			},
 			/** Row buttons. */
@@ -1417,7 +1413,7 @@ export const en = {
 					desc:
 						"A Tasks card can read the Tasks plugin's own tasks — its " +
 						"statuses (including custom ones) and task format — drawn by " +
-						"Hearth with its filter, sort and fields, and tick, edit and " +
+						"ZeroHearth with its filter, sort and fields, and tick, edit and " +
 						"create through the plugin into the daily note or a note of " +
 						"your choice.",
 				},
@@ -1438,7 +1434,7 @@ export const en = {
 					name: "Omnisearch",
 					desc:
 						"Swaps the search bar over to Omnisearch's fuzzy, full-text index " +
-						"instead of Hearth's built-in engine. Pick the engine under " +
+						"instead of ZeroHearth's built-in engine. Pick the engine under " +
 						"Search → Search bar; the choice only sticks while Omnisearch is enabled.",
 				},
 				tasknotes: {
@@ -1497,12 +1493,12 @@ export const en = {
 						"The Operon cards — tasks, board, agenda and timer — read through " +
 						"Operon's own Developer API, so its statuses, priorities and " +
 						"recurrence stay its to define. Desktop only, needs Obsidian 1.12.2 " +
-						"or newer, and Operon must approve Hearth's read request.",
+						"or newer, and Operon must approve ZeroHearth's read request.",
 				},
 				iconic: {
 					name: "Iconic",
 					desc:
-						"Per-file icons set with Iconic show up wherever Hearth lists a file — " +
+						"Per-file icons set with Iconic show up wherever ZeroHearth lists a file — " +
 						"Recent, Favorites, saved searches and search results.",
 				},
 				iconize: {
@@ -1524,7 +1520,7 @@ export const en = {
 						"The Vault Pet card houses the plugin on your board — either its " +
 						"own pet card, live and clickable, or its whole pet house with " +
 						"quests, dex, badges and stats. The pet, its XP and everything " +
-						"it unlocks stay Vault Pet's; Hearth only gives it the space.",
+						"it unlocks stay Vault Pet's; ZeroHearth only gives it the space.",
 				},
 				excalidraw: {
 					name: "Excalidraw",
@@ -1558,7 +1554,7 @@ export const en = {
 				},
 				fileExplorer: {
 					name: "File explorer",
-					desc: "Powers “Reveal in file explorer” on Hearth's search results.",
+					desc: "Powers “Reveal in file explorer” on ZeroHearth's search results.",
 				},
 				workspaces: {
 					name: "Workspaces",
@@ -1646,7 +1642,7 @@ export const en = {
 			fieldsEnable: "Customize task fields",
 			fieldsEnableDesc:
 				"Replace the fixed metadata Tasks cards show with fields you define " +
-				"yourself — any frontmatter property or anything Hearth reads, named, " +
+				"yourself — any frontmatter property or anything ZeroHearth reads, named, " +
 				"colored and ordered how you like. Off by default, and tasks keep " +
 				"their usual look until you turn it on. Turning it on starts from a " +
 				"blank slate: tasks show only the fields you add.",
@@ -1659,16 +1655,16 @@ export const en = {
 			heading: "File icons / Iconic / Iconize",
 			headingDesc:
 				"Use the per-file icons you've set with the Iconic or Iconize " +
-				"plugins wherever Hearth shows a file — Recent, Favorites, saved " +
+				"plugins wherever ZeroHearth shows a file — Recent, Favorites, saved " +
 				"searches and the search bar. Lucide icons and emoji are shown; " +
-				"files using an icon from a downloaded icon pack keep Hearth's own " +
+				"files using an icon from a downloaded icon pack keep ZeroHearth's own " +
 				"file-type icon.",
 			enable: "Use icons from Iconic / Iconize",
 			enableDesc:
-				"Off shows Hearth's file-type icon for every file, ignoring both plugins.",
+				"Off shows ZeroHearth's file-type icon for every file, ignoring both plugins.",
 			enableDescNoPlugin:
 				"Neither Iconic nor Iconize is enabled right now, so every file " +
-				"shows Hearth's file-type icon unless the frontmatter option " +
+				"shows ZeroHearth's file-type icon unless the frontmatter option " +
 				"below is on. This can stay on — it takes effect as soon as one " +
 				"of them is installed.",
 			property: "Iconize frontmatter property",
@@ -1686,7 +1682,7 @@ export const en = {
 				"Off by default: “icon” is a common property name, and a vault " +
 				"using it for something else would see those values drawn as " +
 				"icons. Only emoji and icon ids Obsidian knows are shown; anything " +
-				"else keeps Hearth's file-type icon.",
+				"else keeps ZeroHearth's file-type icon.",
 		},
 		frontMatterTitle: {
 			heading: "Front Matter Title",
@@ -1708,10 +1704,10 @@ export const en = {
 			headingDesc:
 				"Read tasks, boards, agendas and the running timer from the Operon " +
 				"plugin through its own developer API — Operon stays the source of " +
-				"truth for what a task is, and Hearth only displays what it returns.",
+				"truth for what a task is, and ZeroHearth only displays what it returns.",
 			enable: "Connect to Operon",
 			enableDesc:
-				"Off is a kill switch: Operon cards stop reading and Hearth never " +
+				"Off is a kill switch: Operon cards stop reading and ZeroHearth never " +
 				"asks Operon for access. Nothing is requested until an Operon card " +
 				"is on a dashboard.",
 			status: "Connection",
@@ -1721,15 +1717,15 @@ export const en = {
 			statusBooting: "Operon is running but still starting up.",
 			statusPending:
 				"Waiting for approval. Open Settings → Operon → Core → General → " +
-				"Developer API Integrations and approve Hearth.",
+				"Developer API Integrations and approve ZeroHearth.",
 			statusSuspended:
-				"Access is suspended. Review Hearth's pending scope in Operon's " +
+				"Access is suspended. Review ZeroHearth's pending scope in Operon's " +
 				"Developer API Integrations.",
 			statusRevoked:
 				"Access was revoked. Grant it again in Operon's Developer API Integrations.",
 			statusReady: "Connected — Operon cards can read tasks.",
 			statusIdle: "Not connected yet. Add an Operon card to open a session.",
-			statusOff: "The integration is switched off, so Hearth isn't reading anything from Operon.",
+			statusOff: "The integration is switched off, so ZeroHearth isn't reading anything from Operon.",
 			statusError: "Operon refused the connection.",
 			detail: "Operon reported",
 			install: "Open Operon in Community plugins",
@@ -1737,16 +1733,16 @@ export const en = {
 			writesDesc:
 				"Lets the board card move a task to another status by dragging it, and " +
 				"adds a “+” for creating one. Operon decides where a new task goes and " +
-				"whether a move is legal; Hearth only asks. Turning this on widens what " +
-				"Hearth requests, so you'll need to approve it again in Operon's " +
-				"Developer API Integrations. Off means Hearth can only read.",
+				"whether a move is legal; ZeroHearth only asks. Turning this on widens what " +
+				"ZeroHearth requests, so you'll need to approve it again in Operon's " +
+				"Developer API Integrations. Off means ZeroHearth can only read.",
 			writesPending:
 				"Reading works, but the change permissions haven't been granted yet — " +
-				"approve Hearth again in Operon's Developer API Integrations. Until then " +
+				"approve ZeroHearth again in Operon's Developer API Integrations. Until then " +
 				"the cards stay read-only.",
 			capabilities: "Requested access",
 			capabilitiesDesc:
-				"Hearth asks for all of these at once because Operon does not open a " +
+				"ZeroHearth asks for all of these at once because Operon does not open a " +
 				"partly approved session. Read-only unless “Allow changes” is on, which " +
 				"adds the task-transition and task-creation permissions.",
 			missing: (names: string) => `Not yet granted: ${names}`,
@@ -1808,8 +1804,8 @@ export const en = {
 				"Expressive cards sit on an opaque tonal surface with large, rounded corners, so opacity, blur, corner radius and border apply only to Classic cards.",
 			cardDesign: "Design",
 			cardDesignDesc:
-				"How Hearth is drawn: Classic, or Material 3 Expressive — tonal containers in your accent colour, pills and soft shapes, heavier type. Expressive reaches all of Hearth's interface: the cards, the board's buttons, every dialog and menu, and this settings pane. A dashboard or a card can still choose for itself; cards whose content is your own (notes, embeds, web pages) keep that content as it is and take only the Expressive frame.",
-			designClassicDesc: "Quiet surfaces and fine borders — Hearth as it has always looked.",
+				"How ZeroHearth is drawn: Classic, or Material 3 Expressive — tonal containers in your accent colour, pills and soft shapes, heavier type. Expressive reaches all of ZeroHearth's interface: the cards, the board's buttons, every dialog and menu, and this settings pane. A dashboard or a card can still choose for itself; cards whose content is your own (notes, embeds, web pages) keep that content as it is and take only the Expressive frame.",
+			designClassicDesc: "Quiet surfaces and fine borders — ZeroHearth as it has always looked.",
 			designExpressiveDesc: "Material 3 Expressive everywhere: tonal colour from your accent, pills and soft shapes, bold type.",
 			designInUse: "In use",
 			cards: "Cards",
@@ -1828,7 +1824,7 @@ export const en = {
 			exportDashboardButton: "Export dashboard…",
 			importAny: "Import",
 			importAnyDesc:
-				"Open a Hearth file — one dashboard, a layout, or a full backup. It tells you what's in it before anything changes, and a single dashboard is added alongside your own rather than replacing anything.",
+				"Open a ZeroHearth file — one dashboard, a layout, or a full backup. It tells you what's in it before anything changes, and a single dashboard is added alongside your own rather than replacing anything.",
 			export: "Export layout",
 			exportDesc:
 				"Download every dashboard plus the grid and layout settings as a JSON file.",
@@ -1838,7 +1834,7 @@ export const en = {
 			importButton: "Import file",
 			exportSettings: "Export settings",
 			exportSettingsDesc:
-				"Download every Hearth setting — the full layout plus header, background, " +
+				"Download every ZeroHearth setting — the full layout plus header, background, " +
 				"behaviour, appearance and TaskNotes options — as a JSON backup file.",
 		},
 	},
@@ -2230,7 +2226,7 @@ export const en = {
 			count: "Number of files",
 			countDesc: (max: number) =>
 				`How many recently-opened files to list — at most ${max}, which is as ` +
-				`far back as Hearth's recent-file history goes.`,
+				`far back as ZeroHearth's recent-file history goes.`,
 			types: "File types",
 			typesDesc: "Only list files of the selected types. Pick any combination; none selected shows every type.",
 		},
@@ -2238,7 +2234,7 @@ export const en = {
 			heading: "Folder bookmarks",
 			folderTarget: "Opening a folder bookmark",
 			folderTargetDesc:
-				"In Hearth's folder browser, or in Obsidian's own file explorer in " +
+				"In ZeroHearth's folder browser, or in Obsidian's own file explorer in " +
 				"the sidebar.",
 		},
 		folder: {
@@ -2248,7 +2244,7 @@ export const en = {
 			pickFolder: "Pick a folder",
 			sort: "Order",
 			sortDesc:
-				"How the contents are ordered. Under Hearth's own orders folders lead " +
+				"How the contents are ordered. Under ZeroHearth's own orders folders lead " +
 				"and sort by name, the way the file explorer does.",
 			sorts: {
 				explorer: "Same as the file explorer",
@@ -2326,7 +2322,7 @@ export const en = {
 			operonTasksDesc:
 				"Mark days that have an Operon task due, and list those tasks in the " +
 				"agenda. Reads through Operon's developer API, so it needs Operon " +
-				"approved in Settings → Hearth → Integrations. Tasks that are only " +
+				"approved in Settings → ZeroHearth → Integrations. Tasks that are only " +
 				"scheduled (no due date) aren't included.",
 			operonTaskColor: "Operon task colour",
 			operonTaskColorDesc: "Colour of the task markers. Defaults to the accent colour.",
@@ -2410,7 +2406,7 @@ export const en = {
 				`${count} event${count === 1 ? "" : "s"} loaded.`,
 			taskNotesSubPending: "Not loaded yet — refresh below.",
 			taskNotesSubDisabled: "Disabled in TaskNotes.",
-			taskNotesSubBlocked: "Not fetched: external calls are disabled in Hearth's settings.",
+			taskNotesSubBlocked: "Not fetched: external calls are disabled in ZeroHearth's settings.",
 			taskNotesSubFailed: (reason: string) => `Couldn't load: ${reason}`,
 			taskNotesSubNotCalendar: "the response wasn't an iCalendar feed.",
 			taskNotesSubMissingFile: "that file isn't in the vault.",
@@ -2679,7 +2675,7 @@ export const en = {
 			targetFolder: "Target (folder path)",
 			folderTarget: "Opening a folder button",
 			folderTargetDesc:
-				"In Hearth's folder browser, or in Obsidian's own file explorer in " +
+				"In ZeroHearth's folder browser, or in Obsidian's own file explorer in " +
 				"the sidebar.",
 			moveUp: "Move up",
 			moveDown: "Move down",
@@ -2778,10 +2774,10 @@ export const en = {
 			sourceDesc:
 				"Markdown checkboxes work anywhere. TaskNotes reads that plugin's " +
 				"task notes via frontmatter (field names configurable in Settings → " +
-				"Hearth, since TaskNotes has no API for other plugins to query it). " +
+				"ZeroHearth, since TaskNotes has no API for other plugins to query it). " +
 				"Kanban reads a single Kanban-plugin board note, one column per heading. " +
 				"The Tasks plugin reads that plugin's own tasks — its statuses and " +
-				"task format — drawn by Hearth, with the plugin's toggle, edit and " +
+				"task format — drawn by ZeroHearth, with the plugin's toggle, edit and " +
 				"create experience.",
 			sourceCheckbox: "Markdown checkboxes",
 			sourceTaskNotes: "TaskNotes plugin",
@@ -2930,12 +2926,12 @@ export const en = {
 			doneStatusesDesc:
 				"TaskNotes source: which status values are treated as complete (hidden " +
 				"unless “Show completed” is on, and struck through when shown), one per " +
-				"line. Leave empty to use just the done value from Settings → Hearth. " +
+				"line. Leave empty to use just the done value from Settings → ZeroHearth. " +
 				"Add, e.g., “canceled” to count cancelled tasks as complete too.",
 			doneStatusesPlaceholder: "done\ncanceled",
 			fields: "Fields",
 			fieldsFollowGlobal:
-				"Following the fields from Settings → Hearth → Integrations. Turn on " +
+				"Following the fields from Settings → ZeroHearth → Integrations. Turn on " +
 				"to give this card its own.",
 			fieldsOwnDesc:
 				"This source doesn't follow the vault-wide TaskNotes list. Turn on " +
@@ -3000,15 +2996,15 @@ export const en = {
 			fieldNoKeys: "No keys",
 			fieldAddKey: "Add a key",
 			fieldAddKeyDesc:
-				"Hearth's own values reach a checkbox line's priority, a board column " +
+				"ZeroHearth's own values reach a checkbox line's priority, a board column " +
 				"and the parsed dates; a property reads anything in your frontmatter.",
-			fieldAddBuiltin: "What Hearth reads",
+			fieldAddBuiltin: "What ZeroHearth reads",
 			fieldAddProperty: "Frontmatter property",
 			fieldAddKeyTyped: "Type a property name…",
 			fieldAddKeyPlaceholder: "Property name",
 			fieldRemoveKey: "Remove key",
 			fieldPickProperty: "Properties found in your notes",
-			fieldPickBuiltin: "Values Hearth parses itself",
+			fieldPickBuiltin: "Values ZeroHearth parses itself",
 			fieldKeyAlreadyAdded: (key: string) => `“${key}” is already a key on this field.`,
 			fieldMapValues: "Values & colors",
 			fieldMappedValues: (n: number) => `${n} value(s) mapped`,
@@ -3184,7 +3180,7 @@ export const en = {
 			languageTs: "Script (TS)",
 			query: "Query",
 			queryDesc:
-				"A Datacore query, e.g. @page and #project. Hearth renders the matches as a " +
+				"A Datacore query, e.g. @page and #project. ZeroHearth renders the matches as a " +
 				"live list of links. Runs with no “current note”, so global queries work " +
 				"fully but file-relative ones have no file to resolve to.",
 			queryPlaceholder: "@page and #project",
@@ -3418,7 +3414,7 @@ export const en = {
 			removeFeed: "Remove feed",
 			github: "Add from GitHub",
 			githubDesc:
-				"Enter a repository as owner/repo (or paste its URL) and pick what to follow — Hearth builds the Atom feed for you.",
+				"Enter a repository as owner/repo (or paste its URL) and pick what to follow — ZeroHearth builds the Atom feed for you.",
 			githubPlaceholder: "owner/repo",
 			githubReleases: "Releases",
 			githubCommits: "Commits",
@@ -3449,7 +3445,7 @@ export const en = {
 			reading: "Reading",
 			openIn: "Open entries in",
 			openInDesc:
-				"Where a click on an entry takes you. An entry without a web page — a newsletter, say — always opens in Hearth's reader.",
+				"Where a click on an entry takes you. An entry without a web page — a newsletter, say — always opens in ZeroHearth's reader.",
 			openInBrowser: "Browser",
 			openInDialog: "Reader (dialog)",
 			openInTab: "Reader (tab)",
@@ -3563,10 +3559,10 @@ export const en = {
 			location: "Location",
 			search: "Find a place",
 			searchDesc:
-				"Search by name — Hearth stores the coordinates on the card, so this " +
+				"Search by name — ZeroHearth stores the coordinates on the card, so this " +
 				"lookup happens once.",
 			searchDisabled:
-				"Place search is unavailable while external calls are disabled in Hearth " +
+				"Place search is unavailable while external calls are disabled in ZeroHearth " +
 				"settings. You can still enter coordinates below.",
 			searchPlaceholder: "Prague, Lisbon, Kyoto…",
 			searchButton: "Search",
@@ -3655,7 +3651,7 @@ export const en = {
 			hostDesc: "The Jira site origin. HTTPS is required when sending a personal access token.",
 			hostPlaceholder: "https://jira.example.com",
 			pat: "Personal access token",
-			patDesc: "Bearer PAT used for this card. Stored in Hearth's plugin data.",
+			patDesc: "Bearer PAT used for this card. Stored in ZeroHearth's plugin data.",
 			apiBase: "API base path",
 			apiBaseDesc: "A relative Jira REST path. Full URLs are rejected.",
 			apiBasePlaceholder: "/rest/api/latest",
@@ -3667,7 +3663,7 @@ export const en = {
 			noFavoriteFilters: "Jira returned no favorite filters.",
 			loadFailed: "Couldn't load Jira filters. Check the host, API path, and token.",
 			externalCallsDisabled:
-				"Favorite filters can't be loaded while external calls are disabled in Hearth settings.",
+				"Favorite filters can't be loaded while external calls are disabled in ZeroHearth settings.",
 			controls: "Filter controls",
 			maxResults: "Max results",
 			maxResultsDesc: "The most refined issues to show, up to 200.",
@@ -3698,7 +3694,7 @@ export const en = {
 				"arrows and menu. Handy when the card shows a single file.",
 			perfLabel: "Performance",
 			perfNote:
-				"This is by far the heaviest card Hearth has. It runs another " +
+				"This is by far the heaviest card ZeroHearth has. It runs another " +
 				"plugin's full view live inside the dashboard, so it keeps that " +
 				"plugin's own timers, listeners and rendering going for as long as " +
 				"the board is open — every one of these cards costs again. Use one " +
@@ -3957,13 +3953,13 @@ export const en = {
 				"No TaskChute records yet — run a task in TaskChute and come back",
 			operonEnable: "Enable the Operon plugin to show its tasks",
 			operonDisabled:
-				"The Operon integration is off — turn it on in Settings → Hearth → Integrations",
+				"The Operon integration is off — turn it on in Settings → ZeroHearth → Integrations",
 			operonUnsupported:
 				"Operon's developer API is desktop-only and needs Obsidian 1.12.2 or newer",
 			operonPending:
-				"Approve Hearth in Settings → Operon → Core → General → Developer API Integrations",
+				"Approve ZeroHearth in Settings → Operon → Core → General → Developer API Integrations",
 			operonSuspended:
-				"Operon suspended Hearth's access — review it in Operon's Developer API Integrations",
+				"Operon suspended ZeroHearth's access — review it in Operon's Developer API Integrations",
 			operonRevoked:
 				"Operon access was revoked — grant it again in Operon's Developer API Integrations",
 			operonBooting: "Operon is still starting up",
@@ -4019,7 +4015,7 @@ export const en = {
 			addTaskDue: "Due date",
 			confirmTitle: "Operon needs a confirmation",
 			/** Operon assessed the change and asked for consent; its own summary
-			 * of what would happen is shown rather than Hearth's guess at it. */
+			 * of what would happen is shown rather than ZeroHearth's guess at it. */
 			confirmMessage: (risk: string, effects: string) =>
 				effects
 					? `Operon rates this change as ${risk}: ${effects}`
@@ -4132,7 +4128,7 @@ export const en = {
 			markAllRead: "Mark all as read",
 			markRead: "Mark as read",
 			markUnread: "Mark as unread",
-			readHere: "Read in Hearth",
+			readHere: "Read in ZeroHearth",
 			openTab: "Read in a new tab",
 			openBrowser: "Open in browser",
 			saveNote: "Save as note",
@@ -4871,7 +4867,7 @@ export const en = {
 		journal: "A journal's current note, from the Journals plugin",
 		web: "A web page in an iframe, refreshed on a timer",
 		bookmarks: "Your Obsidian bookmarks, one click away",
-		favorites: "The notes you starred in Hearth",
+		favorites: "The notes you starred in ZeroHearth",
 		recent: "The files you opened most recently",
 		folder: "What is in a folder, one level down, with a browser behind it",
 		links: "A launchpad for links, notes, commands and folders",
@@ -4930,7 +4926,7 @@ export const en = {
 			railLabel: "Request a card",
 			heading: "Request a card",
 			intro:
-				"Missing something? Describe the card you wish Hearth had — what it " +
+				"Missing something? Describe the card you wish ZeroHearth had — what it " +
 				"should show and where its data would come from.",
 			footPrompt: "Not what you were looking for?",
 			footLink: "Request a card",
@@ -4942,7 +4938,7 @@ export const en = {
 			emailDesc: "Straight to the maintainer, if you'd rather not use GitHub. Opens your mail app.",
 			emailAction: "Open email",
 			prefilledNote:
-				"Both open pre-filled with a few prompts and your Hearth and Obsidian versions — edit anything before sending.",
+				"Both open pre-filled with a few prompts and your ZeroHearth and Obsidian versions — edit anything before sending.",
 		},
 	},
 
@@ -5023,13 +5019,13 @@ export const en = {
 			snapshotLeak:
 				"If something of yours is readable in it, don't publish this board: the picture can't be taken back once people have installed it. Please tell us instead — that's a bug in the blanking, and it's worth fixing before it happens to somebody else.",
 			snapshotLeakReport: "Report it on GitHub",
-			snapshotFailed: "Hearth couldn't take a picture of the board.",
+			snapshotFailed: "ZeroHearth couldn't take a picture of the board.",
 			snapshotRequired:
 				"A gallery entry needs a picture of the board. Take one first — you can look at it before it goes.",
 			snapshotUnavailable:
 				"Publishing needs a picture of the board, and this build can't take one — screenshots need the desktop app. You can still save the dashboard as a file and publish it from a desktop vault.",
 			snapshotNotActive:
-				"Publishing needs a picture of the board, and Hearth can only photograph the board that's open. Switch to this dashboard first, then publish it.",
+				"Publishing needs a picture of the board, and ZeroHearth can only photograph the board that's open. Switch to this dashboard first, then publish it.",
 			theme: "Recommended with my theme",
 			themeDesc: (name: string) =>
 				`Say the board is meant to be seen under ${name}, the theme you're using. It's a note for whoever installs it — nothing is installed or changed on their side.`,
@@ -5067,7 +5063,7 @@ export const en = {
 			identityReplaceConfirm: "Replace it",
 			identityRestoreLabel: "Recovery key",
 			identityRestored: (name: string) => `You're now publishing as ${name}.`,
-			identityRestoreFailed: "That isn't a Hearth recovery key.",
+			identityRestoreFailed: "That isn't a ZeroHearth recovery key.",
 
 			// ---- What travels ----
 			contents: "What to include",
@@ -5150,7 +5146,7 @@ export const en = {
 				"This file claims an author, but its signature doesn't check out — it was either edited " +
 				"after it was signed, or somebody put another maker's handle on it. It's shown without " +
 				"an author. Everything else about the import is unaffected.",
-			madeWith: (version: string) => `Hearth ${version}`,
+			madeWith: (version: string) => `ZeroHearth ${version}`,
 			cardCount: (n: number) => (n === 1 ? "1 kind of card" : `${n} kinds of card`),
 			assetCount: (n: number) =>
 				n === 1 ? "Brings 1 picture with it" : `Brings ${n} pictures with it`,
@@ -5164,7 +5160,7 @@ export const en = {
 			modeReplaceBoard: (name: string) => `Update “${name}” in place`,
 			modeReplaceAll: "Replace all my settings",
 			replaceAllWarning:
-				"This replaces your dashboards and every Hearth setting with the ones in this file. It can't be undone.",
+				"This replaces your dashboards and every ZeroHearth setting with the ones in this file. It can't be undone.",
 			heads: "Worth knowing",
 			missingPlugins: (plugins: string) =>
 				`Not installed or not enabled here: ${plugins}. Those cards will be empty until they are.`,
@@ -5189,7 +5185,7 @@ export const en = {
 				`${n} plugin${n === 1 ? " it wants isn't" : "s it wants aren't"} enabled.`,
 			warnTaskFields:
 				"Its task cards use custom fields — turn on task field customization in Settings → Integrations to see them.",
-			warnUnknownCards: "Some cards need a newer Hearth and were left out.",
+			warnUnknownCards: "Some cards need a newer ZeroHearth and were left out.",
 			warnAssets: "Some of its pictures were missing from the file.",
 		},
 	},
@@ -5242,9 +5238,9 @@ export const en = {
 			pluginBoard: "Hosts a plugin view",
 			noPicture: "No picture",
 			needsIdentity:
-				"You can browse and install without one, but voting and publishing need a handle. Hearth makes you an anonymous one from a key that never leaves this vault.",
+				"You can browse and install without one, but voting and publishing need a handle. ZeroHearth makes you an anonymous one from a key that never leaves this vault.",
 			needsIdentityVote:
-				"Voting needs a handle. Hearth will make you an anonymous one from a key that never leaves this vault — no account, and nothing about who you are. Make one now?",
+				"Voting needs a handle. ZeroHearth will make you an anonymous one from a key that never leaves this vault — no account, and nothing about who you are. Make one now?",
 		},
 		detail: {
 			install: "Install",
@@ -5258,13 +5254,13 @@ export const en = {
 			updated: (when: string) => `Updated ${when}`,
 			version: (v: string) => `Author's version ${v}`,
 			theme: (name: string) => `Recommended with the ${name} theme`,
-			madeWith: (v: string) => `Made with Hearth ${v}`,
+			madeWith: (v: string) => `Made with ZeroHearth ${v}`,
 			contents: "What's on this board",
 			requires: "What it needs",
 			requiresPlugins: "Plugins",
 			requiresViews: "Hosted views",
 			requiresSettings: "Settings",
-			nothingRequired: "Nothing beyond Hearth itself.",
+			nothingRequired: "Nothing beyond ZeroHearth itself.",
 			size: (kb: number) => `${kb} KB`,
 			remote: (n: number) =>
 				n === 1
@@ -5297,7 +5293,7 @@ export const en = {
 		publish: {
 			title: "Publish to the gallery",
 			intro:
-				"Puts this dashboard in the gallery, where anyone using this Hearth gallery can find and install it.",
+				"Puts this dashboard in the gallery, where anyone using this ZeroHearth gallery can find and install it.",
 			category: "Category",
 			categoryDesc: "What this board is for. It's how people find it.",
 			button: "Publish",
@@ -5324,10 +5320,10 @@ export const en = {
 			updateMissing:
 				"This vault hasn't got the board this was published from — it was deleted, or it lives in another vault. Publishing from here would make a second listing, so there's nothing to update.",
 			/** Nothing has said which board this is yet — an entry published
-			 * before Hearth kept the note, or to a gallery too old to be asked.
+			 * before ZeroHearth kept the note, or to a gallery too old to be asked.
 			 * The button still works: pressing it reads the entry to find out. */
 			updateUnknown:
-				"Hearth doesn't know yet which of your boards this entry is. Press Update and it will read the entry to find out.",
+				"ZeroHearth doesn't know yet which of your boards this entry is. Press Update and it will read the entry to find out.",
 			unpublish: "Remove from the gallery",
 			unpublishConfirm: (name: string) =>
 				`Remove “${name}” from the gallery? People who already installed it keep their copy; nobody new can find it.`,
@@ -5337,9 +5333,9 @@ export const en = {
 			heading: "Dashboard gallery",
 			host: "Gallery address",
 			hostDesc:
-				"The gallery Hearth browses and publishes to. Nothing is fetched until you open it and nothing is sent until you publish. Clear this field to turn the gallery off entirely — it stays off. https only (or http on localhost, for a gallery you run yourself).",
+				"The gallery ZeroHearth browses and publishes to. Nothing is fetched until you open it and nothing is sent until you publish. Clear this field to turn the gallery off entirely — it stays off. https only (or http on localhost, for a gallery you run yourself).",
 			hostPlaceholder: "https://gallery.example.com",
-			hostInvalid: "That isn't an address Hearth will talk to. Use https, or http on localhost.",
+			hostInvalid: "That isn't an address ZeroHearth will talk to. Use https, or http on localhost.",
 			hostCleared: "Gallery turned off.",
 			hostSet: (host: string) => `Gallery set to ${host}.`,
 			browse: "Browse the gallery",
@@ -5348,11 +5344,11 @@ export const en = {
 		},
 		errors: {
 			noHost:
-				"No gallery is set up. Put a gallery address in Hearth's settings, under Dashboard gallery.",
+				"No gallery is set up. Put a gallery address in ZeroHearth's settings, under Dashboard gallery.",
 			externalCallsOff:
 				"The gallery is a server on the internet, and this vault has \u201cDisable external calls\u201d turned on. Turn that off to browse or publish.",
 			offline: "Couldn't reach the gallery. It may be down, or this device may be offline.",
-			badResponse: "That address answered, but not like a Hearth gallery.",
+			badResponse: "That address answered, but not like a ZeroHearth gallery.",
 			unauthorized: "The gallery didn't accept this vault's identity.",
 			forbidden: "The gallery wouldn't let this vault's identity do that.",
 			rateLimited: "The gallery is asking you to slow down. Try again in a few minutes.",
@@ -5361,7 +5357,7 @@ export const en = {
 			notFound: "The gallery doesn't have that.",
 			server: "The gallery had a problem with that request.",
 			unsigned:
-				"Hearth couldn't sign the file, so it wasn't published — an unsigned board has no provable author.",
+				"ZeroHearth couldn't sign the file, so it wasn't published — an unsigned board has no provable author.",
 		},
 	},
 
@@ -5371,10 +5367,10 @@ export const en = {
 		notAnObject: "Layout must be a JSON object.",
 		noValidDashboards: "Layout contained no valid dashboards.",
 		noValidCards: "Layout contained no valid cards.",
-		notAHearthLayout:
-			'Not a Hearth layout — no "dashboards" or "cards" array found.',
-		notHearthSettings:
-			'Not a Hearth settings backup — no "hearthSettings" marker or layout found.',
+		notAZeroHearthLayout:
+			'Not a ZeroHearth layout — no "dashboards" or "cards" array found.',
+		notZeroHearthSettings:
+			'Not a ZeroHearth settings backup — no "hearthSettings" marker or layout found.',
 	},
 
 	// ---- A vault item's menu (src/filemenu.ts) ----------------------------
@@ -5529,13 +5525,13 @@ export const en = {
 		schemes: {
 			theme: "Obsidian theme",
 			htop: "Htop",
-			hearth: "Hearth",
+			zerohearth: "ZeroHearth",
 			amber: "Amber",
 			paper: "Paper",
 		},
 		quitTitle: "Leave terminal mode?",
 		quitMessage:
-			"Hearth goes back to its graphical design. Terminal mode can be switched on again in Settings → Hearth → Appearance.",
+			"ZeroHearth goes back to its graphical design. Terminal mode can be switched on again in Settings → ZeroHearth → Appearance.",
 		quitConfirm: "Leave terminal mode",
 		fn: {
 			help: "Help",
@@ -5633,7 +5629,7 @@ export const en = {
 		settings: {
 			name: "Terminal",
 			experimental: "Experimental",
-			desc: "The whole of Hearth as text: a character grid, box-drawn cards and keys for everything, the way a terminal tool looks. Light enough for any machine.",
+			desc: "The whole of ZeroHearth as text: a character grid, box-drawn cards and keys for everything, the way a terminal tool looks. Light enough for any machine.",
 			heading: "Terminal mode",
 			headingDesc: "How the text interface looks. Every board is drawn in it while it's on.",
 			scheme: "Colour scheme",

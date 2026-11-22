@@ -2,7 +2,7 @@
 
 A **dashboard** (also called a **board** in this guide) is one arrangement of
 cards, with its own name, its own icon in the switcher, and its own optional
-overrides for almost every visual setting Hearth has. A vault can hold as many
+overrides for almost every visual setting ZeroHearth has. A vault can hold as many
 dashboards as you like, and switching between them is instant.
 
 This chapter covers the dashboards themselves. Adding and arranging the cards
@@ -32,14 +32,14 @@ A new dashboard is named *Dashboard N* by default. A duplicate is named
 Several commands are bindable under **Settings → Hotkeys**:
 
 - **Switch to dashboard 1 … 9** — changes the active board.
-- **Open dashboard 1 … 9** — changes the active board *and* brings Hearth up.
+- **Open dashboard 1 … 9** — changes the active board *and* brings ZeroHearth up.
   This is the useful one: it means jumping to a particular board from anywhere
-  in the vault is a single shortcut, whether or not Hearth is currently in
+  in the vault is a single shortcut, whether or not ZeroHearth is currently in
   front.
 - **Next dashboard** and **Previous dashboard**.
-- **Open home dashboard** — opens Hearth on whichever board is active.
+- **Open home dashboard** — opens ZeroHearth on whichever board is active.
 - **Focus board search** — puts the cursor in the search field. A board that is
-  already in front only takes the cursor; otherwise Hearth is brought forward
+  already in front only takes the cursor; otherwise ZeroHearth is brought forward
   (and opened, if no board is up) before the field takes it.
 
 ## Dashboard settings
@@ -56,7 +56,7 @@ the Arrange toolbar. The dialog has up to six tabs.
 | *Switcher icon* | An emoji or short text on the switcher button. Empty shows the number |
 | *Switcher Lucide icon* | A Lucide icon such as `home`, `star`, `layout-dashboard`. Takes precedence over the emoji |
 | *Linked workspace* | Automatically switch to this dashboard when the named Obsidian workspace loads. Requires the core Workspaces plugin |
-| *Default on mobile* | Open this dashboard when Hearth loads on a phone or tablet. Only one board can hold this; enabling it clears it on the others |
+| *Default on mobile* | Open this dashboard when ZeroHearth loads on a phone or tablet. Only one board can hold this; enabling it clears it on the others |
 
 ### Header tab
 
@@ -68,7 +68,7 @@ global default currently is.
 - *Title alignment* (default centre, left, centre, right), *Title size*, *Title
   icon size*, *Title top margin*, *Spacing below title/header*.
 - *Accent colour on the title* — which parts of this board's brand mark follow
-  the theme's icon colour: neither, the icon, the title, or both. Hearth's tab
+  the theme's icon colour: neither, the icon, the title, or both. ZeroHearth's tab
   and ribbon icons keep following the vault-wide setting.
 - *Search visibility*, *Search placeholder*.
 - *Button beside search* (shown or hidden), *What that button does* (new note or
@@ -102,7 +102,7 @@ for the board's own buttons and the dialogs and menus opened from it (see
 
 ### Background tab
 
-A per-board override of the whole background: type (none, Hearth default, harbour town,
+A per-board override of the whole background: type (none, ZeroHearth default, harbour town,
 solid colour, vault image, vault video, image URL, live weather sky), the value, *Opacity*,
 *Blur*, *Background layout* (full or banner), *Banner height*, *Fade the lower
 edge*, *Full width*, and *Animate the sky*. Choosing *Follow the global setting*
@@ -122,7 +122,7 @@ Only relevant when *Dashboard type* is **Single card**. See
 ## Single-card dashboards
 
 Setting a board's *Dashboard type* to **Single card** gives the whole board to
-one Hearth card — an RSS reader, a task list, a calendar — at full size, the way
+one ZeroHearth card — an RSS reader, a task list, a calendar — at full size, the way
 a plugin view board gives it to another plugin. The switcher, header and
 background stay around it, and the board is always fitted to the pane: the card
 fills it and scrolls itself.
@@ -195,7 +195,7 @@ Turning a board into a plugin view does not throw away its cards. Switch the
 A hosted view is the plugin doing its full job, not a preview of it. It costs
 what opening that plugin costs, and it keeps that plugin's own timers, listeners
 and rendering going for as long as the board is open. Views that are slow in
-their own tab are slow here too. Hearth's performance tier cannot slow a hosted
+their own tab are slow here too. ZeroHearth's performance tier cannot slow a hosted
 view down, because the view manages itself.
 
 The same warning applies to the **Plugin view** *card*, which hosts a view
@@ -221,7 +221,7 @@ your settings file, but there are two costs worth knowing:
 
 - A **plugin view** board with *Keep running in the background* on keeps another
   plugin loaded. Up to three boards are kept warm at once.
-- Every board's cards are stored in Hearth's plugin data, which syncs with your
+- Every board's cards are stored in ZeroHearth's plugin data, which syncs with your
   vault.
 
 A common arrangement is three or four boards: a home board with search and
@@ -230,8 +230,8 @@ plugin-view board for whatever plugin you live in.
 
 ## Picking up changes made on another device
 
-If you sync your vault, Hearth can apply dashboard changes made on another
+If you sync your vault, ZeroHearth can apply dashboard changes made on another
 device as soon as sync brings them in, rather than at the next Obsidian restart.
-That is *Pick up synced changes* under **Settings → Hearth → Behaviour →
+That is *Pick up synced changes* under **Settings → ZeroHearth → Behaviour →
 Startup & tabs**, and it is on by default. Turn it off only if a board reloading
 mid-session gets in your way.

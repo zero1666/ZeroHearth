@@ -12,10 +12,10 @@ export interface CellMetrics {
 /**
  * Measure the terminal font's cell inside `root`: the advance of one
  * character and the height of one line. `root` must be inside an element that
- * sets the terminal font (any `.hearth-tui` scope).
+ * sets the terminal font (any `.zerohearth-tui` scope).
  */
 export function measureCell(root: HTMLElement): CellMetrics {
-	const probe = root.createDiv({ cls: "hearth-tui-probe", text: "M".repeat(64) });
+	const probe = root.createDiv({ cls: "zerohearth-tui-probe", text: "M".repeat(64) });
 	const box = probe.getBoundingClientRect();
 	probe.remove();
 	return { ch: box.width / 64 || 8, lh: box.height || 17 };

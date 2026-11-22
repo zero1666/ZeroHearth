@@ -18,10 +18,10 @@ import type { HomeView } from "../src/view";
 import type { TasksConfig } from "../src/types";
 
 /**
- * The obsidian-tasks source. Hearth draws the plugin's tasks itself — its
+ * The obsidian-tasks source. ZeroHearth draws the plugin's tasks itself — its
  * statuses (built-ins plus custom ones) and the vault's task format — while
  * ticking, editing and creating go through the plugin so the note is never
- * converted. What's covered here is Hearth's side of that deal: parsing both
+ * converted. What's covered here is ZeroHearth's side of that deal: parsing both
  * task formats, the status registry probe, the duck-typed API probe, the
  * toggle/edit/delete writes, and where a new task lands.
  */

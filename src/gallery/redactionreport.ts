@@ -21,14 +21,14 @@
  */
 
 /** GitHub's issue-form endpoint, and the form this report opens. */
-const GITHUB_NEW_ISSUE_URL = "https://github.com/ondreu/hearth/issues/new";
+const GITHUB_NEW_ISSUE_URL = "https://github.com/zero1666/ZeroHearth/issues/new";
 const BUG_REPORT_FORM = "bug_report.yml";
 
 /** What the report stamps in so the maintainer doesn't have to ask "which
  * version, on what?" first. Same shape as a card request's context. */
 export interface RedactionReportContext {
-	/** The running Hearth version, from the plugin manifest. */
-	hearthVersion: string;
+	/** The running ZeroHearth version, from the plugin manifest. */
+	zerohearthVersion: string;
 	/** Obsidian's `apiVersion`. */
 	obsidianVersion: string;
 	/** "Desktop" / "Mobile". A snapshot is a desktop thing today, but the field
@@ -42,7 +42,7 @@ export const REDACTION_REPORT_TITLE = "[Bug]: Snapshot redaction left something 
 
 /** The "What happened?" prompt (form field `what-happened`). */
 const WHAT_HAPPENED = [
-	"Publishing a dashboard to the gallery. The picture Hearth took of the board",
+	"Publishing a dashboard to the gallery. The picture ZeroHearth took of the board",
 	"still shows something of mine that should have been blanked out.",
 	"",
 	"Which card was it (the card's kind, and its title if it has one):",
@@ -79,7 +79,7 @@ export function redactionReportGithubUrl(ctx: RedactionReportContext): string {
 		title: REDACTION_REPORT_TITLE,
 		"what-happened": `${WHAT_HAPPENED}\n${ctx.platform}`,
 		repro: REPRO,
-		"hearth-version": ctx.hearthVersion,
+		"zerohearth-version": ctx.zerohearthVersion,
 		"obsidian-version": ctx.obsidianVersion,
 	});
 	return `${GITHUB_NEW_ISSUE_URL}?${params.toString()}`;

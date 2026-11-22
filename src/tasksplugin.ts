@@ -17,7 +17,7 @@ import type { CardHost } from "./cardhost";
 /**
  * The obsidian-tasks community plugin as a tasks-card source.
  *
- * Hearth draws this source itself — the card's normal rows/board/matrix with
+ * ZeroHearth draws this source itself — the card's normal rows/board/matrix with
  * its own chips, dots and colours — but everything it draws is what the Tasks
  * plugin says is a task:
  *
@@ -25,14 +25,14 @@ import type { CardHost } from "./cardhost";
  *     plugin knows (its built-ins plus the user's custom statuses, read live
  *     from its status registry);
  *   - whether it is done is the plugin's own notion (its DONE/CANCELLED types,
- *     not Hearth's checkbox config);
+ *     not ZeroHearth's checkbox config);
  *   - the vault's task format is honoured on write: ticking goes through the
  *     plugin's own toggle command (which rolls recurrence and stamps done
  *     dates the way the plugin does), editing and creating go through its own
  *     modals, so the note is never converted to another format.
  *
  * The query building of the previous version is gone: the card filters, sorts,
- * caps and fields Hearth's own way, over the tasks collected here.
+ * caps and fields ZeroHearth's own way, over the tasks collected here.
  */
 
 
@@ -328,7 +328,7 @@ export function parseTasksPluginLine(raw: string): ParsedTasksPluginLine {
 	const priorityEmoji = readPriorityEmoji(raw) ?? "";
 	const priorityWord = readDataviewField(raw, "priority") ?? "";
 	// An emoji priority is the plugin's own level; a Dataview word ("high") is
-	// kept verbatim so Hearth's priority colours and sorts still apply.
+	// kept verbatim so ZeroHearth's priority colours and sorts still apply.
 	const priority = priorityEmoji || priorityWord.trim();
 	let due: string | null = null;
 	let dueRaw: string | null = null;
@@ -443,7 +443,7 @@ export async function createTasksPluginTask(view: CardHost, cfg: TasksConfig): P
 /** Whether an on-disk line is still the task that was read: only the leading
  * checkbox marker may have changed underneath us (a toggle from elsewhere);
  * the rest of the line — modulo the plugin's own metadata and tags, which
- * Hearth rewrites through the card — must match. */
+ * ZeroHearth rewrites through the card — must match. */
 function samePluginLine(lineText: string, hitText: string): boolean {
 	const norm = (v: string): string => stripInlineTags(stripDataviewFields(stripTaskMetadata(v)));
 	return norm(lineText) === norm(hitText);

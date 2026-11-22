@@ -17,7 +17,7 @@ export const zh: Translations = {
 		newDrawing: "新建 Excalidraw 绘图",
 		recordVoice: "开始/停止录音",
 		openDailyNote: "打开今天的日记",
-		runSetup: "设置 Hearth（首次运行向导）",
+		runSetup: "设置 ZeroHearth（首次运行向导）",
 		searchTips: "显示搜索技巧",
 		switchDashboard: (n: number) => `切换到面板 ${n}`,
 		openDashboard: (n: number) => `打开面板 ${n}`,
@@ -25,62 +25,62 @@ export const zh: Translations = {
 		previousDashboard: "上一个面板",
 	},
 	ribbon: {
-		openHome: "打开 Hearth 主页",
+		openHome: "打开 ZeroHearth 主页",
 	},
 
 	// ---- Notices (transient toasts) ------------------------------------
 	notices: {
-		couldNotCreateNote: "Hearth：无法新建笔记。",
-		operonTaskMissing: "Hearth：该 Operon 任务的笔记已不在仓库中。",
-		operonRechecked: "Hearth：已重新检查 Operon 连接。",
-		operonWriteFailed: (reason: string) => `Hearth：Operon 拒绝了此更改 — ${reason}`,
+		couldNotCreateNote: "ZeroHearth：无法新建笔记。",
+		operonTaskMissing: "ZeroHearth：该 Operon 任务的笔记已不在仓库中。",
+		operonRechecked: "ZeroHearth：已重新检查 Operon 连接。",
+		operonWriteFailed: (reason: string) => `ZeroHearth：Operon 拒绝了此更改 — ${reason}`,
 		/** A refused create, with the Operon setting that decided the target —
 		 * the error alone names a configured target without saying which one. */
 		operonCreateFailed: (reason: string, where: string) =>
-			`Hearth：Operon 拒绝创建该任务 — ${reason} ${where} ` +
+			`ZeroHearth：Operon 拒绝创建该任务 — ${reason} ${where} ` +
 			"请在 Operon 的设置中修改，或在此卡片设置的“新任务”下选择其他目标。",
-		/** The mutation may have landed. Hearth has already spent its one legal
+		/** The mutation may have landed. ZeroHearth has already spent its one legal
 		 * recovery attempt, so the honest report is "unknown", not "failed" —
 		 * and never an offer to retry, which could apply the change twice. */
 		operonWriteUnknown: (reason: string) =>
-			`Hearth：Operon 无法确认更改是否已应用（${reason}）。` +
+			`ZeroHearth：Operon 无法确认更改是否已应用（${reason}）。` +
 			"卡片已重新读取 — 请先检查该任务再重试。",
-		enableExcalidraw: "Hearth：请启用 Excalidraw 插件以创建绘图。",
-		excalidrawCommandMissing: "Hearth：找不到 Excalidraw 的“新建绘图”命令。",
-		enableAudioRecorder: "Hearth：请启用核心插件“录音机”。",
-		couldNotRecordVoice: "Hearth：无法开始录音。",
-		enableDailyNotes: "Hearth：请启用核心插件“日记”。",
-		couldNotOpenDaily: "Hearth：无法打开今天的日记。",
-		couldNotOpenPeriodic: "Hearth：Periodic Notes 无法创建该笔记。",
-		couldNotCreateJournalNote: "Hearth：Journals 无法创建该笔记。",
-		commandNotFound: (id: string) => `Hearth：找不到命令：${id}`,
-		couldNotCreateNoteForDay: (day: string) => `Hearth：无法为 ${day} 创建笔记。`,
-		couldNotCreateEventNote: "Hearth：无法为该事件创建笔记。",
-		taskNotesCreateFailed: "Hearth：无法运行 TaskNotes：新建任务。",
-		tasksPluginCreateFailed: "Hearth：无法打开 Tasks 插件的创建任务对话框。",
-		tasksPluginNoTarget: "Hearth：请在此卡片设置中选择新任务的去向。",
-		tasksPluginNoDailyNotes: "Hearth：请启用核心“日记”插件，或在此卡片设置中为新任务选择一篇笔记。",
+		enableExcalidraw: "ZeroHearth：请启用 Excalidraw 插件以创建绘图。",
+		excalidrawCommandMissing: "ZeroHearth：找不到 Excalidraw 的“新建绘图”命令。",
+		enableAudioRecorder: "ZeroHearth：请启用核心插件“录音机”。",
+		couldNotRecordVoice: "ZeroHearth：无法开始录音。",
+		enableDailyNotes: "ZeroHearth：请启用核心插件“日记”。",
+		couldNotOpenDaily: "ZeroHearth：无法打开今天的日记。",
+		couldNotOpenPeriodic: "ZeroHearth：Periodic Notes 无法创建该笔记。",
+		couldNotCreateJournalNote: "ZeroHearth：Journals 无法创建该笔记。",
+		commandNotFound: (id: string) => `ZeroHearth：找不到命令：${id}`,
+		couldNotCreateNoteForDay: (day: string) => `ZeroHearth：无法为 ${day} 创建笔记。`,
+		couldNotCreateEventNote: "ZeroHearth：无法为该事件创建笔记。",
+		taskNotesCreateFailed: "ZeroHearth：无法运行 TaskNotes：新建任务。",
+		tasksPluginCreateFailed: "ZeroHearth：无法打开 Tasks 插件的创建任务对话框。",
+		tasksPluginNoTarget: "ZeroHearth：请在此卡片设置中选择新任务的去向。",
+		tasksPluginNoDailyNotes: "ZeroHearth：请启用核心“日记”插件，或在此卡片设置中为新任务选择一篇笔记。",
 		tasksPluginNoteMissing: (path: string) =>
-			`Hearth：在“${path}”没有找到用于新任务的笔记 — 请在此卡片设置中另选一篇。`,
-		taskChangedOnDisk: "Hearth：该任务在磁盘上已更改 — 已刷新。",
-		couldNotOpenTaskNote: "Hearth：无法打开该任务的笔记。",
-		couldNotUpdateTaskStatus: "Hearth：无法更新任务状态。",
-		couldNotCompleteRecurring: "Hearth：无法将该重复任务标记为完成。",
-		couldNotUndoRecurring: "Hearth：无法撤销该重复任务的完成状态。",
-		couldNotAddKanbanCard: "Hearth：无法将卡片添加到看板。",
-		couldNotConvertCard: "Hearth：无法将卡片转换为笔记。",
-		templaterNoTemplate: (path: string) => `Hearth：找不到模板：${path}`,
-		templaterFailed: (name: string) => `Hearth：Templater 未能从 ${name} 创建笔记。`,
-		templaterCreated: (path: string) => `Hearth：已创建 ${path}`,
+			`ZeroHearth：在“${path}”没有找到用于新任务的笔记 — 请在此卡片设置中另选一篇。`,
+		taskChangedOnDisk: "ZeroHearth：该任务在磁盘上已更改 — 已刷新。",
+		couldNotOpenTaskNote: "ZeroHearth：无法打开该任务的笔记。",
+		couldNotUpdateTaskStatus: "ZeroHearth：无法更新任务状态。",
+		couldNotCompleteRecurring: "ZeroHearth：无法将该重复任务标记为完成。",
+		couldNotUndoRecurring: "ZeroHearth：无法撤销该重复任务的完成状态。",
+		couldNotAddKanbanCard: "ZeroHearth：无法将卡片添加到看板。",
+		couldNotConvertCard: "ZeroHearth：无法将卡片转换为笔记。",
+		templaterNoTemplate: (path: string) => `ZeroHearth：找不到模板：${path}`,
+		templaterFailed: (name: string) => `ZeroHearth：Templater 未能从 ${name} 创建笔记。`,
+		templaterCreated: (path: string) => `ZeroHearth：已创建 ${path}`,
 		newNoteTemplaterMissing:
-			"Hearth：“新建笔记”按钮指向一个 Templater 模板，但 Templater 未启用 — " +
+			"ZeroHearth：“新建笔记”按钮指向一个 Templater 模板，但 Templater 未启用 — " +
 			"改为创建空白笔记。",
-		exported: "Hearth：已导出。",
-		layoutExported: "Hearth：布局已导出。",
-		layoutImported: "Hearth：布局已导入。",
-		layoutImportError: (error: string) => `Hearth：${error}`,
-		exportedToVault: (file: string) => `Hearth：已将 ${file} 保存到仓库根目录。`,
-		exportFailed: "Hearth：无法保存导出文件。",
+		exported: "ZeroHearth：已导出。",
+		layoutExported: "ZeroHearth：布局已导出。",
+		layoutImported: "ZeroHearth：布局已导入。",
+		layoutImportError: (error: string) => `ZeroHearth：${error}`,
+		exportedToVault: (file: string) => `ZeroHearth：已将 ${file} 保存到仓库根目录。`,
+		exportFailed: "ZeroHearth：无法保存导出文件。",
 		cardCopied: "卡片已复制到面板。",
 	},
 
@@ -104,7 +104,7 @@ export const zh: Translations = {
 		noMatchingCommands: "无匹配命令",
 		tips: {
 			title: "搜索栏能做什么",
-			intro: "在任意 Hearth 搜索栏中输入以下内容。",
+			intro: "在任意 ZeroHearth 搜索栏中输入以下内容。",
 			introTry: "点击示例即可试用。",
 			findHeading: "查找笔记",
 			answersHeading: "即时答案",
@@ -173,7 +173,7 @@ export const zh: Translations = {
 			loading: "加载中…",
 			invalid: "不是有效的表达式",
 			noQuote: (query: string) => `没有“${query}”的行情数据`,
-			externalOff: "Hearth 设置中已禁用外部请求",
+			externalOff: "ZeroHearth 设置中已禁用外部请求",
 			rate: (from: string, rate: string, to: string) => `1 ${from} = ${rate} ${to}`,
 			days: (n: number) => `${n} 天`,
 			today: "今天",
@@ -201,7 +201,7 @@ export const zh: Translations = {
 
 	// ---- "What's new" release-notes dialog -----------------------------
 	whatsNew: {
-		title: "Hearth 更新内容",
+		title: "ZeroHearth 更新内容",
 		intro: "感谢更新！以下是您上次查看以来的变化。",
 		/** Shown instead of {@link intro} when there are headlines to click. */
 		introHint:
@@ -246,7 +246,7 @@ export const zh: Translations = {
 		},
 		/** The line under each heading. */
 		stepDescs: {
-			purpose: "可任选多项，Hearth 会据此挑选卡片。只需三步，之后一切都可以修改。",
+			purpose: "可任选多项，ZeroHearth 会据此挑选卡片。只需三步，之后一切都可以修改。",
 			look: "只作用于正在搭建的面板，其他面板保留各自的外观。",
 			finish: "目前尚未更改任何内容。以下就是将要搭建的面板。",
 		},
@@ -263,7 +263,7 @@ export const zh: Translations = {
 			showTitleDesc: "关闭后面板将完全没有标题。",
 			titleIcon: "标题图标",
 			titleIconDesc:
-				"标题旁显示的表情、一两个字符、Lucide 图标 id、仓库图片路径或图片网址。留空则使用 Hearth 水晶图标。",
+				"标题旁显示的表情、一两个字符、Lucide 图标 id、仓库图片路径或图片网址。留空则使用 ZeroHearth 水晶图标。",
 			themeColor: "跟随主题的强调色",
 			themeColorDesc: "品牌标识的哪些部分采用主题的颜色。",
 			themeColorOptions: {
@@ -277,8 +277,8 @@ export const zh: Translations = {
 		},
 		look: {
 			designHeading: "设计",
-			designNote: "此选项适用于整个 Hearth，而不仅是此面板。可随时在 设置 → Hearth → 外观 中更改。",
-			terminalNote: "终端模式适用于整个 Hearth 和所有仪表板。它不绘制壁纸和卡片底色，因此这里没有其他可选项。这是实验性功能：可随时在 设置 → Hearth → 外观 中关闭，仪表板会恢复为其下的设计。",
+			designNote: "此选项适用于整个 ZeroHearth，而不仅是此面板。可随时在 设置 → ZeroHearth → 外观 中更改。",
+			terminalNote: "终端模式适用于整个 ZeroHearth 和所有仪表板。它不绘制壁纸和卡片底色，因此这里没有其他可选项。这是实验性功能：可随时在 设置 → ZeroHearth → 外观 中关闭，仪表板会恢复为其下的设计。",
 			surfaceHeading: "卡片",
 			backgroundHeading: "背景",
 			color: "颜色",
@@ -314,12 +314,12 @@ export const zh: Translations = {
 			classic: {
 				icon: "square",
 				name: "经典",
-				desc: "Hearth 一贯的样子：安静的表面，细边框。",
+				desc: "ZeroHearth 一贯的样子：安静的表面，细边框。",
 			},
 			expressive: {
 				icon: "shapes",
 				name: "Expressive",
-				desc: "整个 Hearth 使用 Material 3 Expressive——卡片、按钮、菜单、对话框和设置——采用强调色的色调。",
+				desc: "整个 ZeroHearth 使用 Material 3 Expressive——卡片、按钮、菜单、对话框和设置——采用强调色的色调。",
 			},
 			terminal: {
 				icon: "terminal",
@@ -330,8 +330,8 @@ export const zh: Translations = {
 		backgrounds: {
 			default: {
 				icon: "image",
-				name: "Hearth 壁纸",
-				desc: "由 Hearth 绘制的山丘，随主题呈现白天或夜晚。",
+				name: "ZeroHearth 壁纸",
+				desc: "由 ZeroHearth 绘制的山丘，随主题呈现白天或夜晚。",
 			},
 			harbour: {
 				icon: "anchor",
@@ -399,7 +399,7 @@ export const zh: Translations = {
 		},
 		integrations: {
 			lead:
-				"这里每开启一项，Hearth 都会为此面板添加一张已配置好的卡片 — " +
+				"这里每开启一项，ZeroHearth 都会为此面板添加一张已配置好的卡片 — " +
 				"不会安装或改动其他插件，也不会影响此面板之外的任何内容。",
 			recommended: "推荐",
 			effects: {
@@ -414,7 +414,7 @@ export const zh: Translations = {
 				git: "添加一张 Git 卡片显示仓库状态，并带有提交与同步按钮。",
 				operon:
 					"添加一张 Operon 任务卡片，通过 Operon 的开发者 API 读取数据。" +
-					"卡片首次加载时，需要您在 Operon 自己的设置中批准 Hearth；" +
+					"卡片首次加载时，需要您在 Operon 自己的设置中批准 ZeroHearth；" +
 					"在此之前，卡片会说明它在等什么。",
 				bases: "添加一张卡片，嵌入仓库中的某个 base。",
 				dailyNotes: "添加一张卡片显示今天的日记，可就地编辑。",
@@ -425,7 +425,7 @@ export const zh: Translations = {
 			taskNotesDue: "到期字段",
 			taskNotesPriority: "优先级字段",
 			taskNotesDone: "视为已完成",
-			taskNotesDoneNone: "未定义 — Hearth 将使用 “done”",
+			taskNotesDoneNone: "未定义 — ZeroHearth 将使用 “done”",
 		},
 		finish: {
 			empty:
@@ -444,7 +444,7 @@ export const zh: Translations = {
 			calloutTitle: "这是起点，不是预设",
 			calloutHint:
 				"每张卡片都可以通过“排列”（面板右上角）移动、缩放、重新配置或删除；" +
-				"其余内容在 设置 → Hearth 中。您随时可以从 设置 → 关于 再次运行此向导。",
+				"其余内容在 设置 → ZeroHearth 中。您随时可以从 设置 → 关于 再次运行此向导。",
 			clock: "时钟",
 			clockDesc: "侧栏顶部的一个小时钟和问候语。",
 			more: "标题与页眉",
@@ -504,7 +504,7 @@ export const zh: Translations = {
 			},
 		},
 		notice: {
-			done: (n: number) => `Hearth：面板已就绪 — 添加了 ${n} 张卡片。`,
+			done: (n: number) => `ZeroHearth：面板已就绪 — 添加了 ${n} 张卡片。`,
 		},
 	},
 
@@ -592,7 +592,7 @@ export const zh: Translations = {
 			name: "名称",
 			mode: "仪表板类型",
 			modeDesc:
-				"由 Hearth 卡片组成的面板、铺满整个面板的单张 Hearth 卡片，或将整个面板交给某个插件的视图。切换类型会保留此面板的卡片——切换回来即可恢复。",
+				"由 ZeroHearth 卡片组成的面板、铺满整个面板的单张 ZeroHearth 卡片，或将整个面板交给某个插件的视图。切换类型会保留此面板的卡片——切换回来即可恢复。",
 			modeOptions: {
 				cards: "卡片",
 				single: "单张卡片",
@@ -636,7 +636,7 @@ export const zh: Translations = {
 			linkedWorkspaceNone: "无",
 			mobileDefault: "移动端默认",
 			mobileDefaultDesc:
-				"在手机或平板上加载 Hearth 时打开此面板。只能有一个面板作为移动端默认；开启此项会清除其他面板的设置。",
+				"在手机或平板上加载 ZeroHearth 时打开此面板。只能有一个面板作为移动端默认；开启此项会清除其他面板的设置。",
 			titleVisibility: "标题可见性",
 			titleVisibilityDesc:
 				"仅针对此面板显示或隐藏标题/图标区块。覆盖全局设置。",
@@ -709,7 +709,7 @@ export const zh: Translations = {
 				"此面板的绘制方式——其卡片、按钮以及从它打开的对话框和菜单——卡片未单独指定时生效：经典，或 Material 3 Expressive。",
 			skyDesign: "背景设计",
 			skyDesignDesc: "在此面板上使用经典手绘天空，或 Material 3 Expressive 风格的扁平天空。",
-			wallpaperDesignDesc: "此面板上的 Hearth 壁纸：经典山丘，或以你的强调色绘制的 Material 3 Expressive 扁平图形。",
+			wallpaperDesignDesc: "此面板上的 ZeroHearth 壁纸：经典山丘，或以你的强调色绘制的 Material 3 Expressive 扁平图形。",
 			visibilityDefaultPlugin: (state: string) => `插件视图面板的默认值（${state}）`,
 			visibilityDefaultSingle: (state: string) =>
 				`单卡片面板的默认值（${state}）`,
@@ -721,7 +721,7 @@ export const zh: Translations = {
 			titleTextDesc: "为此面板覆盖全局标题文本。",
 			titleIcon: "标题图标",
 			titleIconDesc:
-				"此面板标题旁的标识：Lucide 图标 id、表情或短文本、仓库图片路径，或图片网址。清空后，仅此面板会显示 Hearth 水晶图标。",
+				"此面板标题旁的标识：Lucide 图标 id、表情或短文本、仓库图片路径，或图片网址。清空后，仅此面板会显示 ZeroHearth 水晶图标。",
 			titleAlign: "标题对齐",
 			titleAlignDesc: "仅对齐标题/图标区块。搜索栏保持自身布局。",
 			alignDefault: "默认（居中）",
@@ -752,7 +752,7 @@ export const zh: Translations = {
 				"单卡片面板始终铺满窗格——卡片会填满它并自行滚动。",
 			themeColorTarget: "标题上的强调色",
 			themeColorTargetDesc:
-				"此面板品牌标识的哪些部分跟随主题的图标颜色。仅为此面板覆盖全局设置；Hearth 的标签页与侧边栏图标仍跟随全局设置。",
+				"此面板品牌标识的哪些部分跟随主题的图标颜色。仅为此面板覆盖全局设置；ZeroHearth 的标签页与侧边栏图标仍跟随全局设置。",
 			themeColorTargetDefault: (state: string) => `使用全局默认（${state}）`,
 			themeColorTargetOptions: {
 				none: "都不",
@@ -793,7 +793,7 @@ export const zh: Translations = {
 		backgroundOptions: {
 			default: "使用全局默认",
 			none: "无",
-			hdefault: "Hearth 默认",
+			hdefault: "ZeroHearth 默认",
 			harbour: "港口小镇",
 			color: "纯色",
 			image: "仓库图片",
@@ -835,7 +835,7 @@ export const zh: Translations = {
 			dashboard: "网格、卡片表面与面板周围的控件。",
 			behaviour: "启动、笔记打开方式与隐私。",
 			mobile: "手机上的堆叠布局，以及操作栏。",
-			integrations: "TaskNotes、文件图标，以及 Hearth 读取的每个插件。",
+			integrations: "TaskNotes、文件图标，以及 ZeroHearth 读取的每个插件。",
 			backup: "导出与导入您的布局和设置。",
 			about: "版本、更新内容，以及问题反馈渠道。",
 		},
@@ -873,18 +873,18 @@ export const zh: Translations = {
 			startup: "启动与标签页",
 			startupDesc: "主页视图何时、在何处打开。",
 			opening: "打开笔记",
-			openingDesc: "在 Hearth 中点击笔记时它在哪里打开。",
+			openingDesc: "在 ZeroHearth 中点击笔记时它在哪里打开。",
 			mobileMode: "布局",
 			mobileModeDesc: "当屏幕宽度不足以容纳面板自身布局时，面板如何排布。",
 			privacy: "隐私与网络",
-			privacyDesc: "控制 Hearth 允许发出的对外请求。",
+			privacyDesc: "控制 ZeroHearth 允许发出的对外请求。",
 		},
 		about: {
-			heading: "关于 Hearth",
+			heading: "关于 ZeroHearth",
 			headingDesc: "项目链接、支持与版本。",
-			setup: "设置 Hearth",
+			setup: "设置 ZeroHearth",
 			setupDesc:
-				"回答几个关于您工作方式和已装插件的问题，Hearth 就会搭建一个匹配的面板。" +
+				"回答几个关于您工作方式和已装插件的问题，ZeroHearth 就会搭建一个匹配的面板。" +
 				"它会作为新面板添加 — 您已有的内容都不会改变。",
 			setupAgain: "搭建一个面板",
 			setupAgainDesc:
@@ -900,13 +900,11 @@ export const zh: Translations = {
 			reportIssue: "反馈问题",
 			reportIssueDesc: "遇到 bug 或有功能想法？请在 GitHub 上提交 issue。",
 			reportIssueButton: "反馈问题",
-			kofi: "支持 Hearth",
-			kofiDesc:
-				"Hearth 是免费的，并且永远免费。如果它值得留在您的主屏幕上，" +
-				"欢迎打赏 — 完全自愿，不会锁定任何功能。",
-			kofiButton: "在 Ko-fi 上打赏",
+			kofi: "支持上游作者",
+			kofiDesc: "打赏将给 ZeroHearth 所基于的 Hearth 项目的作者。",
+			kofiButton: "在 Ko-fi 上支持上游作者",
 			version: (v: string) => `版本 ${v}`,
-			versionDesc: "您正在运行的 Hearth 构建版本。",
+			versionDesc: "您正在运行的 ZeroHearth 构建版本。",
 		},
 		appearance: {
 			heading: "外观",
@@ -922,10 +920,10 @@ export const zh: Translations = {
 			titleIconDesc:
 				"标题旁绘制的标识。可以是 Lucide 图标 id（用 🔍 按钮浏览图标集）、" +
 				"表情或一两个字符、仓库中图片的路径（📷 按钮），或网络图片的网址。" +
-				"留空则使用 Hearth 水晶图标。每个面板都可以在自己的设置中覆盖此项。",
+				"留空则使用 ZeroHearth 水晶图标。每个面板都可以在自己的设置中覆盖此项。",
 			tabIcon: "标签页图标",
 			tabIconDesc:
-				"用于 Hearth 标签页标题栏和侧边栏按钮的 Lucide 图标，取代 Hearth 水晶图标。" +
+				"用于 ZeroHearth 标签页标题栏和侧边栏按钮的 Lucide 图标，取代 ZeroHearth 水晶图标。" +
 				"可浏览图标集或输入 id；留空则使用水晶图标。",
 			themeColorTarget: "跟随主题图标颜色",
 			themeColorTargetDesc:
@@ -953,7 +951,7 @@ export const zh: Translations = {
 			searchEngineDesc:
 				"为搜索栏提供支持的引擎。快速切换会像 Obsidian 的快速切换一样匹配：仅文件，包含别名。" +
 				"Omnisearch 需要安装并启用 Omnisearch 社区插件。",
-			searchEngineBuiltin: "Hearth（内置）",
+			searchEngineBuiltin: "ZeroHearth（内置）",
 			searchEngineOmnisearch: "Omnisearch",
 			searchEngineQuickSwitcher: "快速切换",
 			numberFormat: "数字格式",
@@ -977,7 +975,7 @@ export const zh: Translations = {
 			newNoteHeading: "“新建笔记”按钮",
 			newNoteHeadingDesc:
 				"它创建什么、创建在哪里。同一组设置同时驱动搜索栏旁的按钮、" +
-				"搜索栏卡片上的按钮，以及 Hearth 的“新建笔记”命令。",
+				"搜索栏卡片上的按钮，以及 ZeroHearth 的“新建笔记”命令。",
 			newNoteButtonLabel: "按钮文本",
 			newNoteButtonLabelDesc: "按钮上的文本。留空则显示“新建笔记”。",
 			newNoteTemplate: "模板",
@@ -1038,7 +1036,7 @@ export const zh: Translations = {
 			pauseWhenUnfocused: "Obsidian 不在前台时暂停动画",
 			pauseWhenUnfocusedDesc:
 				"当您在另一个应用或另一个窗口工作时，暂停所有动画。" +
-				"被其他标签页挡住的 Hearth 标签页本身就不消耗资源；此项针对的是" +
+				"被其他标签页挡住的 ZeroHearth 标签页本身就不消耗资源；此项针对的是" +
 				"在您并未使用的窗口中仍可见的面板 — 例如与浏览器并排，或在第二块屏幕上。" +
 				"如果您让面板常驻第二块显示器，请关闭此项。",
 			color: "最简模式背景",
@@ -1075,7 +1073,7 @@ export const zh: Translations = {
 			valueUrlDesc: "图片的直链 URL。",
 			valueVideoDesc: "仓库内的视频路径，例如 Attachments/loop.mp4。它会静音循环播放。",
 			videoNote:
-				"视频背景是 Hearth 能绘制的最耗资源的一种——看板打开期间它一直在解码画面。它只在“完整”性能档位下播放；从“均衡”往下会停留在第一帧。",
+				"视频背景是 ZeroHearth 能绘制的最耗资源的一种——看板打开期间它一直在解码画面。它只在“完整”性能档位下播放；从“均衡”往下会停留在第一帧。",
 			externalCallsDisabled:
 				"“行为”中的“禁用对外调用”已开启，因此不会显示：该背景需要从网络获取。" +
 				"请改用仓库内的图片，或关闭该设置。",
@@ -1099,7 +1097,7 @@ export const zh: Translations = {
 			bannerFullWidth: "全宽",
 			bannerFullWidthDesc: "让横幅横贯窗口两端，而不是与下方内容对齐。",
 			labels: {
-				default: "Hearth 默认",
+				default: "ZeroHearth 默认",
 				harbour: "港口小镇",
 				none: "无",
 				color: "纯色",
@@ -1133,13 +1131,13 @@ export const zh: Translations = {
 			skyDesign: "设计",
 			skyDesignDesc: "经典的手绘天空，或 Material 3 Expressive 风格的扁平天空：山丘、圆润的云与旋转的太阳。",
 			wallpaperDesignDesc:
-				"经典山丘与小屋——浅色主题下是清晨，深色主题下是月夜——或以强调色色调绘制的 Material 3 Expressive 扁平图形。由 Hearth 绘制，无需下载任何内容。",
+				"经典山丘与小屋——浅色主题下是清晨，深色主题下是月夜——或以强调色色调绘制的 Material 3 Expressive 扁平图形。由 ZeroHearth 绘制，无需下载任何内容。",
 			skyDesignClassic: "经典（手绘）",
 			skyDesignExpressive: "Expressive（扁平）",
 		},
 		behaviour: {
 			heading: "行为",
-			headingDesc: "Hearth 何时、在何处打开，以及手机/平板的“仅搜索”模式。",
+			headingDesc: "ZeroHearth 何时、在何处打开，以及手机/平板的“仅搜索”模式。",
 			openOnStartup: "启动时打开",
 			openOnStartupDesc: "仓库加载时打开主页视图。",
 			replaceNewTabs: "替换新标签页",
@@ -1150,7 +1148,7 @@ export const zh: Translations = {
 			liveRefresh: "随仓库变化实时刷新",
 			liveRefreshDesc:
 				"仓库变化时保持已打开的主页视图为最新 — 最近、书签和已保存查询卡片" +
-				"无需重新打开标签页即会更新。无论此设置如何，切回 Hearth 标签页时总会刷新。",
+				"无需重新打开标签页即会更新。无论此设置如何，切回 ZeroHearth 标签页时总会刷新。",
 			liveSettingsSync: "接收同步的更改",
 			liveSettingsSyncDesc:
 				"同步送达其他设备上所做的面板更改后立即应用，而不必等到下次重启 " +
@@ -1180,16 +1178,16 @@ export const zh: Translations = {
 			mobileTierMatch: "与桌面一致",
 			disableExternalCalls: "禁用对外调用",
 			disableExternalCallsDesc:
-				"阻止 Hearth 发出的所有对外网络请求，包括 Jira、外部日历、RSS 源、" +
+				"阻止 ZeroHearth 发出的所有对外网络请求，包括 Jira、外部日历、RSS 源、" +
 				"计算器的汇率查询，以及以网址给出的背景图片和标题图标——它们会" +
-				"分别回退为不显示图片和 Hearth 水晶。",
+				"分别回退为不显示图片和 ZeroHearth 水晶。",
 			openIn: "笔记打开位置",
 			openInDesc:
-				"从 Hearth 打开笔记时它去哪里。“当前标签页”会替换主页视图，" +
-				"使 Hearth 表现得像任何其他标签页。无论如何，Ctrl/Cmd 点击总会打开新标签页。",
+				"从 ZeroHearth 打开笔记时它去哪里。“当前标签页”会替换主页视图，" +
+				"使 ZeroHearth 表现得像任何其他标签页。无论如何，Ctrl/Cmd 点击总会打开新标签页。",
 			openInModes: {
 				tab: "新标签页",
-				same: "当前标签页（替换 Hearth）",
+				same: "当前标签页（替换 ZeroHearth）",
 				split: "分割窗格",
 				window: "新窗口",
 			},
@@ -1204,17 +1202,17 @@ export const zh: Translations = {
 				card: "卡片中的笔记",
 				cardDesc:
 					"由最近、书签、收藏、日历、热力图和任务卡片列出的笔记，以及移动端操作按钮。",
-				newNote: "Hearth 创建的笔记",
+				newNote: "ZeroHearth 创建的笔记",
 				newNoteDesc: "新笔记、日记和事件笔记，在创建时随即打开。",
 			},
-			openFromOutside: "从 Hearth 之外打开的笔记",
+			openFromOutside: "从 ZeroHearth 之外打开的笔记",
 			openFromOutsideDesc:
 				"文件浏览器、快速切换器、关系图 — 以及卡片嵌入的、自行打开链接的内容。" +
-				"Obsidian 会把它们交给当前聚焦的标签页，因此 Hearth 标签页会被占用。" +
-				"选择“新标签页”可保留 Hearth 标签页；此时文件浏览器将不再跟随您打开的文件。",
+				"Obsidian 会把它们交给当前聚焦的标签页，因此 ZeroHearth 标签页会被占用。" +
+				"选择“新标签页”可保留 ZeroHearth 标签页；此时文件浏览器将不再跟随您打开的文件。",
 			openFromOutsideModes: {
-				same: "当前标签页（替换 Hearth）",
-				tab: "新标签页（保留 Hearth）",
+				same: "当前标签页（替换 ZeroHearth）",
+				tab: "新标签页（保留 ZeroHearth）",
 			},
 		},
 		mobileActions: {
@@ -1241,11 +1239,11 @@ export const zh: Translations = {
 		integrations: {
 			heading: "所有集成",
 			headingDesc:
-				"Hearth 可以配合使用的一切，无论是否已安装都列在这里。" +
+				"ZeroHearth 可以配合使用的一切，无论是否已安装都列在这里。" +
 				"多数集成无需设置 — 需要设置的会说明其设置所在的位置。",
 			groups: {
 				plugin: "社区插件",
-				pluginDesc: "这些插件一旦启用，Hearth 就会自动识别。",
+				pluginDesc: "这些插件一旦启用，ZeroHearth 就会自动识别。",
 				core: "Obsidian 核心插件",
 				coreDesc:
 					"内置于 Obsidian。如果某张卡片提示缺少其中之一，请在 设置 → 核心插件 中启用。",
@@ -1260,11 +1258,11 @@ export const zh: Translations = {
 				external: "网络",
 				always: "始终可用",
 			},
-			/** Tooltip on the status pill, spelling out what it means for Hearth. */
+			/** Tooltip on the status pill, spelling out what it means for ZeroHearth. */
 			statusTooltip: {
-				enabled: "已安装并启用 — Hearth 正在使用它。",
-				disabled: "已安装但已关闭，因此 Hearth 目前无法使用它。",
-				missing: "未安装。Hearth 的其他一切在没有它的情况下也能正常工作。",
+				enabled: "已安装并启用 — ZeroHearth 正在使用它。",
+				disabled: "已安装但已关闭，因此 ZeroHearth 目前无法使用它。",
+				missing: "未安装。ZeroHearth 的其他一切在没有它的情况下也能正常工作。",
 				external: "这是一次对外请求，而不是插件。",
 				always: "无需安装。",
 			},
@@ -1273,7 +1271,7 @@ export const zh: Translations = {
 				section: "设置就在本页下方。",
 				tab: (tab: string) => `设置位于 ${tab} 下。`,
 				card: "在面板上的卡片本身进行配置。",
-				pluginSettings: "使用该插件自己的设置 — Hearth 中无需设置。",
+				pluginSettings: "使用该插件自己的设置 — ZeroHearth 中无需设置。",
 				none: "无需配置。",
 			},
 			/** Row buttons. */
@@ -1291,7 +1289,7 @@ export const zh: Translations = {
 					name: "Tasks",
 					desc:
 						"任务卡片可以读取 Tasks 插件自身的任务——它的状态（含自定义状态）与任务格式——" +
-						"由 Hearth 绘制并支持筛选、排序与字段，经由插件勾选、编辑，在日记或自选笔记中创建任务。",
+						"由 ZeroHearth 绘制并支持筛选、排序与字段，经由插件勾选、编辑，在日记或自选笔记中创建任务。",
 				},				stereo: {
 					name: "Stereo",
 					desc:
@@ -1301,7 +1299,7 @@ export const zh: Translations = {
 				omnisearch: {
 					name: "Omnisearch",
 					desc:
-						"把搜索栏切换到 Omnisearch 的模糊全文索引，取代 Hearth 的内置引擎。" +
+						"把搜索栏切换到 Omnisearch 的模糊全文索引，取代 ZeroHearth 的内置引擎。" +
 						"请在 搜索 → 搜索栏 下选择引擎；该选择仅在 Omnisearch 启用时保持有效。",
 				},
 				tasknotes: {
@@ -1354,12 +1352,12 @@ export const zh: Translations = {
 					desc:
 						"Operon 卡片 — 任务、看板、日程和计时器 — 通过 Operon 自己的开发者 API " +
 						"读取数据，因此状态、优先级和重复规则仍由它定义。仅桌面端，" +
-						"需要 Obsidian 1.12.2 或更新版本，且 Operon 必须批准 Hearth 的读取请求。",
+						"需要 Obsidian 1.12.2 或更新版本，且 Operon 必须批准 ZeroHearth 的读取请求。",
 				},
 				iconic: {
 					name: "Iconic",
 					desc:
-						"用 Iconic 设置的按文件图标会出现在 Hearth 列出文件的任何位置 — " +
+						"用 Iconic 设置的按文件图标会出现在 ZeroHearth 列出文件的任何位置 — " +
 						"最近、收藏、已保存搜索和搜索结果。",
 				},
 				iconize: {
@@ -1377,7 +1375,7 @@ export const zh: Translations = {
 					desc:
 						"Vault Pet 卡片把该插件安置在您的面板上：既可以是它自己的宠物卡片，" +
 						"活生生且可点击，也可以是它完整的小屋，含任务、图鉴、徽章与统计。" +
-						"宠物、经验以及解锁的一切都属于 Vault Pet，Hearth 只提供空间。",
+						"宠物、经验以及解锁的一切都属于 Vault Pet，ZeroHearth 只提供空间。",
 				},
 				excalidraw: {
 					name: "Excalidraw",
@@ -1409,7 +1407,7 @@ export const zh: Translations = {
 				},
 				fileExplorer: {
 					name: "文件浏览器",
-					desc: "为 Hearth 搜索结果上的“在文件浏览器中显示”提供支持。",
+					desc: "为 ZeroHearth 搜索结果上的“在文件浏览器中显示”提供支持。",
 				},
 				workspaces: {
 					name: "工作区",
@@ -1490,7 +1488,7 @@ export const zh: Translations = {
 			fieldsEnable: "自定义任务字段",
 			fieldsEnableDesc:
 				"用您自己定义的字段取代任务卡片显示的固定元数据 — 任何 frontmatter 属性" +
-				"或 Hearth 能读取的内容，名称、颜色和顺序都由您决定。默认关闭，" +
+				"或 ZeroHearth 能读取的内容，名称、颜色和顺序都由您决定。默认关闭，" +
 				"在您开启之前任务保持通常的样式。开启后从空白开始：任务只显示您添加的字段。",
 			fields: "任务上显示的字段",
 			fieldsDesc:
@@ -1499,14 +1497,14 @@ export const zh: Translations = {
 		fileIcons: {
 			heading: "文件图标 / Iconic / Iconize",
 			headingDesc:
-				"在 Hearth 显示文件的任何位置 — 最近、收藏、已保存搜索和搜索栏 — " +
+				"在 ZeroHearth 显示文件的任何位置 — 最近、收藏、已保存搜索和搜索栏 — " +
 				"使用您通过 Iconic 或 Iconize 插件设置的按文件图标。支持显示 Lucide 图标" +
-				"和表情；使用下载图标包中图标的文件仍会显示 Hearth 自己的文件类型图标。",
+				"和表情；使用下载图标包中图标的文件仍会显示 ZeroHearth 自己的文件类型图标。",
 			enable: "使用来自 Iconic / Iconize 的图标",
-			enableDesc: "关闭后所有文件都显示 Hearth 的文件类型图标，忽略这两个插件。",
+			enableDesc: "关闭后所有文件都显示 ZeroHearth 的文件类型图标，忽略这两个插件。",
 			enableDescNoPlugin:
 				"目前 Iconic 与 Iconize 都未启用，因此除非下方 frontmatter 选项已开启，" +
-				"所有文件都显示 Hearth 的文件类型图标。此项可以保持开启 — 一旦其中之一被安装即会生效。",
+				"所有文件都显示 ZeroHearth 的文件类型图标。此项可以保持开启 — 一旦其中之一被安装即会生效。",
 			property: "Iconize frontmatter 属性",
 			propertyDesc:
 				"Iconize 存放笔记图标的属性，用于通过 frontmatter 而非菜单设置的图标。" +
@@ -1517,7 +1515,7 @@ export const zh: Translations = {
 				"即使没有安装 Iconic 或 Iconize，也显示笔记 frontmatter 中指定的图标 — " +
 				"适用于其他插件（Notebook Navigator、Pretty Properties、AutoIcon）或手动写入的图标。" +
 				"默认关闭：“icon” 是很常见的属性名，用它表示其他含义的库会把这些值显示成图标。" +
-				"只显示表情和 Obsidian 已知的图标 ID，其他情况保留 Hearth 的文件类型图标。",
+				"只显示表情和 Obsidian 已知的图标 ID，其他情况保留 ZeroHearth 的文件类型图标。",
 		},
 		frontMatterTitle: {
 			heading: "Front Matter Title",
@@ -1533,10 +1531,10 @@ export const zh: Translations = {
 			heading: "Operon",
 			headingDesc:
 				"通过 Operon 插件自己的开发者 API 读取任务、看板、日程和正在运行的计时器 — " +
-				"任务的定义仍以 Operon 为准，Hearth 只显示它返回的内容。",
+				"任务的定义仍以 Operon 为准，ZeroHearth 只显示它返回的内容。",
 			enable: "连接到 Operon",
 			enableDesc:
-				"关闭即为总开关：Operon 卡片停止读取，Hearth 也绝不会向 Operon 请求访问。" +
+				"关闭即为总开关：Operon 卡片停止读取，ZeroHearth 也绝不会向 Operon 请求访问。" +
 				"在面板上出现 Operon 卡片之前不会发起任何请求。",
 			status: "连接",
 			statusAbsent: "Operon 未安装或未启用。",
@@ -1545,29 +1543,29 @@ export const zh: Translations = {
 			statusBooting: "Operon 正在运行，但仍在启动中。",
 			statusPending:
 				"等待批准。请打开 设置 → Operon → Core → General → Developer API " +
-				"Integrations 并批准 Hearth。",
+				"Integrations 并批准 ZeroHearth。",
 			statusSuspended:
-				"访问已暂停。请在 Operon 的 Developer API Integrations 中查看 Hearth 待批的权限范围。",
+				"访问已暂停。请在 Operon 的 Developer API Integrations 中查看 ZeroHearth 待批的权限范围。",
 			statusRevoked:
 				"访问已被撤销。请在 Operon 的 Developer API Integrations 中重新授予。",
 			statusReady: "已连接 — Operon 卡片可以读取任务。",
 			statusIdle: "尚未连接。添加一张 Operon 卡片即可开启会话。",
-			statusOff: "该集成已关闭，因此 Hearth 不会从 Operon 读取任何内容。",
+			statusOff: "该集成已关闭，因此 ZeroHearth 不会从 Operon 读取任何内容。",
 			statusError: "Operon 拒绝了连接。",
 			detail: "Operon 报告",
 			install: "在社区插件中打开 Operon",
 			writes: "允许更改",
 			writesDesc:
 				"允许看板卡片通过拖动把任务移到另一个状态，并添加一个用于创建任务的“+”。" +
-				"新任务放在哪里、某次移动是否合法都由 Operon 决定；Hearth 只是发起请求。" +
-				"开启此项会扩大 Hearth 请求的权限范围，因此您需要在 Operon 的 " +
-				"Developer API Integrations 中重新批准。关闭则表示 Hearth 只能读取。",
+				"新任务放在哪里、某次移动是否合法都由 Operon 决定；ZeroHearth 只是发起请求。" +
+				"开启此项会扩大 ZeroHearth 请求的权限范围，因此您需要在 Operon 的 " +
+				"Developer API Integrations 中重新批准。关闭则表示 ZeroHearth 只能读取。",
 			writesPending:
 				"读取正常，但更改权限尚未授予 — 请在 Operon 的 Developer API Integrations " +
-				"中重新批准 Hearth。在此之前卡片保持只读。",
+				"中重新批准 ZeroHearth。在此之前卡片保持只读。",
 			capabilities: "请求的访问权限",
 			capabilitiesDesc:
-				"Hearth 一次性请求全部权限，因为 Operon 不会开启部分批准的会话。" +
+				"ZeroHearth 一次性请求全部权限，因为 Operon 不会开启部分批准的会话。" +
 				"除非开启“允许更改”（会追加任务状态流转与任务创建权限），否则均为只读。",
 			missing: (names: string) => `尚未授予：${names}`,
 			recheck: "重新检查",
@@ -1620,8 +1618,8 @@ export const zh: Translations = {
 				"Expressive 卡片使用不透明的色调表面和大圆角，因此不透明度、模糊、圆角半径和边框只作用于经典卡片。",
 			cardDesign: "设计",
 			cardDesignDesc:
-				"Hearth 的绘制方式：经典，或 Material 3 Expressive——强调色的色调容器、胶囊与柔和形状、更粗的字体。Expressive 适用于 Hearth 的整个界面：卡片、面板按钮、所有对话框和菜单，以及此设置页面。面板或卡片仍可单独指定；内容来自你自己的卡片（笔记、嵌入、网页）内容保持不变，只采用 Expressive 的卡片外框。",
-			designClassicDesc: "安静的表面与细边框——Hearth 一贯的样子。",
+				"ZeroHearth 的绘制方式：经典，或 Material 3 Expressive——强调色的色调容器、胶囊与柔和形状、更粗的字体。Expressive 适用于 ZeroHearth 的整个界面：卡片、面板按钮、所有对话框和菜单，以及此设置页面。面板或卡片仍可单独指定；内容来自你自己的卡片（笔记、嵌入、网页）内容保持不变，只采用 Expressive 的卡片外框。",
+			designClassicDesc: "安静的表面与细边框——ZeroHearth 一贯的样子。",
 			designExpressiveDesc: "处处 Material 3 Expressive：源自强调色的色调、胶囊与柔和形状、醒目的字体。",
 			designInUse: "使用中",
 			cards: "卡片",
@@ -1638,7 +1636,7 @@ export const zh: Translations = {
 			exportDashboardButton: "导出仪表板…",
 			importAny: "导入",
 			importAnyDesc:
-				"打开一个 Hearth 文件——单个仪表板、一份布局或一份完整备份。在任何改动之前会先告诉您文件内容；单个仪表板会添加到您现有面板旁边，而不会替换任何内容。",
+				"打开一个 ZeroHearth 文件——单个仪表板、一份布局或一份完整备份。在任何改动之前会先告诉您文件内容；单个仪表板会添加到您现有面板旁边，而不会替换任何内容。",
 			export: "导出布局",
 			exportDesc: "将所有仪表板以及网格和布局设置下载为 JSON 文件。",
 			exportButton: "导出文件",
@@ -1646,7 +1644,7 @@ export const zh: Translations = {
 			importButton: "导入文件",
 			exportSettings: "导出设置",
 			exportSettingsDesc:
-				"将全部 Hearth 设置 — 完整布局加上顶部、背景、行为、外观和 TaskNotes 选项 — " +
+				"将全部 ZeroHearth 设置 — 完整布局加上顶部、背景、行为、外观和 TaskNotes 选项 — " +
 				"下载为 JSON 备份文件。",
 		},
 	},
@@ -1999,14 +1997,14 @@ export const zh: Translations = {
 				"按卡片高度能容纳的数量列出文件，而不是固定数量。调整卡片大小会改变显示数量。",
 			count: "文件数量",
 			countDesc: (max: number) =>
-				`列出多少个最近打开的文件 — 最多 ${max} 个，这也是 Hearth 最近文件历史的上限。`,
+				`列出多少个最近打开的文件 — 最多 ${max} 个，这也是 ZeroHearth 最近文件历史的上限。`,
 			types: "文件类型",
 			typesDesc: "只列出所选类型的文件。可任意组合；不选则显示所有类型。",
 		},
 		bookmarks: {
 			heading: "文件夹书签",
 			folderTarget: "打开文件夹书签时",
-			folderTargetDesc: "在 Hearth 的文件夹浏览页中打开，或在侧边栏的 Obsidian 文件浏览器中显示。",
+			folderTargetDesc: "在 ZeroHearth 的文件夹浏览页中打开，或在侧边栏的 Obsidian 文件浏览器中显示。",
 		},
 		folder: {
 			folder: "文件夹",
@@ -2014,7 +2012,7 @@ export const zh: Translations = {
 			folderPlaceholder: "项目/2026",
 			pickFolder: "选择文件夹",
 			sort: "排序",
-			sortDesc: "内容的排列顺序。使用 Hearth 自带的排序时，文件夹排在前面并按名称排列，与文件管理器一致。",
+			sortDesc: "内容的排列顺序。使用 ZeroHearth 自带的排序时，文件夹排在前面并按名称排列，与文件管理器一致。",
 			sorts: {
 				explorer: "与文件管理器一致",
 				name: "名称（A–Z）",
@@ -2075,7 +2073,7 @@ export const zh: Translations = {
 			operonTasks: "显示 Operon 任务",
 			operonTasksDesc:
 				"标记有 Operon 任务到期的日期，并在日程中列出这些任务。" +
-				"通过 Operon 的开发者 API 读取，因此需要在 设置 → Hearth → 集成 中" +
+				"通过 Operon 的开发者 API 读取，因此需要在 设置 → ZeroHearth → 集成 中" +
 				"批准 Operon。仅有计划时间（无到期日）的任务不包含在内。",
 			operonTaskColor: "Operon 任务颜色",
 			operonTaskColorDesc: "任务标记的颜色。默认使用强调色。",
@@ -2157,7 +2155,7 @@ export const zh: Translations = {
 			taskNotesSubLoaded: (count: number) => `已加载 ${count} 个事件。`,
 			taskNotesSubPending: "尚未加载 — 请在下方刷新。",
 			taskNotesSubDisabled: "已在 TaskNotes 中禁用。",
-			taskNotesSubBlocked: "未获取：Hearth 的设置中已禁用对外调用。",
+			taskNotesSubBlocked: "未获取：ZeroHearth 的设置中已禁用对外调用。",
 			taskNotesSubFailed: (reason: string) => `无法加载：${reason}`,
 			taskNotesSubNotCalendar: "返回的内容不是 iCalendar 源。",
 			taskNotesSubMissingFile: "该文件不在仓库中。",
@@ -2399,7 +2397,7 @@ export const zh: Translations = {
 			targetNote: "目标（笔记路径）",
 			targetFolder: "目标（文件夹路径）",
 			folderTarget: "打开文件夹按钮时",
-			folderTargetDesc: "在 Hearth 的文件夹浏览页中打开，或在侧边栏的 Obsidian 文件浏览器中显示。",
+			folderTargetDesc: "在 ZeroHearth 的文件夹浏览页中打开，或在侧边栏的 Obsidian 文件浏览器中显示。",
 			moveUp: "上移",
 			moveDown: "下移",
 			removeLink: "移除链接",
@@ -2488,9 +2486,9 @@ export const zh: Translations = {
 			source: "来源",
 			sourceDesc:
 				"Markdown 复选框在任何地方都可用。TaskNotes 通过 frontmatter 读取该插件的" +
-				"任务笔记（字段名可在 设置 → Hearth 中配置，因为 TaskNotes 没有供其他插件" +
+				"任务笔记（字段名可在 设置 → ZeroHearth 中配置，因为 TaskNotes 没有供其他插件" +
 				"查询的 API）。Kanban 读取单个 Kanban 插件的看板笔记，每个标题作为一列。" +
-				"Tasks 插件读取该插件自身的任务——它的状态与任务格式——由 Hearth 绘制，" +
+				"Tasks 插件读取该插件自身的任务——它的状态与任务格式——由 ZeroHearth 绘制，" +
 				"并使用该插件的勾选、编辑和创建体验。",
 			sourceCheckbox: "Markdown 复选框",
 			sourceTaskNotes: "TaskNotes 插件",
@@ -2618,12 +2616,12 @@ export const zh: Translations = {
 			doneStatuses: "视为已完成的状态",
 			doneStatusesDesc:
 				"TaskNotes 来源：哪些状态值被视为已完成（除非开启“显示已完成”，否则隐藏；" +
-				"显示时加删除线），每行一个。留空则仅使用 设置 → Hearth 中的完成值。" +
+				"显示时加删除线），每行一个。留空则仅使用 设置 → ZeroHearth 中的完成值。" +
 				"例如加上 “canceled” 可把已取消的任务也算作已完成。",
 			doneStatusesPlaceholder: "done\ncanceled",
 			fields: "字段",
 			fieldsFollowGlobal:
-				"当前跟随 设置 → Hearth → 集成 中的字段。开启后可为此卡片单独设定。",
+				"当前跟随 设置 → ZeroHearth → 集成 中的字段。开启后可为此卡片单独设定。",
 			fieldsOwnDesc:
 				"此来源不跟随全库 TaskNotes 列表。开启后可为此卡片配置自有字段，" +
 				"从卡片一向显示的内容开始。",
@@ -2683,15 +2681,15 @@ export const zh: Translations = {
 			fieldNoKeys: "无键",
 			fieldAddKey: "添加一个键",
 			fieldAddKeyDesc:
-				"Hearth 自己的值可以取到复选框行的优先级、看板列以及解析出的日期；" +
+				"ZeroHearth 自己的值可以取到复选框行的优先级、看板列以及解析出的日期；" +
 				"属性则读取 frontmatter 中的任何内容。",
-			fieldAddBuiltin: "Hearth 读取的内容",
+			fieldAddBuiltin: "ZeroHearth 读取的内容",
 			fieldAddProperty: "Frontmatter 属性",
 			fieldAddKeyTyped: "输入属性名…",
 			fieldAddKeyPlaceholder: "属性名",
 			fieldRemoveKey: "移除键",
 			fieldPickProperty: "在您的笔记中找到的属性",
-			fieldPickBuiltin: "Hearth 自行解析的值",
+			fieldPickBuiltin: "ZeroHearth 自行解析的值",
 			fieldKeyAlreadyAdded: (key: string) => `“${key}”已经是此字段的一个键。`,
 			fieldMapValues: "值与颜色",
 			fieldMappedValues: (n: number) => `已映射 ${n} 个值`,
@@ -2859,7 +2857,7 @@ export const zh: Translations = {
 			languageTs: "脚本（TS）",
 			query: "查询",
 			queryDesc:
-				"一条 Datacore 查询，例如 @page and #project。Hearth 会把匹配项渲染为" +
+				"一条 Datacore 查询，例如 @page and #project。ZeroHearth 会把匹配项渲染为" +
 				"实时链接列表。运行时没有“当前笔记”，因此全局查询完全可用，" +
 				"但相对文件的查询没有可解析的文件。",
 			queryPlaceholder: "@page and #project",
@@ -3085,7 +3083,7 @@ export const zh: Translations = {
 			removeFeed: "移除订阅源",
 			github: "从 GitHub 添加",
 			githubDesc:
-				"以 owner/repo 形式输入仓库（或粘贴其网址）并选择要关注的内容 — Hearth 会为您构建 Atom 源。",
+				"以 owner/repo 形式输入仓库（或粘贴其网址）并选择要关注的内容 — ZeroHearth 会为您构建 Atom 源。",
 			githubPlaceholder: "owner/repo",
 			githubReleases: "发布",
 			githubCommits: "提交",
@@ -3114,7 +3112,7 @@ export const zh: Translations = {
 			showDateDesc: "显示每个条目的发布时间。",
 			reading: "阅读",
 			openIn: "打开条目于",
-			openInDesc: "点击条目后去往何处。没有网页的条目（例如简报）总是在 Hearth 阅读器中打开。",
+			openInDesc: "点击条目后去往何处。没有网页的条目（例如简报）总是在 ZeroHearth 阅读器中打开。",
 			openInBrowser: "浏览器",
 			openInDialog: "阅读器（对话框）",
 			openInTab: "阅读器（标签页）",
@@ -3226,9 +3224,9 @@ export const zh: Translations = {
 			location: "位置",
 			search: "查找地点",
 			searchDesc:
-				"按名称搜索 — Hearth 会把坐标存在卡片上，因此这次查询只发生一次。",
+				"按名称搜索 — ZeroHearth 会把坐标存在卡片上，因此这次查询只发生一次。",
 			searchDisabled:
-				"Hearth 设置中已禁用对外调用，地点搜索不可用。您仍可在下方输入坐标。",
+				"ZeroHearth 设置中已禁用对外调用，地点搜索不可用。您仍可在下方输入坐标。",
 			searchPlaceholder: "布拉格、里斯本、京都…",
 			searchButton: "搜索",
 			searchEmpty: "请输入要搜索的地名。",
@@ -3312,7 +3310,7 @@ export const zh: Translations = {
 			hostDesc: "Jira 站点的源地址。发送个人访问令牌时必须使用 HTTPS。",
 			hostPlaceholder: "https://jira.example.com",
 			pat: "个人访问令牌",
-			patDesc: "此卡片使用的 Bearer PAT。存储在 Hearth 的插件数据中。",
+			patDesc: "此卡片使用的 Bearer PAT。存储在 ZeroHearth 的插件数据中。",
 			apiBase: "API 基础路径",
 			apiBaseDesc: "Jira REST 的相对路径。完整 URL 会被拒绝。",
 			apiBasePlaceholder: "/rest/api/latest",
@@ -3324,7 +3322,7 @@ export const zh: Translations = {
 			noFavoriteFilters: "Jira 未返回任何收藏的筛选器。",
 			loadFailed: "无法加载 Jira 筛选器。请检查主机、API 路径和令牌。",
 			externalCallsDisabled:
-				"Hearth 设置中已禁用对外调用，无法加载收藏的筛选器。",
+				"ZeroHearth 设置中已禁用对外调用，无法加载收藏的筛选器。",
 			controls: "筛选控件",
 			maxResults: "最大结果数",
 			maxResultsDesc: "最多显示多少条筛选后的事项，上限 200。",
@@ -3353,7 +3351,7 @@ export const zh: Translations = {
 				"当卡片只显示单个文件时很实用。",
 			perfLabel: "性能",
 			perfNote:
-				"这是 Hearth 中开销最大的卡片。它在面板内实时运行另一个插件的完整视图，" +
+				"这是 ZeroHearth 中开销最大的卡片。它在面板内实时运行另一个插件的完整视图，" +
 				"因此只要面板处于打开状态，该插件自己的计时器、监听器和渲染就会一直运行 — " +
 				"每多一张这样的卡片就再多一份开销。最多使用一两张，" +
 				"并预期在配置一般的硬件上面板会变慢。",
@@ -3615,13 +3613,13 @@ export const zh: Translations = {
 			taskChuteUnsupported: "TaskChute 的视图未提供此卡片所需的内容——请更新 TaskChute Plus",
 			taskChuteNoData: "还没有 TaskChute 记录——先在 TaskChute 中执行一项任务",
 			operonEnable: "请启用 Operon 插件以显示其任务",
-			operonDisabled: "Operon 集成已关闭 — 请在 设置 → Hearth → 集成 中开启",
+			operonDisabled: "Operon 集成已关闭 — 请在 设置 → ZeroHearth → 集成 中开启",
 			operonUnsupported:
 				"Operon 的开发者 API 仅支持桌面端，且需要 Obsidian 1.12.2 或更新版本",
 			operonPending:
-				"请在 设置 → Operon → Core → General → Developer API Integrations 中批准 Hearth",
+				"请在 设置 → Operon → Core → General → Developer API Integrations 中批准 ZeroHearth",
 			operonSuspended:
-				"Operon 暂停了 Hearth 的访问权限 — 请在 Operon 的 Developer API Integrations 中查看",
+				"Operon 暂停了 ZeroHearth 的访问权限 — 请在 Operon 的 Developer API Integrations 中查看",
 			operonRevoked:
 				"Operon 访问权限已被撤销 — 请在 Operon 的 Developer API Integrations 中重新授予",
 			operonBooting: "Operon 仍在启动中",
@@ -3677,7 +3675,7 @@ export const zh: Translations = {
 			addTaskDue: "到期日",
 			confirmTitle: "Operon 需要确认",
 			/** Operon assessed the change and asked for consent; its own summary
-			 * of what would happen is shown rather than Hearth's guess at it. */
+			 * of what would happen is shown rather than ZeroHearth's guess at it. */
 			confirmMessage: (risk: string, effects: string) =>
 				effects
 					? `Operon 将此更改评定为 ${risk}：${effects}`
@@ -3757,7 +3755,7 @@ export const zh: Translations = {
 			markAllRead: "全部标为已读",
 			markRead: "标为已读",
 			markUnread: "标为未读",
-			readHere: "在 Hearth 中阅读",
+			readHere: "在 ZeroHearth 中阅读",
 			openTab: "在新标签页中阅读",
 			openBrowser: "在浏览器中打开",
 			saveNote: "保存为笔记",
@@ -4484,7 +4482,7 @@ export const zh: Translations = {
 		journal: "来自 Journals 插件的某个日志的当前笔记",
 		web: "iframe 中的网页，按计时器刷新",
 		bookmarks: "您的 Obsidian 书签，一键可达",
-		favorites: "您在 Hearth 中标星的笔记",
+		favorites: "您在 ZeroHearth 中标星的笔记",
 		recent: "您最近打开的文件",
 		folder: "文件夹下一层的内容，并可继续展开浏览",
 		links: "链接、笔记、命令与文件夹的启动台",
@@ -4543,7 +4541,7 @@ export const zh: Translations = {
 			railLabel: "申请一种卡片",
 			heading: "申请一种卡片",
 			intro:
-				"缺了什么？请描述您希望 Hearth 拥有的卡片 — 它应该显示什么，" +
+				"缺了什么？请描述您希望 ZeroHearth 拥有的卡片 — 它应该显示什么，" +
 				"数据又从哪里来。",
 			footPrompt: "没找到您想要的？",
 			footLink: "申请一种卡片",
@@ -4555,7 +4553,7 @@ export const zh: Translations = {
 			emailDesc: "如果您不想用 GitHub，可以直接发给维护者。会打开您的邮件应用。",
 			emailAction: "打开邮件",
 			prefilledNote:
-				"两种方式都会预填几个提示问题以及您的 Hearth 和 Obsidian 版本 — 发送前可任意修改。",
+				"两种方式都会预填几个提示问题以及您的 ZeroHearth 和 Obsidian 版本 — 发送前可任意修改。",
 		},
 	},
 
@@ -4613,12 +4611,12 @@ export const zh: Translations = {
 			snapshotLeak:
 				"如果图里能读到你的内容，请不要发布这个面板：别人一旦安装，这张图就再也收不回来了。也请告诉我们——这是涂抹功能的缺陷，最好在它落到别人身上之前修好。",
 			snapshotLeakReport: "去 GitHub 反馈",
-			snapshotFailed: "Hearth 无法截取面板图片。",
+			snapshotFailed: "ZeroHearth 无法截取面板图片。",
 			snapshotRequired: "画廊条目需要一张面板截图。请先截图——发布前你可以先检查它。",
 			snapshotUnavailable:
 				"发布需要一张面板截图，而当前版本无法截图——截图需要桌面版应用。你仍然可以把仪表板保存为文件，再从桌面端的库发布。",
 			snapshotNotActive:
-				"发布需要一张面板截图，而 Hearth 只能拍摄当前打开的面板。请先切换到这个仪表板，再发布它。",
+				"发布需要一张面板截图，而 ZeroHearth 只能拍摄当前打开的面板。请先切换到这个仪表板，再发布它。",
 			theme: "推荐搭配我的主题",
 			themeDesc: (name: string) =>
 				`标明这个面板适合在 ${name}（你正在使用的主题）下查看。这只是给安装者的提示——不会在对方那边安装或更改任何东西。`,
@@ -4652,7 +4650,7 @@ export const zh: Translations = {
 			identityReplaceConfirm: "替换",
 			identityRestoreLabel: "恢复密钥",
 			identityRestored: (name: string) => `现在你的发布身份是 ${name}。`,
-			identityRestoreFailed: "这不是一把 Hearth 恢复密钥。",
+			identityRestoreFailed: "这不是一把 ZeroHearth 恢复密钥。",
 
 			// ---- 包含哪些内容 ----
 			contents: "包含哪些内容",
@@ -4715,7 +4713,7 @@ export const zh: Translations = {
 			signatureInvalid:
 				"该文件声明了作者，但签名校验不通过——可能是签名之后被修改过，" +
 				"也可能是有人把别人的代号放在了上面。因此它以“无作者”显示。导入的其他部分不受影响。",
-			madeWith: (version: string) => `Hearth ${version}`,
+			madeWith: (version: string) => `ZeroHearth ${version}`,
 			cardCount: (n: number) => `${n} 种卡片`,
 			assetCount: (n: number) => `随附 ${n} 张图片`,
 			pathCount: (n: number) => `指向 ${n} 个库内路径`,
@@ -4726,7 +4724,7 @@ export const zh: Translations = {
 			modeAddBoards: "把它的仪表板添加到我的库",
 			modeReplaceBoard: (name: string) => `就地更新“${name}”`,
 			modeReplaceAll: "替换我的全部设置",
-			replaceAllWarning: "这会用文件中的内容替换你的仪表板和每一项 Hearth 设置，且无法撤销。",
+			replaceAllWarning: "这会用文件中的内容替换你的仪表板和每一项 ZeroHearth 设置，且无法撤销。",
 			heads: "需要留意",
 			missingPlugins: (plugins: string) =>
 				`此处未安装或未启用：${plugins}。在启用之前，这些卡片会是空的。`,
@@ -4744,7 +4742,7 @@ export const zh: Translations = {
 			warnMissingPlugins: (n: number) => `它需要的 ${n} 个插件未启用。`,
 			warnTaskFields:
 				"它的任务卡片使用了自定义字段——请在“设置 → 集成”中开启任务字段自定义才能看到。",
-			warnUnknownCards: "部分卡片需要更新版本的 Hearth，已被略过。",
+			warnUnknownCards: "部分卡片需要更新版本的 ZeroHearth，已被略过。",
 			warnAssets: "文件中缺少它的部分图片。",
 		},
 	},
@@ -4794,9 +4792,9 @@ export const zh: Translations = {
 			pluginBoard: "承载插件视图",
 			noPicture: "没有图片",
 			needsIdentity:
-				"浏览和安装无需代号，但投票和发布需要。Hearth 会用一把永不离开本库的密钥为你生成一个匿名代号。",
+				"浏览和安装无需代号，但投票和发布需要。ZeroHearth 会用一把永不离开本库的密钥为你生成一个匿名代号。",
 			needsIdentityVote:
-				"投票需要一个代号。Hearth 会用一把永不离开本库的密钥为你生成匿名代号——不需要账号，也不涉及你的任何身份信息。现在就生成吗？",
+				"投票需要一个代号。ZeroHearth 会用一把永不离开本库的密钥为你生成匿名代号——不需要账号，也不涉及你的任何身份信息。现在就生成吗？",
 		},
 		detail: {
 			install: "安装",
@@ -4810,13 +4808,13 @@ export const zh: Translations = {
 			updated: (when: string) => `更新于 ${when}`,
 			version: (v: string) => `作者版本 ${v}`,
 			theme: (name: string) => `推荐搭配 ${name} 主题`,
-			madeWith: (v: string) => `使用 Hearth ${v} 制作`,
+			madeWith: (v: string) => `使用 ZeroHearth ${v} 制作`,
 			contents: "这个面板上有什么",
 			requires: "它需要什么",
 			requiresPlugins: "插件",
 			requiresViews: "承载的视图",
 			requiresSettings: "设置",
-			nothingRequired: "除 Hearth 本身外无需其他。",
+			nothingRequired: "除 ZeroHearth 本身外无需其他。",
 			size: (kb: number) => `${kb} KB`,
 			remote: (n: number) => `这个面板上有 ${n} 处内容来自互联网。`,
 			noRemote: "这个面板不会从互联网加载任何内容。",
@@ -4844,7 +4842,7 @@ export const zh: Translations = {
 		},
 		publish: {
 			title: "发布到画廊",
-			intro: "把这个仪表板放进画廊，任何使用这个 Hearth 画廊的人都能找到并安装它。",
+			intro: "把这个仪表板放进画廊，任何使用这个 ZeroHearth 画廊的人都能找到并安装它。",
 			category: "分类",
 			categoryDesc: "这个面板是做什么用的。别人靠它找到你。",
 			button: "发布",
@@ -4864,7 +4862,7 @@ export const zh: Translations = {
 			updateMissing:
 				"这个库里没有当初用来发布它的面板——可能已被删除，或者它在另一个库里。从这里发布只会新建一个条目，所以没有可更新的对象。",
 			updateUnknown:
-				"Hearth 还不知道这个条目对应你的哪个面板。点击“更新”，它会读取条目来确认。",
+				"ZeroHearth 还不知道这个条目对应你的哪个面板。点击“更新”，它会读取条目来确认。",
 			unpublish: "从画廊移除",
 			unpublishConfirm: (name: string) =>
 				`要把“${name}”从画廊移除吗？已经安装的人仍然保留副本，但新的人再也找不到它。`,
@@ -4874,9 +4872,9 @@ export const zh: Translations = {
 			heading: "仪表板画廊",
 			host: "画廊地址",
 			hostDesc:
-				"Hearth 浏览与发布仪表板的画廊。打开画廊之前不会拉取任何内容，发布之前也不会发送任何内容。清空此项即可彻底关闭画廊，并且会一直保持关闭。只接受 https（自建画廊也可用 localhost 上的 http）。",
+				"ZeroHearth 浏览与发布仪表板的画廊。打开画廊之前不会拉取任何内容，发布之前也不会发送任何内容。清空此项即可彻底关闭画廊，并且会一直保持关闭。只接受 https（自建画廊也可用 localhost 上的 http）。",
 			hostPlaceholder: "https://gallery.example.com",
-			hostInvalid: "这不是 Hearth 会连接的地址。请使用 https，或 localhost 上的 http。",
+			hostInvalid: "这不是 ZeroHearth 会连接的地址。请使用 https，或 localhost 上的 http。",
 			hostCleared: "已关闭画廊。",
 			hostSet: (host: string) => `画廊已设为 ${host}。`,
 			browse: "浏览画廊",
@@ -4884,11 +4882,11 @@ export const zh: Translations = {
 			browseButton: "打开画廊",
 		},
 		errors: {
-			noHost: "尚未设置画廊。请在 Hearth 设置的“仪表板画廊”中填写画廊地址。",
+			noHost: "尚未设置画廊。请在 ZeroHearth 设置的“仪表板画廊”中填写画廊地址。",
 			externalCallsOff:
 				"画廊是互联网上的服务器，而此库启用了“禁用外部调用”。要浏览或发布，请先关闭该设置。",
 			offline: "无法连接画廊。它可能已下线，或此设备当前离线。",
-			badResponse: "该地址有响应，但不像是一个 Hearth 画廊。",
+			badResponse: "该地址有响应，但不像是一个 ZeroHearth 画廊。",
 			unauthorized: "画廊没有接受这个库的身份。",
 			forbidden: "画廊不允许这个库的身份执行该操作。",
 			rateLimited: "画廊请求你放慢速度。请几分钟后再试。",
@@ -4896,7 +4894,7 @@ export const zh: Translations = {
 			rejected: (why: string) => `画廊拒绝了它：${why}`,
 			notFound: "画廊里没有这个内容。",
 			server: "画廊在处理该请求时出错了。",
-			unsigned: "Hearth 无法为文件签名，因此没有发布——未签名的面板无法证明作者是谁。",
+			unsigned: "ZeroHearth 无法为文件签名，因此没有发布——未签名的面板无法证明作者是谁。",
 		},
 	},
 
@@ -4906,9 +4904,9 @@ export const zh: Translations = {
 		notAnObject: "布局必须是一个 JSON 对象。",
 		noValidDashboards: "布局中没有有效的面板。",
 		noValidCards: "布局中没有有效的卡片。",
-		notAHearthLayout: '这不是 Hearth 布局 — 未找到 "dashboards" 或 "cards" 数组。',
-		notHearthSettings:
-			'这不是 Hearth 设置备份 — 未找到 "hearthSettings" 标记或布局。',
+		notAZeroHearthLayout: '这不是 ZeroHearth 布局 — 未找到 "dashboards" 或 "cards" 数组。',
+		notZeroHearthSettings:
+			'这不是 ZeroHearth 设置备份 — 未找到 "hearthSettings" 标记或布局。',
 	},
 
 	// ---- 多视图卡片（#385，src/cardviews.ts）---------------------------------
@@ -5059,12 +5057,12 @@ export const zh: Translations = {
 		schemes: {
 			theme: "Obsidian 主题",
 			htop: "Htop",
-			hearth: "Hearth",
+			zerohearth: "ZeroHearth",
 			amber: "琥珀",
 			paper: "纸张",
 		},
 		quitTitle: "退出终端模式？",
-		quitMessage: "Hearth 将回到图形设计。可在 设置 → Hearth → 外观 中再次开启终端模式。",
+		quitMessage: "ZeroHearth 将回到图形设计。可在 设置 → ZeroHearth → 外观 中再次开启终端模式。",
 		quitConfirm: "退出终端模式",
 		fn: {
 			help: "帮助",
@@ -5162,7 +5160,7 @@ export const zh: Translations = {
 		settings: {
 			name: "终端",
 			experimental: "实验性",
-			desc: "把整个 Hearth 画成文字：字符网格、线框卡片、一切皆有按键，就像终端工具一样。任何机器都跑得动。",
+			desc: "把整个 ZeroHearth 画成文字：字符网格、线框卡片、一切皆有按键，就像终端工具一样。任何机器都跑得动。",
 			heading: "终端模式",
 			headingDesc: "文字界面的外观。开启时每个仪表板都以它绘制。",
 			scheme: "配色",

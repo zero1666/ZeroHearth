@@ -3,7 +3,7 @@ import { setIcon } from "./glyphs";
 import { CARD_KINDS, cardDefinition, resolveCardDesign } from "./cards";
 import { type CardEditorContext } from "./cards/definition";
 import { t } from "./i18n";
-import { HearthTabbedModal, type HearthModalTab } from "./tabbedmodal";
+import { ZeroHearthTabbedModal, type ZeroHearthModalTab } from "./tabbedmodal";
 import {
 	TILE_COLS_DEFAULT,
 	TILE_COLS_MAX,
@@ -86,7 +86,7 @@ export interface CardSettingsOptions {
  * Remove/Done footer, so a card with a dense editor (tasks, RSS) stays as
  * navigable as a plain one.
  */
-export class CardSettingsModal extends HearthTabbedModal {
+export class CardSettingsModal extends ZeroHearthTabbedModal {
 	private card: DashboardCard;
 	private opts: CardSettingsOptions;
 
@@ -126,8 +126,8 @@ export class CardSettingsModal extends HearthTabbedModal {
 			},
 			render: () => this.render(),
 			showContent: () => {
-				this.app.saveLocalStorage(this.hearthTabStorageKey(), "content");
-				this.hearthRenderShell(false);
+				this.app.saveLocalStorage(this.zerohearthTabStorageKey(), "content");
+				this.zerohearthRenderShell(false);
 			},
 		};
 	}
@@ -146,17 +146,17 @@ export class CardSettingsModal extends HearthTabbedModal {
 
 	onOpen(): void {
 		this.titleEl.setText(t().editors.title);
-		this.hearthRenderShell();
+		this.zerohearthRenderShell();
 	}
 
 	/** Rebuild the modal in place, keeping the active tab. Kind-specific editors
 	 * call this after a change that swaps which controls are shown. */
 	private render(): void {
-		this.hearthRenderShell();
+		this.zerohearthRenderShell();
 	}
 
-	protected hearthTabStorageKey(): string {
-		return "hearth-card-settings-tab";
+	protected zerohearthTabStorageKey(): string {
+		return "zerohearth-card-settings-tab";
 	}
 
 	/** Whether the board this card is on is drawn as text. Terminal mode draws
@@ -168,7 +168,7 @@ export class CardSettingsModal extends HearthTabbedModal {
 		return terminalModeActive(this.opts.settings);
 	}
 
-	protected hearthTabs(): HearthModalTab[] {
+	protected zerohearthTabs(): ZeroHearthModalTab[] {
 		const tabs = t().editors.tabs;
 		return [
 			{ id: "content", label: tabs.content, icon: "square-pen" },
@@ -178,14 +178,14 @@ export class CardSettingsModal extends HearthTabbedModal {
 		];
 	}
 
-	protected hearthRenderBody(body: HTMLElement, tabId: string): void {
+	protected zerohearthRenderBody(body: HTMLElement, tabId: string): void {
 		switch (tabId) {
 			// Each section its own group in the Expressive design (see
-			// hearthGroupBreak); a kind's editor splits further by its headings.
+			// zerohearthGroupBreak); a kind's editor splits further by its headings.
 			case "content":
 				renderViewPicker(body, this.viewsHost());
 				this.identitySection(body);
-				this.hearthGroupBreak(body);
+				this.zerohearthGroupBreak(body);
 				this.contentSection(body);
 				break;
 			case "views":
@@ -196,17 +196,17 @@ export class CardSettingsModal extends HearthTabbedModal {
 				break;
 			case "layout":
 				this.sizeSection(body);
-				this.hearthGroupBreak(body);
+				this.zerohearthGroupBreak(body);
 				this.mobileSection(body);
-				this.hearthGroupBreak(body);
+				this.zerohearthGroupBreak(body);
 				this.buttonsSection(body);
-				this.hearthGroupBreak(body);
+				this.zerohearthGroupBreak(body);
 				this.pinSection(body);
-				this.hearthGroupBreak(body);
+				this.zerohearthGroupBreak(body);
 				this.sidebarSection(body);
-				this.hearthGroupBreak(body);
+				this.zerohearthGroupBreak(body);
 				this.commandSection(body);
-				this.hearthGroupBreak(body);
+				this.zerohearthGroupBreak(body);
 				this.copySection(body);
 				break;
 		}
@@ -255,7 +255,7 @@ export class CardSettingsModal extends HearthTabbedModal {
 	}
 
 	/** Persistent footer shared by every tab: remove the card, or close. */
-	protected hearthRenderFooter(footer: HTMLElement): void {
+	protected zerohearthRenderFooter(footer: HTMLElement): void {
 		new Setting(footer)
 			.addButton((b) => {
 				b.setButtonText(t().editors.removeCard).onClick(() => {
@@ -271,7 +271,7 @@ export class CardSettingsModal extends HearthTabbedModal {
 						},
 					});
 				});
-				b.buttonEl.addClass("hearth-danger-btn");
+				b.buttonEl.addClass("zerohearth-danger-btn");
 			})
 			.addButton((b) =>
 				b
@@ -307,7 +307,7 @@ export class CardSettingsModal extends HearthTabbedModal {
 				},
 			});
 		}
-		this.hearthGroupBreak(containerEl);
+		this.zerohearthGroupBreak(containerEl);
 		const row = new Setting(containerEl)
 			.setName(t().editors.colors.heading)
 			.setDesc(t().editors.colors.headingDesc);
@@ -345,12 +345,12 @@ export class CardSettingsModal extends HearthTabbedModal {
 				}),
 		);
 
-		this.hearthGroupBreak(containerEl);
+		this.zerohearthGroupBreak(containerEl);
 		// Opacity, blur and border shape the Classic frame only.
 		if (resolveCardDesign(this.opts.settings, activeViewCard(card)) === "expressive") {
 			const note = new Setting(containerEl).setDesc(t().settings.dashboard.cardSurfaceExpressive);
-			note.settingEl.addClass("hearth-setting-note");
-			const icon = createSpan("hearth-setting-note-icon");
+			note.settingEl.addClass("zerohearth-setting-note");
+			const icon = createSpan("zerohearth-setting-note-icon");
 			setIcon(icon, "shapes");
 			note.descEl.prepend(icon);
 			return;
@@ -451,7 +451,7 @@ export class CardSettingsModal extends HearthTabbedModal {
 					this.opts.save();
 				});
 			txt.inputEl.type = "number";
-			txt.inputEl.addClass("hearth-count-input");
+			txt.inputEl.addClass("zerohearth-count-input");
 			txt.inputEl.setAttribute("aria-label", t().editors.size.widthAria);
 		});
 		row.addText((txt) => {
@@ -462,7 +462,7 @@ export class CardSettingsModal extends HearthTabbedModal {
 				this.opts.save();
 			});
 			txt.inputEl.type = "number";
-			txt.inputEl.addClass("hearth-count-input");
+			txt.inputEl.addClass("zerohearth-count-input");
 			txt.inputEl.setAttribute("aria-label", t().editors.size.heightAria);
 		});
 		addResetButton(this.editorContext(), row, t().editors.resetSize, () => {
@@ -542,7 +542,7 @@ export class CardSettingsModal extends HearthTabbedModal {
 						this.opts.rerender();
 					});
 				txt.inputEl.type = "number";
-				txt.inputEl.addClass("hearth-count-input");
+				txt.inputEl.addClass("zerohearth-count-input");
 			});
 
 		new Setting(containerEl)
@@ -560,7 +560,7 @@ export class CardSettingsModal extends HearthTabbedModal {
 						this.opts.rerender();
 					});
 				txt.inputEl.type = "number";
-				txt.inputEl.addClass("hearth-count-input");
+				txt.inputEl.addClass("zerohearth-count-input");
 			});
 	}
 

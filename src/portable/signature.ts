@@ -14,7 +14,7 @@
  * A reader recomputes the handle from the public key — so the name still cannot
  * disagree with the key — and then checks the signature, which says that
  * whoever holds that key produced *these exact bytes*. Copying a handle now
- * produces a package that fails to verify, and Hearth shows it as unsigned.
+ * produces a package that fails to verify, and ZeroHearth shows it as unsigned.
  *
  * **What is signed, and what that costs.** Everything in the package except the
  * two fields that cannot be: `meta.signature` itself, and `meta.author`, which
@@ -39,7 +39,7 @@ import {
 	signMessage,
 	verifyMessage,
 } from "../identity";
-import type { HearthPackage } from "./schema";
+import type { ZeroHearthPackage } from "./schema";
 
 /** What a reader can conclude about a package's authorship. */
 export type SignatureState =
@@ -65,7 +65,7 @@ export type SignatureState =
  * The subject is built field by field rather than by copying the package and
  * deleting two things, and that is the load-bearing decision here. `readPackage`
  * rebuilds the envelope from the fields it knows, so a package written by a
- * *newer* Hearth carrying a header field this build has never heard of arrives
+ * *newer* ZeroHearth carrying a header field this build has never heard of arrives
  * with that field gone. Signing "everything" would make every such file fail
  * verification — reported to the reader as a forged author, which is both
  * alarming and wrong. Signing exactly the fields that survive a round trip
@@ -81,7 +81,7 @@ export type SignatureState =
  *
  * **Adding a field to the format?** Add it here too, or it travels unsigned.
  */
-export function signedBytes(pkg: HearthPackage): string {
+export function signedBytes(pkg: ZeroHearthPackage): string {
 	const meta = { ...pkg.meta };
 	delete meta.signature;
 	delete meta.author;
@@ -138,13 +138,13 @@ export function canonicalJson(value: unknown): string {
  * have to have happened already. Returns false when the key isn't one, leaving
  * the package unsigned rather than half-signed.
  */
-export function signPackage(pkg: HearthPackage, recoveryKey: string): boolean {
+export function signPackage(pkg: ZeroHearthPackage, recoveryKey: string): boolean {
 	const publicKey = publicKeyFromAuthorKey(recoveryKey);
 	if (!publicKey) return false;
 	pkg.meta = {
 		...pkg.meta,
 		authorPublicKey: publicKey,
-		// Written for anything reading the file without Hearth's derivation, and
+		// Written for anything reading the file without ZeroHearth's derivation, and
 		// not part of what is signed. A reader with the derivation ignores it.
 		author: handleFromPublicKey(publicKey),
 	};
@@ -155,7 +155,7 @@ export function signPackage(pkg: HearthPackage, recoveryKey: string): boolean {
 }
 
 /** What this package's signature says, without changing it. */
-export function verifyPackageSignature(pkg: HearthPackage): SignatureState {
+export function verifyPackageSignature(pkg: ZeroHearthPackage): SignatureState {
 	const publicKey = pkg.meta?.authorPublicKey;
 	const signature = pkg.meta?.signature;
 	if (typeof publicKey !== "string" || typeof signature !== "string") return "unsigned";
@@ -172,7 +172,7 @@ export function verifyPackageSignature(pkg: HearthPackage): SignatureState {
  * evidence of who made it. The distinction is worth telling the reader about
  * (the import dialog does), but it is not a distinction between two authors.
  */
-export function packageAuthor(pkg: HearthPackage): string | null {
+export function packageAuthor(pkg: ZeroHearthPackage): string | null {
 	if (verifyPackageSignature(pkg) !== "valid") return null;
 	const publicKey = pkg.meta?.authorPublicKey;
 	return typeof publicKey === "string" ? handleFromPublicKey(publicKey) : null;

@@ -1,4 +1,4 @@
-/* Harness entry: builds the real Hearth board DOM in a plain browser using the
+/* Harness entry: builds the real ZeroHearth board DOM in a plain browser using the
  * plugin's own drawSky() and updateFrostLayers(), so the measurements below are
  * of the shipped code path rather than a mock-up. */
 import { installDomShim } from "./dom-shim";
@@ -7,7 +7,7 @@ import { applyEdgeMerging, updateFrostLayers } from "../../../src/grid";
 
 installDomShim();
 
-/** Hearth's shipped defaults (DEFAULT_SETTINGS in src/types.ts). */
+/** ZeroHearth's shipped defaults (DEFAULT_SETTINGS in src/types.ts). */
 const DEFAULTS = {
 	backgroundOpacity: 0.35,
 	backgroundBlur: 2,
@@ -45,11 +45,11 @@ export interface Scenario {
 
 function makeBoard(root: HTMLElement, s: Scenario): void {
 	root.empty();
-	root.setAttribute("class", "hearth-view");
+	root.setAttribute("class", "zerohearth-view");
 
 	// ---- Wallpaper layer, exactly as background.ts paints it ----
 	if (s.bg !== "none") {
-		const layer = root.createDiv("hearth-bg");
+		const layer = root.createDiv("zerohearth-bg");
 		layer.style.opacity = String(DEFAULTS.backgroundOpacity);
 		if (s.bgBlur > 0) layer.style.filter = `blur(${s.bgBlur}px)`;
 		if (s.bg === "color") {
@@ -71,20 +71,20 @@ function makeBoard(root: HTMLElement, s: Scenario): void {
 		}
 	}
 
-	const scroll = root.createDiv("hearth-scroll");
-	const inner = scroll.createDiv("hearth-inner");
-	const dash = inner.createDiv("hearth-dashboard");
-	const grid = dash.createDiv("hearth-grid");
+	const scroll = root.createDiv("zerohearth-scroll");
+	const inner = scroll.createDiv("zerohearth-inner");
+	const dash = inner.createDiv("zerohearth-dashboard");
+	const grid = dash.createDiv("zerohearth-grid");
 	grid.setCssProps({
 		"--card-opacity": String(DEFAULTS.cardOpacity),
-		"--hearth-card-radius": `${DEFAULTS.cardRadius}px`,
+		"--zerohearth-card-radius": `${DEFAULTS.cardRadius}px`,
 		"--card-border-width": "1px",
 		position: "relative",
 		height: "600px",
 	});
 
 	for (const c of CARDS) {
-		const el = grid.createDiv("hearth-card");
+		const el = grid.createDiv("zerohearth-card");
 		el.setCssProps({
 			position: "absolute",
 			left: `${c.x}px`,
@@ -96,9 +96,9 @@ function makeBoard(root: HTMLElement, s: Scenario): void {
 			el.addClass("has-blur");
 			el.dataset.blur = String(s.cardBlur);
 		}
-		const head = el.createDiv("hearth-card-head");
-		head.createDiv({ cls: "hearth-card-title", text: "Card" });
-		const body = el.createDiv("hearth-card-body");
+		const head = el.createDiv("zerohearth-card-head");
+		head.createDiv({ cls: "zerohearth-card-title", text: "Card" });
+		const body = el.createDiv("zerohearth-card-body");
 		body.createDiv({ text: "Some representative card content." });
 	}
 
@@ -108,7 +108,7 @@ function makeBoard(root: HTMLElement, s: Scenario): void {
 
 declare global {
 	interface Window {
-		hearthBench: {
+		zerohearthBench: {
 			build: (s: Scenario) => void;
 			countAnimated: () => number;
 			frostMaskBytes: () => number;
@@ -119,20 +119,20 @@ declare global {
 
 const root = document.getElementById("root") as HTMLElement;
 
-window.hearthBench = {
+window.zerohearthBench = {
 	build: (s: Scenario) => makeBoard(root, s),
 	/** How many elements currently have a running CSS animation. */
 	countAnimated: () => document.getAnimations().length,
 	/** Total bytes of the inline SVG data-URI masks on the frost layers. */
 	frostMaskBytes: () => {
 		let n = 0;
-		for (const l of Array.from(document.querySelectorAll<HTMLElement>(".hearth-frost"))) {
+		for (const l of Array.from(document.querySelectorAll<HTMLElement>(".zerohearth-frost"))) {
 			n += (l.style.getPropertyValue("mask-image") || "").length;
 		}
 		return n;
 	},
 	rebuildFrost: () => {
-		const grid = document.querySelector<HTMLElement>(".hearth-grid");
+		const grid = document.querySelector<HTMLElement>(".zerohearth-grid");
 		if (grid) updateFrostLayers(grid);
 	},
 };

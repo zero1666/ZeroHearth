@@ -1,11 +1,11 @@
 # 8. Cards for planning: tasks, calendars and clocks
 
-This chapter documents the Hearth cards in the **Planning** category of the Add
+This chapter documents the ZeroHearth cards in the **Planning** category of the Add
 card picker: **Tasks**, **Calendar**, **Mini calendar**, and **Clock &
-greeting**. These are the largest and most configurable cards Hearth has, and
+greeting**. These are the largest and most configurable cards ZeroHearth has, and
 the Tasks card in particular repays reading in full.
 
-Cards are added with **Arrange → Add card** in Hearth's Home view and configured
+Cards are added with **Arrange → Add card** in ZeroHearth's Home view and configured
 from each card's own gear button while arranging; see
 [chapter 6](06-arranging-cards.md).
 
@@ -14,7 +14,7 @@ from each card's own gear button while arranging; see
 ## The Tasks card
 
 **What it shows:** your tasks, as a list, a drag-and-drop Kanban board or an
-Eisenhower matrix — drawn by Hearth, whatever the source.
+Eisenhower matrix — drawn by ZeroHearth, whatever the source.
 
 **Requires:** nothing for Markdown checkboxes. The TaskNotes, Kanban or Tasks
 community plugins for those sources.
@@ -28,7 +28,7 @@ community plugins for those sources.
 | **Markdown checkboxes** | Ordinary `- [ ]` checkboxes anywhere in your vault. Works with no plugin at all |
 | **TaskNotes plugin** | One-note-per-task vaults managed by the TaskNotes community plugin, read from frontmatter |
 | **Kanban plugin** | A single board note from the Kanban community plugin, one column per heading |
-| **Tasks plugin** | The [Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks) community plugin's tasks — its statuses (including custom ones) and task format — drawn by Hearth like every other source |
+| **Tasks plugin** | The [Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks) community plugin's tasks — its statuses (including custom ones) and task format — drawn by ZeroHearth like every other source |
 
 #### The Markdown checkboxes source
 
@@ -59,10 +59,10 @@ the note gave them.
 #### The TaskNotes source
 
 TaskNotes stores each task as its own note, with the task's metadata in
-frontmatter. TaskNotes has no stable API for other plugins to query, so Hearth
+frontmatter. TaskNotes has no stable API for other plugins to query, so ZeroHearth
 reads that frontmatter directly — which means it has to be told the field names.
 
-The field names live at **Settings → Hearth → Integrations → Tasks /
+The field names live at **Settings → ZeroHearth → Integrations → Tasks /
 TaskNotes**: *Status field*, *Due date field*, *Priority field* and the
 *"Done" status value*. The defaults are TaskNotes' own defaults (`status`,
 `due`, `priority`, `done`). If you renamed a field inside TaskNotes, match it
@@ -86,19 +86,19 @@ Reads a single Kanban-plugin board note, one column per heading.
 - *Dates & priorities* — as above, reading the obsidian-tasks-compatible marks
   written on each card.
 
-**Kanban write-back:** when you drag a card between columns, Hearth writes the
+**Kanban write-back:** when you drag a card between columns, ZeroHearth writes the
 change in Kanban's own format, so the note stays fully editable in the Kanban
-plugin. Hearth is not a second, disagreeing owner of the board.
+plugin. ZeroHearth is not a second, disagreeing owner of the board.
 
 #### The Tasks plugin source
 
 The card draws what the Tasks plugin says are tasks — any checkbox line whose
 status symbol the plugin knows (its built-ins plus your custom statuses, read
 live from the plugin), with the vault's task format (Emoji or Dataview inline
-fields) parsed off each line — as Hearth's own rows, board and matrix, with
-Hearth's chips, dots and colours. The card's filter, sort, *Show completed*
+fields) parsed off each line — as ZeroHearth's own rows, board and matrix, with
+ZeroHearth's chips, dots and colours. The card's filter, sort, *Show completed*
 and *Max tasks shown* all apply over those tasks, and the custom-field system
-works too: priority, dates, status, repeat and tags all flow through Hearth's
+works too: priority, dates, status, repeat and tags all flow through ZeroHearth's
 normal task rendering, so a field can be a chip, a dot, text, or colour the
 whole task.
 
@@ -231,7 +231,7 @@ switches between the matrix and the list.
 
 ### Dates, priorities and recurrence
 
-With *Dates & priorities* on, Hearth understands the full obsidian-tasks mark
+With *Dates & priorities* on, ZeroHearth understands the full obsidian-tasks mark
 set: the priority marks 🔺 ⏫ 🔼 🔽 ⏬, the recurrence mark 🔁, and the date
 marks 🛫 (start), ⏳ (scheduled), 📅 (due) and ✅ (done).
 
@@ -260,7 +260,7 @@ small chips beside the date chips. With *Dates & priorities* off nothing is
 scraped, so tags stay part of the text exactly as you typed them — and are still
 offered in the filter.
 
-TaskNotes tasks are created and edited in TaskNotes itself, so Hearth reads
+TaskNotes tasks are created and edited in TaskNotes itself, so ZeroHearth reads
 their tags but doesn't write them.
 
 ### Sorting and filtering
@@ -280,7 +280,7 @@ No date) and these criteria, all combined with AND:
 | *Priority* | High / Medium / Low / None — pick any number |
 | *Status* | The task's status (TaskNotes) or board column (Kanban) |
 | *Contexts*, *Projects* | TaskNotes only, read from the task's frontmatter |
-| *Tags* | Any tag Hearth found on the card's tasks |
+| *Tags* | Any tag ZeroHearth found on the card's tasks |
 | *Text contains* | A substring of the task's text |
 
 Picking several values in one row matches a task carrying **any** of them.
@@ -343,7 +343,7 @@ fixed look.
 *Customize task fields* replaces the fixed metadata a task shows with fields you
 define yourself. Turning it on starts from a blank slate: tasks then show only
 the fields you add. For TaskNotes cards the fields are defined vault-wide at
-**Settings → Hearth → Integrations → Tasks / TaskNotes → Fields shown on a
+**Settings → ZeroHearth → Integrations → Tasks / TaskNotes → Fields shown on a
 task**, and a single card can define its own instead from that card's settings.
 Cards on the other sources always define their own fields on the card —
 starting from what the card has always shown — and never follow the
@@ -370,13 +370,13 @@ The six display styles are:
 | *Glow around the task* | Shows nothing on the task; puts a coloured ring around it |
 
 The last two are **ambient**: a task has one background and one ring, so only
-one field can use each. If a second field asks for one, Hearth says which field
+one field can use each. If a second field asks for one, ZeroHearth says which field
 already holds it and that this one will colour nothing. Both ambient styles have
 a *Strength* control for how strongly the colour is laid on; only a value that
 has a colour mapped affects the task at all.
 
 **Keys.** A field can read several keys at once, so one field can gather several
-pieces of metadata under one name. The pickers offer two groups: *Values Hearth
+pieces of metadata under one name. The pickers offer two groups: *Values ZeroHearth
 parses itself* — status (TaskNotes cards only), board column (Kanban cards
 only), priority, start date, scheduled date, due date, done date and
 description — and *Properties found in your notes*, which is anything in your
@@ -384,7 +384,7 @@ frontmatter.
 
 **Value mappings.** For a key with discrete values you can map each value to a
 nicer label and a colour, chosen from the theme's eight named colours (red,
-orange, yellow, green, cyan, blue, purple, pink) or a custom colour. Hearth
+orange, yellow, green, cyan, blue, purple, pink) or a custom colour. ZeroHearth
 offers the values that key actually takes elsewhere in your vault, so you are
 picking from real data. Values you do not map still show, as themselves.
 
@@ -549,7 +549,7 @@ due-date entries and for timeblocks that carry no colour of their own.
 
 If the Operon integration is connected, *Show Operon tasks* marks days that have
 an Operon task due and lists those tasks in the agenda, in a colour you choose.
-It reads through Operon's developer API, so Operon must have approved Hearth;
+It reads through Operon's developer API, so Operon must have approved ZeroHearth;
 see [chapter 14](14-integrations.md). Tasks that are only scheduled, with no due
 date, are not included.
 

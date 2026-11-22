@@ -89,14 +89,14 @@ describe("webSearchUrl", () => {
 	});
 
 	it("trims the query rather than searching for the spaces around it", () => {
-		expect(webSearchUrl(webSearchEngine("mojeek"), "  hearth  ")).toBe(
-			"https://www.mojeek.com/search?q=hearth",
+		expect(webSearchUrl(webSearchEngine("mojeek"), "  zerohearth  ")).toBe(
+			"https://www.mojeek.com/search?q=zerohearth",
 		);
 	});
 
 	it("keeps the no-AI DuckDuckGo on its own host", () => {
-		expect(webSearchUrl(webSearchEngine("duckduckgo-noai"), "hearth")).toBe(
-			"https://noai.duckduckgo.com/?q=hearth",
+		expect(webSearchUrl(webSearchEngine("duckduckgo-noai"), "zerohearth")).toBe(
+			"https://noai.duckduckgo.com/?q=zerohearth",
 		);
 	});
 });

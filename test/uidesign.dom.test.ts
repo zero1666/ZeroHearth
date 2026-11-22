@@ -1,7 +1,7 @@
 /**
  * @vitest-environment jsdom
  *
- * Where Hearth's own interface takes its design from (src/uidesign.ts): the
+ * Where ZeroHearth's own interface takes its design from (src/uidesign.ts): the
  * nearest thing around the element a dialog or menu was opened from that
  * states one — a card, else its board, else a dialog it sits in — and the
  * vault's design when nothing does.
@@ -20,13 +20,13 @@ beforeAll(async () => {
 /** A board in `board`'s design holding one card in `card`'s, and a button
  * inside the card and one on the board's toolbar. */
 function board(boardDesign: "classic" | "expressive", cardDesign: "classic" | "expressive") {
-	const view = document.body.createDiv("hearth-view");
+	const view = document.body.createDiv("zerohearth-view");
 	ui.stateDesign(view, boardDesign);
-	const card = view.createDiv("hearth-card");
+	const card = view.createDiv("zerohearth-card");
 	ui.stateDesign(card, cardDesign);
 	return {
-		inCard: card.createDiv("hearth-card-body").createEl("button"),
-		onBoard: view.createDiv("hearth-toolbar").createEl("button"),
+		inCard: card.createDiv("zerohearth-card-body").createEl("button"),
+		onBoard: view.createDiv("zerohearth-toolbar").createEl("button"),
 	};
 }
 

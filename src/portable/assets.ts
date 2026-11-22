@@ -27,7 +27,7 @@ import { type App, arrayBufferToBase64, base64ToArrayBuffer, TFile, TFolder } fr
 import {
 	assetRef,
 	assetRefId,
-	type HearthPackage,
+	type ZeroHearthPackage,
 	MAX_ASSET_BYTES,
 	MAX_TOTAL_ASSET_BYTES,
 	type PackageAsset,
@@ -49,9 +49,9 @@ export interface AssetStore {
 }
 
 /** Where imported pictures are written unless the caller says otherwise. A
- * folder of Hearth's own, so an import never scatters files through the vault
+ * folder of ZeroHearth's own, so an import never scatters files through the vault
  * and everything one import brought in can be deleted in one go. */
-export const DEFAULT_ASSET_FOLDER = "Hearth/imported";
+export const DEFAULT_ASSET_FOLDER = "ZeroHearth/imported";
 
 /**
  * The picture types a package may carry.
@@ -59,7 +59,7 @@ export const DEFAULT_ASSET_FOLDER = "Hearth/imported";
  * SVG is deliberately not among them. It is a document rather than an image —
  * it can carry script and can reference remote resources — and an imported
  * package's files are written into someone else's vault, where a board might
- * then point a title icon or a wallpaper at one. Hearth only ever renders vault
+ * then point a title icon or a wallpaper at one. ZeroHearth only ever renders vault
  * images through `img.src`, which neither runs an SVG's script nor is meant to,
  * but "safe because of how the consumer happens to work today" is not a
  * property to bet a shared-file format on. An SVG wallpaper is left as a path
@@ -132,7 +132,7 @@ export interface EmbedReport {
  * the one copy.
  */
 export async function embedAssets(
-	pkg: HearthPackage,
+	pkg: ZeroHearthPackage,
 	store: AssetStore,
 	opts: EmbedOptions = {},
 ): Promise<EmbedReport> {
@@ -231,7 +231,7 @@ export interface MaterializeReport {
  * board arrived without its wallpaper.
  */
 export async function materializeAssets(
-	pkg: HearthPackage,
+	pkg: ZeroHearthPackage,
 	store: AssetStore,
 	folder: string = DEFAULT_ASSET_FOLDER,
 ): Promise<MaterializeReport> {
@@ -302,7 +302,7 @@ export async function materializeAssets(
  * into settings. This is the sweep for that: any string anywhere in the payload
  * that is an asset reference and wasn't rewritten above is cleared.
  */
-export function clearAssetRefs(pkg: HearthPackage): string[] {
+export function clearAssetRefs(pkg: ZeroHearthPackage): string[] {
 	const cleared: string[] = [];
 	const seen = new Set<unknown>();
 	const sweep = (node: unknown): void => {

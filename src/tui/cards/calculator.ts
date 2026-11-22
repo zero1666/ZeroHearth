@@ -31,11 +31,11 @@ export const calculatorTui: TuiRenderer = {
 				line: 0,
 				rows: 3,
 				mount: (host: HTMLElement) => {
-					host.addClass("hearth-tui-calc");
-					const prompt = host.createDiv("hearth-tui-line hearth-tui-calc-prompt");
-					prompt.createSpan({ cls: "hearth-tui-accent hearth-tui-bold", text: "> " });
+					host.addClass("zerohearth-tui-calc");
+					const prompt = host.createDiv("zerohearth-tui-line zerohearth-tui-calc-prompt");
+					prompt.createSpan({ cls: "zerohearth-tui-accent zerohearth-tui-bold", text: "> " });
 					const input = prompt.createEl("input", {
-						cls: "hearth-tui-calc-input",
+						cls: "zerohearth-tui-calc-input",
 						attr: { type: "text", spellcheck: "false", placeholder: t().cards.calculator.placeholder, "aria-label": t().cards.calculator.placeholder },
 					});
 					input.value = cfg.lastInput ?? "";

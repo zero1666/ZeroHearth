@@ -1,8 +1,8 @@
 # 6. Arrange mode: adding, moving, resizing and styling cards
 
-Everything about the cards on a Hearth dashboard is edited from the board
+Everything about the cards on a ZeroHearth dashboard is edited from the board
 itself, in **arrange mode**. The plugin settings page holds vault-wide defaults;
-it deliberately does not hold a card editor. *Settings → Hearth → Dashboard*
+it deliberately does not hold a card editor. *Settings → ZeroHearth → Dashboard*
 says as much in a row of its own: open the Home view, hit Arrange, then use
 *Add card*, *Dashboard settings* and each card's settings button.
 
@@ -13,7 +13,7 @@ Press **Arrange** in the top-right corner of the Home view. The button becomes
 
 The Arrange button can be set to stay always visible, or to fade in only when
 the pointer comes near it. That is *Arrange button visibility* under **Settings
-→ Hearth → Dashboard → Dashboard controls** vault-wide, and *Dashboard settings
+→ ZeroHearth → Dashboard → Dashboard controls** vault-wide, and *Dashboard settings
 → Layout → Arrange button* per board.
 
 ## The arrange toolbar
@@ -54,7 +54,7 @@ the card anyway: it shows a prompt until the dependency arrives.
 
 At the bottom of the rail is **Request a card**. It opens a pre-filled GitHub
 issue, or a pre-filled email to the maintainer if you would rather not use
-GitHub. Both are pre-filled with a few prompts and with your Hearth and Obsidian
+GitHub. Both are pre-filled with a few prompts and with your ZeroHearth and Obsidian
 version numbers, and you can edit anything before sending.
 
 A newly added card is placed automatically, packed left to right into the first
@@ -179,12 +179,12 @@ widen the sidebar — or keep the card on the board — for its full layout.
 
 Any card can also be given a command of its own. The switch is in the card's
 settings dialog, on the **Layout** tab: **Add to command menu**. With it on, the card
-appears in Obsidian's command palette as **Hearth: Open <card>** — the card's
+appears in Obsidian's command palette as **ZeroHearth: Open <card>** — the card's
 title is what gets matched, so name the card something you would type.
 
 On Obsidian versions with the core **Slash commands** plugin turned on, the same
 command is also in the editor's `/` menu, which is the quick way to it while
-writing. Hearth's own search bar lists it too: a leading `>` searches commands.
+writing. ZeroHearth's own search bar lists it too: a leading `>` searches commands.
 
 Running it opens the card in a floating dialog over the note — the same card,
 with its own settings a click away. The switch is off by default, because a
@@ -195,7 +195,7 @@ board of thirty cards would otherwise put thirty commands in the palette.
 Three visual properties — opacity, blur, border width — plus corner radius exist
 at three levels:
 
-1. **Vault-wide**, at *Settings → Hearth → Dashboard → Card surface*.
+1. **Vault-wide**, at *Settings → ZeroHearth → Dashboard → Card surface*.
 2. **Per dashboard**, at *Dashboard settings → Style*.
 3. **Per card**, at that card's *Style* tab.
 
@@ -255,4 +255,4 @@ setting?":
 | A card's colour, opacity, blur, border | Arrange → the card's gear → Style |
 | A card's size, mobile behaviour, pinning | Arrange → the card's gear → Layout |
 | This board's name, icon, type, background | Arrange → Dashboard settings, or right-click its switcher button |
-| Vault-wide defaults for all of the above | Settings → Hearth |
+| Vault-wide defaults for all of the above | Settings → ZeroHearth |

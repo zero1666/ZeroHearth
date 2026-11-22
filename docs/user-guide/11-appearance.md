@@ -1,10 +1,10 @@
 # 11. Appearance: backgrounds, banners, frosted glass and icons
 
-This chapter covers how a Hearth dashboard looks: the backdrop behind it, the
+This chapter covers how a ZeroHearth dashboard looks: the backdrop behind it, the
 surface the cards are drawn on, and the marks and icons around them.
 
 Nearly everything here exists at two or three levels. The vault-wide value lives
-under **Settings → Hearth**; a dashboard can override it from *Dashboard
+under **Settings → ZeroHearth**; a dashboard can override it from *Dashboard
 settings*; and for the card-surface properties an individual card can override it
 again from its own Style tab. The most specific level with an opinion wins, and
 every overriding control tells you what it is overriding.
@@ -13,15 +13,15 @@ every overriding control tells you what it is overriding.
 
 ## The background
 
-Vault-wide: **Settings → Hearth → Appearance → Background**.
+Vault-wide: **Settings → ZeroHearth → Appearance → Background**.
 Per dashboard: *Dashboard settings → Background*.
 
 ### The eight background types
 
 | Type | What it is |
 | --- | --- |
-| *Hearth default* | A wallpaper Hearth draws itself, so nothing is downloaded. Its *Design* is **Classic** — layered hills with a cabin, a soft morning in a light theme and a moonlit night with stars in a dark one — or **Expressive**: flat Material 3 Expressive shapes in the corners, in tones of your accent colour. It is the same *Design* setting the live sky uses, and a dashboard can override it |
-| *Harbour town* | A harbour town Hearth draws itself: houses stepping down a hill to the quay, a lighthouse at the end of the pier and sailing boats on the bay, all in Material 3 Expressive's soft shapes and tones of your accent colour. By day in a light theme, at night — lit windows, the lamp burning, stars — in a dark one |
+| *ZeroHearth default* | A wallpaper ZeroHearth draws itself, so nothing is downloaded. Its *Design* is **Classic** — layered hills with a cabin, a soft morning in a light theme and a moonlit night with stars in a dark one — or **Expressive**: flat Material 3 Expressive shapes in the corners, in tones of your accent colour. It is the same *Design* setting the live sky uses, and a dashboard can override it |
+| *Harbour town* | A harbour town ZeroHearth draws itself: houses stepping down a hill to the quay, a lighthouse at the end of the pier and sailing boats on the bay, all in Material 3 Expressive's soft shapes and tones of your accent colour. By day in a light theme, at night — lit windows, the lamp burning, stars — in a dark one |
 | *None* | Your theme's own background, untouched |
 | *Solid color* | Any CSS colour, for example `#1e1e2e` or `rgb(30,30,46)` |
 | *Vault image* | An image path in your vault, for example `Attachments/bg.png` |
@@ -36,7 +36,7 @@ because the decode happens off the main thread it does not stutter the way an
 animated GIF or WEBP does — that stutter is the animated image being re-decoded
 frame by frame on the same thread that draws the page.
 
-It is also the most expensive thing Hearth paints, and the only background whose
+It is also the most expensive thing ZeroHearth paints, and the only background whose
 cost the performance tier decides for you:
 
 | Performance tier | What a video backdrop does |
@@ -59,7 +59,7 @@ it: the recipient needs the same file at the same path.
 *Opacity* controls how much the background shows through; lower is more subtle.
 *Blur* is the background blur in pixels.
 
-The defaults suit Hearth's own wallpaper: opacity 0.8 and no blur. It is a flat,
+The defaults suit ZeroHearth's own wallpaper: opacity 0.8 and no blur. It is a flat,
 already muted drawing, so it needs little dimming and has no detail to soften;
 the card surfaces keep the content readable. Switching to a vault image, a
 video or an image URL dims a photo to 0.35 and blurs it by 2, so text reads over
@@ -70,7 +70,7 @@ it.
 
 *Background layout* wears the same backdrop two ways:
 
-- **Full background** — it fills the whole view. This is what Hearth has always
+- **Full background** — it fills the whole view. This is what ZeroHearth has always
   done, and stays the default.
 - **Banner** — a strip across the top of the board, the way a cover image sits
   above a note, with the cards below it on your theme's own surface.
@@ -112,16 +112,16 @@ reduced motion. Each dashboard can also override *Animate the sky* on its own.
 ### External calls and backgrounds
 
 An *Image URL* background and a title icon given as a web address are both
-network requests. While *Disable external calls* is on under **Settings → Hearth
+network requests. While *Disable external calls* is on under **Settings → ZeroHearth
 → Behaviour**, the settings page says the background will not be shown and
 suggests a vault image instead; a URL background falls back to no picture, and a
-URL title icon falls back to the Hearth crystal.
+URL title icon falls back to the ZeroHearth crystal.
 
 ---
 
 ## The card surface
 
-Vault-wide: **Settings → Hearth → Dashboard → Card surface**.
+Vault-wide: **Settings → ZeroHearth → Dashboard → Card surface**.
 Per dashboard: *Dashboard settings → Style*.
 Per card: that card's *Style* tab.
 
@@ -134,7 +134,7 @@ Per card: that card's *Style* tab.
 
 ### Design: Classic or Expressive
 
-Vault-wide: at the head of **Settings → Hearth → Appearance**, where the two
+Vault-wide: at the head of **Settings → ZeroHearth → Appearance**, where the two
 choices are shown as a small card drawn each way — pick one to switch. Per
 dashboard: *Dashboard settings → Style → Design*. Per card: that card's *Style*
 tab. The first run of the setup wizard asks too.
@@ -172,14 +172,14 @@ Dataview and Datacore, hosted views, the slideshow and the pets — stay as they
 are. Nothing changes the card's frame: its corners, border and surface are still
 the board's.
 
-#### All of Hearth in Expressive
+#### All of ZeroHearth in Expressive
 
-The design reaches past the cards to everything else Hearth draws. In
-Expressive, every Hearth dialog and picker opens on a tonal surface with large
+The design reaches past the cards to everything else ZeroHearth draws. In
+Expressive, every ZeroHearth dialog and picker opens on a tonal surface with large
 corners, pill buttons and filled fields, Material's wide switches and
-slim-handled sliders, and pill tab ribbons; Hearth's menus become rounded
+slim-handled sliders, and pill tab ribbons; ZeroHearth's menus become rounded
 tonal sheets; the board's toolbar, dashboard switcher and card buttons become
-pills (the current board's button squares off as it is chosen); and Hearth's
+pills (the current board's button squares off as it is chosen); and ZeroHearth's
 own settings pane groups its rows in tonal containers. Menus are grouped:
 entries that belong together share a rounded container, a small gap apart
 from the next group, and a destructive entry (deleting a board, discarding a
@@ -225,16 +225,16 @@ Beyond opacity, blur and border, each card can take an **accent** colour and a
 
 | Setting | Where | Meaning |
 | --- | --- | --- |
-| *Spacing* | Settings → Hearth → Dashboard; per board on the Layout tab | How much padding the board leaves around its cards and along the page edges: *Roomy*, *Compact* (tighter gaps, so more fits on screen) or *Flush* (no side or bottom gutter, so the cards reach the edge of the pane — and the width ceiling below is ignored, like *Full width*). The space between cards is part of their saved layout and does not change |
-| *Content width* | Settings → Hearth → Appearance → Home; per board on the Layout tab | The widest the home content may grow, in pixels. Default 1600. It is a ceiling, not a width — the content still shrinks to fit a narrower pane |
+| *Spacing* | Settings → ZeroHearth → Dashboard; per board on the Layout tab | How much padding the board leaves around its cards and along the page edges: *Roomy*, *Compact* (tighter gaps, so more fits on screen) or *Flush* (no side or bottom gutter, so the cards reach the edge of the pane — and the width ceiling below is ignored, like *Full width*). The space between cards is part of their saved layout and does not change |
+| *Content width* | Settings → ZeroHearth → Appearance → Home; per board on the Layout tab | The widest the home content may grow, in pixels. Default 1600. It is a ceiling, not a width — the content still shrinks to fit a narrower pane |
 | *Full width* | Same places | Let the content fill the pane instead of stopping at the width above. Cards keep their proportions as the pane widens, but text does not grow with them, so a very wide board reads sparser |
-| *Fit to page* | Settings → Hearth → Dashboard; per board on the Layout tab | Keep the dashboard to one screen instead of allowing it to scroll. On by default |
+| *Fit to page* | Settings → ZeroHearth → Dashboard; per board on the Layout tab | Keep the dashboard to one screen instead of allowing it to scroll. On by default |
 
 ---
 
 ## The title and its icon
 
-Vault-wide: **Settings → Hearth → Appearance → Home**.
+Vault-wide: **Settings → ZeroHearth → Appearance → Home**.
 Per dashboard: *Dashboard settings → Header*.
 
 | Setting | Meaning |
@@ -242,7 +242,7 @@ Per dashboard: *Dashboard settings → Header*.
 | *Show title* | Display the big title and its icon at the top |
 | *Title* | The heading text. The default is `Obsidian` |
 | *Title icon* | The mark drawn next to the title |
-| *Tab icon* | A Lucide icon for Hearth's tab header and ribbon button, in place of the Hearth crystal |
+| *Tab icon* | A Lucide icon for ZeroHearth's tab header and ribbon button, in place of the ZeroHearth crystal |
 | *Follow theme icon color* | Draw the crystal icon and/or the title text in your theme's icon colour instead of the default purple crystal and normal text. Four choices: **Off**, **Icon**, **Title**, **Icon and title** |
 
 ### One title icon, four kinds of value
@@ -257,10 +257,10 @@ it:
    picker button for this.
 4. The **URL of an image on the web**.
 
-Leave it empty for the Hearth crystal.
+Leave it empty for the ZeroHearth crystal.
 
 Each dashboard can override the title icon, so one board can wear a logo and the
-next the crystal. Hearth's tab and ribbon icons follow the vault-wide setting
+next the crystal. ZeroHearth's tab and ribbon icons follow the vault-wide setting
 even when a board overrides its own title mark.
 
 ### Title layout, per board
@@ -279,7 +279,7 @@ The dashboard switcher and the Arrange button can each be set to **Always
 visible** or **Show on hover**.
 
 Vault-wide those are *Arrange button visibility* and *Dashboard switcher
-visibility* under **Settings → Hearth → Dashboard → Dashboard controls**. Per
+visibility* under **Settings → ZeroHearth → Dashboard → Dashboard controls**. Per
 board they are *Arrange button* and *Dashboard switcher* on the Layout tab of
 that dashboard's settings.
 
@@ -300,7 +300,7 @@ otherwise, and each travels with the board when you export it. See
 
 ## Themes
 
-Hearth draws its own surfaces but honours your Obsidian theme's colours, and the
+ZeroHearth draws its own surfaces but honours your Obsidian theme's colours, and the
 *Follow theme icon color* setting exists specifically so the brand mark can join
 in rather than sitting apart from the theme.
 
@@ -312,16 +312,16 @@ changed on their side. See [chapter 16](16-sharing-and-gallery.md).
 
 ## Terminal mode
 
-Vault-wide only: **Settings → Hearth → Appearance**, the third of the design
+Vault-wide only: **Settings → ZeroHearth → Appearance**, the third of the design
 choices at the head of the page, *Terminal* — or the same choice in the setup
 wizard's look step. There is no per-board or per-card terminal mode; while it
-is on, it is the whole of Hearth.
+is on, it is the whole of ZeroHearth.
 
 Terminal mode is **experimental**, and both places say so: some cards are still
 drawn graphically inside their frame, and details of how it looks and which
 keys do what may change between releases.
 
-Terminal mode draws Hearth as a text interface, the way a terminal tool such
+Terminal mode draws ZeroHearth as a text interface, the way a terminal tool such
 as `htop` looks: one character grid in a bundled monospaced font, every card a
 box drawn in line characters, and keys for everything. It sets aside the
 wallpaper, the frosted glass, the card surfaces, the animations and the
@@ -353,7 +353,7 @@ off brings every board back exactly as it was.
   embedded picture, canvas, base or drawing are drawn graphically inside their
   terminal frame. A board of the *Plugin view* type — one other plugin's view
   filling the whole board — is drawn as usual.
-- **Dialogs, menus and Hearth's settings** are drawn in the same font and
+- **Dialogs, menus and ZeroHearth's settings** are drawn in the same font and
   colours, with double-lined frames and `[ ]` buttons. The icon picker keeps
   real icons, since showing what an icon looks like is its whole job.
 
@@ -363,7 +363,7 @@ With terminal mode on, a *Terminal mode* section appears under the design
 choices:
 
 - *Colour scheme*: **Obsidian theme** takes every colour from your theme, so
-  the text interface follows it light or dark; **Htop**, **Hearth**, **Amber**
+  the text interface follows it light or dark; **Htop**, **ZeroHearth**, **Amber**
   and **Paper** are fixed palettes. F9 (or `t`) steps through them from the
   board.
 - *Font size*: the size of the terminal's text, 10 to 20 pixels (13 by
@@ -372,7 +372,7 @@ choices:
 ### The screen
 
 From the top: the board tabs (with the board menu and a `+` for a new board),
-the title line with the date and time, the search line (the full Hearth search,
+the title line with the date and time, the search line (the full ZeroHearth search,
 labelled *Search:*), the board, a status line that says what the last key did,
 and the function-key bar. Each function key is also a button:
 
@@ -445,13 +445,13 @@ the way they do in the graphical design, so a board that is slow because of
 what its cards compute is not made fast by drawing them as text. See
 [Performance tiers and battery life](12-performance.md) for that.
 
-The font is a subset of JetBrains Mono, bundled with Hearth under the SIL Open
+The font is a subset of JetBrains Mono, bundled with ZeroHearth under the SIL Open
 Font License, so every box, block and arrow sits on the grid whatever fonts
 the system has.
 
 ## Putting a look together: three worked examples
 
-**A calm, low-contrast board.** Background: *Hearth default* at opacity 0.25,
+**A calm, low-contrast board.** Background: *ZeroHearth default* at opacity 0.25,
 blur 4. Card surface: opacity 0.6, blur 12, radius 14, border 0. Compact
 spacing off. Chrome on hover.
 

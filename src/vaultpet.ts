@@ -1,27 +1,27 @@
 /**
- * The Vault Pet integration: everything Hearth knows about the
+ * The Vault Pet integration: everything ZeroHearth knows about the
  * [Vault Pet](https://github.com/elliott-json-park/obsidian-vault-pet)
  * community plugin.
  *
- * The rule is the one the Git, Dataview and Datacore modules follow: **Hearth
+ * The rule is the one the Git, Dataview and Datacore modules follow: **ZeroHearth
  * never does the work itself.** It does not count characters, keep XP, draw a
  * sprite or store a single byte of pet state — Vault Pet owns all of it, and
- * Hearth only gives it a place on the board. Two places, in fact, and both are
+ * ZeroHearth only gives it a place on the board. Two places, in fact, and both are
  * the plugin's *own* surfaces rather than a second rendering of them:
  *
  * 1. **The pet card** — the `vault-pet` fenced block the plugin registers a
- *    Markdown processor for. Hearth renders that block into the card body, so
+ *    Markdown processor for. ZeroHearth renders that block into the card body, so
  *    what appears is the plugin's own compact card: its sprite, its level bar,
  *    its streak, its click-to-pet. The plugin keeps a handle on every block it
  *    renders and repaints them itself, so the card stays live with no polling
- *    of any kind from Hearth.
+ *    of any kind from ZeroHearth.
  * 2. **The pet house** — the `vault-pet-house` side-panel view, hosted in the
  *    card as a detached leaf the same way the Plugin view card hosts any other
  *    view. Quests, dex, badges, wardrobe and stats are all there, exactly as
  *    they are in the sidebar.
  *
  * Consequently this module is tiny and entirely made of guards. Vault Pet
- * exposes no versioned API object, so the only plugin member Hearth calls —
+ * exposes no versioned API object, so the only plugin member ZeroHearth calls —
  * `openHouse()` — is declared optional, checked before use, and backed by the
  * plugin's own command as a fallback. A renamed method costs one button; it
  * never throws inside a dashboard render.
@@ -43,7 +43,7 @@ export const VAULT_PET_BLOCK_LANG = "vault-pet";
 export const VAULT_PET_OPEN_COMMAND = `${VAULT_PET_PLUGIN_ID}:open-house`;
 
 /**
- * The Markdown source Hearth renders for the pet card: the plugin's own fenced
+ * The Markdown source ZeroHearth renders for the pet card: the plugin's own fenced
  * block, empty, which is exactly what its "Insert pet card" command writes into
  * a note. The processor ignores the block's contents, so there is nothing to
  * configure inside it.
@@ -55,7 +55,7 @@ export const VAULT_PET_DISPLAYS: readonly VaultPetDisplay[] = ["pet", "house"];
 
 /**
  * Which surface a card is set to show. Total, because the value reaches here
- * from a shared board, a hand-edited `data.json` or a Hearth old enough to
+ * from a shared board, a hand-edited `data.json` or a ZeroHearth old enough to
  * predate the setting: anything that isn't one of the two named surfaces is
  * the default rather than an empty card.
  */
@@ -64,7 +64,7 @@ export function vaultPetDisplay(card: DashboardCard): VaultPetDisplay {
 	return display && VAULT_PET_DISPLAYS.includes(display) ? display : "pet";
 }
 
-/** The members of the Vault Pet plugin instance Hearth touches. All optional:
+/** The members of the Vault Pet plugin instance ZeroHearth touches. All optional:
  * none of them is a published contract. */
 interface VaultPetLike {
 	openHouse?: (tab?: string) => unknown;

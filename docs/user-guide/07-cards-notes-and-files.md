@@ -1,6 +1,6 @@
 # 7. Cards for notes and files
 
-This chapter documents the Hearth cards in the **Notes & files** category of the
+This chapter documents the ZeroHearth cards in the **Notes & files** category of the
 Add card picker. Every card is added the same way — press **Arrange** in the
 Home view, press **Add card**, and pick it — and every card is configured from
 its own gear button while arranging. See [chapter 6](06-arranging-cards.md) for
@@ -272,7 +272,7 @@ the list; picking a track plays that album as the queue. Files loose in the
 picked folder come last, as *Loose tracks*. With **Show albums** off the card
 stays one queue of every track, in name order.
 
-The two vault sources are played by Hearth itself. **Stereo** plays nothing: the
+The two vault sources are played by ZeroHearth itself. **Stereo** plays nothing: the
 card is a remote control for the Stereo plugin, so browsing, queuing and
 scrobbling all stay in Stereo and the card only mirrors what it is playing. Pick
 it when your library lives on a server rather than in the vault.
@@ -337,7 +337,7 @@ This is the Embedded note card pointed at a `.canvas` file.
 **Requires:** the [Excalidraw](https://github.com/zsviczian/obsidian-excalidraw-plugin)
 community plugin.
 
-Drawings render live. Hearth also exposes a *Create new Excalidraw drawing*
+Drawings render live. ZeroHearth also exposes a *Create new Excalidraw drawing*
 command and a mobile action button for it; both run Excalidraw's own "new
 drawing" command rather than reimplementing it.
 
@@ -365,7 +365,7 @@ the *Base view* and *Hide base header* options.
 | Setting | Meaning |
 | --- | --- |
 | *Fit to card height* | List as many files as the card is tall enough to show, instead of a fixed number. Resizing the card then changes how many appear |
-| *Number of files* | How many recently-opened files to list, when not fitting to height. There is a ceiling, which is as far back as Hearth's recent-file history goes |
+| *Number of files* | How many recently-opened files to list, when not fitting to height. There is a ceiling, which is as far back as ZeroHearth's recent-file history goes |
 | *File types* | Only list files of the selected types. Pick any combination; selecting none shows every type |
 | *Advanced → Title from a property* | Name each note by a frontmatter property instead of its file name — `aliases`, or a `title` your vault keeps for the purpose. A note without it keeps its file name |
 
@@ -438,7 +438,7 @@ Two honest limits:
   is still in the order the card is given. Use *Show* if you need the card to
   leave things out.
 
-The other orders are Hearth's own: name A–Z or Z–A, and modified or created,
+The other orders are ZeroHearth's own: name A–Z or Z–A, and modified or created,
 newest or oldest first. Under those, folders lead and are sorted by name, the
 way the file explorer does it — a folder has no modification time of its own for
 a time sort to use.
@@ -470,7 +470,7 @@ file, so the two agree.
 
 That sidebar belongs to Obsidian's core **File explorer** plugin, and revealing
 through it is not a documented API. If the plugin is off — or a future version
-changes that call — the click opens Hearth's folder browser instead, so a
+changes that call — the click opens ZeroHearth's folder browser instead, so a
 subfolder never becomes unclickable.
 
 ### The folder browser
@@ -539,13 +539,13 @@ is read only once its tile comes near the screen, so opening a large folder
 doesn't read every note in it.
 
 The text is deliberately small; *Preview text size* makes it larger. A CSS
-snippet can also set `--hearth-folder-preview-size`.
+snippet can also set `--zerohearth-folder-preview-size`.
 
 With *Image previews* on, a picture's tile shows the picture, and a note whose
 text embeds an image from the vault (`![[photo.jpg]]` or `![](photo.jpg)`)
 shows the first one as a cover above its name. Images on the web are never
 fetched for this. Pictures are shown **only on the Full performance tier**
-(*Settings → Hearth → Behaviour*): Obsidian has no thumbnails, so every picture
+(*Settings → ZeroHearth → Behaviour*): Obsidian has no thumbnails, so every picture
 is the whole file decoded and held in memory while the page is open — a folder
 of phone photos is exactly what the lighter tiers, and the phone's Balanced
 default, are there to spare. Like the text, a picture loads only once its tile
@@ -559,11 +559,11 @@ them. See [chapter 14](14-integrations.md).
 
 ## Favorites
 
-**What it shows:** the notes you have starred in Hearth.
+**What it shows:** the notes you have starred in ZeroHearth.
 
 **Requires:** nothing.
 
-Favorites are Hearth's own list, separate from Obsidian's Bookmarks.
+Favorites are ZeroHearth's own list, separate from Obsidian's Bookmarks.
 
 By default every Favorites card shows one vault-wide list, which is edited from
 the card's settings (*Add favorite*, plus move up, move down and remove).
@@ -597,7 +597,7 @@ where it belongs:
 | Bookmark | Clicking it |
 | --- | --- |
 | A **note** | Opens the note — at the heading or block you bookmarked, if you bookmarked one rather than the whole note |
-| A **folder** | Opens Hearth's folder browser on that folder (the same browser the Folder card uses) — or reveals it in Obsidian's file explorer, if the card is set that way |
+| A **folder** | Opens ZeroHearth's folder browser on that folder (the same browser the Folder card uses) — or reveals it in Obsidian's file explorer, if the card is set that way |
 | A **URL** | Opens it in your browser |
 | A **search** | Hands the query to Obsidian's search pane |
 | A **graph** | Opens the graph view with the settings that were saved with the bookmark |
@@ -622,15 +622,15 @@ bookmarks pane hides them.
 
 ## Common behaviour across these cards
 
-**Where a clicked note opens** is governed by **Settings → Hearth → Behaviour →
+**Where a clicked note opens** is governed by **Settings → ZeroHearth → Behaviour →
 Opening notes**. There is a general *Open notes in* choice and a per-source
 override for *Notes in cards*, which covers the Recent, Bookmarks, Favorites,
 Calendar, Heatmap and Tasks cards.
 
 **Liveness.** Embedded and editable notes follow vault events without losing
 your cursor. The Recent and saved-query cards update as the vault changes if
-*Live refresh on vault changes* is on under **Settings → Hearth → Behaviour**.
-Switching back to the Hearth tab always refreshes it regardless of that
+*Live refresh on vault changes* is on under **Settings → ZeroHearth → Behaviour**.
+Switching back to the ZeroHearth tab always refreshes it regardless of that
 setting. The Bookmarks card is the exception: bookmarks aren't a vault change,
 so it follows the bookmark list itself and needs no setting.
 

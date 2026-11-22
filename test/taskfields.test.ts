@@ -409,7 +409,7 @@ describe("sourceValueAliases", () => {
 	});
 
 	it("leaves every other source alone", () => {
-		expect(sourceValueAliases("fm:project", "Hearth")).toEqual(["Hearth"]);
+		expect(sourceValueAliases("fm:project", "ZeroHearth")).toEqual(["ZeroHearth"]);
 		expect(sourceValueAliases("builtin:status", "In-Progress")).toEqual(["In-Progress"]);
 	});
 });
@@ -439,8 +439,8 @@ describe("displayValue", () => {
 	// vault after the mapping was written still has to be visible.
 	it("shows an unmapped value as itself, uncoloured", () => {
 		expect(displayValue(key, "blocked")).toEqual({ label: "blocked", color: null });
-		expect(displayValue({ source: "fm:project" }, "Hearth")).toEqual({
-			label: "Hearth",
+		expect(displayValue({ source: "fm:project" }, "ZeroHearth")).toEqual({
+			label: "ZeroHearth",
 			color: null,
 		});
 	});
@@ -538,7 +538,7 @@ describe("date keys", () => {
 		expect(keyIsDate({ source: "builtin:status" })).toBe(false);
 	});
 
-	// Hearth can't know a frontmatter property holds a date rather than text
+	// ZeroHearth can't know a frontmatter property holds a date rather than text
 	// that happens to look like one, so the user says.
 	it("takes a frontmatter property as a date only when marked", () => {
 		expect(keyIsDate({ source: "fm:deadline" })).toBe(false);

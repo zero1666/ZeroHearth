@@ -13,7 +13,7 @@ import {
 import type { MusicRepeat } from "./types";
 
 /**
- * Hearth's own playback store for tracks in the vault — the half of the music
+ * ZeroHearth's own playback store for tracks in the vault — the half of the music
  * card that must outlive the card.
  *
  * Why a store and not an `<audio>` element inside the card: `HomeView.render()`
@@ -33,7 +33,7 @@ import type { MusicRepeat } from "./types";
  */
 
 /** Local-storage key holding the last session's queue and playhead. */
-const STATE_KEY = "hearth:music-state";
+const STATE_KEY = "zerohearth:music-state";
 
 /** While playing, write the playhead at most this often. A `timeupdate` fires
  * around four times a second; without this every one of them would be a
@@ -334,7 +334,7 @@ class VaultAudioPlayer {
 		if (this.audio) return this.audio;
 		const audio = new Audio();
 		audio.preload = "metadata";
-		audio.addClass("hearth-music-audio");
+		audio.addClass("zerohearth-music-audio");
 		audio.volume = this.state.volume;
 		audio.addEventListener("play", () => this.update({ playing: true }));
 		audio.addEventListener("pause", () => this.update({ playing: false }));

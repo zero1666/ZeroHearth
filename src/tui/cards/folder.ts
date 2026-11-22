@@ -34,7 +34,7 @@ import type { BookmarksInstance } from "../../obsidian-ext";
 import { openFile } from "../../opener";
 import type { TuiContext, TuiRenderer } from "../card";
 import { asciify, type Line } from "../text";
-import { hearthMenu } from "../../uidesign";
+import { zerohearthMenu } from "../../uidesign";
 import { fileMenu, fileTag, fileTagStyle, listOutput, message, openCardFile, showMenuFor, treeRows, type Row, type TreeNode } from "./common";
 
 // ---- Folder -------------------------------------------------------------------------
@@ -140,7 +140,7 @@ function entryNode(ctx: TuiContext, entry: FolderEntry, inCard: boolean): TreeNo
 					showFileMenu(folder, evt, { ...explorerMenu(ctx), extend: own });
 					return;
 				}
-				const menu = hearthMenu();
+				const menu = zerohearthMenu();
 				own(menu);
 				showMenuFor(menu, evt);
 			},

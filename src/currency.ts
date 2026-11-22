@@ -37,7 +37,7 @@ const ECB_ENDPOINT = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.
  * The old `api.frankfurter.app` host only redirects here now. */
 const FRANKFURTER_ENDPOINT = "https://api.frankfurter.dev/v1/latest";
 /** localStorage key for the last good table (device-local, never synced). */
-const STORE_KEY = "hearth-currency-rates";
+const STORE_KEY = "zerohearth-currency-rates";
 
 /** ISO 4217 codes the ECB publishes a reference rate for (also what we
  * recognise as units). EUR is the base and isn't returned in the rate table, so
@@ -63,7 +63,7 @@ export const CURRENCY_SYMBOLS: Record<string, string> = {
 	"₺": "try",
 };
 
-/** Currency names as they're typed in the languages Hearth speaks (English,
+/** Currency names as they're typed in the languages ZeroHearth speaks (English,
  * German, French, Chinese), mapped to their ISO code: `20 euros to dollars`,
  * `100 美元换成人民币`, `100 美元換成人民幣`. Only names that belong to one currency 
  * are listed — "pound" is a unit of mass to the calculator, and "Krone" (French "couronne")

@@ -1,6 +1,6 @@
 import { App, Component, MarkdownRenderer, Setting } from "obsidian";
 import { setIcon } from "./glyphs";
-import { HearthModal } from "./uidesign";
+import { ZeroHearthModal } from "./uidesign";
 import changelogMarkdown from "../CHANGELOG.md";
 import {
 	isNewer,
@@ -12,7 +12,7 @@ import {
 import { t } from "./i18n";
 import { kofiTipButton } from "./kofi";
 import { makeClickable } from "./ui";
-import type HearthPlugin from "./main";
+import type ZeroHearthPlugin from "./main";
 
 export type { ChangelogEntry };
 
@@ -44,6 +44,7 @@ const KIND_ICONS: Record<ChangeKind, string> = {
 	other: "info",
 };
 
+// The inherited changelog contains original Hearth issue numbers.
 const ISSUE_URL = "https://github.com/ondreu/hearth/issues/";
 
 /** Above this many headlines the dialog offers a filter box — below it, there
@@ -88,7 +89,7 @@ interface ReleaseView {
  * summarised or rewritten: every word still comes from the file, one click
  * further in. Purely informational.
  */
-export class WhatsNewModal extends HearthModal {
+export class WhatsNewModal extends ZeroHearthModal {
 	private readonly entries: ChangelogEntry[];
 	private readonly renderComponent = new Component();
 	private readonly releases: ReleaseView[] = [];
@@ -105,7 +106,7 @@ export class WhatsNewModal extends HearthModal {
 
 	onOpen(): void {
 		const { contentEl, modalEl } = this;
-		modalEl.addClass("hearth-whatsnew-modal");
+		modalEl.addClass("zerohearth-whatsnew-modal");
 		this.titleEl.setText(t().whatsNew.title);
 		this.renderComponent.load();
 
@@ -115,7 +116,7 @@ export class WhatsNewModal extends HearthModal {
 		);
 
 		contentEl.createEl("p", {
-			cls: "hearth-whatsnew-intro",
+			cls: "zerohearth-whatsnew-intro",
 			text: total > 0 ? t().whatsNew.introHint : t().whatsNew.intro,
 		});
 
@@ -123,16 +124,16 @@ export class WhatsNewModal extends HearthModal {
 
 		// Only this scrolls, so the intro and the toolbar stay put and the close
 		// button below stays reachable no matter how long the log is.
-		const body = contentEl.createDiv({ cls: "hearth-whatsnew-body" });
+		const body = contentEl.createDiv({ cls: "zerohearth-whatsnew-body" });
 		// Only the newest release starts open: with a whole log on screen, the
 		// rest are one line each until asked for.
 		this.entries.forEach((entry, i) => this.renderEntry(body, entry, i > 0));
 
-		this.emptyEl = body.createEl("p", { cls: "hearth-whatsnew-empty" });
+		this.emptyEl = body.createEl("p", { cls: "zerohearth-whatsnew-empty" });
 		this.emptyEl.hide();
 
 		contentEl.createEl("p", {
-			cls: "hearth-whatsnew-footer",
+			cls: "zerohearth-whatsnew-footer",
 			text: t().whatsNew.footer,
 		});
 
@@ -152,13 +153,13 @@ export class WhatsNewModal extends HearthModal {
 
 	/** The filter box and the expand/collapse-all control. */
 	private renderToolbar(parent: HTMLElement, withFilter: boolean): void {
-		const bar = parent.createDiv({ cls: "hearth-whatsnew-toolbar" });
+		const bar = parent.createDiv({ cls: "zerohearth-whatsnew-toolbar" });
 
 		if (withFilter) {
-			const search = bar.createDiv({ cls: "hearth-whatsnew-search" });
-			setIcon(search.createSpan({ cls: "hearth-whatsnew-search-icon" }), "search");
+			const search = bar.createDiv({ cls: "zerohearth-whatsnew-search" });
+			setIcon(search.createSpan({ cls: "zerohearth-whatsnew-search-icon" }), "search");
 			const input = search.createEl("input", {
-				cls: "hearth-whatsnew-filter",
+				cls: "zerohearth-whatsnew-filter",
 				type: "search",
 				attr: {
 					placeholder: t().whatsNew.filterPlaceholder,
@@ -168,7 +169,7 @@ export class WhatsNewModal extends HearthModal {
 			input.addEventListener("input", () => this.applyFilter(input.value));
 		}
 
-		const toggle = bar.createDiv({ cls: "hearth-whatsnew-expand-all" });
+		const toggle = bar.createDiv({ cls: "zerohearth-whatsnew-expand-all" });
 		this.expandAllEl = toggle;
 		toggle.setText(t().whatsNew.expandAll);
 		const flip = () => {
@@ -182,10 +183,10 @@ export class WhatsNewModal extends HearthModal {
 	/** One release: a header carrying the version, its date and a count per kind
 	 * of change, then the sections themselves. */
 	private renderEntry(parent: HTMLElement, entry: ChangelogEntry, collapsed: boolean): void {
-		const section = parent.createDiv({ cls: "hearth-whatsnew-release" });
+		const section = parent.createDiv({ cls: "zerohearth-whatsnew-release" });
 		const view: ReleaseView = {
 			el: section,
-			bodyEl: section.createDiv({ cls: "hearth-whatsnew-release-body" }),
+			bodyEl: section.createDiv({ cls: "zerohearth-whatsnew-release-body" }),
 			items: [],
 			collapsed: false,
 		};
@@ -193,18 +194,18 @@ export class WhatsNewModal extends HearthModal {
 
 		// The header is built after the body element so it can be moved above it,
 		// keeping the DOM order readable while the closure below has both.
-		const header = section.createDiv({ cls: "hearth-whatsnew-release-header" });
+		const header = section.createDiv({ cls: "zerohearth-whatsnew-release-header" });
 		section.insertBefore(header, view.bodyEl);
 
-		const chevron = header.createSpan({ cls: "hearth-whatsnew-release-chevron" });
+		const chevron = header.createSpan({ cls: "zerohearth-whatsnew-release-chevron" });
 		setIcon(chevron, "chevron-down");
 
-		const version = header.createEl("h2", { cls: "hearth-whatsnew-version" });
+		const version = header.createEl("h2", { cls: "zerohearth-whatsnew-version" });
 		if (entry.url) {
 			const link = version.createEl("a", {
 				text: entry.version,
 				href: entry.url,
-				cls: "hearth-whatsnew-version-link",
+				cls: "zerohearth-whatsnew-version-link",
 				attr: { rel: "noopener", "aria-label": t().whatsNew.releaseNotes(entry.version) },
 			});
 			// The link is inside the header, which toggles — don't do both.
@@ -214,30 +215,30 @@ export class WhatsNewModal extends HearthModal {
 		}
 
 		if (entry.date) {
-			header.createSpan({ cls: "hearth-whatsnew-date", text: entry.date });
+			header.createSpan({ cls: "zerohearth-whatsnew-date", text: entry.date });
 		}
 
 		// A count per kind, so a release says what it holds while still folded.
-		const counts = header.createDiv({ cls: "hearth-whatsnew-counts" });
+		const counts = header.createDiv({ cls: "zerohearth-whatsnew-counts" });
 		for (const s of entry.sections) {
 			if (s.items.length === 0) continue;
-			const pill = counts.createSpan({ cls: `hearth-whatsnew-count is-${s.kind}` });
-			pill.createSpan({ cls: "hearth-whatsnew-count-dot" });
+			const pill = counts.createSpan({ cls: `zerohearth-whatsnew-count is-${s.kind}` });
+			pill.createSpan({ cls: "zerohearth-whatsnew-count-dot" });
 			pill.createSpan({ text: `${s.items.length} ${this.kindLabel(s.kind, s.label)}` });
 		}
 
 		for (const s of entry.sections) {
-			const group = view.bodyEl.createDiv({ cls: `hearth-whatsnew-group is-${s.kind}` });
-			const label = group.createDiv({ cls: "hearth-whatsnew-group-label" });
-			setIcon(label.createSpan({ cls: "hearth-whatsnew-group-icon" }), KIND_ICONS[s.kind]);
+			const group = view.bodyEl.createDiv({ cls: `zerohearth-whatsnew-group is-${s.kind}` });
+			const label = group.createDiv({ cls: "zerohearth-whatsnew-group-label" });
+			setIcon(label.createSpan({ cls: "zerohearth-whatsnew-group-icon" }), KIND_ICONS[s.kind]);
 			label.createSpan({ text: this.kindLabel(s.kind, s.label) });
 
 			if (s.prose) {
-				const prose = group.createDiv({ cls: "hearth-whatsnew-prose" });
+				const prose = group.createDiv({ cls: "zerohearth-whatsnew-prose" });
 				void MarkdownRenderer.render(this.app, s.prose, prose, "", this.renderComponent);
 			}
 
-			const list = group.createDiv({ cls: "hearth-whatsnew-items" });
+			const list = group.createDiv({ cls: "zerohearth-whatsnew-items" });
 			for (const item of s.items) view.items.push(this.renderItem(list, item));
 		}
 
@@ -249,22 +250,22 @@ export class WhatsNewModal extends HearthModal {
 
 	/** One change: its headline, always visible, and the detail panel it opens. */
 	private renderItem(parent: HTMLElement, item: ChangelogItem): ItemView {
-		const el = parent.createDiv({ cls: "hearth-whatsnew-item" });
-		const summary = el.createDiv({ cls: "hearth-whatsnew-item-summary" });
+		const el = parent.createDiv({ cls: "zerohearth-whatsnew-item" });
+		const summary = el.createDiv({ cls: "zerohearth-whatsnew-item-summary" });
 
-		const chevron = summary.createSpan({ cls: "hearth-whatsnew-item-chevron" });
+		const chevron = summary.createSpan({ cls: "zerohearth-whatsnew-item-chevron" });
 		if (item.details) setIcon(chevron, "chevron-right");
 
-		const headline = summary.createDiv({ cls: "hearth-whatsnew-headline" });
+		const headline = summary.createDiv({ cls: "zerohearth-whatsnew-headline" });
 		// Rendered as Markdown so inline code and links in a headline survive;
 		// CSS keeps the paragraph it comes wrapped in on one line.
 		void MarkdownRenderer.render(this.app, item.headline, headline, "", this.renderComponent);
 
 		if (item.issues.length > 0) {
-			const refs = summary.createDiv({ cls: "hearth-whatsnew-issues" });
+			const refs = summary.createDiv({ cls: "zerohearth-whatsnew-issues" });
 			for (const n of item.issues) {
 				const link = refs.createEl("a", {
-					cls: "hearth-whatsnew-issue",
+					cls: "zerohearth-whatsnew-issue",
 					text: `#${n}`,
 					href: `${ISSUE_URL}${n}`,
 					attr: { rel: "noopener", "aria-label": t().whatsNew.issue(n) },
@@ -275,7 +276,7 @@ export class WhatsNewModal extends HearthModal {
 
 		const view: ItemView = {
 			el,
-			detailEl: el.createDiv({ cls: "hearth-whatsnew-detail" }),
+			detailEl: el.createDiv({ cls: "zerohearth-whatsnew-detail" }),
 			chevronEl: chevron,
 			item,
 			haystack: `${item.headline}\n${item.details}`.toLowerCase(),
@@ -303,7 +304,7 @@ export class WhatsNewModal extends HearthModal {
 		view.expanded = expanded;
 		view.el.toggleClass("is-expanded", expanded);
 		view.el
-			.querySelector(".hearth-whatsnew-item-summary")
+			.querySelector(".zerohearth-whatsnew-item-summary")
 			?.setAttribute("aria-expanded", String(expanded));
 		setIcon(view.chevronEl, expanded ? "chevron-down" : "chevron-right");
 
@@ -325,7 +326,7 @@ export class WhatsNewModal extends HearthModal {
 		view.collapsed = collapsed;
 		view.el.toggleClass("is-collapsed", collapsed);
 		view.el
-			.querySelector(".hearth-whatsnew-release-header")
+			.querySelector(".zerohearth-whatsnew-release-header")
 			?.setAttribute("aria-expanded", String(!collapsed));
 		if (collapsed) view.bodyEl.hide();
 		else view.bodyEl.show();
@@ -362,10 +363,10 @@ export class WhatsNewModal extends HearthModal {
 
 			// A group whose every row is hidden loses its label too.
 			for (const group of Array.from(
-				release.bodyEl.querySelectorAll<HTMLElement>(".hearth-whatsnew-group"),
+				release.bodyEl.querySelectorAll<HTMLElement>(".zerohearth-whatsnew-group"),
 			)) {
 				const visible = group.querySelectorAll(
-					".hearth-whatsnew-item:not(.is-filtered-out)",
+					".zerohearth-whatsnew-item:not(.is-filtered-out)",
 				).length;
 				group.toggleClass("is-filtered-out", q !== "" && visible === 0);
 			}
@@ -406,7 +407,7 @@ export class WhatsNewModal extends HearthModal {
  * the dialog and records the new version so it won't show again until the next
  * update.
  */
-export async function maybeShowWhatsNew(plugin: HearthPlugin): Promise<void> {
+export async function maybeShowWhatsNew(plugin: ZeroHearthPlugin): Promise<void> {
 	const current = plugin.manifest.version;
 	const seen = plugin.settings.lastSeenVersion;
 

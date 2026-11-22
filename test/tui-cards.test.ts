@@ -80,7 +80,7 @@ describe("dataview values as text", () => {
 		expect(literalText("a")).toBe("a");
 		expect(literalText(3)).toBe("3");
 		expect(literalText([1, "b"])).toBe("1, b");
-		expect(literalText({ path: "Projects/Hearth.md", type: "file", embed: false })).toBe("Hearth");
+		expect(literalText({ path: "Projects/ZeroHearth.md", type: "file", embed: false })).toBe("ZeroHearth");
 		expect(literalText({ path: "a.md", type: "file", embed: false, display: "Alias" })).toBe("Alias");
 	});
 });

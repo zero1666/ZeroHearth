@@ -4,7 +4,7 @@
  * There is no API for this: the call is the core file-explorer's
  * `revealInFolder`, the same one the search pane makes for a folder result. So
  * every step here is duck-typed and every failure is quiet — the caller falls
- * back to Hearth's own folder browser, which is exactly what the click did
+ * back to ZeroHearth's own folder browser, which is exactly what the click did
  * before the option existed.
  *
  * Two objects carry the reveal — the core plugin's instance and its view — and
@@ -16,7 +16,7 @@ import type { App, TAbstractFile, WorkspaceLeaf } from "obsidian";
 /** The view type Obsidian registers its file explorer under. */
 const FILE_EXPLORER_VIEW = "file-explorer";
 
-/** Where a click that opens a folder sends it: Hearth's own browser, or
+/** Where a click that opens a folder sends it: ZeroHearth's own browser, or
  * Obsidian's file explorer in the sidebar (#448). */
 export type FolderDestination = "browser" | "explorer";
 

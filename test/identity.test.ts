@@ -67,7 +67,7 @@ describe("the recovery key", () => {
 	});
 
 	it("refuses anything that isn't a key", () => {
-		for (const bad of ["", "ondreu", "HEARTH-4KJ2M", `${KEY}-EXTRA`]) {
+		for (const bad of ["", "ondreu", "ZEROHEARTH-4KJ2M", `${KEY}-EXTRA`]) {
 			expect(normalizeAuthorKey(bad)).toBeNull();
 			expect(identityFromKey(bad)).toBeNull();
 			expect(publicKeyFromAuthorKey(bad)).toBeNull();
@@ -249,7 +249,7 @@ describe("the key as it is stored in a vault", () => {
 	});
 
 	it("drops a value that isn't a key rather than deriving from nonsense", () => {
-		for (const bad of ["ondreu", "HEARTH-4KJ2M", 42, null]) {
+		for (const bad of ["ondreu", "ZEROHEARTH-4KJ2M", 42, null]) {
 			expect(loaded({ authorKey: bad }).authorKey).toBe("");
 		}
 		expect(loaded({}).authorKey).toBe("");

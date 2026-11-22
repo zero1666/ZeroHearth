@@ -1,5 +1,5 @@
 /**
- * The Journals integration: everything Hearth knows about the
+ * The Journals integration: everything ZeroHearth knows about the
  * [Journals](https://github.com/srg-kostyrko/obsidian-journal) community
  * plugin (issue #318).
  *
@@ -10,7 +10,7 @@
  * behind the Journals half of it, exactly as `periodic.ts` sits behind the
  * Periodic Notes half.
  *
- * Same rule as every other integration: **Hearth never does the work
+ * Same rule as every other integration: **ZeroHearth never does the work
  * itself.** It does not resolve a path, read the plugin's settings or write a
  * note; it asks Journals for the note covering *now* and renders the answer.
  *
@@ -20,7 +20,7 @@
  *    the same cadence — a personal daily and a work daily — so the card asks
  *    for a journal *by name* rather than for a period. That also means the
  *    plugin's `custom` cadence (every N days/weeks/…) needs no special case:
- *    the journal already knows what period it writes, and Hearth never has to
+ *    the journal already knows what period it writes, and ZeroHearth never has to
  *    name it.
  * 2. **The whole API is async**, and card renders are synchronous. So every
  *    lookup goes through the small stale-while-revalidate cache below:
@@ -47,20 +47,20 @@ export const JOURNALS_PLUGIN_ID = "journals";
  *
  * The file a note lives at is re-checked against the vault on every render, so
  * this window only covers changes to the journal's *configuration* — a renamed
- * folder or an edited name template, neither of which raises an event Hearth
+ * folder or an edited name template, neither of which raises an event ZeroHearth
  * can hear. A minute keeps that self-healing without asking the plugin
  * anything on a board that is merely redrawing.
  */
 export const JOURNAL_CACHE_TTL_MS = 60_000;
 
 /** What Journals says a journal is. Mirrors its `JournalInfo`, minus the
- * fields Hearth has no use for. */
+ * fields ZeroHearth has no use for. */
 export interface JournalInfo {
 	/** The journal's name, which is also its selector. */
 	readonly name: string;
 	/** The shelf it sits on, or null when it sits on none. */
 	readonly shelf?: string | null;
-	/** Its cadence. `custom` is "every N days/weeks/…", which Hearth shows but
+	/** Its cadence. `custom` is "every N days/weeks/…", which ZeroHearth shows but
 	 * never has to name. */
 	readonly write?: { readonly type?: string };
 }
@@ -79,7 +79,7 @@ export interface JournalNote {
 	readonly displayDate?: string;
 }
 
-/** The slice of Journals' public API Hearth touches. Every member optional:
+/** The slice of Journals' public API ZeroHearth touches. Every member optional:
  * see the module comment. */
 export interface JournalsApi {
 	readonly apiVersion?: number;
@@ -119,7 +119,7 @@ export function isJournalsEnabled(app: App): boolean {
 }
 
 /**
- * What another plugin handed back, as a list Hearth can walk.
+ * What another plugin handed back, as a list ZeroHearth can walk.
  *
  * `Array.isArray` widens a readonly array to `any[]`, which would quietly undo
  * the typing on everything downstream of a value that is untrusted precisely
@@ -149,7 +149,7 @@ export async function listJournals(app: App): Promise<readonly JournalInfo[]> {
 // ---- The note for now ---------------------------------------------------
 
 /**
- * What Hearth knows about one journal's current note. `missing` is the
+ * What ZeroHearth knows about one journal's current note. `missing` is the
  * answer's own state, not the file's: a journal that no longer exists reads
  * differently from one whose note simply hasn't been written yet.
  */
@@ -196,7 +196,7 @@ export function today(): string {
 }
 
 /**
- * What Hearth last learned about `journal`'s current note, without waiting.
+ * What ZeroHearth last learned about `journal`'s current note, without waiting.
  *
  * Returns null the first time a card asks, and the last answer after that —
  * stale-while-revalidate, because `render` is synchronous and a card that
@@ -223,7 +223,7 @@ export function peekNote(
  * Journals anything.
  *
  * Separate from {@link peekNote} because the card's liveness re-reads the
- * watched path on every vault event: that is a question about what Hearth
+ * watched path on every vault event: that is a question about what ZeroHearth
  * already knows, and must not start a refresh — let alone one per event.
  */
 export function cachedPath(journal: string): string | null {
@@ -304,7 +304,7 @@ export function errorCode(err: unknown): string | null {
  * Have Journals write `journal`'s note for today, applying its own template
  * and asking its own creation prompts, and return the file.
  *
- * `ensureNote` is idempotent and does not open what it creates, so Hearth
+ * `ensureNote` is idempotent and does not open what it creates, so ZeroHearth
  * opens it the way it opens everything else and redraws the card itself.
  */
 export async function createJournalNote(app: App, journal: string): Promise<TFile | null> {
@@ -324,7 +324,7 @@ export async function createJournalNote(app: App, journal: string): Promise<TFil
 	}
 }
 
-/** Record where a journal's current note is, for a path Hearth has just been
+/** Record where a journal's current note is, for a path ZeroHearth has just been
  * told authoritatively — the note Journals reports having written. */
 export function remember(journal: string, path: string): void {
 	cache.set(cacheKey(journal, today()), { path, unknownJournal: false, at: Date.now() });

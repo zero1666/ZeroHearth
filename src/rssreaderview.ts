@@ -1,5 +1,5 @@
 import { ItemView, type ViewStateResult, type WorkspaceLeaf } from "obsidian";
-import type HearthPlugin from "./main";
+import type ZeroHearthPlugin from "./main";
 import { findRssCard } from "./rssfeeds";
 import { readReaderState, RssReader, VIEW_TYPE_RSS_READER, type RssReaderHost, type RssReaderState } from "./rssreader";
 import { t } from "./i18n";
@@ -23,7 +23,7 @@ export class RssReaderView extends ItemView {
 	private reader: RssReader | null = null;
 	private title = "";
 
-	constructor(leaf: WorkspaceLeaf, private readonly plugin: HearthPlugin) {
+	constructor(leaf: WorkspaceLeaf, private readonly plugin: ZeroHearthPlugin) {
 		super(leaf);
 		this.navigation = true;
 	}
@@ -57,7 +57,7 @@ export class RssReaderView extends ItemView {
 	}
 
 	async onOpen(): Promise<void> {
-		this.contentEl.addClass("hearth-rss-reader-view");
+		this.contentEl.addClass("zerohearth-rss-reader-view");
 		const host: RssReaderHost = {
 			app: this.app,
 			settings: this.plugin.settings,

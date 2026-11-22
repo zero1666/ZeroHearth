@@ -30,7 +30,7 @@ import {
 	type RssSource,
 } from "../types";
 import { drawTabStrip } from "../tabstrip";
-import { hearthMenu } from "../uidesign";
+import { zerohearthMenu } from "../uidesign";
 import { makeClickable } from "../ui";
 import { type CardDefinition, type CardEditorContext } from "./definition";
 
@@ -77,7 +77,7 @@ export function renderRss(
 	});
 	let loading = false;
 
-	const wrap = body.createDiv("hearth-rss");
+	const wrap = body.createDiv("zerohearth-rss");
 	const opener: RssOpenContext = { app: view.app, settings: view.plugin.settings, opener: view };
 
 	const activeTab = (): RssTab =>
@@ -92,7 +92,7 @@ export function renderRss(
 	const renderItem = (container: HTMLElement, entry: RssEntry, merged: boolean): void => {
 		const item = entry.item;
 		const open = (): void => openRssEntry(opener, card, activeId, entry);
-		const row = container.createDiv("hearth-rss-item");
+		const row = container.createDiv("zerohearth-rss-item");
 		row.toggleClass("is-read", rssEntryRead(entry));
 		makeClickable(row, open, item.title || t().cards.rss.untitled);
 		row.addEventListener("click", open);
@@ -100,10 +100,10 @@ export function renderRss(
 			evt.preventDefault();
 			rssEntryMenu(opener, card, activeId, entry).showAtMouseEvent(evt);
 		});
-		row.createSpan({ cls: "hearth-rss-dot", attr: { "aria-hidden": "true" } });
+		row.createSpan({ cls: "zerohearth-rss-dot", attr: { "aria-hidden": "true" } });
 
 		if (layout === "cards" && cfg.showImages !== false && item.image) {
-			const thumb = row.createDiv("hearth-rss-thumb");
+			const thumb = row.createDiv("zerohearth-rss-thumb");
 			const img = thumb.createEl("img");
 			img.setAttribute("src", item.image);
 			img.setAttribute("loading", "lazy");
@@ -112,13 +112,13 @@ export function renderRss(
 			img.addEventListener("error", () => thumb.remove());
 		}
 
-		const main = row.createDiv("hearth-rss-main");
+		const main = row.createDiv("zerohearth-rss-main");
 		main.createDiv({
-			cls: "hearth-rss-title",
+			cls: "zerohearth-rss-title",
 			text: item.title || t().cards.rss.untitled,
 		});
 		if (layout === "cards" && cfg.showExcerpt !== false && item.excerpt) {
-			main.createDiv({ cls: "hearth-rss-excerpt", text: item.excerpt });
+			main.createDiv({ cls: "zerohearth-rss-excerpt", text: item.excerpt });
 		}
 
 		const metaBits: string[] = [];
@@ -129,7 +129,7 @@ export function renderRss(
 			);
 		}
 		if (metaBits.length) {
-			main.createDiv({ cls: "hearth-rss-meta", text: metaBits.join(" · ") });
+			main.createDiv({ cls: "zerohearth-rss-meta", text: metaBits.join(" · ") });
 		}
 	};
 
@@ -159,7 +159,7 @@ export function renderRss(
 	};
 
 	const barButton = (bar: HTMLElement, icon: string, label: string, onClick: () => void): HTMLButtonElement => {
-		const btn = bar.createEl("button", { cls: "hearth-rss-refresh", attr: { "aria-label": label } });
+		const btn = bar.createEl("button", { cls: "zerohearth-rss-refresh", attr: { "aria-label": label } });
 		setIcon(btn, icon);
 		btn.addEventListener("click", onClick);
 		return btn;
@@ -171,10 +171,10 @@ export function renderRss(
 
 	/** Rebuild tab bar + content from the current cache and loading flag. */
 	const rebuild = (): void => {
-		const scroll = wrap.querySelector(".hearth-rss-content")?.scrollTop ?? 0;
+		const scroll = wrap.querySelector(".zerohearth-rss-content")?.scrollTop ?? 0;
 		wrap.empty();
 
-		const bar = wrap.createDiv("hearth-rss-tabs");
+		const bar = wrap.createDiv("zerohearth-rss-tabs");
 		disposeStrip();
 		if (tabs.length > 1) {
 			disposeStrip = drawTabStrip(
@@ -190,7 +190,7 @@ export function renderRss(
 			);
 		} else {
 			// One feed has no tabs; the empty row keeps the buttons on the right.
-			bar.createDiv("hearth-rss-tablist");
+			bar.createDiv("zerohearth-rss-tablist");
 		}
 		const strings = t().cards.rss;
 		const filter = barButton(bar, "list-filter", cfg.unreadOnly ? strings.showAll : strings.unreadOnly, () => {
@@ -205,7 +205,7 @@ export function renderRss(
 		const refresh = barButton(bar, "refresh-cw", strings.refresh, () => load(true));
 		if (loading) refresh.addClass("is-loading");
 
-		const content = wrap.createDiv(`hearth-rss-content hearth-rss-${layout}`);
+		const content = wrap.createDiv(`zerohearth-rss-content zerohearth-rss-${layout}`);
 		paint(content);
 		content.scrollTop = scroll;
 	};
@@ -247,7 +247,7 @@ export function renderRss(
  * `m`: every way to open it, mark it, save it or copy its link. */
 export function rssEntryMenu(ctx: RssOpenContext, card: DashboardCard, tabId: string, entry: RssEntry): Menu {
 	const strings = t().cards.rss;
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	const item = entry.item;
 	const linked = /^https?:\/\//i.test(item.link);
 	const readable = !!(item.content.trim() || item.excerpt.trim());
@@ -362,7 +362,7 @@ export function rssEditor(ctx: CardEditorContext, containerEl: HTMLElement): voi
 	new Setting(containerEl).setName(t().editors.rss.feeds).setHeading();
 
 	sources.forEach((source, index) => {
-		const row = new Setting(containerEl).setClass("hearth-rss-setting");
+		const row = new Setting(containerEl).setClass("zerohearth-rss-setting");
 		row.addText((txt) =>
 			txt
 				.setPlaceholder(t().editors.rss.namePlaceholder)
@@ -381,7 +381,7 @@ export function rssEditor(ctx: CardEditorContext, containerEl: HTMLElement): voi
 					ctx.opts.save();
 					ctx.opts.rerender();
 				});
-			txt.inputEl.addClass("hearth-rss-url");
+			txt.inputEl.addClass("zerohearth-rss-url");
 		});
 		row.addExtraButton((b) =>
 			b
@@ -639,7 +639,7 @@ export function githubFeedAdder(ctx: CardEditorContext, containerEl: HTMLElement
 	const setting = new Setting(containerEl)
 		.setName(t().editors.rss.github)
 		.setDesc(t().editors.rss.githubDesc)
-		.setClass("hearth-rss-github");
+		.setClass("zerohearth-rss-github");
 
 	setting.addText((txt) => {
 		txt
@@ -648,7 +648,7 @@ export function githubFeedAdder(ctx: CardEditorContext, containerEl: HTMLElement
 			.onChange((v) => {
 				ctx.session.ghRepo = v;
 			});
-		txt.inputEl.addClass("hearth-rss-github-repo");
+		txt.inputEl.addClass("zerohearth-rss-github-repo");
 	});
 
 	setting.addDropdown((d) => {

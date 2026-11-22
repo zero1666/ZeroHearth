@@ -57,7 +57,7 @@ function makeHost(output: () => TuiOutput, el: HTMLElement) {
 
 /** The drawn rows, in document order. */
 function rows(el: HTMLElement): HTMLElement[] {
-	return Array.from(el.querySelectorAll<HTMLElement>(".hearth-tui-line"));
+	return Array.from(el.querySelectorAll<HTMLElement>(".zerohearth-tui-line"));
 }
 
 describe("repainting a text body", () => {
@@ -112,12 +112,12 @@ describe("repainting a text body", () => {
 		const host = makeHost(() => out, el);
 
 		host.draw(new Component());
-		const stickyRow = el.querySelector<HTMLElement>(".hearth-tui-sticky .hearth-tui-line");
+		const stickyRow = el.querySelector<HTMLElement>(".zerohearth-tui-sticky .zerohearth-tui-line");
 		const bodyRow = rows(el)[1];
 		out = { sticky: 1, lines: [[{ text: "head" }], [{ text: "A" }], [{ text: "b" }]] };
 		host.draw(new Component());
 
-		expect(el.querySelector(".hearth-tui-sticky .hearth-tui-line")).toBe(stickyRow);
+		expect(el.querySelector(".zerohearth-tui-sticky .zerohearth-tui-line")).toBe(stickyRow);
 		expect(rows(el)[1]).not.toBe(bodyRow);
 		expect(rows(el)).toHaveLength(3);
 	});

@@ -270,7 +270,7 @@ export function fitVerticalScale(cards: DashboardCard[], boardHeight: number): n
  * to convert between a card's stored geometry and the pixels it actually
  * occupies must go through this — see cardGeometryFromScreen. */
 export function boardFitScale(gridEl: HTMLElement, cards: DashboardCard[]): number {
-	if (!gridEl.closest(".hearth-fit")) return 1;
+	if (!gridEl.closest(".zerohearth-fit")) return 1;
 	return fitVerticalScale(cards, gridEl.clientHeight);
 }
 
@@ -446,7 +446,7 @@ function bestSnap(
  * is the column's and position is the order, so the full drag engine has
  * nothing to offer here — but height without a gesture meant typing a number
  * into the card's settings, which is not how anyone resizes a card anywhere
- * else in Hearth.
+ * else in ZeroHearth.
  *
  * The height is written to `mobile.height`, the card's own stacked-layout
  * override, so resizing a card on a phone never touches the `fh` the desktop
@@ -459,7 +459,7 @@ export function enableStackedResize(
 	component: Component,
 	onCommit: () => void,
 ): void {
-	const handle = cardEl.createDiv("hearth-resize-handle is-s is-stacked-grip");
+	const handle = cardEl.createDiv("zerohearth-resize-handle is-s is-stacked-grip");
 	let start: { y: number; height: number; pointer: number } | null = null;
 
 	component.registerDomEvent(handle, "pointerdown", (e: PointerEvent) => {
@@ -510,12 +510,12 @@ export function enableDragResize(
 	 * merged by dragging. */
 	onMergeDrop?: (target: DashboardCard) => void,
 ): void {
-	const overlay = cardEl.createDiv("hearth-card-overlay");
+	const overlay = cardEl.createDiv("zerohearth-card-overlay");
 	// One resize grip per edge and corner, so the card can be resized from any
 	// side, not just the bottom-right.
 	const handles = RESIZE_DIRS.map((dir) => ({
 		dir,
-		el: cardEl.createDiv(`hearth-resize-handle is-${dir}`),
+		el: cardEl.createDiv(`zerohearth-resize-handle is-${dir}`),
 	}));
 
 	let ctx: DragContext | null = null;
@@ -565,7 +565,7 @@ export function enableDragResize(
 	 * scale (which a commit may have changed) and reposition every card with it,
 	 * scrolling boards just place the dragged card. */
 	const reposition = () => {
-		if (gridEl.closest(".hearth-fit")) applyFitLayout(gridEl, layout);
+		if (gridEl.closest(".zerohearth-fit")) applyFitLayout(gridEl, layout);
 		else applyCardPosition(cardEl, card);
 	};
 
@@ -602,7 +602,7 @@ export function enableDragResize(
 				guideX = null;
 				return;
 			}
-			if (!guideX) guideX = gridEl.createDiv("hearth-align-guide is-vertical");
+			if (!guideX) guideX = gridEl.createDiv("zerohearth-align-guide is-vertical");
 			guideX.style.left = `${pos}px`;
 		} else {
 			if (pos == null) {
@@ -610,7 +610,7 @@ export function enableDragResize(
 				guideY = null;
 				return;
 			}
-			if (!guideY) guideY = gridEl.createDiv("hearth-align-guide is-horizontal");
+			if (!guideY) guideY = gridEl.createDiv("zerohearth-align-guide is-horizontal");
 			guideY.style.top = `${pos}px`;
 		}
 	};
@@ -619,7 +619,7 @@ export function enableDragResize(
 		e.preventDefault();
 		e.stopPropagation();
 		const boardWidth = gridEl.clientWidth;
-		const fit = !!gridEl.closest(".hearth-fit");
+		const fit = !!gridEl.closest(".zerohearth-fit");
 		// Fit-to-page clamps cards to the visible board; scroll mode lets the board
 		// grow downward without limit, so a card can be dragged/resized as far down
 		// as the pointer goes (the board height follows via updateBoardHeight).
@@ -828,11 +828,11 @@ export function mergeZoneHit(
  * In fit-to-page mode the board is locked to one screen, so skip the inline
  * min-height there — the CSS handles clipping instead. */
 export function updateBoardHeight(gridEl: HTMLElement): void {
-	if (gridEl.closest(".hearth-fit")) return;
+	if (gridEl.closest(".zerohearth-fit")) return;
 	let bottom = 0;
 	for (const child of Array.from(gridEl.children)) {
 		const el = child as HTMLElement;
-		if (!el.classList.contains("hearth-card")) continue;
+		if (!el.classList.contains("zerohearth-card")) continue;
 		bottom = Math.max(bottom, el.offsetTop + el.offsetHeight);
 	}
 	gridEl.style.minHeight = `${bottom + GRID_GAP}px`;
@@ -931,7 +931,7 @@ export function mergedRuns<T extends CardBox>(boxes: readonly T[]): T[][] {
  *  notifications. Reads live DOM offsets so it works both at rest and while a
  *  card is being dragged (its inline position is already current). */
 export function applyEdgeMerging(gridEl: HTMLElement): void {
-	const cards = Array.from(gridEl.querySelectorAll<HTMLElement>(":scope > .hearth-card"));
+	const cards = Array.from(gridEl.querySelectorAll<HTMLElement>(":scope > .zerohearth-card"));
 	const MERGE_CLASSES = [
 		"merge-top", "merge-bottom", "merge-left", "merge-right",
 		"merge-tl", "merge-tr", "merge-bl", "merge-br",
@@ -1026,14 +1026,14 @@ export function applyEdgeMerging(gridEl: HTMLElement): void {
 }
 
 /** Fallback card corner radius (px), matching the `border-radius` fallback in
- *  styles.css, used when the board hasn't set --hearth-card-radius. */
+ *  styles.css, used when the board hasn't set --zerohearth-card-radius. */
 const CARD_RADIUS_FALLBACK = 14;
 
-/** Resolve the board's live corner radius (px) from the --hearth-card-radius
+/** Resolve the board's live corner radius (px) from the --zerohearth-card-radius
  *  CSS variable set by renderDashboard, so the frost mask rounds by exactly the
  *  same amount the cards do. Falls back to the design baseline if unset. */
 function resolveGridRadius(gridEl: HTMLElement): number {
-	const raw = getComputedStyle(gridEl).getPropertyValue("--hearth-card-radius");
+	const raw = getComputedStyle(gridEl).getPropertyValue("--zerohearth-card-radius");
 	const n = parseFloat(raw);
 	return Number.isFinite(n) && n >= 0 ? n : CARD_RADIUS_FALLBACK;
 }
@@ -1067,25 +1067,25 @@ function cardSilhouettePath(
 	);
 }
 
-/** Rebuild the frosted-glass blur layers behind the cards. See the .hearth-frost
+/** Rebuild the frosted-glass blur layers behind the cards. See the .zerohearth-frost
  *  note in styles.css for why the blur is shared across touching cards rather
- *  than run per card. One .hearth-frost layer is created per distinct resolved
+ *  than run per card. One .zerohearth-frost layer is created per distinct resolved
  *  blur value (stashed on each card as data-blur) *per run of touching cards*
  *  (see mergedRuns), each masked — via an inline SVG built from the cards' live
  *  silhouettes — to the union of that run's cards. So a run of touching cards
  *  blurs as one seamless surface, and a card standing on its own gets a layer no
  *  bigger than itself. */
 export function updateFrostLayers(gridEl: HTMLElement): void {
-	let root = gridEl.querySelector<HTMLElement>(":scope > .hearth-frost-root");
+	let root = gridEl.querySelector<HTMLElement>(":scope > .zerohearth-frost-root");
 	const cards = Array.from(
-		gridEl.querySelectorAll<HTMLElement>(":scope > .hearth-card.has-blur"),
+		gridEl.querySelectorAll<HTMLElement>(":scope > .zerohearth-card.has-blur"),
 	);
 	if (cards.length === 0) {
 		root?.remove();
 		return;
 	}
 	if (!root) {
-		root = gridEl.createDiv("hearth-frost-root");
+		root = gridEl.createDiv("zerohearth-frost-root");
 		// Paint behind every card by sitting first in the grid.
 		gridEl.prepend(root);
 	}
@@ -1124,16 +1124,16 @@ export function updateFrostLayers(gridEl: HTMLElement): void {
 			const key = `${blur}:${i}`;
 			seen.add(key);
 			let layer = root.querySelector<HTMLElement>(
-				`:scope > .hearth-frost[data-frost="${key}"]`,
+				`:scope > .zerohearth-frost[data-frost="${key}"]`,
 			);
 			if (!layer) {
-				layer = root.createDiv("hearth-frost");
+				layer = root.createDiv("zerohearth-frost");
 				layer.dataset.frost = key;
 			}
 			// The radius goes in as a variable, not as an inline backdrop-filter:
 			// styles.css applies it, so the kill switches there (no frost, macOS
 			// translucency) can still turn the blur off by specificity alone.
-			layer.style.setProperty("--hearth-frost-blur", `${blur}px`);
+			layer.style.setProperty("--zerohearth-frost-blur", `${blur}px`);
 
 			// Size the layer to its own run, and to EXACTLY that run — no padding.
 			//
@@ -1155,7 +1155,7 @@ export function updateFrostLayers(gridEl: HTMLElement): void {
 			//   of blurred wallpaper twice the blur radius wide.
 			// - What it bought is nothing you can see. Compared side by side at 2x, the
 			//   padded and unpadded boxes are indistinguishable over a photographic
-			//   wallpaper, which is what Hearth's backgrounds are. The clamping only
+			//   wallpaper, which is what ZeroHearth's backgrounds are. The clamping only
 			//   shows against contrived high-frequency content (hard 4px stripes).
 			//
 			// So the box is the run's own bounding box, rounded off by border-radius
@@ -1203,7 +1203,7 @@ export function updateFrostLayers(gridEl: HTMLElement): void {
 	}
 	// Drop layers whose blur value or run no longer exists.
 	for (const layer of Array.from(
-		root.querySelectorAll<HTMLElement>(":scope > .hearth-frost"),
+		root.querySelectorAll<HTMLElement>(":scope > .zerohearth-frost"),
 	)) {
 		if (!seen.has(layer.dataset.frost ?? "")) layer.remove();
 	}

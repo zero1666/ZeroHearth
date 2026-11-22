@@ -1,7 +1,7 @@
 import { Component, debounce, getLinkpath, Keymap, Setting, TAbstractFile, TFile, TFolder, type App, type EventRef } from "obsidian";
 import type { CardHost } from "../cardhost";
 import { setIcon } from "../glyphs";
-import { currentUiDesign, DESIGN_ATTR, HearthModal } from "../uidesign";
+import { currentUiDesign, DESIGN_ATTR, ZeroHearthModal } from "../uidesign";
 import { cardOverlayButton, emptyState, redrawCard, resetCardBody } from "../cardbodies";
 import { addResetButton } from "../editors";
 import { explorerChildOrder, explorerSortAsFolderSort } from "../explorerorder";
@@ -244,7 +244,7 @@ export function renderFolder(view: CardHost, card: DashboardCard, body: HTMLElem
 			// Everything the body draws that handles its own click — a row, a
 			// tile, the path row, the "N more" footer — is left to it, or the
 			// browser would open twice on the footer and over the note on a row.
-			const own = ".hearth-list-item, .hearth-link-tile, .hearth-folder-more, .hearth-folder-nav";
+			const own = ".zerohearth-list-item, .zerohearth-link-tile, .zerohearth-folder-more, .zerohearth-folder-nav";
 			if (target instanceof HTMLElement && target.closest(own)) return;
 			open(path);
 		});
@@ -278,7 +278,7 @@ export function renderFolder(view: CardHost, card: DashboardCard, body: HTMLElem
 	// only thing that can say it; it just isn't a way in then.
 	const rest = entries.length - shown.length;
 	if (rest > 0) {
-		const more = body.createDiv({ cls: "hearth-folder-more", text: t().cards.folder.more(rest) });
+		const more = body.createDiv({ cls: "zerohearth-folder-more", text: t().cards.folder.more(rest) });
 		more.toggleClass("is-static", !browse);
 		if (browse) {
 			makeClickable(more, () => open(path), t().cards.folder.browse);
@@ -301,12 +301,12 @@ function drawCardNav(
 	root: string,
 	walkTo: (at: string) => void,
 ): void {
-	const nav = body.createDiv("hearth-folder-nav");
+	const nav = body.createDiv("zerohearth-folder-nav");
 	// Never above the card's own folder: the card is that folder, and a reader
 	// who could climb out of it would be looking at a card that isn't this one.
 	const up = path === root ? root : maxPath(parentPath(path), root);
 	const upName = up === ROOT ? t().cards.folder.vaultRoot : (up.split("/").pop() ?? up);
-	const button = nav.createDiv("hearth-folder-up");
+	const button = nav.createDiv("zerohearth-folder-up");
 	setIcon(button, "chevron-left");
 	const go = () => walkTo(up);
 	button.addEventListener("click", go);
@@ -315,7 +315,7 @@ function drawCardNav(
 	// The path from the card's own folder down, which is the part the card's
 	// title doesn't already say.
 	const here = root === ROOT ? path : path.slice(root.length + 1);
-	nav.createDiv({ cls: "hearth-folder-here", text: here, attr: { title: path } });
+	nav.createDiv({ cls: "zerohearth-folder-here", text: here, attr: { title: path } });
 }
 
 /** `path` unless it has climbed above `root`, which it must not. */
@@ -330,15 +330,15 @@ function renderFolderList(
 	cfg: FolderCardConfig,
 	activate: (entry: FolderEntry, evt?: MouseEvent) => void,
 ): void {
-	const list = body.createDiv("hearth-list");
+	const list = body.createDiv("zerohearth-list");
 	const icons = fileIconOptions(view.plugin.settings);
 	for (const entry of entries) {
-		const row = list.createDiv("hearth-list-item");
+		const row = list.createDiv("zerohearth-list-item");
 		row.toggleClass("is-folder", entry.isFolder);
-		applyFileIcon(row.createDiv("hearth-list-icon"), entryIcon(view.app, entry, icons));
-		row.createDiv({ cls: "hearth-list-label", text: entry.name });
+		applyFileIcon(row.createDiv("zerohearth-list-icon"), entryIcon(view.app, entry, icons));
+		row.createDiv({ cls: "zerohearth-list-label", text: entry.name });
 		if (entry.isFolder && cfg.counts === true) {
-			row.createDiv({ cls: "hearth-folder-count", text: String(childCount(view.app, entry.path)) });
+			row.createDiv({ cls: "zerohearth-folder-count", text: String(childCount(view.app, entry.path)) });
 		}
 		row.addEventListener("click", (evt) => activate(entry, evt));
 		makeClickable(row, () => activate(entry), entry.name);
@@ -356,15 +356,15 @@ function renderFolderTiles(
 	// Not the links card's grid: those tiles carry a user-chosen span in its
 	// fine 44×34 cells, and a folder tile has none to carry — it is sized by
 	// what is in it (see the CSS). Only the tile's own look is shared.
-	const grid = body.createDiv("hearth-folder-tiles");
+	const grid = body.createDiv("zerohearth-folder-tiles");
 	const icons = fileIconOptions(view.plugin.settings);
 	for (const entry of entries) {
-		const tile = grid.createDiv("hearth-link-tile");
+		const tile = grid.createDiv("zerohearth-link-tile");
 		tile.toggleClass("is-folder", entry.isFolder);
-		applyFileIcon(tile.createDiv("hearth-link-icon"), entryIcon(view.app, entry, icons));
-		tile.createDiv({ cls: "hearth-link-label", text: entry.name });
+		applyFileIcon(tile.createDiv("zerohearth-link-icon"), entryIcon(view.app, entry, icons));
+		tile.createDiv({ cls: "zerohearth-link-label", text: entry.name });
 		if (entry.isFolder && cfg.counts === true) {
-			tile.createDiv({ cls: "hearth-folder-count", text: String(childCount(view.app, entry.path)) });
+			tile.createDiv({ cls: "zerohearth-folder-count", text: String(childCount(view.app, entry.path)) });
 		}
 		tile.addEventListener("click", (evt) => activate(entry, evt));
 		makeClickable(tile, () => activate(entry), entry.name);
@@ -398,7 +398,7 @@ function entryIcon(app: App, entry: FolderEntry, icons: FileIconOptions) {
 /** The view type the folder browser registers under when it opens in a tab
  * (`folderview.ts`). Declared here so the card can open one without importing
  * the view, which imports this module. */
-export const VIEW_TYPE_FOLDER = "hearth-folder-view";
+export const VIEW_TYPE_FOLDER = "zerohearth-folder-view";
 
 interface BrowseOptions extends FolderBrowseState {
 	/** Open in a tab of its own instead of the dialog. */
@@ -557,7 +557,7 @@ export class FolderBrowser {
 		state: FolderBrowseState,
 	) {
 		this.state = { ...state };
-		el.addClass("hearth-folder-browser");
+		el.addClass("zerohearth-folder-browser");
 	}
 
 	/** Show another state — the tab's history moving, say. */
@@ -586,7 +586,7 @@ export class FolderBrowser {
 	 * explorer's own. Nothing else redraws on a layout change, which is why
 	 * the sort looked like it only worked once the sidebar was open.
 	 *
-	 * Only the *explorer* order is asked for here: another sort is Hearth's own
+	 * Only the *explorer* order is asked for here: another sort is ZeroHearth's own
 	 * and cannot change behind the page's back. And the page is only rebuilt
 	 * when the answer differs, so a tab switch costs a comparison, not a draw.
 	 */
@@ -619,7 +619,7 @@ export class FolderBrowser {
 		this.host.setTitle(folderTitle(app, path));
 		this.el.empty();
 		this.el.toggleClass("is-tiles", this.state.layout === "tiles");
-		this.el.style.setProperty("--hearth-folder-preview-size", `${this.state.previewSize}px`);
+		this.el.style.setProperty("--zerohearth-folder-preview-size", `${this.state.previewSize}px`);
 		const folder = folderAt(app, path);
 		const titles = explorerTitles(app, this.host.settings);
 		const entries = folder ? folderEntries(app, folder, sort, show, titles) : [];
@@ -630,18 +630,18 @@ export class FolderBrowser {
 		this.sections = groups.flatMap((group) => (group.kind === "folder" ? [group.folder.path] : []));
 		this.drawTrail();
 		if (!folder) {
-			this.el.createDiv({ cls: "hearth-folder-empty", text: t().cards.folder.missing });
+			this.el.createDiv({ cls: "zerohearth-folder-empty", text: t().cards.folder.missing });
 			return;
 		}
 		if (entries.length === 0) {
-			this.el.createDiv({ cls: "hearth-folder-empty", text: t().cards.empty.folderEmpty });
+			this.el.createDiv({ cls: "zerohearth-folder-empty", text: t().cards.empty.folderEmpty });
 			return;
 		}
 		this.pictures = picturesAllowed(this.state, performanceTier(this.host.settings));
 		if (this.state.layout === "tiles" && (this.state.preview || this.pictures)) {
 			this.previews = new PreviewLoader(this.el);
 		}
-		const host = this.el.createDiv("hearth-folder-groups");
+		const host = this.el.createDiv("zerohearth-folder-groups");
 		for (const group of groups) {
 			if (group.kind === "files") this.drawFiles(host, group.entries);
 			else this.drawFolder(host, group.folder, group.children);
@@ -651,18 +651,18 @@ export class FolderBrowser {
 	/** The breadcrumb, and the controls that sit with it: all of them are
 	 * "where am I looking and how", which is one row's worth of question. */
 	private drawTrail(): void {
-		const bar = this.el.createDiv("hearth-folder-bar");
-		const trail = bar.createDiv("hearth-folder-trail");
+		const bar = this.el.createDiv("zerohearth-folder-bar");
+		const trail = bar.createDiv("zerohearth-folder-trail");
 		const crumb = (name: string, path: string, last: boolean) => {
 			if (last) {
-				trail.createDiv({ cls: "hearth-folder-crumb is-current", text: name });
+				trail.createDiv({ cls: "zerohearth-folder-crumb is-current", text: name });
 				return;
 			}
-			const el = trail.createDiv({ cls: "hearth-folder-crumb", text: name });
+			const el = trail.createDiv({ cls: "zerohearth-folder-crumb", text: name });
 			const go = () => this.navigate(path);
 			el.addEventListener("click", go);
 			makeClickable(el, go, name);
-			setIcon(trail.createDiv("hearth-folder-crumb-sep"), "chevron-right");
+			setIcon(trail.createDiv("zerohearth-folder-crumb-sep"), "chevron-right");
 		};
 		const steps = folderTrail(this.state.path);
 		crumb(this.host.app.vault.getName(), ROOT, steps.length === 0);
@@ -680,7 +680,7 @@ export class FolderBrowser {
 			this.syncFoldAll();
 		}
 
-		const picker = bar.createEl("select", { cls: "dropdown hearth-folder-sort" });
+		const picker = bar.createEl("select", { cls: "dropdown zerohearth-folder-sort" });
 		for (const sort of FOLDER_SORTS) {
 			picker.createEl("option", { value: sort, text: t().editors.folder.sorts[sort] });
 		}
@@ -697,7 +697,7 @@ export class FolderBrowser {
 	}
 
 	private barButton(bar: HTMLElement, icon: string, label: string, run: () => void): HTMLElement {
-		const button = bar.createDiv({ cls: "clickable-icon hearth-folder-bar-button" });
+		const button = bar.createDiv({ cls: "clickable-icon zerohearth-folder-bar-button" });
 		if (icon) setIcon(button, icon);
 		button.setAttr("title", label);
 		button.addEventListener("click", run);
@@ -756,13 +756,13 @@ export class FolderBrowser {
 	 * its heading, so it reads no previews either.
 	 */
 	private drawFolder(host: HTMLElement, folder: FolderEntry, children: FolderEntry[]): void {
-		const section = host.createDiv("hearth-folder-section");
-		const head = section.createDiv("hearth-folder-head");
-		const toggle = head.createDiv("hearth-folder-head-toggle");
-		setIcon(head.createDiv("hearth-folder-head-icon"), "folder");
-		head.createDiv({ cls: "hearth-folder-head-name", text: folder.name });
+		const section = host.createDiv("zerohearth-folder-section");
+		const head = section.createDiv("zerohearth-folder-head");
+		const toggle = head.createDiv("zerohearth-folder-head-toggle");
+		setIcon(head.createDiv("zerohearth-folder-head-icon"), "folder");
+		head.createDiv({ cls: "zerohearth-folder-head-name", text: folder.name });
 		head.createDiv({
-			cls: "hearth-folder-count",
+			cls: "zerohearth-folder-count",
 			text: String(childCount(this.host.app, folder.path)),
 		});
 		const go = () => this.navigate(folder.path);
@@ -784,7 +784,7 @@ export class FolderBrowser {
 			if (folded) return;
 			body = section.createDiv(this.blockClass());
 			if (children.length === 0) {
-				body.createDiv({ cls: "hearth-folder-empty", text: t().cards.empty.folderEmpty });
+				body.createDiv({ cls: "zerohearth-folder-empty", text: t().cards.empty.folderEmpty });
 				return;
 			}
 			for (const entry of children) this.drawEntry(body, entry);
@@ -809,7 +809,7 @@ export class FolderBrowser {
 	}
 
 	private blockClass(): string {
-		return this.state.layout === "tiles" ? "hearth-folder-browser-tiles" : "hearth-folder-files";
+		return this.state.layout === "tiles" ? "zerohearth-folder-browser-tiles" : "zerohearth-folder-files";
 	}
 
 	private drawEntry(list: HTMLElement, entry: FolderEntry): void {
@@ -819,13 +819,13 @@ export class FolderBrowser {
 
 	private drawRow(list: HTMLElement, entry: FolderEntry): void {
 		const icons = fileIconOptions(this.host.settings);
-		const row = list.createDiv("hearth-list-item");
+		const row = list.createDiv("zerohearth-list-item");
 		row.toggleClass("is-folder", entry.isFolder);
-		applyFileIcon(row.createDiv("hearth-list-icon"), entryIcon(this.host.app, entry, icons));
-		row.createDiv({ cls: "hearth-list-label", text: entry.name });
+		applyFileIcon(row.createDiv("zerohearth-list-icon"), entryIcon(this.host.app, entry, icons));
+		row.createDiv({ cls: "zerohearth-list-label", text: entry.name });
 		if (entry.isFolder) {
 			row.createDiv({
-				cls: "hearth-folder-count",
+				cls: "zerohearth-folder-count",
 				text: String(childCount(this.host.app, entry.path)),
 			});
 		}
@@ -839,14 +839,14 @@ export class FolderBrowser {
 	 */
 	private drawTile(grid: HTMLElement, entry: FolderEntry): void {
 		const icons = fileIconOptions(this.host.settings);
-		const tile = grid.createDiv("hearth-folder-tile");
+		const tile = grid.createDiv("zerohearth-folder-tile");
 		tile.toggleClass("is-folder", entry.isFolder);
-		const head = tile.createDiv("hearth-folder-tile-head");
-		applyFileIcon(head.createDiv("hearth-folder-tile-icon"), entryIcon(this.host.app, entry, icons));
-		head.createDiv({ cls: "hearth-folder-tile-name", text: entry.name });
+		const head = tile.createDiv("zerohearth-folder-tile-head");
+		applyFileIcon(head.createDiv("zerohearth-folder-tile-icon"), entryIcon(this.host.app, entry, icons));
+		head.createDiv({ cls: "zerohearth-folder-tile-name", text: entry.name });
 		if (entry.isFolder) {
 			head.createDiv({
-				cls: "hearth-folder-count",
+				cls: "zerohearth-folder-count",
 				text: String(childCount(this.host.app, entry.path)),
 			});
 		} else {
@@ -869,7 +869,7 @@ export class FolderBrowser {
 		if (isImageFile(file)) {
 			if (!this.pictures) return;
 			tile.addClass("has-picture");
-			const frame = tile.createDiv("hearth-folder-tile-picture");
+			const frame = tile.createDiv("zerohearth-folder-tile-picture");
 			loader.watch(frame, () => this.showPicture(frame, file));
 			return;
 		}
@@ -877,7 +877,7 @@ export class FolderBrowser {
 		if (this.pictures) {
 			// Watched through the tile: the frame stays hidden until there is a
 			// cover to put in it, and a hidden element never comes into view.
-			const cover = tile.createDiv("hearth-folder-tile-cover");
+			const cover = tile.createDiv("zerohearth-folder-tile-cover");
 			loader.watch(tile, () => {
 				const image = noteCover(this.host.app, file);
 				if (image) {
@@ -889,7 +889,7 @@ export class FolderBrowser {
 			});
 		}
 		if (this.state.preview) {
-			const text = tile.createDiv("hearth-folder-tile-preview");
+			const text = tile.createDiv("zerohearth-folder-tile-preview");
 			loader.watch(text, () => fillPreview(this.host.app, loader, text, entry.path));
 		}
 	}
@@ -989,7 +989,7 @@ export function watchBrowsedFolder(app: App, browser: () => FolderBrowser | null
 }
 
 /** The dialog the browser opens in by default. */
-class FolderBrowserModal extends HearthModal {
+class FolderBrowserModal extends ZeroHearthModal {
 	private browser: FolderBrowser | null = null;
 	/** Holds the vault watch for as long as the dialog is open. */
 	private watch: Component | null = null;
@@ -999,7 +999,7 @@ class FolderBrowserModal extends HearthModal {
 	}
 
 	onOpen(): void {
-		this.modalEl.addClass("hearth-folder-modal");
+		this.modalEl.addClass("zerohearth-folder-modal");
 		// Reopen where the reader left off, even if they never stepped
 		// anywhere: a dialog opened on a subfolder row is already somewhere
 		// worth returning to. Set on open rather than only on navigation.
@@ -1247,7 +1247,7 @@ export function folderEditor(ctx: CardEditorContext, containerEl: HTMLElement): 
 		});
 		txt.inputEl.type = "number";
 		txt.inputEl.min = "1";
-		txt.inputEl.addClass("hearth-count-input");
+		txt.inputEl.addClass("zerohearth-count-input");
 	});
 	addResetButton(ctx, count, t().settings.resetField, () => {
 		cfg.count = undefined;

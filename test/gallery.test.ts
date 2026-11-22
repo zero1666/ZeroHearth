@@ -28,7 +28,7 @@ import {
 	readProfile,
 	redactedText,
 } from "../src/gallery";
-import type { HearthPackage } from "../src/portable";
+import type { ZeroHearthPackage } from "../src/portable";
 import { exportSettingsPayload } from "../src/layout";
 import { DEFAULT_SETTINGS, type HomeSettings, migrateSettings } from "../src/types";
 
@@ -48,11 +48,11 @@ function card(
 }
 
 /** A dashboard package with the cards given, and nothing else set. */
-function pkg(cards: unknown[], dash: Record<string, unknown> = {}): HearthPackage {
+function pkg(cards: unknown[], dash: Record<string, unknown> = {}): ZeroHearthPackage {
 	return {
 		hearth: { format: 3, kind: "dashboard" },
 		payload: { dashboard: { id: "d1", name: "Board", cards, ...dash } },
-	} as unknown as HearthPackage;
+	} as unknown as ZeroHearthPackage;
 }
 
 const KEY = "a".repeat(64);
@@ -90,7 +90,7 @@ describe("cardCountsFromPackage", () => {
 
 	it("refuses anything that isn't a dashboard package", () => {
 		const settings = { hearth: { format: 3, kind: "settings" }, payload: {} };
-		expect(cardCountsFromPackage(settings as unknown as HearthPackage)).toEqual([]);
+		expect(cardCountsFromPackage(settings as unknown as ZeroHearthPackage)).toEqual([]);
 	});
 
 	it("drops a kind that isn't shaped like one", () => {
@@ -198,7 +198,7 @@ describe("reading a listing from a host", () => {
 		const info = readInfo({ name: "Example", api: 1 });
 		expect(info.limits.maxPackageBytes).toBeGreaterThan(0);
 		expect(info.termsUrl).toBeUndefined();
-		// An http terms link is not one Hearth would put in front of a reader.
+		// An http terms link is not one ZeroHearth would put in front of a reader.
 		expect(readInfo({ termsUrl: "http://example.com/terms" }).termsUrl).toBeUndefined();
 		expect(readInfo({ termsUrl: "https://example.com/terms" }).termsUrl).toBe(
 			"https://example.com/terms",
@@ -294,7 +294,7 @@ describe("normalizeGalleryUrl", () => {
 		expect(normalizeGalleryUrl("http://192.168.1.5:8787")).toBeNull();
 	});
 
-	it("refuses anything that isn't a host Hearth would talk to", () => {
+	it("refuses anything that isn't a host ZeroHearth would talk to", () => {
 		expect(normalizeGalleryUrl("")).toBeNull();
 		expect(normalizeGalleryUrl("gallery.example.com")).toBeNull();
 		expect(normalizeGalleryUrl("file:///etc/passwd")).toBeNull();

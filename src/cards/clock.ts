@@ -85,8 +85,8 @@ function renderAnalogClock(
 	cfg: ClockConfig,
 	lowPower: boolean,
 ): (now: Date) => void {
-	const svg = svgEl(wrap, "svg", { viewBox: "0 0 100 100" }, "hearth-analog");
-	svgEl(svg, "circle", { cx: "50", cy: "50", r: "48" }, "hearth-analog-face");
+	const svg = svgEl(wrap, "svg", { viewBox: "0 0 100 100" }, "zerohearth-analog");
+	svgEl(svg, "circle", { cx: "50", cy: "50", r: "48" }, "zerohearth-analog-face");
 	for (let i = 0; i < 12; i++) {
 		const a = (i / 12) * Math.PI * 2;
 		const major = i % 3 === 0;
@@ -100,15 +100,15 @@ function renderAnalogClock(
 				x2: String(50 + Math.sin(a) * 46),
 				y2: String(50 - Math.cos(a) * 46),
 			},
-			major ? "hearth-analog-tick-major" : "hearth-analog-tick",
+			major ? "zerohearth-analog-tick-major" : "zerohearth-analog-tick",
 		);
 	}
 	const hand = (cls: string, length: number) =>
 		svgEl(svg, "line", { x1: "50", y1: "50", x2: "50", y2: String(50 - length) }, cls);
-	const hourHand = hand("hearth-analog-hour", 26);
-	const minHand = hand("hearth-analog-min", 38);
-	const secHand = cfg.showSeconds && !lowPower ? hand("hearth-analog-sec", 42) : null;
-	svgEl(svg, "circle", { cx: "50", cy: "50", r: "2.5" }, "hearth-analog-pin");
+	const hourHand = hand("zerohearth-analog-hour", 26);
+	const minHand = hand("zerohearth-analog-min", 38);
+	const secHand = cfg.showSeconds && !lowPower ? hand("zerohearth-analog-sec", 42) : null;
+	svgEl(svg, "circle", { cx: "50", cy: "50", r: "2.5" }, "zerohearth-analog-pin");
 
 	const rotate = (el: SVGElement, deg: number) =>
 		el.setAttribute("transform", `rotate(${deg} 50 50)`);
@@ -198,12 +198,12 @@ export function wavyPath(cx: number, cy: number, r: number, amp: number, waves: 
  * blocks. */
 function renderStackedClock(wrap: HTMLElement, cfg: ClockConfig, seconds: boolean): (now: Date) => void {
 	const parts = timePartsFormatter(cfg, "2-digit");
-	const face = wrap.createDiv("hearth-clock-face hearth-clock-stacked");
-	const setH = textSetter(face.createDiv("hearth-clock-stack-h"));
-	const setM = textSetter(face.createDiv("hearth-clock-stack-m"));
-	const side = face.createDiv("hearth-clock-stack-side");
-	const setS = seconds ? textSetter(side.createSpan("hearth-clock-stack-s")) : null;
-	const setP = textSetter(side.createSpan("hearth-clock-stack-p"));
+	const face = wrap.createDiv("zerohearth-clock-face zerohearth-clock-stacked");
+	const setH = textSetter(face.createDiv("zerohearth-clock-stack-h"));
+	const setM = textSetter(face.createDiv("zerohearth-clock-stack-m"));
+	const side = face.createDiv("zerohearth-clock-stack-side");
+	const setS = seconds ? textSetter(side.createSpan("zerohearth-clock-stack-s")) : null;
+	const setP = textSetter(side.createSpan("zerohearth-clock-stack-p"));
 	return (now) => {
 		const p = parts(now);
 		setH(p.hour);
@@ -223,11 +223,11 @@ function renderFlipClock(
 	animate: boolean,
 ): (now: Date) => void {
 	const parts = timePartsFormatter(cfg, "2-digit");
-	const face = wrap.createDiv("hearth-clock-face hearth-clock-flip");
+	const face = wrap.createDiv("zerohearth-clock-face zerohearth-clock-flip");
 	face.toggleClass("with-seconds", seconds);
 	const tile = (cls: string) => {
-		const el = face.createDiv(`hearth-clock-flip-tile ${cls}`);
-		const set = textSetter(el.createSpan("hearth-clock-flip-num"));
+		const el = face.createDiv(`zerohearth-clock-flip-tile ${cls}`);
+		const set = textSetter(el.createSpan("zerohearth-clock-flip-num"));
 		// The first paint is not a change; nothing turns over on it.
 		let painted = false;
 		return (text: string) => {
@@ -244,7 +244,7 @@ function renderFlipClock(
 	const setH = tile("is-hours");
 	const setM = tile("is-minutes");
 	const setS = seconds ? tile("is-seconds") : null;
-	const setP = textSetter(face.createDiv("hearth-clock-flip-p"));
+	const setP = textSetter(face.createDiv("zerohearth-clock-flip-p"));
 	return (now) => {
 		const p = parts(now);
 		setH(p.hour);
@@ -265,13 +265,13 @@ function renderRingClock(
 	expressive: boolean,
 ): (now: Date) => void {
 	const parts = timePartsFormatter(cfg, "2-digit");
-	const svg = svgEl(wrap, "svg", { viewBox: "0 0 100 100" }, "hearth-clock-face hearth-clock-ring");
+	const svg = svgEl(wrap, "svg", { viewBox: "0 0 100 100" }, "zerohearth-clock-face zerohearth-clock-ring");
 	const ring = (r: number, cls: string) => {
-		svgEl(svg, "circle", { cx: "50", cy: "50", r: String(r) }, `hearth-clock-ring-track ${cls}`);
+		svgEl(svg, "circle", { cx: "50", cy: "50", r: String(r) }, `zerohearth-clock-ring-track ${cls}`);
 		// A wave of roughly the same length on every ring, whatever its radius.
 		const waves = Math.round((2 * Math.PI * r) / 22);
 		const d = expressive ? wavyPath(50, 50, r, 1.1, waves) : wavyPath(50, 50, r, 0, 1);
-		const bar = svgEl(svg, "path", { d, pathLength: "100" }, `hearth-clock-ring-bar ${cls}`);
+		const bar = svgEl(svg, "path", { d, pathLength: "100" }, `zerohearth-clock-ring-bar ${cls}`);
 		let last = NaN;
 		return (fraction: number) => {
 			const pct = Math.round(fraction * 1000) / 10;
@@ -288,7 +288,7 @@ function renderRingClock(
 		svg,
 		"text",
 		{ x: "50", y: "50", "text-anchor": "middle", "dominant-baseline": "central" },
-		"hearth-clock-ring-time",
+		"zerohearth-clock-ring-time",
 	);
 	text.toggleClass("is-small", seconds);
 	const setText = textSetter(text);
@@ -315,20 +315,20 @@ const SHAPE_TILES: { waves: number; amp: number }[] = [
  * minutes in its complementary tone — in a 2×2 block, or a row on a wide card. */
 function renderShapesClock(wrap: HTMLElement, cfg: ClockConfig, seconds: boolean): (now: Date) => void {
 	const parts = timePartsFormatter(cfg, "2-digit");
-	const face = wrap.createDiv("hearth-clock-face hearth-clock-shapes");
+	const face = wrap.createDiv("zerohearth-clock-face zerohearth-clock-shapes");
 	const digits = SHAPE_TILES.map((shape, i) => {
-		const tile = face.createDiv(`hearth-clock-shape ${i < 2 ? "is-hours" : "is-minutes"}`);
-		const svg = svgEl(tile, "svg", { viewBox: "0 0 100 100", "aria-hidden": "true" }, "hearth-clock-shape-bg");
+		const tile = face.createDiv(`zerohearth-clock-shape ${i < 2 ? "is-hours" : "is-minutes"}`);
+		const svg = svgEl(tile, "svg", { viewBox: "0 0 100 100", "aria-hidden": "true" }, "zerohearth-clock-shape-bg");
 		if (shape.waves === 0) {
 			svgEl(svg, "rect", { x: "4", y: "4", width: "92", height: "92", rx: "34" });
 		} else {
 			svgEl(svg, "path", { d: wavyPath(50, 50, 46 - shape.amp, shape.amp, shape.waves) });
 		}
-		return textSetter(tile.createSpan("hearth-clock-shape-num"));
+		return textSetter(tile.createSpan("zerohearth-clock-shape-num"));
 	});
-	const extra = face.createDiv("hearth-clock-shapes-extra");
-	const setS = seconds ? textSetter(extra.createSpan("hearth-clock-shapes-pill is-seconds")) : null;
-	const periodEl = extra.createSpan("hearth-clock-shapes-pill is-period");
+	const extra = face.createDiv("zerohearth-clock-shapes-extra");
+	const setS = seconds ? textSetter(extra.createSpan("zerohearth-clock-shapes-pill is-seconds")) : null;
+	const periodEl = extra.createSpan("zerohearth-clock-shapes-pill is-period");
 	const setP = textSetter(periodEl);
 	return (now) => {
 		const p = parts(now);
@@ -350,18 +350,18 @@ function renderOrbitClock(
 	lowPower: boolean,
 ): (now: Date) => void {
 	const parts = timePartsFormatter(cfg, "numeric");
-	const svg = svgEl(wrap, "svg", { viewBox: "0 0 100 100" }, "hearth-clock-face hearth-clock-orbit");
-	svgEl(svg, "path", { d: wavyPath(50, 50, 38.5, 1.5, 12) }, "hearth-clock-orbit-face");
+	const svg = svgEl(wrap, "svg", { viewBox: "0 0 100 100" }, "zerohearth-clock-face zerohearth-clock-orbit");
+	svgEl(svg, "path", { d: wavyPath(50, 50, 38.5, 1.5, 12) }, "zerohearth-clock-orbit-face");
 	// Sixty minute marks: zero-length dashes whose round caps draw dots.
-	svgEl(svg, "circle", { cx: "50", cy: "50", r: "46", pathLength: "60" }, "hearth-clock-orbit-track");
-	const minDot = svgEl(svg, "circle", { cx: "50", cy: "4", r: "4" }, "hearth-clock-orbit-min");
+	svgEl(svg, "circle", { cx: "50", cy: "50", r: "46", pathLength: "60" }, "zerohearth-clock-orbit-track");
+	const minDot = svgEl(svg, "circle", { cx: "50", cy: "4", r: "4" }, "zerohearth-clock-orbit-min");
 	const secDot = seconds && !lowPower
-		? svgEl(svg, "circle", { cx: "50", cy: "18", r: "1.8" }, "hearth-clock-orbit-sec")
+		? svgEl(svg, "circle", { cx: "50", cy: "18", r: "1.8" }, "zerohearth-clock-orbit-sec")
 		: null;
 	const attrs = (y: string) => ({ x: "50", y, "text-anchor": "middle", "dominant-baseline": "central" });
-	const setP = textSetter(svgEl(svg, "text", attrs("27"), "hearth-clock-orbit-p"));
-	const setH = textSetter(svgEl(svg, "text", attrs("48"), "hearth-clock-orbit-h"));
-	const setM = textSetter(svgEl(svg, "text", attrs("71"), "hearth-clock-orbit-m"));
+	const setP = textSetter(svgEl(svg, "text", attrs("27"), "zerohearth-clock-orbit-p"));
+	const setH = textSetter(svgEl(svg, "text", attrs("48"), "zerohearth-clock-orbit-h"));
+	const setM = textSetter(svgEl(svg, "text", attrs("71"), "zerohearth-clock-orbit-m"));
 	let lastMin = NaN;
 	let lastSec = NaN;
 	return (now) => {
@@ -390,9 +390,9 @@ export function renderClock(
 	const face = resolveClockFace(cfg.mode, expressive);
 
 	// The newer faces size themselves against the card body.
-	body.toggleClass("hearth-clock-host", face !== "digital" && face !== "analog");
-	const wrap = body.createDiv(`hearth-clock is-face-${face}`);
-	const greetingEl = showGreeting ? wrap.createDiv("hearth-clock-greeting") : null;
+	body.toggleClass("zerohearth-clock-host", face !== "digital" && face !== "analog");
+	const wrap = body.createDiv(`zerohearth-clock is-face-${face}`);
+	const greetingEl = showGreeting ? wrap.createDiv("zerohearth-clock-greeting") : null;
 
 	// Pick the greeting once per time bucket so playful ones don't flicker.
 	let bucket = -1;
@@ -436,8 +436,8 @@ export function renderClock(
 			tickFace = renderOrbitClock(wrap, cfg, seconds, lowPower);
 			break;
 	}
-	const timeEl = face === "digital" ? wrap.createDiv("hearth-clock-time") : null;
-	const dateEl = dateMode === "none" ? null : wrap.createDiv("hearth-clock-date");
+	const timeEl = face === "digital" ? wrap.createDiv("zerohearth-clock-time") : null;
+	const dateEl = dateMode === "none" ? null : wrap.createDiv("zerohearth-clock-date");
 	// What the face shares the card with, for the CSS that sizes it.
 	wrap.toggleClass("has-greeting", greetingEl !== null);
 	wrap.toggleClass("has-date", dateEl !== null);

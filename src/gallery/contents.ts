@@ -9,7 +9,7 @@
  * too (see `docs/gallery-hosting.md`): keep it free of Obsidian imports.
  */
 
-import type { HearthPackage } from "../portable/schema";
+import type { ZeroHearthPackage } from "../portable/schema";
 
 /** One line of the detail view's contents list. */
 export interface PackageCardCount {
@@ -17,7 +17,7 @@ export interface PackageCardCount {
 	count: number;
 }
 
-/** A kind id, or "" for anything that isn't one. Held to the shape Hearth's own
+/** A kind id, or "" for anything that isn't one. Held to the shape ZeroHearth's own
  * kinds have, so a listing can't be made to look up something strange. */
 function safeKind(value: unknown): string {
 	return typeof value === "string" && /^[a-z][a-z0-9-]{0,31}$/.test(value) ? value : "";
@@ -30,7 +30,7 @@ function safeKind(value: unknown): string {
  * whether to install this wants, and a board's fourteenth link card is not.
  * Sorted by count, then by kind, so the same board always reads the same way.
  */
-export function cardCountsFromPackage(pkg: HearthPackage): PackageCardCount[] {
+export function cardCountsFromPackage(pkg: ZeroHearthPackage): PackageCardCount[] {
 	if (pkg.hearth.kind !== "dashboard") return [];
 	const payload = pkg.payload as { dashboard?: { cards?: unknown } } | undefined;
 	const cards = payload?.dashboard?.cards;

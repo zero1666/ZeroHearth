@@ -1,12 +1,12 @@
 # 3. The anatomy of the Home view
 
-This chapter names every part of the Hearth Home view, so that the rest of this
+This chapter names every part of the ZeroHearth Home view, so that the rest of this
 guide can refer to them without ambiguity. Read it once and the vocabulary in
 the other chapters will be obvious.
 
 The Home view is an ordinary Obsidian view. It lives in a tab, it can be split
 and moved like any other tab, and Obsidian's own tab header sits above it
-carrying the Hearth crystal (or a Lucide icon of your choosing) and the view
+carrying the ZeroHearth crystal (or a Lucide icon of your choosing) and the view
 name, *Home*.
 
 Inside the tab, from top to bottom:
@@ -23,7 +23,7 @@ Right-clicking a button opens a menu with *Dashboard settings…*, *Duplicate*,
 *Export dashboard…*, *Import dashboard…* and *Delete*.
 
 The switcher can be set to stay always visible, or to fade in only when you move
-the pointer near it. That is *Settings → Hearth → Dashboard → Dashboard switcher
+the pointer near it. That is *Settings → ZeroHearth → Dashboard → Dashboard switcher
 visibility* vault-wide, and *Dashboard settings → Layout → Dashboard switcher*
 per board.
 
@@ -31,7 +31,7 @@ Dashboards are covered in [chapter 5](05-dashboards.md).
 
 ## 2. The Arrange button (top-right)
 
-The button that puts the board into **arrange mode** — Hearth's edit mode. In
+The button that puts the board into **arrange mode** — ZeroHearth's edit mode. In
 arrange mode the button becomes *Done arranging*, and a toolbar appears carrying
 *Add card*, *Dashboard settings*, a titles toggle, a card-headers toggle, and
 *Preview at phone width*.
@@ -51,7 +51,7 @@ yourself, and installing a whole board somebody else has already arranged, are
 the same question at two scales.
 
 The button only appears when a gallery address is configured. Clearing that
-address under *Settings → Hearth → Backup → Dashboard gallery* turns the gallery
+address under *Settings → ZeroHearth → Backup → Dashboard gallery* turns the gallery
 off entirely, and nothing is fetched until you open it.
 
 The gallery is covered in [chapter 16](16-sharing-and-gallery.md).
@@ -59,7 +59,7 @@ The gallery is covered in [chapter 16](16-sharing-and-gallery.md).
 ## 4. The title block
 
 A large heading with an optional mark beside it. The default title text is
-`Obsidian`; the default mark is the Hearth crystal.
+`Obsidian`; the default mark is the ZeroHearth crystal.
 
 The mark accepts four different kinds of value, and works out which you meant:
 
@@ -82,7 +82,7 @@ The search field, the row of file-type filter chips beneath it, and the results
 dropdown that appears as you type. Optionally, an action button sits beside the
 field — by default *New note*, and optionally *Search online* instead.
 
-The whole section can be hidden vault-wide (*Settings → Hearth → Appearance →
+The whole section can be hidden vault-wide (*Settings → ZeroHearth → Appearance →
 Show search section*) and each dashboard can follow that default or override it
 to show or hide the section on that board alone.
 
@@ -119,7 +119,7 @@ magnetically to the edges and centres of its neighbours and of the board itself
 which drops out so that the pair reads as one continuous tile — this is called
 **edge-merging**, and merged cards blur as one seamless sheet.
 
-Because the board is free-form there is no column count to configure. Hearth
+Because the board is free-form there is no column count to configure. ZeroHearth
 keeps an internal column count of 12 and a seed row height of 92 pixels, used
 only when it has to place a newly added card for you.
 
@@ -133,7 +133,7 @@ pane, because the hosted view fills it and scrolls itself.
 ## 7. The background
 
 Behind everything sits the background: nothing, a solid colour, an image from
-your vault, an image from a URL, Hearth's own bundled wallpaper, or a **live
+your vault, an image from a URL, ZeroHearth's own bundled wallpaper, or a **live
 weather sky** — a painted sky that follows the real conditions and time of day
 over a place you pick, or one condition pinned and kept.
 
@@ -162,7 +162,7 @@ See [chapter 5](05-dashboards.md).
 ### Single-card dashboards
 
 Set *Dashboard type* to **Single card** and the board shows just one of its own
-Hearth cards — an RSS card, a task list — filling the whole board instead of a
+ZeroHearth cards — an RSS card, a task list — filling the whole board instead of a
 grid. Like a plugin view board it keeps its other cards, and switching back to
 **Cards** brings them all back.
 
@@ -170,7 +170,7 @@ See [chapter 5](05-dashboards.md).
 
 ### Mobile mode (search only)
 
-An optional mode, off by default, in which Hearth on phones and tablets hides the
+An optional mode, off by default, in which ZeroHearth on phones and tablets hides the
 dashboard entirely and shows only the search field with a row of action buttons
 beneath it. This is for people who want a launcher on their phone and a
 dashboard on their desktop. It has no effect on desktop.
@@ -183,11 +183,11 @@ This table is a map of the rest of the guide.
 
 | Part of the view | Configured from |
 | --- | --- |
-| Title, title icon, tab icon, content width | Settings → Hearth → Appearance, with per-board overrides in Dashboard settings → Header |
-| Search field, filter chips, action button | Settings → Hearth → Search, with per-board overrides in Dashboard settings → Header |
-| Background and banner | Settings → Hearth → Appearance → Background, with per-board overrides in Dashboard settings → Background |
-| Grid, spacing, card surface, chrome visibility | Settings → Hearth → Dashboard, with per-board overrides in Dashboard settings → Layout and → Style |
+| Title, title icon, tab icon, content width | Settings → ZeroHearth → Appearance, with per-board overrides in Dashboard settings → Header |
+| Search field, filter chips, action button | Settings → ZeroHearth → Search, with per-board overrides in Dashboard settings → Header |
+| Background and banner | Settings → ZeroHearth → Appearance → Background, with per-board overrides in Dashboard settings → Background |
+| Grid, spacing, card surface, chrome visibility | Settings → ZeroHearth → Dashboard, with per-board overrides in Dashboard settings → Layout and → Style |
 | One dashboard's name, icon, type, workspace link | Right-click its switcher button → Dashboard settings… |
 | An individual card | Arrange → that card's gear button |
-| Startup, new tabs, where notes open, privacy | Settings → Hearth → Behaviour |
-| The stacked phone layout and the action bar | Settings → Hearth → Mobile, and each card's Layout tab |
+| Startup, new tabs, where notes open, privacy | Settings → ZeroHearth → Behaviour |
+| The stacked phone layout and the action bar | Settings → ZeroHearth → Mobile, and each card's Layout tab |

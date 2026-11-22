@@ -1,7 +1,7 @@
 /**
  * Talking to a gallery server.
  *
- * One class, one host, and a hard line about what crosses it: Hearth sends a
+ * One class, one host, and a hard line about what crosses it: ZeroHearth sends a
  * package, a vote and a signature over a nonce. It never sends the recovery
  * key, and there is no code path here that could — `signMessage` takes the key
  * and returns a signature, and only the signature is ever put in a body. That
@@ -44,7 +44,7 @@ import {
 const TIMEOUT_MS = 20_000;
 
 /** A downloaded package is applied by the importer, which has its own caps; this
- * is the earlier line, so a host cannot make Hearth hold an arbitrary string in
+ * is the earlier line, so a host cannot make ZeroHearth hold an arbitrary string in
  * memory before anything has looked at it. */
 export const MAX_DOWNLOAD_BYTES = 24 * 1024 * 1024;
 
@@ -116,7 +116,7 @@ interface Session {
 }
 
 /**
- * The gallery Hearth points at out of the box.
+ * The shared upstream Hearth gallery. ZeroHearth has no separate hosted gallery.
  *
  * A default host means every install talks to it — so the setting stays a
  * setting: clearing the address in settings turns the gallery off entirely, and
@@ -138,10 +138,10 @@ export const DEFAULT_GALLERY_URL = "https://gallery.o-uhnavy.com";
  * Normalise and vet a host.
  *
  * `https` everywhere except a loopback host, which is allowed plain so that
- * running the server from `docker compose up` and pointing Hearth at
+ * running the server from `docker compose up` and pointing ZeroHearth at
  * `http://localhost:8787` works without a certificate. Anything else — a
  * `file:`, an `http:` host on the network, a URL with credentials in it — is
- * not a gallery Hearth will talk to.
+ * not a gallery ZeroHearth will talk to.
  */
 export function normalizeGalleryUrl(raw: string): string | null {
 	const trimmed = raw.trim();
@@ -247,7 +247,7 @@ export class GalleryClient {
 	}
 
 	/** Where the real wallpaper lives, for an entry that carries one. A URL
-	 * rather than bytes: it goes straight into an `img.src`, which is how Hearth
+	 * rather than bytes: it goes straight into an `img.src`, which is how ZeroHearth
 	 * renders every other picture.
 	 *
 	 * `version` should be the entry's `updatedAt`. See {@link pictureVersion}:
@@ -269,7 +269,7 @@ export class GalleryClient {
 	 * Prove this vault holds the key behind its handle, and get a token.
 	 *
 	 * Challenge–response, exactly as `docs/dashboard-package.md` sets out: the
-	 * host names a nonce, Hearth signs it, the host checks the signature against
+	 * host names a nonce, ZeroHearth signs it, the host checks the signature against
 	 * the public key. No password exists to be stolen and no account has to be
 	 * created — a profile comes into being the first time a key publishes.
 	 */

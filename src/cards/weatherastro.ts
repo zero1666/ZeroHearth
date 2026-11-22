@@ -72,7 +72,7 @@ export interface AstroOptions {
 let idSeq = 0;
 function uid(prefix: string): string {
 	idSeq += 1;
-	return `hearth-${prefix}-${idSeq}`;
+	return `zerohearth-${prefix}-${idSeq}`;
 }
 
 /** The location's UTC offset in seconds. Before a response carried it we fall
@@ -184,15 +184,15 @@ const CRATERS: [number, number, number][] = [
  * the lit part with a crisp terminator, and its seas and craters on the lit
  * side only. Both layouts draw it the same. */
 function drawMoonDisc(parent: HTMLElement, phase: MoonPhase, southern: boolean): void {
-	const svg = svgRoot(parent, "hearth-moon-svg", "0 0 100 100");
+	const svg = svgRoot(parent, "zerohearth-moon-svg", "0 0 100 100");
 	const defs = svg.createSvg("defs");
 	const clip = uid("moon-clip");
 	const litClip = uid("moon-litclip");
 	const R = 33;
 
 	// Its own group, so the turn and the entrance don't fight over transform.
-	svg.createSvg("g", { cls: "hearth-moon-shape-wrap" }).createSvg("path", {
-		cls: "hearth-moon-shape",
+	svg.createSvg("g", { cls: "zerohearth-moon-shape-wrap" }).createSvg("path", {
+		cls: "zerohearth-moon-shape",
 		attr: { d: shapePath(50, 50, 46, 9, 0.055) },
 	});
 
@@ -208,11 +208,11 @@ function drawMoonDisc(parent: HTMLElement, phase: MoonPhase, southern: boolean):
 	});
 	if (mirror) litShape.setAttribute("transform", mirror);
 
-	const body = svg.createSvg("g", { cls: "hearth-moon-body", attr: { "clip-path": `url(#${clip})` } });
+	const body = svg.createSvg("g", { cls: "zerohearth-moon-body", attr: { "clip-path": `url(#${clip})` } });
 	// A hair smaller than the lit part, so a full moon has no dark rim where
 	// the two edges antialias over each other.
-	body.createSvg("circle", { cls: "hearth-moon-dark", attr: { cx: "50", cy: "50", r: String(R - 0.4) } });
-	const litEl = body.createSvg("path", { cls: "hearth-moon-lit", attr: { d: lit } });
+	body.createSvg("circle", { cls: "zerohearth-moon-dark", attr: { cx: "50", cy: "50", r: String(R - 0.4) } });
+	const litEl = body.createSvg("path", { cls: "zerohearth-moon-lit", attr: { d: lit } });
 	if (mirror) litEl.setAttribute("transform", mirror);
 
 	const surface = body.createSvg("g", { attr: { "clip-path": `url(#${litClip})` } });
@@ -224,8 +224,8 @@ function drawMoonDisc(parent: HTMLElement, phase: MoonPhase, southern: boolean):
 			});
 		}
 	};
-	spots(MARIA, "hearth-moon-mare");
-	spots(CRATERS, "hearth-moon-crater");
+	spots(MARIA, "zerohearth-moon-mare");
+	spots(CRATERS, "zerohearth-moon-crater");
 }
 
 /**
@@ -237,22 +237,22 @@ function drawMoonDisc(parent: HTMLElement, phase: MoonPhase, southern: boolean):
 function cycleSlider(parent: HTMLElement, phase: MoonPhase): void {
 	const pct = Math.min(Math.max(phase.phase, 0), 1) * 100;
 	const slider = parent.createDiv({
-		cls: "hearth-moon-slider",
+		cls: "zerohearth-moon-slider",
 		attr: { role: "img", "aria-label": `${t().cards.weather.moon.cycle}: ${moonSummary(Date.now())}` },
 	});
 	// The gap either side of the handle is the stylesheet's; see styles.css.
-	slider.createDiv("hearth-moon-slider-active").style.width = `max(0px, calc(${pct.toFixed(2)}% - var(--hearth-slider-gap)))`;
-	slider.createDiv("hearth-moon-slider-inactive").style.insetInlineStart =
-		`min(100%, calc(${pct.toFixed(2)}% + var(--hearth-slider-gap)))`;
+	slider.createDiv("zerohearth-moon-slider-active").style.width = `max(0px, calc(${pct.toFixed(2)}% - var(--zerohearth-slider-gap)))`;
+	slider.createDiv("zerohearth-moon-slider-inactive").style.insetInlineStart =
+		`min(100%, calc(${pct.toFixed(2)}% + var(--zerohearth-slider-gap)))`;
 	for (const at of [0.25, 0.5, 0.75]) {
 		// A stop that would sit in the handle's gap is the handle's to show.
 		if (Math.abs(at * 100 - pct) < 3) continue;
-		const stop = slider.createDiv("hearth-moon-slider-stop");
+		const stop = slider.createDiv("zerohearth-moon-slider-stop");
 		stop.toggleClass("is-past", at * 100 < pct);
 		stop.toggleClass("is-full", at === 0.5);
 		stop.style.insetInlineStart = `${at * 100}%`;
 	}
-	slider.createDiv("hearth-moon-slider-handle").style.insetInlineStart = `${pct.toFixed(2)}%`;
+	slider.createDiv("zerohearth-moon-slider-handle").style.insetInlineStart = `${pct.toFixed(2)}%`;
 }
 
 /** The Classic moon's seas, as tilted ellipses in fractions of the radius —
@@ -277,7 +277,7 @@ const CLASSIC_CRATERS: [number, number, number][] = [
  * earthshine, a shaded lit part with a soft terminator, blurred seas and rimmed
  * craters on the lit side, and limb darkening over the whole ball. */
 function drawClassicMoonDisc(parent: HTMLElement, phase: MoonPhase, southern: boolean): void {
-	const svg = svgRoot(parent, "hearth-moon-svg", "0 0 100 100");
+	const svg = svgRoot(parent, "zerohearth-moon-svg", "0 0 100 100");
 	const defs = svg.createSvg("defs");
 	const lit = uid("moon-lit");
 	const halo = uid("moon-halo");
@@ -320,21 +320,21 @@ function drawClassicMoonDisc(parent: HTMLElement, phase: MoonPhase, southern: bo
 
 	// The halo brightens with the moon: a new moon has none to speak of.
 	const glow = svg.createSvg("circle", {
-		cls: "hearth-moon-halo",
+		cls: "zerohearth-moon-halo",
 		attr: { cx: "50", cy: "50", r: "50", fill: `url(#${halo})` },
 	});
 	glow.style.opacity = String(0.2 + phase.illumination * 0.8);
 
-	const body = svg.createSvg("g", { cls: "hearth-moon-body", attr: { "clip-path": `url(#${clip})` } });
-	body.createSvg("circle", { cls: "hearth-moon-dark", attr: { cx: "50", cy: "50", r: String(R) } });
+	const body = svg.createSvg("g", { cls: "zerohearth-moon-body", attr: { "clip-path": `url(#${clip})` } });
+	body.createSvg("circle", { cls: "zerohearth-moon-dark", attr: { cx: "50", cy: "50", r: String(R) } });
 	const litEl = body.createSvg("path", {
-		cls: "hearth-moon-lit",
+		cls: "zerohearth-moon-lit",
 		attr: { d: litPath(phase, 50, 50, R), fill: `url(#${lit})`, filter: `url(#${soft})` },
 	});
 	if (mirror) litEl.setAttribute("transform", mirror);
 
 	const surface = body.createSvg("g", { attr: { "clip-path": `url(#${litClip})` } });
-	const maria = surface.createSvg("g", { cls: "hearth-moon-maria", attr: { filter: `url(#${blur})` } });
+	const maria = surface.createSvg("g", { cls: "zerohearth-moon-maria", attr: { filter: `url(#${blur})` } });
 	for (const [x, y, rx, ry, tilt] of CLASSIC_MARIA) {
 		const cx = (50 + x * R).toFixed(2);
 		const cy = (50 + y * R).toFixed(2);
@@ -348,28 +348,28 @@ function drawClassicMoonDisc(parent: HTMLElement, phase: MoonPhase, southern: bo
 			},
 		});
 	}
-	const craters = surface.createSvg("g", { cls: "hearth-moon-craters" });
+	const craters = surface.createSvg("g", { cls: "zerohearth-moon-craters" });
 	for (const [x, y, r] of CLASSIC_CRATERS) {
 		craters.createSvg("circle", {
 			attr: { cx: (50 + x * R).toFixed(2), cy: (50 + y * R).toFixed(2), r: (r * R).toFixed(2) },
 		});
 	}
 	body.createSvg("circle", { attr: { cx: "50", cy: "50", r: String(R), fill: `url(#${shade})` } });
-	svg.createSvg("circle", { cls: "hearth-moon-rim", attr: { cx: "50", cy: "50", r: String(R) } });
+	svg.createSvg("circle", { cls: "zerohearth-moon-rim", attr: { cx: "50", cy: "50", r: String(R) } });
 }
 
 /** The Classic month: a track dark at both new moons and bright at the full
  * one in the middle, ticks at the quarters, and a glowing marker at tonight. */
 function cycleTrack(parent: HTMLElement, phase: MoonPhase): void {
 	const cycle = parent.createDiv({
-		cls: "hearth-moon-cycle",
+		cls: "zerohearth-moon-cycle",
 		attr: { role: "img", "aria-label": `${t().cards.weather.moon.cycle}: ${moonSummary(Date.now())}` },
 	});
-	const track = cycle.createDiv("hearth-moon-track");
+	const track = cycle.createDiv("zerohearth-moon-track");
 	for (const at of [0.25, 0.5, 0.75]) {
-		track.createDiv("hearth-moon-tick").style.insetInlineStart = `${at * 100}%`;
+		track.createDiv("zerohearth-moon-tick").style.insetInlineStart = `${at * 100}%`;
 	}
-	track.createDiv("hearth-moon-marker").style.insetInlineStart = `${phase.phase * 100}%`;
+	track.createDiv("zerohearth-moon-marker").style.insetInlineStart = `${phase.phase * 100}%`;
 }
 
 /** One fact under the moon: an icon in a round tonal badge, a label, a value
@@ -382,14 +382,14 @@ function moonFact(
 	note = "",
 	filled = false,
 ): void {
-	const fact = parent.createDiv("hearth-moon-fact");
-	const badge = fact.createDiv("hearth-moon-fact-icon");
+	const fact = parent.createDiv("zerohearth-moon-fact");
+	const badge = fact.createDiv("zerohearth-moon-fact-icon");
 	badge.toggleClass("is-filled", filled);
 	setIcon(badge, icon);
-	const text = fact.createDiv("hearth-moon-fact-text");
-	text.createDiv({ cls: "hearth-moon-fact-label", text: label });
-	const line = text.createDiv({ cls: "hearth-moon-fact-value", text: value });
-	if (note) line.createSpan({ cls: "hearth-moon-fact-note", text: note });
+	const text = fact.createDiv("zerohearth-moon-fact-text");
+	text.createDiv({ cls: "zerohearth-moon-fact-label", text: label });
+	const line = text.createDiv({ cls: "zerohearth-moon-fact-value", text: value });
+	if (note) line.createSpan({ cls: "zerohearth-moon-fact-note", text: note });
 }
 
 /** The next full or new moon as a fact: its date, and how far off it is. */
@@ -438,13 +438,13 @@ export function paintMoon(wrap: HTMLElement, snapshot: WeatherSnapshot, opts: As
 	if (opts.clean) {
 		// Nothing is written on the card, so the phase is the hover text: the
 		// drawing says it, the tooltip names it.
-		disc(wrap.createDiv({ cls: "hearth-moon-disc", attr: { title: moonSummary(ms) } }), phase, opts.lat < 0);
+		disc(wrap.createDiv({ cls: "zerohearth-moon-disc", attr: { title: moonSummary(ms) } }), phase, opts.lat < 0);
 		month(wrap, phase);
 		return;
 	}
 
 	// A few stars behind everything, in the palette's own tone.
-	const sky = svgRoot(wrap, ["hearth-moon-stars", "hearth-weather-stars"], "0 0 200 120", "xMidYMid slice");
+	const sky = svgRoot(wrap, ["zerohearth-moon-stars", "zerohearth-weather-stars"], "0 0 200 120", "xMidYMid slice");
 	for (const star of starField(22, 200, 120, 0x3007, 0.5)) {
 		const c = sky.createSvg("circle", {
 			attr: { cx: String(star.x), cy: String(star.y), r: String(star.r * 0.6) },
@@ -452,13 +452,13 @@ export function paintMoon(wrap: HTMLElement, snapshot: WeatherSnapshot, opts: As
 		c.style.animationDelay = `${star.delay}s`;
 	}
 
-	const main = wrap.createDiv("hearth-moon-main");
-	disc(main.createDiv("hearth-moon-disc"), phase, opts.lat < 0);
-	const text = main.createDiv("hearth-moon-text");
-	if (opts.place) text.createDiv({ cls: "hearth-moon-place", text: opts.place });
-	text.createDiv({ cls: "hearth-moon-name", text: strings.phases[phase.key] });
+	const main = wrap.createDiv("zerohearth-moon-main");
+	disc(main.createDiv("zerohearth-moon-disc"), phase, opts.lat < 0);
+	const text = main.createDiv("zerohearth-moon-text");
+	if (opts.place) text.createDiv({ cls: "zerohearth-moon-place", text: opts.place });
+	text.createDiv({ cls: "zerohearth-moon-name", text: strings.phases[phase.key] });
 	text.createDiv({
-		cls: "hearth-moon-sub",
+		cls: "zerohearth-moon-sub",
 		text: [
 			strings.illuminated(formatPercent(Math.round(phase.illumination * 100))),
 			strings.age(Math.max(Math.floor(phase.age), 0)),
@@ -470,14 +470,14 @@ export function paintMoon(wrap: HTMLElement, snapshot: WeatherSnapshot, opts: As
 	// Searched from the start of the location's day, so a full moon that fell
 	// this morning still says "Today" rather than a month from now.
 	const dayStart = instantOf(todayDate, offset);
-	const facts = wrap.createDiv("hearth-moon-facts");
+	const facts = wrap.createDiv("zerohearth-moon-facts");
 	phaseFact(facts, "circle", strings.nextFull, nextMoonPhase(dayStart, 0.5), todayDate, snapshot, true);
 	phaseFact(facts, "circle", strings.nextNew, nextMoonPhase(dayStart, 0), todayDate, snapshot, false);
 	const times = moonTimes(dayStart, opts.lat, opts.lon);
 	moonFact(facts, "arrow-up", strings.moonrise, timeAt(times.rise, snapshot, opts.hour12));
 	moonFact(facts, "arrow-down", strings.moonset, timeAt(times.set, snapshot, opts.hour12));
 
-	if (opts.updated) wrap.createDiv({ cls: "hearth-moon-updated", text: opts.updated });
+	if (opts.updated) wrap.createDiv({ cls: "zerohearth-moon-updated", text: opts.updated });
 }
 
 /** The moon's line in the full forecast: its phase and how much of it is lit. */
@@ -559,8 +559,8 @@ function easeOut(x: number): number {
 
 /** A pill with an icon and a label: the headline's kicker and the foot's ends. */
 function chip(parent: HTMLElement, cls: string, icon: string, text: string): HTMLElement {
-	const el = parent.createDiv(`hearth-sun-chip ${cls}`);
-	setIcon(el.createSpan("hearth-sun-chip-icon"), icon);
+	const el = parent.createDiv(`zerohearth-sun-chip ${cls}`);
+	setIcon(el.createSpan("zerohearth-sun-chip-icon"), icon);
 	el.createSpan({ text });
 	return el;
 }
@@ -597,9 +597,9 @@ export function paintDaylight(
 	const classic = !opts.expressive;
 
 	// ---- The headline: the next horizon crossing and how long until it ----
-	const head = wrap.createDiv("hearth-sun-head");
-	const lead = head.createDiv("hearth-sun-lead");
-	chip(lead, "hearth-sun-kicker", isDay ? "sunset" : "sunrise", isDay ? strings.sunset : strings.sunrise);
+	const head = wrap.createDiv("zerohearth-sun-head");
+	const lead = head.createDiv("zerohearth-sun-lead");
+	chip(lead, "zerohearth-sun-kicker", isDay ? "sunset" : "sunrise", isDay ? strings.sunset : strings.sunrise);
 	const day = times.day;
 	const nextTime = (() => {
 		if (polar || !day) return "";
@@ -609,25 +609,25 @@ export function paintDaylight(
 		return formatHour(times.next?.sunrise ?? day.sunrise, opts.hour12);
 	})();
 	lead.createDiv({
-		cls: "hearth-sun-time",
+		cls: "zerohearth-sun-time",
 		text: polar ? (isDay ? strings.daylight.polarDay : strings.daylight.polarNight) : nextTime,
 	});
-	const until = lead.createDiv("hearth-sun-until");
+	const until = lead.createDiv("zerohearth-sun-until");
 
 	if (opts.now || opts.place) {
-		const side = head.createDiv("hearth-sun-side");
+		const side = head.createDiv("zerohearth-sun-side");
 		if (opts.now) {
-			const now = side.createDiv("hearth-sun-now");
-			setIcon(now.createSpan("hearth-sun-now-icon"), opts.now.icon);
-			now.createSpan({ cls: "hearth-sun-now-temp", text: opts.now.temp });
+			const now = side.createDiv("zerohearth-sun-now");
+			setIcon(now.createSpan("zerohearth-sun-now-icon"), opts.now.icon);
+			now.createSpan({ cls: "zerohearth-sun-now-temp", text: opts.now.temp });
 		}
-		if (opts.place) side.createDiv({ cls: "hearth-sun-place", text: opts.place });
+		if (opts.place) side.createDiv({ cls: "zerohearth-sun-place", text: opts.place });
 	}
 
 	// ---- The arc ----
-	const stage = wrap.createDiv("hearth-sun-stage");
+	const stage = wrap.createDiv("zerohearth-sun-stage");
 	const svg = stage.createSvg("svg", {
-		cls: "hearth-sun-arc",
+		cls: "zerohearth-sun-arc",
 		attr: { ...SVG_NS, role: "img", "aria-label": strings.daylight.arc },
 	});
 	const defs = svg.createSvg("defs");
@@ -668,11 +668,11 @@ export function paintDaylight(
 	// Everything that depends on the box lives in here and is redrawn on resize.
 	const layer = svg.createSvg("g");
 	// Classic drops a plumb line from the sun to the horizon to mark "now".
-	const plumb = classic ? svg.createSvg("line", { cls: "hearth-sun-plumb" }) : null;
-	const sun = svg.createSvg("g", { cls: "hearth-sun-body" });
+	const plumb = classic ? svg.createSvg("line", { cls: "zerohearth-sun-plumb" }) : null;
+	const sun = svg.createSvg("g", { cls: "zerohearth-sun-body" });
 	if (classic) {
-		sun.createSvg("circle", { cls: "hearth-sun-glow", attr: { r: "20", fill: `url(#${grad.glow})` } });
-		const rays = sun.createSvg("g", { cls: "hearth-sun-rays" });
+		sun.createSvg("circle", { cls: "zerohearth-sun-glow", attr: { r: "20", fill: `url(#${grad.glow})` } });
+		const rays = sun.createSvg("g", { cls: "zerohearth-sun-rays" });
 		for (let i = 0; i < 8; i++) {
 			const a = (i / 8) * Math.PI * 2;
 			rays.createSvg("line", {
@@ -684,12 +684,12 @@ export function paintDaylight(
 				},
 			});
 		}
-		sun.createSvg("circle", { cls: "hearth-sun-core", attr: { r: "7", fill: `url(#${grad.core})` } });
+		sun.createSvg("circle", { cls: "zerohearth-sun-core", attr: { r: "7", fill: `url(#${grad.core})` } });
 	} else {
-		sun.createSvg("circle", { cls: "hearth-sun-glow", attr: { r: "20" } });
+		sun.createSvg("circle", { cls: "zerohearth-sun-glow", attr: { r: "20" } });
 		// The sunny shape turns in a group of its own; the body is moved by script.
-		sun.createSvg("g", { cls: "hearth-sun-spin" }).createSvg("path", {
-			cls: "hearth-sun-shape",
+		sun.createSvg("g", { cls: "zerohearth-sun-spin" }).createSvg("path", {
+			cls: "zerohearth-sun-shape",
 			attr: { d: shapePath(0, 0, 12.5, 8, 0.12) },
 		});
 	}
@@ -710,7 +710,7 @@ export function paintDaylight(
 		const { w, h, horizon } = box;
 		for (const rect of [doneRect, aheadRect]) rect.setAttribute("height", String(h));
 		layer.createSvg("rect", {
-			cls: "hearth-sun-ground",
+			cls: "zerohearth-sun-ground",
 			attr: { x: "0", y: horizon.toFixed(1), width: String(w), height: (h - horizon).toFixed(1) },
 		});
 		if (!polar) {
@@ -732,7 +732,7 @@ export function paintDaylight(
 			const x2 = arcX(box, sunset).toFixed(1);
 			const top = (horizon - 2 * box.day).toFixed(1);
 			const area = layer.createSvg("path", {
-				cls: "hearth-sun-area",
+				cls: "zerohearth-sun-area",
 				attr: {
 					d: `M ${x1} ${horizon} Q ${((arcX(box, sunrise) + arcX(box, sunset)) / 2).toFixed(1)} ${top} ${x2} ${horizon} Z`,
 					"clip-path": `url(#${doneClip})`,
@@ -740,24 +740,24 @@ export function paintDaylight(
 			});
 			if (classic) area.setAttribute("fill", `url(#${grad.area})`);
 			layer.createSvg("path", {
-				cls: "hearth-sun-track",
+				cls: "zerohearth-sun-track",
 				attr: { d: line, "clip-path": `url(#${aheadClip})` },
 			});
 			// Expressive walks a wave behind the sun; Classic a gradient stroke.
 			const trail = layer.createSvg("path", {
-				cls: "hearth-sun-trail",
+				cls: "zerohearth-sun-trail",
 				attr: { d: classic ? line : wavePath(points, 2.4, 26), "clip-path": `url(#${doneClip})` },
 			});
 			if (classic) trail.setAttribute("stroke", `url(#${grad.trail})`);
 		}
 		layer.createSvg("line", {
-			cls: "hearth-sun-horizon",
+			cls: "zerohearth-sun-horizon",
 			attr: { x1: "0", y1: horizon.toFixed(1), x2: String(w), y2: horizon.toFixed(1) },
 		});
 		if (!polar) {
 			for (const minute of [sunrise, sunset]) {
 				layer.createSvg("circle", {
-					cls: "hearth-sun-mark",
+					cls: "zerohearth-sun-mark",
 					attr: { cx: arcX(box, minute).toFixed(1), cy: horizon.toFixed(1), r: classic ? "2.6" : "4.5" },
 				});
 			}
@@ -809,16 +809,16 @@ export function paintDaylight(
 
 	// ---- The foot: sunrise, the length of the day, sunset ----
 	if (day && !polar) {
-		const foot = wrap.createDiv("hearth-sun-foot");
-		chip(foot, "hearth-sun-end", "sunrise", formatHour(day.sunrise, opts.hour12));
+		const foot = wrap.createDiv("zerohearth-sun-foot");
+		chip(foot, "zerohearth-sun-end", "sunrise", formatHour(day.sunrise, opts.hour12));
 		const { h, m } = splitMinutes(sunset - sunrise);
 		foot.createDiv({
-			cls: "hearth-sun-length",
+			cls: "zerohearth-sun-length",
 			text: strings.daylight.dayLength(strings.duration(h, m)),
 		});
-		chip(foot, "hearth-sun-end", "sunset", formatHour(day.sunset, opts.hour12));
+		chip(foot, "zerohearth-sun-end", "sunset", formatHour(day.sunset, opts.hour12));
 	}
-	if (opts.updated) wrap.createDiv({ cls: "hearth-weather-updated", text: opts.updated });
+	if (opts.updated) wrap.createDiv({ cls: "zerohearth-weather-updated", text: opts.updated });
 
 	draw();
 	const target = minuteAt(ms0);

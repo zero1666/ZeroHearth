@@ -83,7 +83,7 @@ const BLOCK = "█";
  * toolbar, the switcher or a card's own title makes a picture of a board nobody
  * could recognise, which defeats the point of taking one.
  */
-const REDACT_INSIDE = ".hearth-card-body";
+const REDACT_INSIDE = ".zerohearth-card-body";
 
 /**
  * Card kinds whose bodies are left alone, because there is nothing of the
@@ -130,7 +130,7 @@ const MEDIA_BLURS: readonly (readonly [selector: string, filter: string])[] = [
 ];
 
 /** Class the wrapper carries, so `styles.css` can draw the bars. */
-const REDACTED_CLASS = "hearth-snapshot-bar";
+const REDACTED_CLASS = "zerohearth-snapshot-bar";
 
 /**
  * Regions the redaction must not touch the *text* of, because their DOM is a
@@ -167,7 +167,7 @@ const EDITABLE_HOST = ".cm-editor";
 /** Class a region carries while the shutter is open, instead of having its text
  * replaced: an editor, or a field holding a value. `styles.css` hides what is
  * inside it, paints its text away and blurs the rest. */
-const BLANKED_CLASS = "hearth-snapshot-blank";
+const BLANKED_CLASS = "zerohearth-snapshot-blank";
 
 /**
  * The bars drawn *over* a blanked editor, so a note card photographs as a note
@@ -191,7 +191,7 @@ const BLANKED_CLASS = "hearth-snapshot-blank";
  * structure. And it never invents a line — every bar stands where text really
  * is, so a two-line note photographs as two lines.
  */
-const LINES_CLASS = "hearth-snapshot-lines";
+const LINES_CLASS = "zerohearth-snapshot-lines";
 
 /** Marks an editor whose bars were drawn, so `styles.css` can drop the slab
  * that stands in when they weren't. */
@@ -222,17 +222,17 @@ const MIN_BAR = 3;
  * task — is still censored, because that is the part that is somebody's.
  */
 const KEEP_INSIDE = [
-	".hearth-calendar-head",
-	".hearth-calendar-label",
-	".hearth-calendar-dow",
-	".hearth-calendar-wk",
-	".hearth-calendar-daynum",
-	".hearth-agenda-month",
-	".hearth-agenda-date",
-	".hearth-agenda-label",
-	".hearth-sched-daynum",
-	".hearth-sched-headnum",
-	".hearth-sched-listdate",
+	".zerohearth-calendar-head",
+	".zerohearth-calendar-label",
+	".zerohearth-calendar-dow",
+	".zerohearth-calendar-wk",
+	".zerohearth-calendar-daynum",
+	".zerohearth-agenda-month",
+	".zerohearth-agenda-date",
+	".zerohearth-agenda-label",
+	".zerohearth-sched-daynum",
+	".zerohearth-sched-headnum",
+	".zerohearth-sched-listdate",
 ].join(",");
 
 /** Longest run of blocks one string becomes. A card holding an essay should not
@@ -272,7 +272,7 @@ export const SNAPSHOT_ASSET_ID = "snapshot";
  *
  * Two module names, because the API moved: older builds expose `remote` from
  * `electron` itself, newer ones through `@electron/remote`. Both are internals
- * of the app Hearth runs inside, so every step is guarded and a build that has
+ * of the app ZeroHearth runs inside, so every step is guarded and a build that has
  * neither simply cannot take a picture.
  */
 function webContents(): WebContentsLike | null {
@@ -539,7 +539,7 @@ export function redact(root: HTMLElement): Redaction {
 	};
 
 	pass();
-	root.addClass("hearth-snapshot-redacted");
+	root.addClass("zerohearth-snapshot-redacted");
 	// After the class, not before: the bars are measured against boxes the
 	// blanking has already settled.
 	drawLines();
@@ -603,7 +603,7 @@ export function redact(root: HTMLElement): Redaction {
 				if (before.value) el.style.setProperty("filter", before.value, before.priority);
 				else el.style.removeProperty("filter");
 			}
-			root.removeClass("hearth-snapshot-redacted");
+			root.removeClass("zerohearth-snapshot-redacted");
 		},
 	};
 }
@@ -617,7 +617,7 @@ export function redact(root: HTMLElement): Redaction {
  * that is the direction to be wrong in.
  */
 function isOpenCard(body: HTMLElement): boolean {
-	const card = body.closest<HTMLElement>(".hearth-card");
+	const card = body.closest<HTMLElement>(".zerohearth-card");
 	const kind = card?.dataset.kind;
 	return kind !== undefined && OPEN_KINDS.has(kind);
 }
@@ -689,14 +689,14 @@ export async function captureBoard(
 	if (rect.width < 40 || rect.height < 40) return null;
 
 	const redaction = redact(board);
-	for (const el of hide) el.addClass("hearth-snapshot-hidden");
+	for (const el of hide) el.addClass("zerohearth-snapshot-hidden");
 	// Themes are entitled to do what they like while a modal is open, and
 	// several blur the workspace behind one — Velocity does. Capturing
 	// photographs the *window*, so that blur lands in the picture. This class
 	// turns filters off for the duration; it is on `body` because the rule has
 	// to outrank a theme's own selector, and off again in the `finally`.
-	document.body.addClass("hearth-snapshot-capturing");
-	const scroller = board.querySelector<HTMLElement>(".hearth-scroll");
+	document.body.addClass("zerohearth-snapshot-capturing");
+	const scroller = board.querySelector<HTMLElement>(".zerohearth-scroll");
 	const scrollFrom = scroller?.scrollTop ?? 0;
 
 	try {
@@ -709,8 +709,8 @@ export async function captureBoard(
 	} finally {
 		if (scroller) scroller.scrollTop = scrollFrom;
 		redaction.restore();
-		for (const el of hide) el.removeClass("hearth-snapshot-hidden");
-		document.body.removeClass("hearth-snapshot-capturing");
+		for (const el of hide) el.removeClass("zerohearth-snapshot-hidden");
+		document.body.removeClass("zerohearth-snapshot-capturing");
 	}
 }
 

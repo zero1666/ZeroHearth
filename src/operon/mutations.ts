@@ -11,7 +11,7 @@ import type { OperonAccess, OperonSession } from "./api";
 import type { OperonPolicies, OperonTask } from "./types";
 
 /**
- * The two Operon writes Hearth performs: moving a task to another status
+ * The two Operon writes ZeroHearth performs: moving a task to another status
  * (dragging it across the board) and creating one (the card's "+").
  *
  * Operon does not take a write as a single call. Every mutation is
@@ -24,17 +24,17 @@ import type { OperonPolicies, OperonTask } from "./types";
  *   up — with `recover(plan)`, the *same* plan, never a fresh preview. Retrying
  *   a mutation whose outcome is unknown is how an integration writes twice.
  * - **Consent is the host's.** A plan can come back `requiresConsent`, or at an
- *   elevated risk level, and Hearth asks the user before applying rather than
+ *   elevated risk level, and ZeroHearth asks the user before applying rather than
  *   deciding on their behalf.
  * - **Expected state travels with the intent.** A transition carries the status
- *   Hearth believed the task was in, so a board drawn from a stale read is
+ *   ZeroHearth believed the task was in, so a board drawn from a stale read is
  *   refused by Operon instead of quietly overwriting someone else's change.
  *
  * Like `reads.ts`, nothing here throws: every path returns a result a card can
  * render.
  */
 
-/** Risk levels Hearth applies without asking. Anything above these — or any
+/** Risk levels ZeroHearth applies without asking. Anything above these — or any
  * plan Operon marks as needing consent — goes to the user first. */
 const SILENT_RISK: readonly RiskLevelV1[] = ["none", "routine"];
 
@@ -98,7 +98,7 @@ export function transitionIntent(
  * use. That matters when one of them is unreachable: a vault whose inline
  * target is the daily note gets "Configured Daily Note target is unavailable or
  * invalid" from Operon, and choosing "file" is a real way past it rather than a
- * workaround Hearth invents by writing somewhere itself.
+ * workaround ZeroHearth invents by writing somewhere itself.
  */
 export type OperonCreateAs = "inline" | "file";
 
@@ -163,7 +163,7 @@ export function createTarget(
  */
 export function createIntent(input: OperonNewTask): DeveloperMutationPreviewInputV1 {
 	const item: CreateTaskItemV1 = {
-		itemRef: "hearth-1",
+		itemRef: "zerohearth-1",
 		description: input.description,
 		// Still `configured-default` in every case: the card may pick which of
 		// Operon's two configured targets to use, never a path of its own.

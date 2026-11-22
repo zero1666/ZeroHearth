@@ -12,14 +12,14 @@ import { createVaultEventHub } from "../cardevents";
 import { mountCardBody } from "../dashboard";
 import { t } from "../i18n";
 import type { DashboardCard } from "../types";
-import { HearthModal } from "../uidesign";
+import { ZeroHearthModal } from "../uidesign";
 import type { HomeView } from "../view";
 import { TuiCardHost } from "./host";
 import { measureCell } from "./metrics";
 import { tuiRenderer } from "./registry";
 import { asciify } from "./text";
 
-class TuiZoomModal extends HearthModal {
+class TuiZoomModal extends ZeroHearthModal {
 	private component = new Component();
 
 	constructor(
@@ -30,18 +30,18 @@ class TuiZoomModal extends HearthModal {
 	}
 
 	onOpen(): void {
-		this.modalEl.addClass("hearth-tui-zoom");
+		this.modalEl.addClass("zerohearth-tui-zoom");
 		const title = asciify(this.card.title?.trim() ?? "") || t().editors.kinds[this.card.kind];
 		this.titleEl.setText(title);
 		this.component.load();
 		const events = createVaultEventHub(this.view.app, (ref) => this.component.registerEvent(ref));
-		const body = this.contentEl.createDiv({ cls: "hearth-tui-zoombody", attr: { tabindex: "0" } });
+		const body = this.contentEl.createDiv({ cls: "zerohearth-tui-zoombody", attr: { tabindex: "0" } });
 		const renderer = tuiRenderer(this.card, this.view);
 
 		if (!renderer) {
-			const shell = body.createDiv("hearth-card hearth-tui-guicard");
+			const shell = body.createDiv("zerohearth-card zerohearth-tui-guicard");
 			shell.dataset.kind = this.card.kind;
-			mountCardBody(this.view, this.card, shell.createDiv("hearth-card-body"), this.component, events);
+			mountCardBody(this.view, this.card, shell.createDiv("zerohearth-card-body"), this.component, events);
 			return;
 		}
 

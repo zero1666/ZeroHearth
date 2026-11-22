@@ -41,7 +41,7 @@ import { t } from "../../i18n";
 import { openFile } from "../../opener";
 import { effectiveAutoRefreshMinutes } from "../../types";
 import { confirmAction } from "../../ui";
-import { hearthMenu } from "../../uidesign";
+import { zerohearthMenu } from "../../uidesign";
 import type { TuiContext, TuiItem, TuiOutput, TuiRenderer } from "../card";
 import { asciify, fit, padEnd, spread, strWidth, type Line, type TuiStyle } from "../text";
 import { button, buttonGrid, message, showMenuFor } from "./common";
@@ -167,7 +167,7 @@ function discard(ctx: TuiContext, plugin: GitPlugin, st: GitState, row: GitChang
 
 function changeMenu(ctx: TuiContext, plugin: GitPlugin, st: GitState, row: GitChangeRow, evt: MouseEvent | KeyboardEvent): void {
 	const strings = t().cards.git;
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	menu.addItem((i) => i.setTitle(t().tui.open).setIcon("file").onClick(() => openChange(ctx, plugin, row)));
 	if (plugin.tools?.openDiff) menu.addItem((i) => i.setTitle(strings.openDiff).setIcon("diff").onClick(() => openGitDiff(plugin, row.path)));
 	if (row.staged) menu.addItem((i) => i.setTitle(strings.unstageFile).setIcon("minus").onClick(() => queueGitFileAction(plugin, "unstage", row.path, () => read(ctx, plugin, st))));

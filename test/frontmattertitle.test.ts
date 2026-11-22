@@ -12,7 +12,7 @@ import {
 /**
  * The Front Matter Title integration (#375). The plugin is reached through the
  * API its `front-matter-plugin-api-provider` package declares — `getDefer()` on
- * the plugin instance — so what's covered here is that Hearth asks for the
+ * the plugin instance — so what's covered here is that ZeroHearth asks for the
  * explorer's titles only when the explorer would show them, and that every
  * shape of missing, unready or broken plugin comes back as "keep the file
  * name" rather than as a thrown error mid-draw.

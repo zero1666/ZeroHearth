@@ -16,8 +16,8 @@
 
 import { Modal, Notice } from "obsidian";
 import { setIcon } from "./glyphs";
-import { HearthModal } from "./uidesign";
-import type HearthPlugin from "./main";
+import { ZeroHearthModal } from "./uidesign";
+import type ZeroHearthPlugin from "./main";
 import type { AuthorIdentity } from "./identity";
 import type { Dashboard } from "./types";
 import { t } from "./i18n";
@@ -70,7 +70,7 @@ export interface EntryViewHooks {
 
 /** Open one entry. Fetches the detail; the id is all the caller needs to have. */
 export function openGalleryEntry(
-	plugin: HearthPlugin,
+	plugin: ZeroHearthPlugin,
 	client: GalleryClient,
 	id: string,
 	hooks: EntryViewHooks = {},
@@ -78,8 +78,8 @@ export function openGalleryEntry(
 	new GalleryEntryModal(plugin, client, id, hooks).open();
 }
 
-class GalleryEntryModal extends HearthModal {
-	private plugin: HearthPlugin;
+class GalleryEntryModal extends ZeroHearthModal {
+	private plugin: ZeroHearthPlugin;
 	private client: GalleryClient;
 	private id: string;
 	private hooks: EntryViewHooks;
@@ -93,7 +93,7 @@ class GalleryEntryModal extends HearthModal {
 	private commentsLoaded = false;
 
 	constructor(
-		plugin: HearthPlugin,
+		plugin: ZeroHearthPlugin,
 		client: GalleryClient,
 		id: string,
 		hooks: EntryViewHooks,
@@ -106,7 +106,7 @@ class GalleryEntryModal extends HearthModal {
 	}
 
 	onOpen(): void {
-		this.modalEl.addClass("hearth-gallery-detail-modal");
+		this.modalEl.addClass("zerohearth-gallery-detail-modal");
 		this.titleEl.setText(t().gallery.browse.loading);
 		this.render();
 		void this.load();
@@ -202,7 +202,7 @@ class GalleryEntryModal extends HearthModal {
 
 		this.titleEl.setText(entry.name);
 
-		const hero = body.createDiv("hearth-gallery-detail-hero");
+		const hero = body.createDiv("zerohearth-gallery-detail-hero");
 		const shot = entry.hasSnapshot ? this.client.snapshotUrl(entry.id, entry.updatedAt) : undefined;
 		const frame = renderPreview(hero, {
 			wallpaper: entry.hasWallpaper ? this.client.wallpaperUrl(entry.id, entry.updatedAt) : undefined,
@@ -234,8 +234,8 @@ class GalleryEntryModal extends HearthModal {
 			});
 		}
 
-		const head = body.createDiv("hearth-gallery-detail-head");
-		const byline = head.createDiv("hearth-gallery-detail-byline");
+		const head = body.createDiv("zerohearth-gallery-detail-head");
+		const byline = head.createDiv("zerohearth-gallery-detail-byline");
 		renderAuthor(byline, entry, this.hooks.onOpenProfile
 			? (publicKey) => {
 					this.close();
@@ -243,14 +243,14 @@ class GalleryEntryModal extends HearthModal {
 				}
 			: undefined);
 		byline.createSpan({
-			cls: "hearth-gallery-chip",
+			cls: "zerohearth-gallery-chip",
 			text: t().gallery.categories[entry.category],
 		});
 		this.renderVotes(head, entry);
 
 		if (entry.description) {
 			body.createEl("p", {
-				cls: "hearth-gallery-detail-desc",
+				cls: "zerohearth-gallery-detail-desc",
 				text: entry.description,
 			});
 		}
@@ -277,10 +277,10 @@ class GalleryEntryModal extends HearthModal {
 	 */
 	private renderVotes(parent: HTMLElement, entry: GalleryEntryDetail): void {
 		const strings = t().gallery.detail;
-		const box = parent.createDiv("hearth-gallery-vote");
+		const box = parent.createDiv("zerohearth-gallery-vote");
 
 		const up = box.createEl("button", {
-			cls: "hearth-gallery-vote-btn",
+			cls: "zerohearth-gallery-vote-btn",
 			attr: { "aria-label": strings.upvoteAria, "aria-pressed": String(entry.myVote === 1) },
 		});
 		up.toggleClass("is-active", entry.myVote === 1);
@@ -288,12 +288,12 @@ class GalleryEntryModal extends HearthModal {
 		up.addEventListener("click", () => void this.vote(entry.myVote === 1 ? 0 : 1));
 
 		box.createSpan({
-			cls: "hearth-gallery-vote-score",
+			cls: "zerohearth-gallery-vote-score",
 			text: t().gallery.browse.score(entry.score),
 		});
 
 		const down = box.createEl("button", {
-			cls: "hearth-gallery-vote-btn",
+			cls: "zerohearth-gallery-vote-btn",
 			attr: { "aria-label": strings.downvoteAria, "aria-pressed": String(entry.myVote === -1) },
 		});
 		down.toggleClass("is-active", entry.myVote === -1);
@@ -350,13 +350,13 @@ class GalleryEntryModal extends HearthModal {
 	/** The one-line facts: when, how many, how big, what wrote it. */
 	private renderFacts(body: HTMLElement, entry: GalleryEntryDetail): void {
 		const strings = t().gallery.detail;
-		const facts = body.createDiv("hearth-gallery-facts");
+		const facts = body.createDiv("zerohearth-gallery-facts");
 
 		const add = (icon: string, text: string): void => {
 			if (!text) return;
-			const row = facts.createDiv("hearth-gallery-fact");
-			setIcon(row.createSpan("hearth-gallery-fact-icon"), icon);
-			row.createSpan({ cls: "hearth-gallery-fact-text", text });
+			const row = facts.createDiv("zerohearth-gallery-fact");
+			setIcon(row.createSpan("zerohearth-gallery-fact-icon"), icon);
+			row.createSpan({ cls: "zerohearth-gallery-fact-text", text });
 		};
 
 		add("download", t().gallery.browse.downloads(entry.downloads));
@@ -385,15 +385,15 @@ class GalleryEntryModal extends HearthModal {
 	private renderContents(body: HTMLElement, entry: GalleryEntryDetail): void {
 		if (entry.cards.length === 0) return;
 		const strings = t().gallery.detail;
-		body.createDiv({ cls: "hearth-gallery-section", text: strings.contents });
-		const list = body.createDiv("hearth-gallery-kinds");
+		body.createDiv({ cls: "zerohearth-gallery-section", text: strings.contents });
+		const list = body.createDiv("zerohearth-gallery-kinds");
 		for (const card of entry.cards) {
 			const { name, icon } = cardKindLabel(card.kind);
-			const chip = list.createDiv("hearth-gallery-kind");
-			setIcon(chip.createSpan("hearth-gallery-kind-icon"), icon);
-			chip.createSpan({ cls: "hearth-gallery-kind-name", text: name });
+			const chip = list.createDiv("zerohearth-gallery-kind");
+			setIcon(chip.createSpan("zerohearth-gallery-kind-icon"), icon);
+			chip.createSpan({ cls: "zerohearth-gallery-kind-name", text: name });
 			if (card.count > 1) {
-				chip.createSpan({ cls: "hearth-gallery-kind-count", text: `×${card.count}` });
+				chip.createSpan({ cls: "zerohearth-gallery-kind-count", text: `×${card.count}` });
 			}
 		}
 	}
@@ -408,33 +408,33 @@ class GalleryEntryModal extends HearthModal {
 			[strings.requiresSettings, entry.requires.settings],
 		];
 		const any = groups.some(([, values]) => values.length > 0);
-		body.createDiv({ cls: "hearth-gallery-section", text: strings.requires });
+		body.createDiv({ cls: "zerohearth-gallery-section", text: strings.requires });
 		if (!any) {
-			body.createDiv({ cls: "hearth-gallery-note", text: strings.nothingRequired });
+			body.createDiv({ cls: "zerohearth-gallery-note", text: strings.nothingRequired });
 			return;
 		}
 		for (const [label, values] of groups) {
 			if (values.length === 0) continue;
-			const row = body.createDiv("hearth-gallery-requires-row");
-			row.createSpan({ cls: "hearth-gallery-requires-label", text: label });
-			const chips = row.createDiv("hearth-gallery-requires-chips");
+			const row = body.createDiv("zerohearth-gallery-requires-row");
+			row.createSpan({ cls: "zerohearth-gallery-requires-label", text: label });
+			const chips = row.createDiv("zerohearth-gallery-requires-chips");
 			for (const value of values) {
-				chips.createSpan({ cls: "hearth-gallery-chip", text: value });
+				chips.createSpan({ cls: "zerohearth-gallery-chip", text: value });
 			}
 		}
 	}
 
 	private renderTags(body: HTMLElement, entry: GalleryEntryDetail): void {
 		if (entry.tags.length === 0) return;
-		const row = body.createDiv("hearth-gallery-requires-row");
-		row.createSpan({ cls: "hearth-gallery-requires-label", text: t().gallery.detail.tags });
-		const chips = row.createDiv("hearth-gallery-requires-chips");
-		for (const tag of entry.tags) chips.createSpan({ cls: "hearth-gallery-chip", text: tag });
+		const row = body.createDiv("zerohearth-gallery-requires-row");
+		row.createSpan({ cls: "zerohearth-gallery-requires-label", text: t().gallery.detail.tags });
+		const chips = row.createDiv("zerohearth-gallery-requires-chips");
+		for (const tag of entry.tags) chips.createSpan({ cls: "zerohearth-gallery-chip", text: tag });
 	}
 
 	private renderActions(body: HTMLElement, entry: GalleryEntryDetail): void {
 		const strings = t().gallery.detail;
-		const actions = body.createDiv("hearth-gallery-actions");
+		const actions = body.createDiv("zerohearth-gallery-actions");
 
 		// The reader's own entry gets the two things only they can do with it.
 		const mine = vaultIdentity(this.plugin)?.publicKey;
@@ -445,7 +445,7 @@ class GalleryEntryModal extends HearthModal {
 			// other side of the gap.
 			this.renderUpdate(actions, entry);
 			const remove = actions.createEl("button", {
-				cls: "hearth-gallery-remove",
+				cls: "zerohearth-gallery-remove",
 				text: t().gallery.publish.unpublish,
 			});
 			remove.addEventListener("click", () => this.confirmUnpublish(entry));
@@ -487,7 +487,7 @@ class GalleryEntryModal extends HearthModal {
 			galleryEntrySourceId(this.plugin.settings, this.client.host, entry.id);
 		const why = dash ? strings.updateDesc : named ? strings.updateMissing : strings.updateUnknown;
 		const update = actions.createEl("button", {
-			cls: "hearth-gallery-update",
+			cls: "zerohearth-gallery-update",
 			text: this.busy ? strings.updateChecking : strings.update,
 		});
 		// Off only when a board is named and this vault hasn't got it: that is
@@ -566,7 +566,7 @@ class GalleryEntryModal extends HearthModal {
 	/**
 	 * Put the board on screen, then open the publish dialog on it.
 	 *
-	 * Both steps matter: publishing needs a picture of the board, and Hearth can
+	 * Both steps matter: publishing needs a picture of the board, and ZeroHearth can
 	 * only photograph the board that is actually rendered — so a dialog opened
 	 * over a different active board would come up saying it cannot take one.
 	 * The wait is the same one the capture itself uses, because a view revealed
@@ -616,22 +616,22 @@ class GalleryEntryModal extends HearthModal {
 	private renderComments(body: HTMLElement, entry: GalleryEntryDetail): void {
 		const strings = t().gallery.comments;
 		body.createDiv({
-			cls: "hearth-gallery-section",
+			cls: "zerohearth-gallery-section",
 			text: this.commentTotal ? strings.heading(this.commentTotal) : strings.headingEmpty,
 		});
 
 		if (!this.commentsLoaded) {
-			body.createDiv({ cls: "hearth-gallery-note", text: t().gallery.browse.loading });
+			body.createDiv({ cls: "zerohearth-gallery-note", text: t().gallery.browse.loading });
 			return;
 		}
 
 		const mine = vaultIdentity(this.plugin)?.publicKey;
-		const list = body.createDiv("hearth-gallery-comments");
+		const list = body.createDiv("zerohearth-gallery-comments");
 		for (const comment of this.comments) {
-			const row = list.createDiv("hearth-gallery-comment");
-			const head = row.createDiv("hearth-gallery-comment-head");
+			const row = list.createDiv("zerohearth-gallery-comment");
+			const head = row.createDiv("zerohearth-gallery-comment-head");
 			const who = head.createSpan({
-				cls: "hearth-gallery-comment-author",
+				cls: "zerohearth-gallery-comment-author",
 				text: comment.author?.handle ?? t().gallery.browse.anonymous,
 			});
 			// A handle is a way to somebody's shelf wherever it appears — in a
@@ -645,28 +645,28 @@ class GalleryEntryModal extends HearthModal {
 				}, t().gallery.detail.profile(comment.author!.handle));
 			}
 			const when = galleryDate(comment.createdAt);
-			if (when) head.createSpan({ cls: "hearth-gallery-comment-date", text: when });
+			if (when) head.createSpan({ cls: "zerohearth-gallery-comment-date", text: when });
 			// The comment's author may remove it, and so may the owner of the
 			// board it is on — which is the whole of moderation here, in the
 			// hands of the person with the most reason to use it.
 			if (mine && (comment.author?.publicKey === mine || entry.author?.publicKey === mine)) {
 				const remove = head.createEl("button", {
-					cls: "hearth-gallery-comment-remove",
+					cls: "zerohearth-gallery-comment-remove",
 					attr: { "aria-label": strings.remove },
 				});
 				setIcon(remove, "trash-2");
 				remove.addEventListener("click", () => void this.removeComment(comment));
 			}
 			// `text`, never markup: this is prose from a stranger.
-			row.createDiv({ cls: "hearth-gallery-comment-body", text: comment.body });
+			row.createDiv({ cls: "zerohearth-gallery-comment-body", text: comment.body });
 		}
 		if (this.comments.length === 0) {
-			list.createDiv({ cls: "hearth-gallery-note", text: strings.none });
+			list.createDiv({ cls: "zerohearth-gallery-note", text: strings.none });
 		}
 
-		const compose = body.createDiv("hearth-gallery-compose");
+		const compose = body.createDiv("zerohearth-gallery-compose");
 		const field = compose.createEl("textarea", {
-			cls: "hearth-gallery-compose-input",
+			cls: "zerohearth-gallery-compose-input",
 			attr: {
 				placeholder: strings.placeholder,
 				"aria-label": strings.placeholder,
@@ -789,7 +789,7 @@ export interface ProfileViewHooks {
  * disagree with the first.
  */
 export function openGalleryProfile(
-	plugin: HearthPlugin,
+	plugin: ZeroHearthPlugin,
 	client: GalleryClient,
 	publicKey: string,
 	hooks: ProfileViewHooks = {},
@@ -802,8 +802,8 @@ export function openGalleryProfile(
 	return modal;
 }
 
-class GalleryProfileModal extends HearthModal {
-	private plugin: HearthPlugin;
+class GalleryProfileModal extends ZeroHearthModal {
+	private plugin: ZeroHearthPlugin;
 	private client: GalleryClient;
 	private publicKey: string;
 	private hooks: ProfileViewHooks;
@@ -811,7 +811,7 @@ class GalleryProfileModal extends HearthModal {
 	private error: string | null = null;
 
 	constructor(
-		plugin: HearthPlugin,
+		plugin: ZeroHearthPlugin,
 		client: GalleryClient,
 		publicKey: string,
 		hooks: ProfileViewHooks,
@@ -824,7 +824,7 @@ class GalleryProfileModal extends HearthModal {
 	}
 
 	onOpen(): void {
-		this.modalEl.addClass("hearth-gallery-modal");
+		this.modalEl.addClass("zerohearth-gallery-modal");
 		this.titleEl.setText(t().gallery.browse.loading);
 		this.render();
 		void this.load();
@@ -864,21 +864,21 @@ class GalleryProfileModal extends HearthModal {
 		// A masthead rather than a row of numbers: the mark, the handle, when
 		// they started, and what they have earned — read top to bottom, which is
 		// how a page about a person reads.
-		const head = body.createDiv("hearth-gallery-profile-head");
+		const head = body.createDiv("zerohearth-gallery-profile-head");
 		renderAvatar(head, profile.author.publicKey, "is-large");
-		const who = head.createDiv("hearth-gallery-profile-who");
-		who.createDiv({ cls: "hearth-gallery-profile-handle", text: profile.author.handle });
+		const who = head.createDiv("zerohearth-gallery-profile-who");
+		who.createDiv({ cls: "zerohearth-gallery-profile-handle", text: profile.author.handle });
 		const firstSeen = galleryDate(profile.firstSeenAt);
 		if (firstSeen) {
-			who.createDiv({ cls: "hearth-gallery-profile-since", text: strings.firstSeen(firstSeen) });
+			who.createDiv({ cls: "zerohearth-gallery-profile-since", text: strings.firstSeen(firstSeen) });
 		}
-		who.createDiv({ cls: "hearth-gallery-profile-note", text: strings.subtitle });
+		who.createDiv({ cls: "zerohearth-gallery-profile-note", text: strings.subtitle });
 
-		const stats = body.createDiv("hearth-gallery-profile-stats");
+		const stats = body.createDiv("zerohearth-gallery-profile-stats");
 		const stat = (label: string, value: string, hint?: string): void => {
-			const box = stats.createDiv("hearth-gallery-profile-stat");
-			box.createDiv({ cls: "hearth-gallery-profile-stat-value", text: value });
-			box.createDiv({ cls: "hearth-gallery-profile-stat-label", text: label });
+			const box = stats.createDiv("zerohearth-gallery-profile-stat");
+			box.createDiv({ cls: "zerohearth-gallery-profile-stat-value", text: value });
+			box.createDiv({ cls: "zerohearth-gallery-profile-stat-label", text: label });
 			if (hint) box.setAttribute("aria-label", `${label}: ${value}. ${hint}`);
 		};
 		// "Karma", not "score": a board has a score, and a person who has
@@ -896,7 +896,7 @@ class GalleryProfileModal extends HearthModal {
 			return;
 		}
 
-		const grid = body.createDiv("hearth-gallery-grid");
+		const grid = body.createDiv("zerohearth-gallery-grid");
 		for (const entry of profile.entries) {
 			renderEntryCard(grid, entry, {
 				wallpaper: entry.hasWallpaper ? this.client.wallpaperUrl(entry.id, entry.updatedAt) : undefined,

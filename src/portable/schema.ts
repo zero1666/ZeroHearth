@@ -1,7 +1,7 @@
 /**
  * The portable-package format: one envelope, three payloads.
  *
- * Hearth has had two export files since 2.x — a layout (`hearthLayout: 2`) and
+ * The inherited Hearth format has had two export files since 2.x — a layout (`hearthLayout: 2`) and
  * a full settings backup (`hearthSettings: 1`) — and both describe a whole
  * vault. Neither can carry *one* dashboard, which is the unit a dashboard
  * gallery trades in, and neither says anything about itself: what made it, what
@@ -33,7 +33,7 @@ import type {
 } from "../types";
 import type { LayoutExport } from "../layout";
 
-/** Current package format. Bumped only for a change a previous Hearth could
+/** Current package format. Bumped only for a change a previous ZeroHearth could
  * not read safely; additive fields don't move it. */
 export const PACKAGE_FORMAT = 3;
 
@@ -45,16 +45,16 @@ export const PACKAGE_KINDS: readonly PackageKind[] = ["dashboard", "layout", "se
 
 /** File name suggested for each kind of export. */
 export const PACKAGE_FILENAMES: Record<PackageKind, string> = {
-	dashboard: "hearth-dashboard.json",
-	layout: "hearth-layout.json",
-	settings: "hearth-settings.json",
+	dashboard: "zerohearth-dashboard.json",
+	layout: "zerohearth-layout.json",
+	settings: "zerohearth-settings.json",
 };
 
 export interface PackageHeader {
 	/** {@link PACKAGE_FORMAT} at the time of writing. */
 	format: number;
 	kind: PackageKind;
-	/** Hearth version that wrote it, for a gallery's compatibility column and
+	/** ZeroHearth version that wrote it, for a gallery's compatibility column and
 	 * for a bug report that arrives as a file. */
 	plugin?: string;
 	/** ISO 8601. Informational — nothing branches on it. */
@@ -99,7 +99,7 @@ export interface PackageMeta {
 	/**
 	 * The author's handle, as `quiet-lantern-4kj2m8`.
 	 *
-	 * Written for anything reading the file without Hearth's derivation, and
+	 * Written for anything reading the file without ZeroHearth's derivation, and
 	 * *not* to be believed: a reader recomputes it from
 	 * {@link authorPublicKey} rather than reading it, so a package claiming a
 	 * name that does not follow from its key displays as whoever that key
@@ -129,7 +129,7 @@ export interface PackageMeta {
 	 *
 	 * Absent on a local export and on every package written before 3.1 — a
 	 * gallery files those under `other` rather than guessing, and nothing in
-	 * Hearth branches on it.
+	 * ZeroHearth branches on it.
 	 */
 	category?: string;
 	/**
@@ -141,7 +141,7 @@ export interface PackageMeta {
 	 * person who knows — so they can say "recommended with Minimal" and let the
 	 * reader decide what to do about it.
 	 *
-	 * A *name*, not an id or a URL: nothing in Hearth installs a theme, and this
+	 * A *name*, not an id or a URL: nothing in ZeroHearth installs a theme, and this
 	 * is displayed rather than acted on. Absent means the author didn't say,
 	 * which includes every board published before this existed.
 	 */
@@ -200,12 +200,12 @@ export interface PackageCapture {
 export interface PackageRequirements {
 	/** Community/core plugin ids (`dataview`, `obsidian-git`, `bases`, …). */
 	plugins?: string[];
-	/** Card kinds used, so a newer board tells an older Hearth what it is
+	/** Card kinds used, so a newer board tells an older ZeroHearth what it is
 	 * missing rather than silently dropping cards. */
 	cardKinds?: string[];
 	/** Registered view types a leaf card or plugin board hosts. */
 	viewTypes?: string[];
-	/** Hearth settings that must be switched on for part of the board to show —
+	/** ZeroHearth settings that must be switched on for part of the board to show —
 	 * currently only `taskFieldsEnabled`, whose master switch gates every
 	 * tasks card's custom field list. */
 	settings?: string[];
@@ -310,8 +310,8 @@ export type SettingsPayload = Record<string, unknown>;
 
 export type PackagePayload = DashboardPayload | LayoutPayload | SettingsPayload;
 
-/** A Hearth portable package. */
-export interface HearthPackage {
+/** A ZeroHearth portable package using the shared Hearth wire format. */
+export interface ZeroHearthPackage {
 	hearth: PackageHeader;
 	meta?: PackageMeta;
 	capture?: PackageCapture;
@@ -342,7 +342,7 @@ export type ImportWarningCode =
 	| "missingPath"
 	/** A plugin the board's cards need isn't installed or enabled. */
 	| "missingPlugin"
-	/** A card kind this Hearth doesn't know — the card was dropped. */
+	/** A card kind this ZeroHearth doesn't know — the card was dropped. */
 	| "unknownCardKind"
 	/** A hosted view type nothing has registered. */
 	| "unknownViewType"
@@ -350,9 +350,9 @@ export type ImportWarningCode =
 	| "assetSkipped"
 	/** An asset reference had no matching asset in the package. */
 	| "assetMissing"
-	/** The package needs a Hearth setting switched on to show everything. */
+	/** The package needs a ZeroHearth setting switched on to show everything. */
 	| "settingRequired"
-	/** The package was written by a newer Hearth; unknown fields were ignored. */
+	/** The package was written by a newer ZeroHearth; unknown fields were ignored. */
 	| "formatNewer";
 
 export interface ImportWarning {

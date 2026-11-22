@@ -23,10 +23,10 @@ export const KOFI_URL = "https://ko-fi.com/ondru";
 /** The Lucide glyph on the button. */
 const KOFI_ICON = "coffee";
 
-/** The shared classes: `hearth-about-btn` is the icon+label button layout
+/** The shared classes: `zerohearth-about-btn` is the icon+label button layout
  * (defined once in `styles.css`, not About-specific despite its name) and
- * `hearth-kofi-btn` paints it in Ko-fi's own red, the cup on a white badge. */
-const KOFI_CLASSES = ["hearth-about-btn", "hearth-kofi-btn"];
+ * `zerohearth-kofi-btn` paints it in Ko-fi's own red, the cup on a white badge. */
+const KOFI_CLASSES = ["zerohearth-about-btn", "zerohearth-kofi-btn"];
 
 /**
  * Fill `el` with the icon and the label, and make it open Ko-fi.
@@ -37,7 +37,7 @@ const KOFI_CLASSES = ["hearth-about-btn", "hearth-kofi-btn"];
 function paintKofiButton(el: HTMLElement): void {
 	el.empty();
 	for (const cls of KOFI_CLASSES) el.addClass(cls);
-	setIcon(el.createSpan("hearth-about-btn-icon"), KOFI_ICON);
+	setIcon(el.createSpan("zerohearth-about-btn-icon"), KOFI_ICON);
 	el.createSpan({ text: t().settings.about.kofiButton });
 	// Same as the About row's tooltip: the destination, so the button says where
 	// it goes before it is pressed.

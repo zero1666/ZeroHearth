@@ -9,10 +9,10 @@
  *
  * Two gates, independent of each other:
  *
- * - **The window gate** (`pauseWhenUnfocused`). A Hearth tab the workspace has
+ * - **The window gate** (`pauseWhenUnfocused`). A ZeroHearth tab the workspace has
  *   hidden already costs nothing — Obsidian takes an inactive leaf out of layout,
  *   and a subtree that isn't laid out isn't animated. The gap is a *visible*
- *   Hearth tab in a window nobody is using: beside a browser, on a second
+ *   ZeroHearth tab in a window nobody is using: beside a browser, on a second
  *   monitor, behind another app. Measured at full price.
  *
  * - **The element gate.** A card scrolled below the fold, or clipped away by a
@@ -33,7 +33,7 @@ import type { BoardHost } from "./cardhost";
 import { motionAllowed } from "./types";
 
 /** Set on the view root while the window gate is closed. */
-const VIEW_PAUSED = "hearth-motion-paused";
+const VIEW_PAUSED = "zerohearth-motion-paused";
 
 /** Set on a card while the element gate is closed. */
 const CARD_PAUSED = "is-motion-paused";
@@ -114,7 +114,7 @@ export function gateCardMotionOnVisibility(
 	);
 
 	for (const card of Array.from(
-		gridEl.querySelectorAll<HTMLElement>(":scope > .hearth-card"),
+		gridEl.querySelectorAll<HTMLElement>(":scope > .zerohearth-card"),
 	)) {
 		observer.observe(card);
 	}

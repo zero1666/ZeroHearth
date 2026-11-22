@@ -148,7 +148,7 @@ describe("the search row's per-board overrides", () => {
 	it("ignores a board's unreadable button mode rather than guessing", () => {
 		const s = settings();
 		s.newNoteButtonMode = "searchOnline";
-		// What a hand-edited data.json or a newer Hearth could leave behind.
+		// What a hand-edited data.json or a newer ZeroHearth could leave behind.
 		(s.dashboards[0] as { newNoteButtonMode?: unknown }).newNoteButtonMode = "sideways";
 		expect(effectiveNewNoteButtonMode(s)).toBe("searchOnline");
 	});

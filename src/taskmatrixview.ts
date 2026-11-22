@@ -11,7 +11,7 @@ import type { TaskMatrixQuadrant } from "./types";
 
 /** The drag payload type, private to the matrix so a drag from elsewhere on
  * the dashboard (a card being arranged, a Kanban card) is never a drop here. */
-const DRAG_TYPE = "application/hearth-matrix-task";
+const DRAG_TYPE = "application/zerohearth-matrix-task";
 
 export interface TaskMatrixFrame<T> {
 	quadrants: Record<TaskMatrixQuadrant, { label: string; items: T[]; droppable: boolean }>;
@@ -43,7 +43,7 @@ export interface TaskMatrixFrame<T> {
 /** Swap a quadrant's name for an input; Enter or leaving the field keeps the
  * new name, Escape keeps the old one. */
 function startRename(titleEl: HTMLElement, current: string, done: (label: string) => void): void {
-	const input = createEl("input", { cls: "hearth-matrix-q-rename", attr: { type: "text", value: current } });
+	const input = createEl("input", { cls: "zerohearth-matrix-q-rename", attr: { type: "text", value: current } });
 	input.value = current;
 	titleEl.replaceWith(input);
 	input.focus();
@@ -98,14 +98,14 @@ function dropZone<T>(zone: HTMLElement, items: T[], drop: (item: T) => void): vo
 export function renderTaskMatrixFrame<T>(container: HTMLElement, frame: TaskMatrixFrame<T>): HTMLElement {
 	const all: T[] = [];
 	// The host is the size container the narrow-card rules query.
-	const root = container.createDiv("hearth-matrix-host").createDiv("hearth-matrix");
+	const root = container.createDiv("zerohearth-matrix-host").createDiv("zerohearth-matrix");
 	root.toggleClass("has-unsorted", frame.unsorted !== null);
 
 	const drawItems = (host: HTMLElement, items: T[]) => {
 		for (const item of items) {
 			const idx = all.push(item) - 1;
 			const el = frame.renderItem(item, host);
-			el.addClass("hearth-matrix-item");
+			el.addClass("zerohearth-matrix-item");
 			el.setAttribute("draggable", "true");
 			el.addEventListener("dragstart", (e) => {
 				e.dataTransfer?.setData(DRAG_TYPE, String(idx));
@@ -122,22 +122,22 @@ export function renderTaskMatrixFrame<T>(container: HTMLElement, frame: TaskMatr
 
 	// The axis across the top, aligned with the two quadrant columns below,
 	// and the one down the side, beside the two rows.
-	root.createDiv("hearth-matrix-corner");
-	const top = root.createDiv("hearth-matrix-axis is-top");
-	for (const end of frame.across) top.createDiv({ cls: `hearth-matrix-axis-label is-${end.id}`, text: end.label });
-	const side = root.createDiv("hearth-matrix-axis is-side");
-	for (const end of frame.down) side.createDiv({ cls: `hearth-matrix-axis-label is-${end.id}`, text: end.label });
+	root.createDiv("zerohearth-matrix-corner");
+	const top = root.createDiv("zerohearth-matrix-axis is-top");
+	for (const end of frame.across) top.createDiv({ cls: `zerohearth-matrix-axis-label is-${end.id}`, text: end.label });
+	const side = root.createDiv("zerohearth-matrix-axis is-side");
+	for (const end of frame.down) side.createDiv({ cls: `zerohearth-matrix-axis-label is-${end.id}`, text: end.label });
 
 	// The cross itself: four quadrants with the two axes drawn through them.
-	const grid = root.createDiv("hearth-matrix-grid");
+	const grid = root.createDiv("zerohearth-matrix-grid");
 	for (const id of frame.cells) {
 		const q = frame.quadrants[id];
-		const cell = grid.createDiv(`hearth-matrix-q is-${id}`);
+		const cell = grid.createDiv(`zerohearth-matrix-q is-${id}`);
 		cell.toggleClass("is-locked", !q.droppable);
 		cell.dataset.quadrant = id;
-		const head = cell.createDiv("hearth-matrix-q-head");
-		head.createSpan("hearth-matrix-q-dot");
-		const title = head.createSpan({ cls: "hearth-matrix-q-title", text: q.label });
+		const head = cell.createDiv("zerohearth-matrix-q-head");
+		head.createSpan("zerohearth-matrix-q-dot");
+		const title = head.createSpan({ cls: "zerohearth-matrix-q-title", text: q.label });
 		const rename = frame.onRename;
 		if (rename) {
 			title.setAttribute("title", frame.labels.rename);
@@ -147,20 +147,20 @@ export function renderTaskMatrixFrame<T>(container: HTMLElement, frame: TaskMatr
 				startRename(title, q.label, (label) => rename(id, label));
 			});
 		}
-		head.createSpan({ cls: "hearth-matrix-q-count", text: String(q.items.length) });
-		const body = cell.createDiv("hearth-matrix-q-body");
+		head.createSpan({ cls: "zerohearth-matrix-q-count", text: String(q.items.length) });
+		const body = cell.createDiv("zerohearth-matrix-q-body");
 		if (q.items.length) drawItems(body, q.items);
-		else body.createDiv({ cls: "hearth-matrix-q-empty", text: frame.labels.empty });
+		else body.createDiv({ cls: "zerohearth-matrix-q-empty", text: frame.labels.empty });
 		if (q.droppable) dropZone(cell, all, (item) => frame.onDrop(item, id));
 	}
 
 	if (frame.unsorted !== null) {
-		const strip = root.createDiv("hearth-matrix-unsorted");
-		const head = strip.createDiv("hearth-matrix-unsorted-head");
-		head.createSpan({ cls: "hearth-matrix-unsorted-title", text: frame.labels.unsorted });
-		head.createSpan({ cls: "hearth-matrix-q-count", text: String(frame.unsorted.length) });
-		head.createSpan({ cls: "hearth-matrix-unsorted-hint", text: frame.labels.unsortedHint });
-		const body = strip.createDiv("hearth-matrix-unsorted-body");
+		const strip = root.createDiv("zerohearth-matrix-unsorted");
+		const head = strip.createDiv("zerohearth-matrix-unsorted-head");
+		head.createSpan({ cls: "zerohearth-matrix-unsorted-title", text: frame.labels.unsorted });
+		head.createSpan({ cls: "zerohearth-matrix-q-count", text: String(frame.unsorted.length) });
+		head.createSpan({ cls: "zerohearth-matrix-unsorted-hint", text: frame.labels.unsortedHint });
+		const body = strip.createDiv("zerohearth-matrix-unsorted-body");
 		drawItems(body, frame.unsorted);
 		dropZone(strip, all, (item) => frame.onDrop(item, null));
 	}

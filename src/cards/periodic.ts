@@ -81,10 +81,10 @@ function createPrompt(
 	label: string,
 	onCreate: () => void,
 ): void {
-	const empty = body.createDiv("hearth-card-empty");
-	setIcon(empty.createDiv("hearth-card-empty-icon"), "calendar-plus");
-	empty.createDiv({ cls: "hearth-card-empty-text", text });
-	const create = empty.createEl("button", { cls: "hearth-periodic-create", text: label });
+	const empty = body.createDiv("zerohearth-card-empty");
+	setIcon(empty.createDiv("zerohearth-card-empty-icon"), "calendar-plus");
+	empty.createDiv({ cls: "zerohearth-card-empty-text", text });
+	const create = empty.createEl("button", { cls: "zerohearth-periodic-create", text: label });
 	create.addEventListener("click", onCreate);
 }
 
@@ -115,7 +115,7 @@ function renderNote(
 		return;
 	}
 
-	const host = body.createDiv("hearth-embed markdown-rendered");
+	const host = body.createDiv("zerohearth-embed markdown-rendered");
 	body.addClass("is-embed-host");
 	void renderMarkdownFile(view, file, host, component);
 }
@@ -170,14 +170,14 @@ function resolveFromPeriodicNotes(view: CardHost, card: DashboardCard, redraw: (
 		label: t().cards.periodic.create(period),
 		create: () => {
 			void (async () => {
-				// Periodic Notes writes the note, with its own template: Hearth
+				// Periodic Notes writes the note, with its own template: ZeroHearth
 				// never invents one (see src/periodic.ts).
 				const made = await createPeriodicNote(view.app, granularity, now());
 				if (!made.ran) {
 					new Notice(t().notices.couldNotOpenPeriodic);
 					return;
 				}
-				// 1.0 hands the file back without opening it, so Hearth opens it
+				// 1.0 hands the file back without opening it, so ZeroHearth opens it
 				// the way it opens everything else (#106) and redraws the card
 				// itself — the file-watch can't see a note whose path the card
 				// couldn't work out. 0.x's command opened it already, and the
@@ -196,16 +196,16 @@ function resolveFromPeriodicNotes(view: CardHost, card: DashboardCard, redraw: (
  *
  * The shape is the same as the Periodic Notes branch above — is there a note
  * for now, else offer to make one — with two differences that come from the
- * plugin rather than from Hearth:
+ * plugin rather than from ZeroHearth:
  *
  * - **The card names a journal, not a period.** A vault can hold several
  *   journals of one cadence, and the journal itself knows what period it
- *   writes, so there is nothing for Hearth to choose.
+ *   writes, so there is nothing for ZeroHearth to choose.
  * - **The lookup is asynchronous**, and this render is not. So the path comes
  *   from the cache in `src/journals.ts`, which answers instantly with what it
  *   last learned and redraws the card when a newer answer lands. Whether the
  *   *file* is there is still read from the vault on every render, so a note
- *   created or deleted behind Hearth's back shows immediately.
+ *   created or deleted behind ZeroHearth's back shows immediately.
  */
 function resolveFromJournals(view: CardHost, card: DashboardCard, redraw: () => void): PeriodicResolution {
 	if (!getJournalsApi(view.app)) {

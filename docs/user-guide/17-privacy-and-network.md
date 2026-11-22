@@ -1,22 +1,22 @@
 # 17. Privacy, network access and your data
 
-This chapter answers, in one place: what data Hearth holds, where it holds it,
+This chapter answers, in one place: what data ZeroHearth holds, where it holds it,
 what it sends over the network, when, and how to stop it.
 
-The short version: Hearth has **no telemetry, no account and no phone-home**.
+The short version: ZeroHearth has **no telemetry, no account and no phone-home**.
 The only outbound requests it makes are the ones a card you added needs, and a
 single switch silences all of them.
 
-## Where Hearth stores your data
+## Where ZeroHearth stores your data
 
-Everything Hearth knows lives in your vault, in the plugin's own data file under
-`.obsidian/plugins/hearth/`. That includes your dashboards, your cards and their
+Everything ZeroHearth knows lives in your vault, in the plugin's own data file under
+`.obsidian/plugins/zerohearth/`. That includes your dashboards, your cards and their
 configuration, your vault-wide settings, your Favorites list, and your
 publishing key if you have created one.
 
 Two things deliberately live elsewhere:
 
-- **Search history.** The last six files you opened through Hearth's search are
+- **Search history.** The last six files you opened through ZeroHearth's search are
   kept in the vault's local storage rather than in the settings file, so they
   never appear in the settings UI and are never included in an export.
 - **Nothing at all is stored outside the vault.** There is no cloud component,
@@ -28,12 +28,12 @@ use, and it is included in whatever backup you already take of the vault.
 
 ## The master switch
 
-**Settings → Hearth → Behaviour → Privacy & network → Disable external calls.**
+**Settings → ZeroHearth → Behaviour → Privacy & network → Disable external calls.**
 
-Turning this on blocks **all** outbound network requests Hearth makes. Its
+Turning this on blocks **all** outbound network requests ZeroHearth makes. Its
 description is exhaustive: Jira, external calendars, RSS feeds, the calculator's
 currency-rate lookup, and background images and title icons given as a web
-address — those last two fall back to no picture and to the Hearth crystal.
+address — those last two fall back to no picture and to the ZeroHearth crystal.
 
 Cards do not fail silently under this setting. Each one says why it is empty:
 *Feeds are off (external calls disabled)*, *Place search is unavailable while
@@ -43,7 +43,7 @@ background will not be shown and suggests a vault image instead.
 
 The gallery is also blocked, with a message saying exactly that.
 
-## Everything Hearth can send, and to whom
+## Everything ZeroHearth can send, and to whom
 
 There are eleven categories of outbound request. Nothing else exists.
 
@@ -74,20 +74,20 @@ sandboxed iframe, so whatever that page loads, it loads. The card's *Trusted
 site* option relaxes the iframe sandbox to allow same-origin access — cookies
 and storage — and should only be enabled for sites you trust.
 
-## What Hearth never does
+## What ZeroHearth never does
 
 - It does not send anything about your vault, your notes, your usage or your
   machine anywhere.
 - It has no analytics, crash reporting or update-check beacon of its own.
-  Obsidian's own plugin updater is Obsidian's, not Hearth's.
+  Obsidian's own plugin updater is Obsidian's, not ZeroHearth's.
 - It does not require an account for any feature. Publishing to a gallery uses a
   key generated in your vault, not a sign-up.
 - It does not read anything a card is not asked to read.
 
 ## Credentials
 
-The only credential Hearth stores is a **Jira personal access token**, entered on
-a Jira card and stored in Hearth's plugin data alongside the rest of your
+The only credential ZeroHearth stores is a **Jira personal access token**, entered on
+a Jira card and stored in ZeroHearth's plugin data alongside the rest of your
 configuration.
 
 It is **never included in any export**, of any kind, with any setting. This is
@@ -95,7 +95,7 @@ not a switch you can get wrong.
 
 ## Sharing a dashboard safely
 
-When you export a dashboard to a file, Hearth offers *Leave out my private
+When you export a dashboard to a file, ZeroHearth offers *Leave out my private
 information*, which removes vault paths, calendar feed URLs, private hosts, your
 location, and any text you typed on a text or calculator card. The details
 section lists **the actual values** it will remove, read from your board, so you
@@ -109,7 +109,7 @@ Both flows are documented in full in [chapter 16](16-sharing-and-gallery.md).
 
 ## The gallery, specifically
 
-The gallery is the only Hearth feature that is a server relationship rather than
+The gallery is the only ZeroHearth feature that is a server relationship rather than
 a one-off request, so it is worth being precise:
 
 - **Nothing is fetched until you open the gallery.** It does not poll, prefetch
@@ -117,7 +117,7 @@ a one-off request, so it is worth being precise:
 - **Nothing is sent until you publish.** Browsing does not upload anything about
   your vault.
 - **The address is a setting.** Clearing the *Gallery address* field under
-  *Settings → Hearth → Backup* turns the gallery off entirely, and it stays off.
+  *Settings → ZeroHearth → Backup* turns the gallery off entirely, and it stays off.
 - **Your identity is a local key.** The handle you publish under is derived from
   a signing key generated in your vault that never leaves it. It says nothing
   about who you are. Voting and publishing need one; browsing and installing do
@@ -128,7 +128,7 @@ a one-off request, so it is worth being precise:
 ## Installing someone else's dashboard
 
 A dashboard from the gallery, or a file from a friend, is data rather than code —
-but it can point at things. Before you install, Hearth tells you:
+but it can point at things. Before you install, ZeroHearth tells you:
 
 - exactly which plugins and hosted views it needs,
 - how many things on the board are loaded from the internet, or explicitly that
@@ -143,9 +143,9 @@ board's scripts are worth reading before you open the board.
 
 ## A quick audit of your own vault
 
-If you want to know what your Hearth setup currently reaches out to:
+If you want to know what your ZeroHearth setup currently reaches out to:
 
-1. Open **Settings → Hearth → Integrations**. The **External services** group
+1. Open **Settings → ZeroHearth → Integrations**. The **External services** group
    lists every network-using integration with a live status pill.
 2. Open the **Share dashboard** dialog for each board and read the details
    disclosure. It lists the actual feed URLs, hosts and locations the board
@@ -157,5 +157,5 @@ If you want to know what your Hearth setup currently reaches out to:
 ## Accessibility and reduced motion
 
 Not privacy, but adjacent and easy to miss: if your operating system asks for
-reduced motion, Hearth honours it. The painted sky holds still regardless of the
+reduced motion, ZeroHearth honours it. The painted sky holds still regardless of the
 performance tier and regardless of the per-board *Animate the sky* setting.

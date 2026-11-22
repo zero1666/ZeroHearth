@@ -1,42 +1,42 @@
 # 18. Troubleshooting and frequently asked questions
 
-This chapter collects the questions people actually ask about Hearth, the
-messages Hearth shows when something is not working, and what to do about each.
+This chapter collects the questions people actually ask about ZeroHearth, the
+messages ZeroHearth shows when something is not working, and what to do about each.
 
 ---
 
-## Getting Hearth open
+## Getting ZeroHearth open
 
-### Hearth does not open when Obsidian starts
+### ZeroHearth does not open when Obsidian starts
 
-Check *Open on startup* under **Settings → Hearth → Behaviour → Startup &
+Check *Open on startup* under **Settings → ZeroHearth → Behaviour → Startup &
 tabs**. It is on by default, so if it is off, something turned it off.
 
-### A new tab is empty instead of showing Hearth
+### A new tab is empty instead of showing ZeroHearth
 
 Check *Replace new tabs* under the same section. It is on by default.
 
 ### I cannot find the ribbon icon
 
-The ribbon button is labelled *Open Hearth home*. If you have changed the *Tab
-icon* setting under **Settings → Hearth → Appearance → Home**, it will be
-wearing your Lucide icon rather than the Hearth crystal. You can also open
-Hearth with the command *Open home dashboard*, which you can bind to a hotkey.
+The ribbon button is labelled *Open ZeroHearth home*. If you have changed the *Tab
+icon* setting under **Settings → ZeroHearth → Appearance → Home**, it will be
+wearing your Lucide icon rather than the ZeroHearth crystal. You can also open
+ZeroHearth with the command *Open home dashboard*, which you can bind to a hotkey.
 
-### Opening a note from the file explorer replaces my Hearth tab
+### Opening a note from the file explorer replaces my ZeroHearth tab
 
 This is Obsidian's behaviour: it hands a file to whichever tab is focused, and a
-focused Hearth tab gets taken over.
+focused ZeroHearth tab gets taken over.
 
-Set *Notes opened from outside Hearth* to **A new tab (keep Hearth open)** under
-**Settings → Hearth → Behaviour → Opening notes**. The trade-off, which Hearth
+Set *Notes opened from outside ZeroHearth* to **A new tab (keep ZeroHearth open)** under
+**Settings → ZeroHearth → Behaviour → Opening notes**. The trade-off, which ZeroHearth
 states: the file explorer then stops following what you open.
 
-### Clicking things inside Hearth opens them in the wrong place
+### Clicking things inside ZeroHearth opens them in the wrong place
 
-**Settings → Hearth → Behaviour → Opening notes** has a general *Open notes in*
+**Settings → ZeroHearth → Behaviour → Opening notes** has a general *Open notes in*
 setting and four per-source overrides — Links, Search results, Notes in cards,
-and Notes Hearth creates. Each override can also follow the general setting.
+and Notes ZeroHearth creates. Each override can also follow the general setting.
 
 `Ctrl`-click, or `Cmd`-click on macOS, always opens a new tab regardless.
 
@@ -48,7 +48,7 @@ and Notes Hearth creates. Each override can also follow the general setting.
 
 Not in the settings window. Open the Home view, press **Arrange**, then press
 that card's gear button. The settings page says so in a row of its own under
-*Settings → Hearth → Dashboard → Cards*.
+*Settings → ZeroHearth → Dashboard → Cards*.
 
 ### Where do I change one dashboard rather than all of them?
 
@@ -78,7 +78,7 @@ the performance tier: *Reduced* and *Minimal* switch the blur off.
 
 ## Cards that are empty or complaining
 
-Hearth's cards say why they are empty rather than showing nothing. The complete
+ZeroHearth's cards say why they are empty rather than showing nothing. The complete
 set of these messages, and what each means:
 
 ### Cards waiting for a core plugin
@@ -137,7 +137,7 @@ is nothing to show.
 ### Network-blocked cards
 
 *Feeds are off (external calls disabled)* and similar messages mean *Disable
-external calls* is on under **Settings → Hearth → Behaviour → Privacy &
+external calls* is on under **Settings → ZeroHearth → Behaviour → Privacy &
 network**.
 
 ### A card that failed to draw
@@ -146,7 +146,7 @@ network**.
 console (`Cmd`/`Ctrl` + `Option` + `I`) to see the error, and please report it on
 GitHub. Only that card is affected.
 
-Similarly, if a whole settings section fails, Hearth shows *The "<name>" section
+Similarly, if a whole settings section fails, ZeroHearth shows *The "<name>" section
 couldn't be shown* in its place, with the same advice. The other settings are
 unaffected.
 
@@ -156,34 +156,34 @@ unaffected.
 
 ### My TaskNotes tasks do not appear
 
-TaskNotes has no stable API, so Hearth reads its frontmatter directly and has to
-be told the field names. Open **Settings → Hearth → Integrations → Tasks /
+TaskNotes has no stable API, so ZeroHearth reads its frontmatter directly and has to
+be told the field names. Open **Settings → ZeroHearth → Integrations → Tasks /
 TaskNotes** and match *Status field*, *Due date field*, *Priority field* and
 *"Done" status value* to whatever TaskNotes is configured with. The defaults are
 TaskNotes' own defaults.
 
 ### Some completed TaskNotes tasks still show as open
 
-Hearth treats one status value as "done" by default. If your vault also uses,
+ZeroHearth treats one status value as "done" by default. If your vault also uses,
 say, `canceled`, add it to *Statuses counted as complete* on the Tasks card, one
 value per line.
 
-### Dragging a Kanban card in Hearth broke my board note
+### Dragging a Kanban card in ZeroHearth broke my board note
 
-It should not: Hearth writes drops in Kanban's own format precisely so the note
+It should not: ZeroHearth writes drops in Kanban's own format precisely so the note
 stays editable in the Kanban plugin. If a board note comes out malformed, that is
 a bug worth reporting with the note's contents.
 
 ### My custom task fields disappeared after importing a board
 
-Turn on *Customize task fields* under **Settings → Hearth → Integrations**.
-Hearth warns about this at import time: "Its task cards use custom fields — turn
+Turn on *Customize task fields* under **Settings → ZeroHearth → Integrations**.
+ZeroHearth warns about this at import time: "Its task cards use custom fields — turn
 on task field customization in Settings → Integrations to see them."
 
 ### Only one of my fields tints the task
 
 Correct, and deliberate. A task has one background and one ring, so only one
-field can use *Tint the whole task* and one *Glow around the task*. Hearth names
+field can use *Tint the whole task* and one *Glow around the task*. ZeroHearth names
 the field that already holds it.
 
 ---
@@ -196,17 +196,17 @@ are specific:
 | Message | What to do |
 | --- | --- |
 | *Operon's developer API is desktop-only and needs Obsidian 1.12.2 or newer* | Nothing — the cards cannot work on this platform or version |
-| *The Operon integration is off — turn it on in Settings → Hearth → Integrations* | The kill switch is on |
-| *Approve Hearth in Settings → Operon → Core → General → Developer API Integrations* | Go there and approve it |
-| *Operon suspended Hearth's access* | Review Hearth's pending scope in Operon's Developer API Integrations |
+| *The Operon integration is off — turn it on in Settings → ZeroHearth → Integrations* | The kill switch is on |
+| *Approve ZeroHearth in Settings → Operon → Core → General → Developer API Integrations* | Go there and approve it |
+| *Operon suspended ZeroHearth's access* | Review ZeroHearth's pending scope in Operon's Developer API Integrations |
 | *Operon access was revoked* | Grant it again in the same place |
 | *Operon is still starting up* | Wait, then press *Recheck now* |
 | *Operon refused the connection* | Operon's own error text is shown underneath |
-| *Reading works, but the change permissions haven't been granted yet* | You turned on *Allow changes*, which widens the request. Approve Hearth again in Operon |
+| *Reading works, but the change permissions haven't been granted yet* | You turned on *Allow changes*, which widens the request. Approve ZeroHearth again in Operon |
 
 ### Operon could not confirm whether my change was applied
 
-Hearth reports "unknown" rather than "failed", re-reads the card, and does not
+ZeroHearth reports "unknown" rather than "failed", re-reads the card, and does not
 offer a retry — a retry could apply the change twice. Check the task before
 trying again.
 
@@ -230,7 +230,7 @@ plugin views are a cost the performance tier cannot touch.
 
 Look for **Plugin view** cards. A hosted view runs another plugin's full view
 live, keeping its timers, listeners and rendering going for as long as the board
-is open, and Hearth's tier cannot slow it down. The card says as much in its own
+is open, and ZeroHearth's tier cannot slow it down. The card says as much in its own
 settings.
 
 ### My animations stop when I switch to another app
@@ -249,11 +249,11 @@ while the desktop tier defaults to *Full*.
 
 ### My board looks completely different on my phone
 
-At or below 700 pixels of measured board width, Hearth reflows the board into one
+At or below 700 pixels of measured board width, ZeroHearth reflows the board into one
 full-width column. Your stored layout is untouched and returns at full width.
 
 If you would rather it did not, turn off *Stack cards on narrow screens* under
-**Settings → Hearth → Mobile → Layout**, or set *Stack when narrow* to *Keep the
+**Settings → ZeroHearth → Mobile → Layout**, or set *Stack when narrow* to *Keep the
 scaled layout* on that one board. The 700 is a setting too — *Narrow below*, in
 the same place — if the column should start sooner or later than that.
 
@@ -297,7 +297,7 @@ values instead of picking up theirs.
 Expected, if the board was published rather than exported as a personal backup:
 publishing always removes vault paths. Point the cards at your own notes.
 
-Hearth also tells you at import time how many paths are missing, with examples.
+ZeroHearth also tells you at import time how many paths are missing, with examples.
 
 ### The gallery says my board is held for review
 
@@ -319,7 +319,7 @@ and copy its key somewhere safe this time.
 ### An imported file says its author cannot be established
 
 Either it carries no signature, or its signature does not check out — it was
-edited after signing, or somebody put another maker's handle on it. Hearth
+edited after signing, or somebody put another maker's handle on it. ZeroHearth
 imports it without an author. Everything else about the import is unaffected.
 
 ---
@@ -328,63 +328,63 @@ imports it without an author. Everything else about the import is unaffected.
 
 ### Search does not find text inside my notes
 
-Check *Search note contents* under **Settings → Hearth → Search → Search bar**.
+Check *Search note contents* under **Settings → ZeroHearth → Search → Search bar**.
 It is on by default.
 
-### I chose Omnisearch and now search is Hearth's again
+### I chose Omnisearch and now search is ZeroHearth's again
 
 The Omnisearch choice only sticks while the Omnisearch plugin is enabled. Disable
-it and Hearth falls back to its own engine rather than showing an empty search.
+it and ZeroHearth falls back to its own engine rather than showing an empty search.
 Re-enable Omnisearch and select it again.
 
 ### A filter chip I want is missing
 
 Chips are auto-detected: one appears only if your vault actually contains that
-kind of file. Also check that it is not hidden under **Settings → Hearth →
+kind of file. Also check that it is not hidden under **Settings → ZeroHearth →
 Search → Filter chips**, or on that board's *Filter chips* override.
 
 ### Search finds nothing for a file type I can see
 
-*Search only the shown types* under **Settings → Hearth → Search → Filter chips**
+*Search only the shown types* under **Settings → ZeroHearth → Search → Filter chips**
 (or the same switch in a board's settings) limits results to the types whose
 chips are on. Switch the chip back on, or turn the switch off.
 
 ### My file icons from Iconic or Iconize do not show
 
-Check *Use icons from Iconic / Iconize* under **Settings → Hearth → Integrations
+Check *Use icons from Iconic / Iconize* under **Settings → ZeroHearth → Integrations
 → File icons**. Note that a file using an icon from a downloaded icon pack keeps
-Hearth's own file-type icon; only Lucide icons and emoji are shown. If you set
+ZeroHearth's own file-type icon; only Lucide icons and emoji are shown. If you set
 icons through Iconize's frontmatter property and renamed that property, tell
-Hearth the new name.
+ZeroHearth the new name.
 
 ---
 
 ## General questions
 
-### Does Hearth send any of my data anywhere?
+### Does ZeroHearth send any of my data anywhere?
 
 No. There is no telemetry, no account and no phone-home. The only outbound
 requests are the ones a card you added needs, and *Disable external calls*
 silences all of them at once. See [chapter 17](17-privacy-and-network.md).
 
-### Is Hearth free?
+### Is ZeroHearth free?
 
-Yes, and MIT-licensed. There is an optional Ko-fi tip link in *Settings → Hearth
+Yes, and MIT-licensed. There is an optional Ko-fi tip link in *Settings → ZeroHearth
 → About*; no features are locked behind it.
 
-### Was Hearth written by AI?
+### Was ZeroHearth written by AI?
 
 Yes, and the README says so plainly. Every pull request is tested in a testing
 vault by a human before merging, and every release is beta tested in a testing
 vault by a human before being promoted to stable.
 
-### Can I use Hearth in more than one vault?
+### Can I use ZeroHearth in more than one vault?
 
 Yes. Its configuration lives in each vault's plugin data, so each vault has its
 own dashboards. You can move a board between vaults with *Export dashboard* and
 *Import*, and you can carry your publishing handle across with its recovery key.
 
-### Can I translate Hearth?
+### Can I translate ZeroHearth?
 
 Yes, and translations are explicitly one of the most valuable contributions
 right now. User-facing strings live in `src/locales/`; English (`en.ts`) is the
@@ -395,18 +395,18 @@ source of truth. Copy it, translate the values and register the file — see
 
 Press **Arrange → Add card**, and use **Request a card** at the bottom of the
 left rail. It opens either a pre-filled GitHub issue or a pre-filled email,
-carrying a few prompts and your Hearth and Obsidian versions. You can edit
+carrying a few prompts and your ZeroHearth and Obsidian versions. You can edit
 anything before sending.
 
 ### How do I report a bug?
 
-**Settings → Hearth → About → Report an issue** opens the GitHub issue tracker.
-Bug reports and feature ideas are the most valuable contributions to Hearth right
+**Settings → ZeroHearth → About → Report an issue** opens the GitHub issue tracker.
+Bug reports and feature ideas are the most valuable contributions to ZeroHearth right
 now. For anything larger than a small, obvious fix, open an issue before writing
-code — Hearth moves fast and big pull requests against a fast-moving codebase
+code — ZeroHearth moves fast and big pull requests against a fast-moving codebase
 tend to go stale.
 
 ### Where are the release notes?
 
-**Settings → Hearth → About → What's new** inside Obsidian, or
+**Settings → ZeroHearth → About → What's new** inside Obsidian, or
 [`CHANGELOG.md`](../../CHANGELOG.md) in the repository.

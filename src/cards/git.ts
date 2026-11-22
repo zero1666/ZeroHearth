@@ -1,7 +1,7 @@
 import { Component, Notice, Setting, TFile } from "obsidian";
 import type { CardHost } from "../cardhost";
 import { setIcon } from "../glyphs";
-import { hearthMenu } from "../uidesign";
+import { zerohearthMenu } from "../uidesign";
 import { emptyState, moment } from "../cardbodies";
 import { addResetButton, moveItem } from "../editors";
 import {
@@ -76,7 +76,7 @@ export function renderGit(
 	}
 	// obsidian-git is enabled but hasn't built its git manager yet. That happens
 	// on every cold desktop start — the plugin probes the git binary after
-	// layout-ready, which can outlast the render of a restored Hearth tab — and
+	// layout-ready, which can outlast the render of a restored ZeroHearth tab — and
 	// it is a phase, not an answer, so the card says "not ready" and waits
 	// instead of telling the user to enable a plugin they already have.
 	waitForGit(view, card, body, component);
@@ -127,10 +127,10 @@ const GIT_STARTUP_POLL_MS = 500;
  * situation — obsidian-git has nothing to show yet, and its own view is where
  * that gets sorted out. */
 function paintGitStarting(view: CardHost, parent: HTMLElement): void {
-	const empty = parent.createDiv("hearth-git-notready");
+	const empty = parent.createDiv("zerohearth-git-notready");
 	emptyState(empty, "git-branch", t().cards.empty.gitNotReady);
 	const button = empty.createEl("button", {
-		cls: "hearth-git-notready-button",
+		cls: "zerohearth-git-notready-button",
 		text: t().cards.git.openSourceControl,
 	});
 	button.addEventListener("click", () => void openGitView(view.app, "sourceControl"));
@@ -159,7 +159,7 @@ function renderGitBody(
 		destroyed = true;
 	});
 
-	const wrap = body.createDiv("hearth-git");
+	const wrap = body.createDiv("zerohearth-git");
 	let snapshot: GitSnapshot = { status: plugin.cachedStatus };
 	let loading = false;
 	let busy = false;
@@ -274,7 +274,7 @@ function renderGitBody(
 	);
 	// The plugin finished a refresh cycle — but it only re-reads the status
 	// during one when its own status bar or one of its views needs it, and a
-	// Hearth card is neither. So when that cycle produced no status event, the
+	// ZeroHearth card is neither. So when that cycle produced no status event, the
 	// card reads for itself; when it did, the paint above already happened and
 	// there is nothing left to do.
 	component.registerEvent(
@@ -315,13 +315,13 @@ function paintStatus(
 	onRefresh: () => void,
 ): void {
 	const strings = t().cards.git;
-	const row = wrap.createDiv("hearth-git-status");
+	const row = wrap.createDiv("zerohearth-git-status");
 
 	const branchName = snapshot.branch?.current;
-	const branch = row.createDiv("hearth-git-branch");
-	setIcon(branch.createDiv("hearth-git-branch-icon"), "git-branch");
+	const branch = row.createDiv("zerohearth-git-branch");
+	setIcon(branch.createDiv("zerohearth-git-branch-icon"), "git-branch");
 	branch.createSpan({
-		cls: "hearth-git-branch-name",
+		cls: "zerohearth-git-branch-name",
 		text: branchName || strings.noBranch,
 	});
 	if (branchName) {
@@ -331,7 +331,7 @@ function paintStatus(
 	}
 
 	const counts = gitChangeCounts(snapshot.status);
-	const chips = row.createDiv("hearth-git-chips");
+	const chips = row.createDiv("zerohearth-git-chips");
 	/** One count chip; drawn only when it has something to say. */
 	const chip = (
 		value: number,
@@ -340,9 +340,9 @@ function paintStatus(
 		cls: string,
 	): void => {
 		if (value <= 0) return;
-		const el = chips.createDiv(`hearth-git-chip ${cls}`);
-		setIcon(el.createSpan("hearth-git-chip-icon"), icon);
-		el.createSpan({ cls: "hearth-git-chip-value", text: String(value) });
+		const el = chips.createDiv(`zerohearth-git-chip ${cls}`);
+		setIcon(el.createSpan("zerohearth-git-chip-icon"), icon);
+		el.createSpan({ cls: "zerohearth-git-chip-value", text: String(value) });
 		el.setAttribute("title", label);
 		el.setAttribute("aria-label", `${value} ${label}`);
 	};
@@ -352,20 +352,20 @@ function paintStatus(
 	chip(snapshot.unpushed ?? 0, "upload", strings.unpushed, "is-unpushed");
 
 	if (counts.total === 0 && !(snapshot.unpushed ?? 0)) {
-		chips.createSpan({ cls: "hearth-git-clean", text: strings.clean });
+		chips.createSpan({ cls: "zerohearth-git-clean", text: strings.clean });
 	}
 
 	const last = snapshot.lastCommit;
 	if (last) {
 		row.createDiv({
-			cls: "hearth-git-lastcommit",
+			cls: "zerohearth-git-lastcommit",
 			text: strings.lastCommit(relativeTime(last)),
 		});
 	}
 	// The refresh control doubles as the busy indicator: it spins while a read is
 	// in flight, which is also when pressing it again would be pointless.
 	const refresh = row.createEl("button", {
-		cls: "hearth-git-refresh",
+		cls: "zerohearth-git-refresh",
 		attr: { "aria-label": strings.refresh },
 		title: strings.refresh,
 	});
@@ -388,16 +388,16 @@ function paintActions(
 	const actions = gitActions(configured);
 	if (actions.length === 0) return;
 	const labelled = style === "labelled";
-	const row = wrap.createDiv("hearth-git-actions");
+	const row = wrap.createDiv("zerohearth-git-actions");
 	row.toggleClass("is-labelled", labelled);
 	for (const action of actions) {
 		const def = GIT_ACTION_DEFS[action];
 		const label = t().cards.git.actions[action];
-		const button = row.createEl("button", { cls: "hearth-git-action" });
+		const button = row.createEl("button", { cls: "zerohearth-git-action" });
 		button.addClass(`is-${action}`);
 		if (def.destructive) button.addClass("is-destructive");
-		setIcon(button.createSpan("hearth-git-action-icon"), def.icon);
-		if (labelled) button.createSpan({ cls: "hearth-git-action-label", text: label });
+		setIcon(button.createSpan("zerohearth-git-action-icon"), def.icon);
+		if (labelled) button.createSpan({ cls: "zerohearth-git-action-label", text: label });
 		button.setAttribute("aria-label", label);
 		button.setAttribute("title", label);
 		const available = gitActionAvailable(plugin, action);
@@ -418,17 +418,17 @@ function paintChanges(
 	refresh: () => void,
 ): void {
 	const rows = gitChangeRows(snapshot.status);
-	const section = wrap.createDiv("hearth-git-changes");
+	const section = wrap.createDiv("zerohearth-git-changes");
 	if (rows.length === 0) {
-		section.createDiv({ cls: "hearth-git-none", text: t().cards.git.noChanges });
+		section.createDiv({ cls: "zerohearth-git-none", text: t().cards.git.noChanges });
 		return;
 	}
 	const shown = limit > 0 ? rows.slice(0, limit) : rows;
-	const list = section.createDiv("hearth-list hearth-git-list");
+	const list = section.createDiv("zerohearth-list zerohearth-git-list");
 	for (const row of shown) paintChangeRow(view, plugin, list, row, showPaths, refresh);
 	if (rows.length > shown.length) {
 		const more = section.createDiv({
-			cls: "hearth-git-more",
+			cls: "zerohearth-git-more",
 			text: t().cards.git.more(rows.length - shown.length),
 		});
 		const open = (): void => void openGitView(view.app, "sourceControl");
@@ -447,18 +447,18 @@ function paintChangeRow(
 	showPaths: boolean | undefined,
 	refresh: () => void,
 ): void {
-	const el = list.createDiv("hearth-list-item hearth-git-file");
+	const el = list.createDiv("zerohearth-list-item zerohearth-git-file");
 	el.addClass(`is-${row.kind}`);
 	if (row.staged) el.addClass("is-staged");
-	el.createDiv({ cls: "hearth-git-letter", text: row.letter });
+	el.createDiv({ cls: "zerohearth-git-letter", text: row.letter });
 
-	const main = el.createDiv("hearth-git-file-main");
-	main.createDiv({ cls: "hearth-list-label", text: row.name });
+	const main = el.createDiv("zerohearth-git-file-main");
+	main.createDiv({ cls: "zerohearth-list-label", text: row.name });
 	if (showPaths) {
 		const folder = row.path.includes("/")
 			? row.path.slice(0, row.path.lastIndexOf("/"))
 			: "";
-		if (folder) main.createDiv({ cls: "hearth-git-file-path", text: folder });
+		if (folder) main.createDiv({ cls: "zerohearth-git-file-path", text: folder });
 	}
 	el.setAttribute("title", row.path);
 
@@ -477,7 +477,7 @@ function paintChangeRow(
 
 	el.addEventListener("contextmenu", (evt) => {
 		evt.preventDefault();
-		const menu = hearthMenu();
+		const menu = zerohearthMenu();
 		const strings = t().cards.git;
 		if (plugin.tools?.openDiff) {
 			menu.addItem((item) =>
@@ -538,23 +538,23 @@ function paintLog(
 	limit: number,
 ): void {
 	const entries = (snapshot.log ?? []).slice(0, limit);
-	const section = wrap.createDiv("hearth-git-log");
+	const section = wrap.createDiv("zerohearth-git-log");
 	if (entries.length === 0) {
-		section.createDiv({ cls: "hearth-git-none", text: t().cards.git.noCommits });
+		section.createDiv({ cls: "zerohearth-git-none", text: t().cards.git.noCommits });
 		return;
 	}
 	for (const entry of entries) {
-		const el = section.createDiv("hearth-git-commit");
-		el.createDiv({ cls: "hearth-git-commit-hash", text: shortHash(entry.hash) });
-		const main = el.createDiv("hearth-git-commit-main");
+		const el = section.createDiv("zerohearth-git-commit");
+		el.createDiv({ cls: "zerohearth-git-commit-hash", text: shortHash(entry.hash) });
+		const main = el.createDiv("zerohearth-git-commit-main");
 		main.createDiv({
-			cls: "hearth-git-commit-message",
+			cls: "zerohearth-git-commit-message",
 			text: commitSummary(entry.message) || t().cards.git.noMessage,
 		});
 		const when = parseCommitDate(entry.date);
 		const meta = [entry.author?.name, when ? relativeTime(when) : ""].filter(Boolean);
 		if (meta.length) {
-			main.createDiv({ cls: "hearth-git-commit-meta", text: meta.join(" · ") });
+			main.createDiv({ cls: "zerohearth-git-commit-meta", text: meta.join(" · ") });
 		}
 		const open = (): void => void openGitView(view.app, "history");
 		el.setAttribute("title", entry.hash ?? "");

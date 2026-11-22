@@ -29,13 +29,13 @@ import {
 } from "../taskchute";
 import { type DashboardCard, type TaskChuteConfig } from "../types";
 import { confirmAction } from "../ui";
-import { hearthMenu, HearthModal } from "../uidesign";
+import { zerohearthMenu, ZeroHearthModal } from "../uidesign";
 import { type CardDefinition, type CardEditorContext } from "./definition";
 
 // ---- TaskChute -----------------------------------------------------------
 //
 // A native card, not a hosted view: the list, the overview and the heatmap are
-// drawn by Hearth in its own markup, sized for a dashboard tile. The data comes
+// drawn by ZeroHearth in its own markup, sized for a dashboard tile. The data comes
 // from TaskChute itself — the live view model for the task list (so starting and
 // stopping a task goes through the plugin's timer, log, heatmap and reminders)
 // and its monthly snapshot for the two read-only views. See `../taskchute.ts`.
@@ -49,7 +49,7 @@ export type TaskChuteViewKind = NonNullable<TaskChuteConfig["view"]>;
 type Strings = ReturnType<typeof t>["cards"]["taskchute"];
 
 /** Which of the three views a card shows. Unknown values fall back to the task
- * list, which is what a card saved by a newer Hearth would have meant. */
+ * list, which is what a card saved by a newer ZeroHearth would have meant. */
 export function taskChuteCardView(cfg: TaskChuteConfig): TaskChuteViewKind {
 	const view = cfg.view;
 	return view === "overview" || view === "heatmap" ? view : "tasks";
@@ -81,20 +81,20 @@ export function renderTaskChute(
 		void openTaskChute(view.app);
 	});
 	if (kind === "overview" || kind === "heatmap") {
-		const root = body.createDiv("hearth-taskchute");
+		const root = body.createDiv("zerohearth-taskchute");
 		root.addClass(`is-${kind}`);
 		void paintRecords(view.app, root, kind);
 		return;
 	}
 
-	const root = body.createDiv("hearth-taskchute");
+	const root = body.createDiv("zerohearth-taskchute");
 	void paintTasks(view.app, root, component, strings);
 }
 
 // ---- Task list -----------------------------------------------------------
 
 function paintTasks(app: App, root: HTMLElement, component: Component, strings: Strings): void {
-	root.createDiv({ cls: "hearth-tc-loading", text: strings.loading });
+	root.createDiv({ cls: "zerohearth-tc-loading", text: strings.loading });
 	void (async () => {
 		const session = await taskChuteSession(app);
 		if (!root.isConnected) return;
@@ -123,7 +123,7 @@ function paintTasks(app: App, root: HTMLElement, component: Component, strings: 
 		component.registerInterval(
 			window.setInterval(() => {
 				if (!root.isConnected) return;
-				for (const el of Array.from(root.querySelectorAll<HTMLElement>(".hearth-tc-elapsed"))) {
+				for (const el of Array.from(root.querySelectorAll<HTMLElement>(".zerohearth-tc-elapsed"))) {
 					const id = el.dataset.instanceId;
 					const inst = session.taskInstances.find((candidate) => candidate.instanceId === id);
 					if (inst) el.setText(formatTaskChuteDuration(taskChuteElapsed(inst)));
@@ -142,25 +142,25 @@ function paintList(app: App, session: TaskChuteLiveView, root: HTMLElement, stri
 		if (root.isConnected) paintList(app, session, root, strings);
 	};
 
-	const header = root.createDiv("hearth-tc-header");
+	const header = root.createDiv("zerohearth-tc-header");
 	dayNav(header, app, strings, repaint);
-	header.createSpan({ cls: "hearth-tc-progress", text: strings.progress(progress.done, progress.total) });
+	header.createSpan({ cls: "zerohearth-tc-progress", text: strings.progress(progress.done, progress.total) });
 	addTaskButton(header, session, strings);
 
 	if (rows.length === 0) {
 		emptyState(root, "list-todo", strings.noTasks);
 		return;
 	}
-	const list = root.createDiv("hearth-tc-list");
+	const list = root.createDiv("zerohearth-tc-list");
 	for (const section of taskChuteSections(session.taskInstances, session.sectionConfig?.getSlotKeys?.() ?? [])) {
-		const group = list.createDiv("hearth-tc-section");
+		const group = list.createDiv("zerohearth-tc-section");
 		group.dataset.slot = section.key;
 		group.createDiv({
-			cls: "hearth-tc-section-label",
+			cls: "zerohearth-tc-section-label",
 			text: taskChuteSectionLabel(section.key, strings.noTime),
 		});
 		if (section.rows.length === 0) {
-			group.createDiv({ cls: "hearth-tc-dropzone", text: strings.dropHere });
+			group.createDiv({ cls: "zerohearth-tc-dropzone", text: strings.dropHere });
 		}
 		for (const inst of section.rows) {
 			row(group, inst, session, section.rows, app, repaint, strings);
@@ -172,7 +172,7 @@ function paintList(app: App, session: TaskChuteLiveView, root: HTMLElement, stri
 	if (list.scrollHeight > list.clientHeight + 1) list.addClass("is-scrollable");
 }
 
-const DRAG_PREFIX = "hearth-taskchute:";
+const DRAG_PREFIX = "zerohearth-taskchute:";
 
 /** Turn a section into a drop target: dropping a row on it hands the task to
  * TaskChute's own `moveInstanceToSlot`, which persists the new section (its
@@ -204,11 +204,11 @@ function dropTarget(group: HTMLElement, session: TaskChuteLiveView, slot: string
  * itself goes back to today, so a card left on next week is one click from
  * home. */
 function dayNav(header: HTMLElement, app: App, strings: Strings, repaint: () => void): void {
-	const nav = header.createDiv("hearth-tc-daynav");
+	const nav = header.createDiv("zerohearth-tc-daynav");
 	const step = async (days: number) => {
 		if (await shiftTaskChuteDay(app, days)) repaint();
 	};
-	const prev = nav.createEl("button", { cls: "hearth-tc-navbtn" });
+	const prev = nav.createEl("button", { cls: "zerohearth-tc-navbtn" });
 	prev.setAttribute("type", "button");
 	prev.setAttribute("aria-label", strings.previousDay);
 	setIcon(prev, "chevron-left");
@@ -219,7 +219,7 @@ function dayNav(header: HTMLElement, app: App, strings: Strings, repaint: () => 
 	});
 
 	const label = nav.createEl("button", {
-		cls: "hearth-tc-day",
+		cls: "zerohearth-tc-day",
 		text: formatTaskChuteDay(taskChuteDay(), strings.today),
 	});
 	label.setAttribute("type", "button");
@@ -232,7 +232,7 @@ function dayNav(header: HTMLElement, app: App, strings: Strings, repaint: () => 
 		});
 	});
 
-	const next = nav.createEl("button", { cls: "hearth-tc-navbtn" });
+	const next = nav.createEl("button", { cls: "zerohearth-tc-navbtn" });
 	next.setAttribute("type", "button");
 	next.setAttribute("aria-label", strings.nextDay);
 	setIcon(next, "chevron-right");
@@ -248,7 +248,7 @@ function dayNav(header: HTMLElement, app: App, strings: Strings, repaint: () => 
 function addTaskButton(header: HTMLElement, session: TaskChuteLiveView, strings: Strings): void {
 	const show = session.taskCreationController?.showAddTaskModal;
 	if (typeof show !== "function") return;
-	const button = header.createEl("button", { cls: "hearth-tc-add" });
+	const button = header.createEl("button", { cls: "zerohearth-tc-add" });
 	button.setAttribute("type", "button");
 	button.setAttribute("aria-label", strings.addTask);
 	setIcon(button, "plus");
@@ -269,7 +269,7 @@ function row(
 	strings: Strings,
 ): void {
 	const state = inst.state === "running" ? "running" : inst.state === "done" ? "done" : "idle";
-	const button = list.createEl("button", { cls: "hearth-tc-row" });
+	const button = list.createEl("button", { cls: "zerohearth-tc-row" });
 	button.addClass(`is-${state}`);
 	button.setAttribute("type", "button");
 	button.draggable = true;
@@ -283,14 +283,14 @@ function row(
 	button.setAttribute("aria-label", state === "running" ? strings.stop : state === "idle" ? strings.start : strings.done);
 	button.dataset.instanceId = inst.instanceId;
 
-	const control = button.createSpan({ cls: "hearth-tc-control" });
+	const control = button.createSpan({ cls: "zerohearth-tc-control" });
 	setIcon(control, state === "running" ? "square" : state === "done" ? "check" : "play");
 
-	button.createSpan({ cls: "hearth-tc-title", text: taskChuteTitle(inst) });
+	button.createSpan({ cls: "zerohearth-tc-title", text: taskChuteTitle(inst) });
 
-	const meta = button.createSpan({ cls: "hearth-tc-meta" });
+	const meta = button.createSpan({ cls: "zerohearth-tc-meta" });
 	if (state === "running") {
-		const elapsed = meta.createSpan({ cls: "hearth-tc-elapsed" });
+		const elapsed = meta.createSpan({ cls: "zerohearth-tc-elapsed" });
 		elapsed.dataset.instanceId = inst.instanceId;
 		elapsed.setText(formatTaskChuteDuration(taskChuteElapsed(inst)));
 	} else {
@@ -300,7 +300,7 @@ function row(
 		meta.setText(taskChuteRange(inst) || inst.task?.scheduledTime?.trim() || "");
 	}
 
-	const more = button.createSpan({ cls: "hearth-tc-more" });
+	const more = button.createSpan({ cls: "zerohearth-tc-more" });
 	setIcon(more, "more-horizontal");
 	more.setAttribute("role", "button");
 	more.setAttribute("tabindex", "0");
@@ -318,7 +318,7 @@ function row(
 	button.addEventListener("contextmenu", menu);
 
 	button.addEventListener("click", (evt) => {
-		if ((evt.target as HTMLElement | null)?.closest(".hearth-tc-more")) return;
+		if ((evt.target as HTMLElement | null)?.closest(".zerohearth-tc-more")) return;
 		evt.preventDefault();
 		evt.stopPropagation();
 		if (state === "idle") void session.startInstance(inst).then(repaint);
@@ -340,7 +340,7 @@ function openRowMenu(
 	repaint: () => void,
 	strings: Strings,
 ): void {
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	const running = inst.state === "running";
 	menu.addItem((item) =>
 		item
@@ -461,7 +461,7 @@ async function moveRow(
  * bigger than a card needs; this one only asks for the day and hands it to
  * `moveTaskToDate`, which does the actual work (running records, routines,
  * day state). */
-class TaskChuteDateModal extends HearthModal {
+class TaskChuteDateModal extends ZeroHearthModal {
 	private value: string;
 
 	constructor(
@@ -480,7 +480,7 @@ class TaskChuteDateModal extends HearthModal {
 		const strings = t().cards.taskchute;
 		this.titleEl.setText(strings.moveDateTitle);
 		this.contentEl.createEl("p", {
-			cls: "hearth-modal-intro",
+			cls: "zerohearth-modal-intro",
 			text: taskChuteTitle(this.inst),
 		});
 		new Setting(this.contentEl).setName(strings.moveDateLabel).addText((text) => {
@@ -515,7 +515,7 @@ class TaskChuteDateModal extends HearthModal {
 async function paintRecords(app: App, root: HTMLElement, kind: "overview" | "heatmap"): Promise<void> {
 	const strings = t().cards.taskchute;
 	root.empty();
-	root.createDiv({ cls: "hearth-tc-loading", text: strings.loading });
+	root.createDiv({ cls: "zerohearth-tc-loading", text: strings.loading });
 	const days = kind === "heatmap" ? TASKCHUTE_HEATMAP_DAYS : TASKCHUTE_OVERVIEW_DAYS;
 	const activity = await taskChuteActivity(app, days);
 	if (!root.isConnected) return;
@@ -534,38 +534,38 @@ function paintOverview(root: HTMLElement, activity: TaskChuteActivityDay[], stri
 	const weekMinutes = week.reduce((sum, day) => sum + day.minutes, 0);
 	const weekDone = week.reduce((sum, day) => sum + day.done, 0);
 
-	const stats = root.createDiv("hearth-tc-stats");
+	const stats = root.createDiv("zerohearth-tc-stats");
 	stat(stats, strings.today, `${today.done}/${today.total}`);
 	stat(stats, strings.minutesToday, formatTaskChuteMinutes(today.minutes));
 	stat(stats, strings.weekDone, String(weekDone));
 	stat(stats, strings.weekMinutes, formatTaskChuteMinutes(weekMinutes));
 
 	const max = Math.max(1, ...week.map((day) => day.minutes));
-	const bars = root.createDiv("hearth-tc-bars");
+	const bars = root.createDiv("zerohearth-tc-bars");
 	for (const day of week) {
-		const bar = bars.createDiv("hearth-tc-bar-row");
+		const bar = bars.createDiv("zerohearth-tc-bar-row");
 		bar.setAttribute("title", `${day.dayKey}: ${formatTaskChuteMinutes(day.minutes)} (${day.done}/${day.total})`);
-		bar.createSpan({ cls: "hearth-tc-bar-label", text: dayLabel(day.dayKey, strings.today) });
-		const track = bar.createDiv("hearth-tc-bar-track");
-		const fill = track.createDiv("hearth-tc-bar-fill");
+		bar.createSpan({ cls: "zerohearth-tc-bar-label", text: dayLabel(day.dayKey, strings.today) });
+		const track = bar.createDiv("zerohearth-tc-bar-track");
+		const fill = track.createDiv("zerohearth-tc-bar-fill");
 		fill.style.width = `${Math.round((day.minutes / max) * 100)}%`;
-		bar.createSpan({ cls: "hearth-tc-bar-value", text: String(day.minutes) });
+		bar.createSpan({ cls: "zerohearth-tc-bar-value", text: String(day.minutes) });
 	}
 }
 
 function paintHeatmap(root: HTMLElement, activity: TaskChuteActivityDay[], strings: Strings): void {
-	const header = root.createDiv("hearth-tc-header");
-	header.createSpan({ cls: "hearth-tc-heading", text: strings.heatmapHeading });
+	const header = root.createDiv("zerohearth-tc-header");
+	header.createSpan({ cls: "zerohearth-tc-heading", text: strings.heatmapHeading });
 	const total = activity.reduce((sum, day) => sum + day.minutes, 0);
-	header.createSpan({ cls: "hearth-tc-progress", text: formatTaskChuteMinutes(total) });
+	header.createSpan({ cls: "zerohearth-tc-progress", text: formatTaskChuteMinutes(total) });
 
 	const max = Math.max(1, ...activity.map((day) => day.minutes));
-	const grid = root.createDiv("hearth-tc-heatmap");
+	const grid = root.createDiv("zerohearth-tc-heatmap");
 	// Pad the first column so the grid starts on Monday like a calendar.
 	const lead = (new Date(`${activity[0].dayKey}T00:00:00`).getDay() + 6) % 7;
-	for (let i = 0; i < lead; i += 1) grid.createDiv("hearth-tc-cell is-empty");
+	for (let i = 0; i < lead; i += 1) grid.createDiv("zerohearth-tc-cell is-empty");
 	for (const day of activity) {
-		const cell = grid.createDiv("hearth-tc-cell");
+		const cell = grid.createDiv("zerohearth-tc-cell");
 		const level = day.minutes === 0 ? 0 : Math.max(1, Math.ceil((day.minutes / max) * 4));
 		cell.addClass(`is-level-${level}`);
 		cell.setAttribute("aria-label", `${day.dayKey}: ${formatTaskChuteMinutes(day.minutes)}`);
@@ -573,13 +573,13 @@ function paintHeatmap(root: HTMLElement, activity: TaskChuteActivityDay[], strin
 	}
 
 	// A key, so the shades mean something without hovering every cell.
-	const legend = root.createDiv("hearth-tc-legend");
-	legend.createSpan({ cls: "hearth-tc-legend-label", text: strings.legendLess });
+	const legend = root.createDiv("zerohearth-tc-legend");
+	legend.createSpan({ cls: "zerohearth-tc-legend-label", text: strings.legendLess });
 	for (let level = 0; level <= 4; level += 1) {
-		const swatch = legend.createDiv("hearth-tc-cell");
+		const swatch = legend.createDiv("zerohearth-tc-cell");
 		if (level > 0) swatch.addClass(`is-level-${level}`);
 	}
-	legend.createSpan({ cls: "hearth-tc-legend-label", text: strings.legendMore });
+	legend.createSpan({ cls: "zerohearth-tc-legend-label", text: strings.legendMore });
 }
 
 /** `Mon 3` for a bar's day, and the localized word for today — `11-03` was a
@@ -597,9 +597,9 @@ function dayLabel(dayKey: string, todayLabel: string): string {
 }
 
 function stat(parent: HTMLElement, label: string, value: string): void {
-	const item = parent.createDiv("hearth-tc-stat");
-	item.createSpan({ cls: "hearth-tc-stat-value", text: value });
-	item.createSpan({ cls: "hearth-tc-stat-label", text: label });
+	const item = parent.createDiv("zerohearth-tc-stat");
+	item.createSpan({ cls: "zerohearth-tc-stat-value", text: value });
+	item.createSpan({ cls: "zerohearth-tc-stat-label", text: label });
 }
 
 // ---- Definition ----------------------------------------------------------
@@ -612,7 +612,7 @@ export function taskChuteEditor(ctx: CardEditorContext, containerEl: HTMLElement
 	const cfg = (ctx.card.taskchute ??= {});
 	if (!isTaskChuteAvailable(ctx.app)) {
 		const note = new Setting(containerEl).setName(strings.missing).setDesc(strings.missingDesc);
-		note.settingEl.addClass("hearth-setting-note");
+		note.settingEl.addClass("zerohearth-setting-note");
 	}
 	new Setting(containerEl)
 		.setName(strings.view)

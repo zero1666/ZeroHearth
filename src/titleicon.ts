@@ -1,7 +1,7 @@
 import { type App, type Setting, type TextComponent, type TFile } from "obsidian";
 import { setIcon } from "./glyphs";
 import { isImageFile, isImagePath } from "./filetypes";
-import { HEARTH_ICON_ID } from "./icon";
+import { ZEROHEARTH_ICON_ID } from "./icon";
 import { LucideIconPickerModal, knownIconIds, pickIconId } from "./lucide";
 import { FilePickerModal } from "./pickers";
 import { t } from "./i18n";
@@ -9,14 +9,14 @@ import { t } from "./i18n";
 /**
  * The mark beside a board's title, as one setting (#252).
  *
- * Hearth used to carry two fields for this — a "logo" holding an emoji or a
+ * ZeroHearth used to carry two fields for this — a "logo" holding an emoji or a
  * couple of characters, and a "title icon" holding a Lucide id that silently
  * won whenever both were set. Two fields for one slot meant the settings tab
  * (and every board's own settings) had to explain a precedence rule, and the
  * two together still couldn't draw a picture. There is now a single
  * `titleIcon` string, and what it holds decides what is drawn:
  *
- *   - empty            → the Hearth crystal (or whatever the caller passes as
+ *   - empty            → the ZeroHearth crystal (or whatever the caller passes as
  *                        the fallback icon)
  *   - `https://…`      → a picture fetched from the web (unless the vault has
  *                        turned external calls off, which draws the fallback)
@@ -101,7 +101,7 @@ export function titleIconFile(app: App, value: string): TFile | null {
 /** How a title icon is drawn. */
 export interface TitleIconOptions {
 	/** What an empty value — and a picture that has gone missing — falls back to.
-	 * The header passes the Hearth crystal in the variant the board's
+	 * The header passes the ZeroHearth crystal in the variant the board's
 	 * theme-colour setting asks for. */
 	fallbackIconId?: string;
 	/** The vault's **Disable external calls** setting. A `https://` icon is a
@@ -112,7 +112,7 @@ export interface TitleIconOptions {
 }
 
 /**
- * Whether a classified title icon names a picture Hearth must not fetch.
+ * Whether a classified title icon names a picture ZeroHearth must not fetch.
  *
  * Only the `url` kind reaches the network: a vault picture is served by
  * Obsidian, and an icon, an emoji or a word is drawn locally. Pure and tested
@@ -131,7 +131,7 @@ export function renderTitleIcon(
 	raw: string | undefined,
 	options: TitleIconOptions = {},
 ): HTMLElement {
-	const fallbackIconId = options.fallbackIconId ?? HEARTH_ICON_ID;
+	const fallbackIconId = options.fallbackIconId ?? ZEROHEARTH_ICON_ID;
 	const icon = titleIconOf(raw);
 	if (icon.kind === "url" || icon.kind === "image") {
 		let src: string | null = null;
@@ -142,20 +142,20 @@ export function renderTitleIcon(
 			if (file) src = app.vault.getResourcePath(file);
 		}
 		if (src) {
-			const el = parent.createSpan({ cls: "hearth-logo hearth-logo-image" });
+			const el = parent.createSpan({ cls: "zerohearth-logo zerohearth-logo-image" });
 			// Decorative: the title text beside it already names the board.
-			const img = el.createEl("img", { cls: "hearth-logo-img", attr: { alt: "" } });
+			const img = el.createEl("img", { cls: "zerohearth-logo-img", attr: { alt: "" } });
 			img.src = src;
 			return el;
 		}
 	} else if (icon.kind === "lucide") {
-		const el = parent.createSpan({ cls: "hearth-logo hearth-logo-icon" });
+		const el = parent.createSpan({ cls: "zerohearth-logo zerohearth-logo-icon" });
 		setIcon(el, icon.value);
 		return el;
 	} else if (icon.kind === "text") {
-		return parent.createSpan({ cls: "hearth-logo", text: icon.value });
+		return parent.createSpan({ cls: "zerohearth-logo", text: icon.value });
 	}
-	const el = parent.createSpan({ cls: "hearth-logo hearth-logo-icon" });
+	const el = parent.createSpan({ cls: "zerohearth-logo zerohearth-logo-icon" });
 	setIcon(el, fallbackIconId);
 	return el;
 }
@@ -180,7 +180,7 @@ export function addTitleIconPicker(
 	onChange: (value: string) => void,
 	externalCallsDisabled = false,
 ): Setting {
-	const preview = setting.controlEl.createSpan({ cls: "hearth-icon-preview" });
+	const preview = setting.controlEl.createSpan({ cls: "zerohearth-icon-preview" });
 	let text: TextComponent | undefined;
 
 	const apply = (next: string) => {

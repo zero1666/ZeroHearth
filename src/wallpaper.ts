@@ -1,5 +1,5 @@
 /**
- * Hearth's own wallpaper: the "default" background, drawn rather than fetched.
+ * ZeroHearth's own wallpaper: the "default" background, drawn rather than fetched.
  *
  * It used to be a picture served from GitHub, which meant a request on every
  * first paint and nothing at all once "Disable external calls" was on. Drawn
@@ -37,7 +37,7 @@ const SUN = { x: 960, y: 500, r: 74 };
  * Paint the wallpaper into `parent` and return the element it created.
  */
 export function drawWallpaper(parent: HTMLElement, design: WallpaperDesign): HTMLElement {
-	const host = parent.createDiv({ cls: ["hearth-wallpaper", `is-${design}`] });
+	const host = parent.createDiv({ cls: ["zerohearth-wallpaper", `is-${design}`] });
 	if (design === "expressive") drawExpressive(host);
 	else drawClassic(host);
 	return host;
@@ -120,14 +120,14 @@ const RIDGES: [number, number, number][] = [
 	[900, 45, 17],
 ];
 
-/** Every glow needs its own gradient id: the document may hold several Hearth
+/** Every glow needs its own gradient id: the document may hold several ZeroHearth
  * views at once, and an id that two of them share resolves to whichever came
  * first — including one that has since been emptied. */
 let glowSeq = 0;
 
 function drawClassic(host: HTMLElement): void {
 	const svg = host.createSvg("svg", {
-		cls: "hearth-wallpaper-art",
+		cls: "zerohearth-wallpaper-art",
 		attr: {
 			viewBox: `0 0 ${W} ${H}`,
 			preserveAspectRatio: "xMidYMid slice",
@@ -137,15 +137,15 @@ function drawClassic(host: HTMLElement): void {
 
 	// The halo round the sun. A gradient rather than rings of low-opacity
 	// circles: rings band visibly across the whole sky.
-	const glowId = `hearth-wallpaper-glow-${++glowSeq}`;
+	const glowId = `zerohearth-wallpaper-glow-${++glowSeq}`;
 	const gradient = svg.createSvg("defs").createSvg("radialGradient", { attr: { id: glowId } });
-	gradient.createSvg("stop", { cls: "hearth-wallpaper-glow-stop", attr: { offset: "0" } });
-	gradient.createSvg("stop", { cls: ["hearth-wallpaper-glow-stop", "is-mid"], attr: { offset: "0.35" } });
-	gradient.createSvg("stop", { cls: ["hearth-wallpaper-glow-stop", "is-end"], attr: { offset: "1" } });
+	gradient.createSvg("stop", { cls: "zerohearth-wallpaper-glow-stop", attr: { offset: "0" } });
+	gradient.createSvg("stop", { cls: ["zerohearth-wallpaper-glow-stop", "is-mid"], attr: { offset: "0.35" } });
+	gradient.createSvg("stop", { cls: ["zerohearth-wallpaper-glow-stop", "is-end"], attr: { offset: "1" } });
 
 	// Stars are drawn in both themes and shown only in the dark one, so the
 	// theme switch stays a pure CSS change.
-	const stars = svg.createSvg("g", { cls: "hearth-wallpaper-stars" });
+	const stars = svg.createSvg("g", { cls: "zerohearth-wallpaper-stars" });
 	const rand = seeded(7);
 	for (let i = 0; i < 90; i++) {
 		stars.createSvg("circle", {
@@ -162,12 +162,12 @@ function drawClassic(host: HTMLElement): void {
 		attr: { cx: String(SUN.x), cy: String(SUN.y), r: "460", fill: `url(#${glowId})` },
 	});
 	svg.createSvg("circle", {
-		cls: "hearth-wallpaper-sun",
+		cls: "zerohearth-wallpaper-sun",
 		attr: { cx: String(SUN.x), cy: String(SUN.y), r: String(SUN.r) },
 	});
 
 	// Long thin streaks of cloud, the way they lie near the horizon.
-	const clouds = svg.createSvg("g", { cls: "hearth-wallpaper-clouds" });
+	const clouds = svg.createSvg("g", { cls: "zerohearth-wallpaper-clouds" });
 	const streaks: [number, number, number, number][] = [
 		[360, 260, 340, 18],
 		[560, 300, 200, 12],
@@ -184,20 +184,20 @@ function drawClassic(host: HTMLElement): void {
 	RIDGES.forEach(([base, amp, seed], i) => {
 		const hill = ridge(base, amp, seed);
 		svg.createSvg("path", {
-			cls: ["hearth-wallpaper-ridge", `is-${i + 1}`],
+			cls: ["zerohearth-wallpaper-ridge", `is-${i + 1}`],
 			attr: { d: hill.d },
 		});
 		// The cabin stands on the third hill, so the two in front of it tuck
 		// its foot away and it sits *in* the landscape rather than on top.
 		if (i === 2) {
 			drawCabin(svg, 640, hill.y(640) + 4);
-			const pines = svg.createSvg("g", { cls: "hearth-wallpaper-pines" });
+			const pines = svg.createSvg("g", { cls: "zerohearth-wallpaper-pines" });
 			for (const [x, h] of [[585, 40], [603, 30], [700, 34], [716, 46], [736, 28]]) {
 				pines.createSvg("path", { attr: { d: pinePath(x, hill.y(x) + 6, h) } });
 			}
 		}
 		if (i === 3) {
-			const pines = svg.createSvg("g", { cls: ["hearth-wallpaper-pines", "is-near"] });
+			const pines = svg.createSvg("g", { cls: ["zerohearth-wallpaper-pines", "is-near"] });
 			for (const [x, h] of [[1060, 56], [1082, 40], [1100, 64], [1230, 44], [1250, 58], [260, 50], [282, 66]]) {
 				pines.createSvg("path", { attr: { d: pinePath(x, hill.y(x) + 8, h) } });
 			}
@@ -205,21 +205,21 @@ function drawClassic(host: HTMLElement): void {
 	});
 }
 
-/** The hearth in Hearth: a small house with lit windows and a curl of smoke. */
+/** The zerohearth in ZeroHearth: a small house with lit windows and a curl of smoke. */
 function drawCabin(svg: SVGElement, x: number, y: number): void {
 	const cabin = svg.createSvg("g", {
-		cls: "hearth-wallpaper-cabin",
+		cls: "zerohearth-wallpaper-cabin",
 		attr: { transform: `translate(${x.toFixed(1)} ${y.toFixed(1)})` },
 	});
 	cabin.createSvg("path", {
-		cls: "hearth-wallpaper-smoke",
+		cls: "zerohearth-wallpaper-smoke",
 		attr: { d: "M 21 -40 c -8 -12 8 -20 0 -34 c -7 -12 9 -20 2 -34" },
 	});
-	cabin.createSvg("rect", { cls: "hearth-wallpaper-house", attr: { x: "16", y: "-38", width: "9", height: "18" } });
-	cabin.createSvg("path", { cls: "hearth-wallpaper-house", attr: { d: "M -16 6 L -16 -20 L 0 -34 L 16 -20 L 16 6 Z" } });
-	cabin.createSvg("path", { cls: "hearth-wallpaper-house", attr: { d: "M 0 6 L 0 -22 L 26 -22 L 34 -12 L 34 6 Z" } });
-	cabin.createSvg("rect", { cls: "hearth-wallpaper-window", attr: { x: "-5", y: "-14", width: "9", height: "9", rx: "1.5" } });
-	cabin.createSvg("rect", { cls: "hearth-wallpaper-window", attr: { x: "14", y: "-12", width: "8", height: "8", rx: "1.5" } });
+	cabin.createSvg("rect", { cls: "zerohearth-wallpaper-house", attr: { x: "16", y: "-38", width: "9", height: "18" } });
+	cabin.createSvg("path", { cls: "zerohearth-wallpaper-house", attr: { d: "M -16 6 L -16 -20 L 0 -34 L 16 -20 L 16 6 Z" } });
+	cabin.createSvg("path", { cls: "zerohearth-wallpaper-house", attr: { d: "M 0 6 L 0 -22 L 26 -22 L 34 -12 L 34 6 Z" } });
+	cabin.createSvg("rect", { cls: "zerohearth-wallpaper-window", attr: { x: "-5", y: "-14", width: "9", height: "9", rx: "1.5" } });
+	cabin.createSvg("rect", { cls: "zerohearth-wallpaper-window", attr: { x: "14", y: "-12", width: "8", height: "8", rx: "1.5" } });
 }
 
 // ---- Expressive -------------------------------------------------------
@@ -234,7 +234,7 @@ type Corner = "tl" | "tr" | "bl" | "br";
  */
 function corner(host: HTMLElement, at: Corner): SVGSVGElement {
 	return host.createSvg("svg", {
-		cls: ["hearth-wallpaper-corner", `is-${at}`],
+		cls: ["zerohearth-wallpaper-corner", `is-${at}`],
 		attr: { viewBox: "0 0 600 600", "aria-hidden": "true" },
 	});
 }
@@ -248,29 +248,29 @@ function wavyLine(x: number, y: number, length: number): string {
 
 function drawExpressive(host: HTMLElement): void {
 	const tl = corner(host, "tl");
-	tl.createSvg("path", { cls: "hearth-wallpaper-primary", attr: { d: shapePath(90, 80, 300, 12, 0.06, 24) } });
-	tl.createSvg("circle", { cls: "hearth-wallpaper-strong", attr: { cx: "450", cy: "90", r: "34" } });
-	tl.createSvg("path", { cls: "hearth-wallpaper-strong", attr: { d: sparklePath(380, 300, 26) } });
-	tl.createSvg("circle", { cls: "hearth-wallpaper-strong-alt", attr: { cx: "150", cy: "470", r: "18" } });
+	tl.createSvg("path", { cls: "zerohearth-wallpaper-primary", attr: { d: shapePath(90, 80, 300, 12, 0.06, 24) } });
+	tl.createSvg("circle", { cls: "zerohearth-wallpaper-strong", attr: { cx: "450", cy: "90", r: "34" } });
+	tl.createSvg("path", { cls: "zerohearth-wallpaper-strong", attr: { d: sparklePath(380, 300, 26) } });
+	tl.createSvg("circle", { cls: "zerohearth-wallpaper-strong-alt", attr: { cx: "150", cy: "470", r: "18" } });
 
 	const tr = corner(host, "tr");
-	tr.createSvg("path", { cls: "hearth-wallpaper-secondary", attr: { d: shapePath(420, 170, 130, 4, 0.2, 48) } });
-	tr.createSvg("path", { cls: ["hearth-wallpaper-wave", "is-alt"], attr: { d: wavyLine(60, 70, 260) } });
-	tr.createSvg("path", { cls: "hearth-wallpaper-strong", attr: { d: sparklePath(230, 250, 18) } });
+	tr.createSvg("path", { cls: "zerohearth-wallpaper-secondary", attr: { d: shapePath(420, 170, 130, 4, 0.2, 48) } });
+	tr.createSvg("path", { cls: ["zerohearth-wallpaper-wave", "is-alt"], attr: { d: wavyLine(60, 70, 260) } });
+	tr.createSvg("path", { cls: "zerohearth-wallpaper-strong", attr: { d: sparklePath(230, 250, 18) } });
 
 	const bl = corner(host, "bl");
 	bl.createSvg("rect", {
-		cls: "hearth-wallpaper-secondary",
+		cls: "zerohearth-wallpaper-secondary",
 		attr: { x: "-160", y: "330", width: "560", height: "220", rx: "110", transform: "rotate(-28 120 440)" },
 	});
-	bl.createSvg("path", { cls: "hearth-wallpaper-strong", attr: { d: sparklePath(380, 210, 22) } });
-	bl.createSvg("circle", { cls: "hearth-wallpaper-strong", attr: { cx: "470", cy: "520", r: "14" } });
+	bl.createSvg("path", { cls: "zerohearth-wallpaper-strong", attr: { d: sparklePath(380, 210, 22) } });
+	bl.createSvg("circle", { cls: "zerohearth-wallpaper-strong", attr: { cx: "470", cy: "520", r: "14" } });
 
 	const br = corner(host, "br");
-	br.createSvg("path", { cls: "hearth-wallpaper-tertiary", attr: { d: shapePath(520, 520, 270, 8, 0.14, 32) } });
-	br.createSvg("circle", { cls: "hearth-wallpaper-ring", attr: { cx: "220", cy: "470", r: "100" } });
-	br.createSvg("path", { cls: "hearth-wallpaper-wave", attr: { d: wavyLine(10, 250, 230) } });
-	br.createSvg("path", { cls: "hearth-wallpaper-strong", attr: { d: sparklePath(430, 120, 28) } });
+	br.createSvg("path", { cls: "zerohearth-wallpaper-tertiary", attr: { d: shapePath(520, 520, 270, 8, 0.14, 32) } });
+	br.createSvg("circle", { cls: "zerohearth-wallpaper-ring", attr: { cx: "220", cy: "470", r: "100" } });
+	br.createSvg("path", { cls: "zerohearth-wallpaper-wave", attr: { d: wavyLine(10, 250, 230) } });
+	br.createSvg("path", { cls: "zerohearth-wallpaper-strong", attr: { d: sparklePath(430, 120, 28) } });
 }
 
 // ---- The harbour town -------------------------------------------------
@@ -290,9 +290,9 @@ function drawExpressive(host: HTMLElement): void {
  * no redraw.
  */
 export function drawHarbour(parent: HTMLElement): HTMLElement {
-	const host = parent.createDiv({ cls: ["hearth-wallpaper", "is-harbour"] });
+	const host = parent.createDiv({ cls: ["zerohearth-wallpaper", "is-harbour"] });
 	const svg = host.createSvg("svg", {
-		cls: "hearth-wallpaper-art",
+		cls: "zerohearth-wallpaper-art",
 		attr: {
 			viewBox: `0 0 ${W} ${H}`,
 			preserveAspectRatio: "xMidYMid slice",
@@ -303,40 +303,40 @@ export function drawHarbour(parent: HTMLElement): HTMLElement {
 	drawHarbourSky(svg);
 
 	// The far shore, behind the town and across the bay.
-	svg.createSvg("path", { cls: ["hearth-harbour-hill", "is-far"], attr: { d: ridge(540, 34, 29).d } });
+	svg.createSvg("path", { cls: ["zerohearth-harbour-hill", "is-far"], attr: { d: ridge(540, 34, 29).d } });
 
 	// The hill the town is built on, falling to the quay.
 	svg.createSvg("path", {
-		cls: "hearth-harbour-hill",
+		cls: "zerohearth-harbour-hill",
 		attr: { d: `${smoothPath(TOWN_HILL)} L ${TOWN_HILL[TOWN_HILL.length - 1][0]} ${SHORE + 30} L -40 ${SHORE + 30} Z` },
 	});
 
-	const town = svg.createSvg("g", { cls: "hearth-harbour-town" });
+	const town = svg.createSvg("g", { cls: "zerohearth-harbour-town" });
 	for (const house of HOUSES) drawHouse(town, house);
 
 	svg.createSvg("rect", {
-		cls: "hearth-harbour-water",
+		cls: "zerohearth-harbour-water",
 		attr: { x: "-40", y: String(SHORE), width: String(W + 80), height: String(H - SHORE + 40) },
 	});
 
 	// The quay along the town's foot, and the pier running out to the light.
 	svg.createSvg("rect", {
-		cls: "hearth-harbour-quay",
+		cls: "zerohearth-harbour-quay",
 		attr: { x: "-60", y: String(SHORE - 12), width: "1020", height: "34", rx: "17" },
 	});
 	svg.createSvg("rect", {
-		cls: "hearth-harbour-quay",
+		cls: "zerohearth-harbour-quay",
 		attr: { x: "850", y: String(SHORE + 4), width: "170", height: "26", rx: "13" },
 	});
 
 	drawLighthouse(svg, 935, SHORE + 8);
 
-	const sea = svg.createSvg("g", { cls: "hearth-harbour-sea" });
+	const sea = svg.createSvg("g", { cls: "zerohearth-harbour-sea" });
 	for (const [x, y, length, alt] of WAVES) {
 		const points: { x: number; y: number }[] = [];
 		for (let dx = 0; dx <= length; dx += 4) points.push({ x: x + dx, y });
 		sea.createSvg("path", {
-			cls: alt ? ["hearth-harbour-wave", "is-alt"] : "hearth-harbour-wave",
+			cls: alt ? ["zerohearth-harbour-wave", "is-alt"] : "zerohearth-harbour-wave",
 			attr: { d: wavePath(points, 7, 46) },
 		});
 	}
@@ -413,33 +413,33 @@ function drawHouse(parent: SVGElement, [x, w, h, roof, tone, drop]: House): void
 	// Walls run on below the ground line; the quay and the row in front hide
 	// the rest, so no house ever floats on a slope.
 	const bottom = SHORE + 10;
-	const house = parent.createSvg("g", { cls: ["hearth-harbour-house", `is-${tone}`] });
+	const house = parent.createSvg("g", { cls: ["zerohearth-harbour-house", `is-${tone}`] });
 
 	if (roof === "arch" || roof === "tower") {
 		house.createSvg("path", {
-			cls: "hearth-harbour-wall",
+			cls: "zerohearth-harbour-wall",
 			attr: { d: `M ${f(x)} ${bottom} L ${f(x)} ${f(top)} A ${f(w / 2)} ${f(w / 2)} 0 0 1 ${f(x + w)} ${f(top)} L ${f(x + w)} ${bottom} Z` },
 		});
 	} else {
 		house.createSvg("rect", {
-			cls: "hearth-harbour-wall",
+			cls: "zerohearth-harbour-wall",
 			attr: { x: f(x), y: f(top), width: f(w), height: f(bottom - top), rx: roof === "flat" ? "10" : "4" },
 		});
 	}
 	if (roof === "gable") {
 		const peak = top - w * 0.42;
 		house.createSvg("path", {
-			cls: "hearth-harbour-roof",
+			cls: "zerohearth-harbour-roof",
 			attr: { d: `M ${f(x - 6)} ${f(top + 4)} L ${f(x + w / 2)} ${f(peak)} L ${f(x + w + 6)} ${f(top + 4)} Z` },
 		});
 	}
 	if (roof === "tower") {
 		// The church: a round window high up and a sparkle for a weathervane.
 		house.createSvg("circle", {
-			cls: "hearth-harbour-window",
+			cls: "zerohearth-harbour-window",
 			attr: { cx: f(x + w / 2), cy: f(top + 8), r: "9" },
 		});
-		house.createSvg("path", { cls: "hearth-harbour-roof", attr: { d: sparklePath(x + w / 2, top - w / 2 - 22, 12) } });
+		house.createSvg("path", { cls: "zerohearth-harbour-roof", attr: { d: sparklePath(x + w / 2, top - w / 2 - 22, 12) } });
 		return;
 	}
 
@@ -450,7 +450,7 @@ function drawHouse(parent: SVGElement, [x, w, h, roof, tone, drop]: House): void
 	for (let i = 0; i < count; i++) {
 		const cx = x + (w * (i + 1)) / (count + 1);
 		house.createSvg("rect", {
-			cls: "hearth-harbour-window",
+			cls: "zerohearth-harbour-window",
 			attr: { x: f(cx - winW / 2), y: f(top + h * 0.3), width: String(winW), height: String(winH), rx: "6" },
 		});
 	}
@@ -463,12 +463,12 @@ function drawLighthouse(parent: SVGElement, x: number, y: number): void {
 	const height = 230;
 	const half = (at: number): number => 32 - ((y - at) / height) * 12;
 	const top = y - height;
-	const light = parent.createSvg("g", { cls: "hearth-harbour-lighthouse" });
+	const light = parent.createSvg("g", { cls: "zerohearth-harbour-lighthouse" });
 	// The halo first, so the lantern and its cap sit on it rather than under.
-	light.createSvg("circle", { cls: "hearth-harbour-halo", attr: { cx: f(x), cy: f(top - 34), r: "50" } });
+	light.createSvg("circle", { cls: "zerohearth-harbour-halo", attr: { cx: f(x), cy: f(top - 34), r: "50" } });
 
 	light.createSvg("path", {
-		cls: "hearth-harbour-tower",
+		cls: "zerohearth-harbour-tower",
 		attr: { d: `M ${f(x - half(y))} ${f(y)} L ${f(x - half(top))} ${f(top)} L ${f(x + half(top))} ${f(top)} L ${f(x + half(y))} ${f(y)} Z` },
 	});
 	for (const [from, to] of [
@@ -476,20 +476,20 @@ function drawLighthouse(parent: SVGElement, x: number, y: number): void {
 		[y - 150, y - 190],
 	]) {
 		light.createSvg("path", {
-			cls: "hearth-harbour-band",
+			cls: "zerohearth-harbour-band",
 			attr: { d: `M ${f(x - half(from))} ${f(from)} L ${f(x - half(to))} ${f(to)} L ${f(x + half(to))} ${f(to)} L ${f(x + half(from))} ${f(from)} Z` },
 		});
 	}
-	light.createSvg("circle", { cls: "hearth-harbour-lamp", attr: { cx: f(x), cy: f(top - 30), r: "17" } });
+	light.createSvg("circle", { cls: "zerohearth-harbour-lamp", attr: { cx: f(x), cy: f(top - 30), r: "17" } });
 	light.createSvg("rect", {
-		cls: "hearth-harbour-band",
+		cls: "zerohearth-harbour-band",
 		attr: { x: f(x - 30), y: f(top - 12), width: "60", height: "14", rx: "7" },
 	});
 	light.createSvg("path", {
-		cls: "hearth-harbour-band",
+		cls: "zerohearth-harbour-band",
 		attr: { d: `M ${f(x - 22)} ${f(top - 44)} A 22 22 0 0 1 ${f(x + 22)} ${f(top - 44)} Z` },
 	});
-	light.createSvg("path", { cls: "hearth-harbour-band", attr: { d: sparklePath(x, top - 78, 9) } });
+	light.createSvg("path", { cls: "zerohearth-harbour-band", attr: { d: sparklePath(x, top - 78, 9) } });
 }
 
 /** A sailing boat on the waterline at (x, y), `s` times its natural size: a
@@ -497,25 +497,25 @@ function drawLighthouse(parent: SVGElement, x: number, y: number): void {
 function drawSailboat(parent: SVGElement, x: number, y: number, s: number, alt: boolean): void {
 	const f = (n: number): string => n.toFixed(1);
 	const p = (dx: number, dy: number): string => `${f(x + dx * s)} ${f(y + dy * s)}`;
-	const boat = parent.createSvg("g", { cls: "hearth-harbour-boat" });
+	const boat = parent.createSvg("g", { cls: "zerohearth-harbour-boat" });
 	boat.createSvg("rect", {
-		cls: "hearth-harbour-shine",
+		cls: "zerohearth-harbour-shine",
 		attr: { x: f(x - 44 * s), y: f(y + 18 * s), width: f(88 * s), height: f(7 * s), rx: f(3.5 * s) },
 	});
 	boat.createSvg("path", {
-		cls: "hearth-harbour-mast",
+		cls: "zerohearth-harbour-mast",
 		attr: { d: `M ${p(0, -14)} L ${p(0, -124)}` },
 	});
 	boat.createSvg("path", {
-		cls: alt ? ["hearth-harbour-sail", "is-alt"] : "hearth-harbour-sail",
+		cls: alt ? ["zerohearth-harbour-sail", "is-alt"] : "zerohearth-harbour-sail",
 		attr: { d: `M ${p(6, -120)} L ${p(6, -24)} L ${p(54, -24)} Z` },
 	});
 	boat.createSvg("path", {
-		cls: alt ? "hearth-harbour-sail" : ["hearth-harbour-sail", "is-alt"],
+		cls: alt ? "zerohearth-harbour-sail" : ["zerohearth-harbour-sail", "is-alt"],
 		attr: { d: `M ${p(-6, -104)} L ${p(-6, -24)} L ${p(-42, -24)} Z` },
 	});
 	boat.createSvg("path", {
-		cls: "hearth-harbour-hull",
+		cls: "zerohearth-harbour-hull",
 		attr: { d: `M ${p(-60, -14)} L ${p(60, -14)} Q ${p(50, 12)} ${p(26, 12)} L ${p(-26, 12)} Q ${p(-50, 12)} ${p(-60, -14)} Z` },
 	});
 }
@@ -524,23 +524,23 @@ function drawSailboat(parent: SVGElement, x: number, y: number, s: number, alt: 
 function drawTug(parent: SVGElement, x: number, y: number, s: number): void {
 	const f = (n: number): string => n.toFixed(1);
 	const p = (dx: number, dy: number): string => `${f(x + dx * s)} ${f(y + dy * s)}`;
-	const tug = parent.createSvg("g", { cls: "hearth-harbour-boat" });
+	const tug = parent.createSvg("g", { cls: "zerohearth-harbour-boat" });
 	tug.createSvg("rect", {
-		cls: "hearth-harbour-shine",
+		cls: "zerohearth-harbour-shine",
 		attr: { x: f(x - 40 * s), y: f(y + 16 * s), width: f(80 * s), height: f(7 * s), rx: f(3.5 * s) },
 	});
 	tug.createSvg("rect", {
-		cls: ["hearth-harbour-sail", "is-alt"],
+		cls: ["zerohearth-harbour-sail", "is-alt"],
 		attr: { x: f(x + 2 * s), y: f(y - 62 * s), width: f(14 * s), height: f(34 * s), rx: f(7 * s) },
 	});
 	tug.createSvg("rect", {
-		cls: "hearth-harbour-sail",
+		cls: "zerohearth-harbour-sail",
 		attr: { x: f(x - 30 * s), y: f(y - 42 * s), width: f(52 * s), height: f(32 * s), rx: f(12 * s) },
 	});
-	tug.createSvg("circle", { cls: "hearth-harbour-window", attr: { cx: f(x - 14 * s), cy: f(y - 26 * s), r: f(5 * s) } });
-	tug.createSvg("circle", { cls: "hearth-harbour-window", attr: { cx: f(x + 4 * s), cy: f(y - 26 * s), r: f(5 * s) } });
+	tug.createSvg("circle", { cls: "zerohearth-harbour-window", attr: { cx: f(x - 14 * s), cy: f(y - 26 * s), r: f(5 * s) } });
+	tug.createSvg("circle", { cls: "zerohearth-harbour-window", attr: { cx: f(x + 4 * s), cy: f(y - 26 * s), r: f(5 * s) } });
 	tug.createSvg("path", {
-		cls: "hearth-harbour-hull",
+		cls: "zerohearth-harbour-hull",
 		attr: { d: `M ${p(-54, -12)} L ${p(54, -12)} Q ${p(46, 12)} ${p(24, 12)} L ${p(-24, 12)} Q ${p(-46, 12)} ${p(-54, -12)} Z` },
 	});
 }
@@ -560,7 +560,7 @@ const WAVES: [number, number, number, boolean][] = [
 /** Sky: the sun (a moon, in a dark theme), clouds, gulls, and stars that only
  * the dark theme shows. */
 function drawHarbourSky(svg: SVGElement): void {
-	const stars = svg.createSvg("g", { cls: "hearth-harbour-stars" });
+	const stars = svg.createSvg("g", { cls: "zerohearth-harbour-stars" });
 	const rand = seeded(19);
 	for (let i = 0; i < 40; i++) {
 		const x = rand() * W;
@@ -569,9 +569,9 @@ function drawHarbourSky(svg: SVGElement): void {
 		else stars.createSvg("circle", { attr: { cx: x.toFixed(0), cy: y.toFixed(0), r: (1.4 + rand() * 1.8).toFixed(1) } });
 	}
 
-	svg.createSvg("path", { cls: "hearth-harbour-sun", attr: { d: shapePath(700, 240, 74, 8, 0.07, 24) } });
+	svg.createSvg("path", { cls: "zerohearth-harbour-sun", attr: { d: shapePath(700, 240, 74, 8, 0.07, 24) } });
 
-	const clouds = svg.createSvg("g", { cls: "hearth-harbour-clouds" });
+	const clouds = svg.createSvg("g", { cls: "zerohearth-harbour-clouds" });
 	for (const [x, y, s] of [
 		[330, 210, 1.1],
 		[1290, 170, 1],
@@ -593,7 +593,7 @@ function drawHarbourSky(svg: SVGElement): void {
 		pill(-40, -24, 110);
 	}
 
-	const gulls = svg.createSvg("g", { cls: "hearth-harbour-gulls" });
+	const gulls = svg.createSvg("g", { cls: "zerohearth-harbour-gulls" });
 	for (const [x, y, s] of [
 		[820, 300, 1],
 		[870, 272, 0.8],

@@ -1,9 +1,9 @@
 import { App, Component, debounce, TextFileView, TFile, WorkspaceLeaf } from "obsidian";
 
-/** Hearth's own view type — hosting it inside itself makes no sense, so it is
+/** ZeroHearth's own view type — hosting it inside itself makes no sense, so it is
  * excluded from the leaf card's picker. Kept as a literal (rather than imported
  * from ./view) to avoid an import cycle through cards.ts. */
-const VIEW_TYPE_HOME = "hearth-home-view";
+const VIEW_TYPE_HOME = "zerohearth-home-view";
 
 /** A view type registered in the app, offered by the "leaf" card's picker. */
 export interface LeafViewType {
@@ -14,7 +14,7 @@ export interface LeafViewType {
 }
 
 /**
- * View types nothing may ever host: the placeholder empty view, and Hearth's
+ * View types nothing may ever host: the placeholder empty view, and ZeroHearth's
  * own view, which must not host itself.
  */
 const EXCLUDED_VIEW_TYPES = new Set<string>(["empty", VIEW_TYPE_HOME]);
@@ -76,14 +76,14 @@ function labelForType(type: string): string {
 }
 
 /** Whether the leaf card can work at all right now (the registry is reachable).
- * Used to gate the "Add card" template so the card is only offered when Hearth
+ * Used to gate the "Add card" template so the card is only offered when ZeroHearth
  * can actually enumerate and host views. */
 export function isLeafViewAvailable(app: App): boolean {
 	return viewByType(app) !== null;
 }
 
 /** Every hostable view type, sorted by label. Empty when the registry can't be
- * read. Always excludes the empty view and Hearth's own; excludes Obsidian's
+ * read. Always excludes the empty view and ZeroHearth's own; excludes Obsidian's
  * document surfaces too unless `scope.documents` asks for them. */
 export function listLeafViewTypes(app: App, scope?: LeafViewScope): LeafViewType[] {
 	const byType = viewByType(app);
@@ -223,7 +223,7 @@ export function teardownHostedLeaf(leaf: WorkspaceLeaf): void {
  * The hosted view is only kept alive while the card is actually on screen. An
  * IntersectionObserver mounts it when the card scrolls into view and tears it
  * down (after a short grace period, so a quick scroll-past doesn't churn it)
- * when it leaves — which also fires when the whole Hearth tab is hidden behind
+ * when it leaves — which also fires when the whole ZeroHearth tab is hidden behind
  * another tab. This bounds the cost of heavy views like Excalidraw, whose
  * background React/autosave loops would otherwise pile up over a long session
  * until Obsidian runs out of memory.

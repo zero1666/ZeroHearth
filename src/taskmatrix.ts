@@ -9,7 +9,7 @@ import type { TaskMatrixAxisLabel, TaskMatrixConfig, TaskMatrixQuadrant, TaskMat
  * The matrix stores nothing of its own on a task. It reads the priority every
  * source already has and maps it to a quadrant, and dropping a task into a
  * quadrant writes that quadrant's priority back — so the matrix, the list and
- * the board always agree, and a vault without Hearth keeps the meaning. Which
+ * the board always agree, and a vault without ZeroHearth keeps the meaning. Which
  * priorities belong to which quadrant is the user's choice
  * (`TasksConfig.matrix`); a task whose priority no quadrant claims sits in the
  * "unsorted" strip under the cross.

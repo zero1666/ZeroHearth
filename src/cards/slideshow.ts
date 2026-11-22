@@ -72,7 +72,7 @@ import { type CardDefinition, type CardEditorContext } from "./definition";
  *   elements exist: the one on screen and the one coming in. A card pointed at a
  *   folder of 500 photos therefore decodes two of them, not 500, and every
  *   transition is a plain CSS animation between that pair (see the
- *   `.hearth-slide` rules in styles.css).
+ *   `.zerohearth-slide` rules in styles.css).
  * - **The pure parts live next door.** Ordering, the folder-scope test, the
  *   interval clamps, the daily arithmetic and the redraw predicate are data-only
  *   functions in `src/slideshow.ts`, unit-tested there; this module is the vault
@@ -168,7 +168,7 @@ export function collectSlideshowPictures(
  * seconds for a position nobody asked to keep, so it keeps its in-memory resume
  * (`slideshowState`) and starts from the top after a restart.
  */
-const POSITIONS_KEY = "hearth:slideshow-positions";
+const POSITIONS_KEY = "zerohearth:slideshow-positions";
 
 /** Whether an advance's position is worth keeping between sessions. */
 function remembersPosition(advance: SlideshowAdvance): boolean {
@@ -249,8 +249,8 @@ export function renderSlideshow(
 	const order = slideshowOrder(cfg);
 	const count = pictures.length;
 
-	body.addClass("hearth-slideshow-host");
-	const stage = body.createDiv("hearth-slideshow");
+	body.addClass("zerohearth-slideshow-host");
+	const stage = body.createDiv("zerohearth-slideshow");
 	stage.addClass(`is-trans-${cfg.transition ?? "fade"}`);
 	// A note has no picture to fill or zoom, so a notes card carries neither
 	// class — `fit` and `kenBurns` only ever reach an `<img>`.
@@ -258,24 +258,24 @@ export function renderSlideshow(
 		stage.addClass(cfg.fit === "contain" ? "is-fit-contain" : "is-fit-cover");
 		if (cfg.kenBurns) stage.addClass("is-kenburns");
 	}
-	stage.style.setProperty("--hearth-slide-ms", `${slideshowTransitionMs(cfg)}ms`);
+	stage.style.setProperty("--zerohearth-slide-ms", `${slideshowTransitionMs(cfg)}ms`);
 	// The slow zoom runs for exactly as long as the picture is held, so it never
 	// finishes early and sits still, nor gets cut off halfway.
 	stage.style.setProperty(
-		"--hearth-slide-hold",
+		"--zerohearth-slide-hold",
 		`${holdMs || SLIDESHOW_DEFAULT_INTERVAL_SEC * 1000}ms`,
 	);
 
 	// Two layers for any number of pictures: the one on screen and the one coming
 	// in. Swapping which is "active" is the whole transition.
-	const layers = [0, 1].map(() => stage.createDiv("hearth-slide"));
+	const layers = [0, 1].map(() => stage.createDiv("zerohearth-slide"));
 	// A notes card draws a rendered page into each layer instead of an `<img>`;
 	// the pair of layers drives the transition either way.
 	const images: HTMLImageElement[] | null =
 		source === "notes"
 			? null
 			: layers.map((layer) => {
-					const img = layer.createEl("img", { cls: "hearth-slide-img" });
+					const img = layer.createEl("img", { cls: "zerohearth-slide-img" });
 					// A picture is decoration here, not something to drag out of the card —
 					// the native image drag would otherwise fight the card's own in arrange mode.
 					img.draggable = false;
@@ -332,7 +332,7 @@ export function renderSlideshow(
 		noteRenders[layer] = null;
 		const file = view.app.vault.getAbstractFileByPath(picture.path);
 		if (!(file instanceof TFile)) return;
-		const host = el.createDiv({ cls: "hearth-slide-note markdown-rendered" });
+		const host = el.createDiv({ cls: "zerohearth-slide-note markdown-rendered" });
 		const child = component.addChild(new Component());
 		noteRenders[layer] = child;
 		void renderMarkdownFile(view, file, host, child).catch(() => {
@@ -350,11 +350,11 @@ export function renderSlideshow(
 		img.alt = pictureLabel(picture);
 	};
 
-	const caption = cfg.showCaption ? stage.createDiv("hearth-slide-caption") : null;
+	const caption = cfg.showCaption ? stage.createDiv("zerohearth-slide-caption") : null;
 	// A single picture has nothing to step through, so it gets no chrome — such a
 	// card is just an image embed, and dead buttons would suggest otherwise.
 	const controls =
-		cfg.controls === false || count < 2 ? null : stage.createDiv("hearth-slideshow-controls");
+		cfg.controls === false || count < 2 ? null : stage.createDiv("zerohearth-slideshow-controls");
 	let pauseButton: HTMLButtonElement | null = null;
 	let counter: HTMLElement | null = null;
 	/** Whether the counter is a number field right now — see `openJump`. */
@@ -501,7 +501,7 @@ export function renderSlideshow(
 		jumping = true;
 		stop();
 		const input = controls.createEl("input", {
-			cls: "hearth-slideshow-jump",
+			cls: "zerohearth-slideshow-jump",
 			type: "text",
 			attr: { inputmode: "numeric", "aria-label": t().cards.slideshow.jump },
 		});
@@ -589,7 +589,7 @@ export function renderSlideshow(
 		if (!controls) return;
 		const button = (icon: string, label: string, onClick: () => void): HTMLButtonElement => {
 			const el = controls.createEl("button", {
-				cls: "hearth-slideshow-btn",
+				cls: "zerohearth-slideshow-btn",
 				attr: { "aria-label": label, title: label },
 			});
 			setIcon(el, icon);
@@ -616,7 +616,7 @@ export function renderSlideshow(
 		// in the controls. It stays a div wearing a button's role rather than a
 		// real button, so it goes on reading as plain text until it is used.
 		counter = controls.createDiv({
-			cls: "hearth-slideshow-count",
+			cls: "zerohearth-slideshow-count",
 			attr: {
 				role: "button",
 				tabindex: "0",
@@ -717,7 +717,7 @@ export function slideshowEditor(ctx: CardEditorContext, containerEl: HTMLElement
 					ctx.opts.save();
 				});
 			txt.inputEl.type = "number";
-			txt.inputEl.addClass("hearth-count-input");
+			txt.inputEl.addClass("zerohearth-count-input");
 			txt.inputEl.setAttribute("aria-label", strings.intervalAria);
 		});
 		interval.addExtraButton((b) =>
@@ -745,7 +745,7 @@ export function slideshowEditor(ctx: CardEditorContext, containerEl: HTMLElement
 				ctx.opts.save();
 			});
 			txt.inputEl.type = "number";
-			txt.inputEl.addClass("hearth-count-input");
+			txt.inputEl.addClass("zerohearth-count-input");
 			txt.inputEl.setAttribute("aria-label", strings.daysAria);
 		});
 		days.addExtraButton((b) =>
@@ -900,7 +900,7 @@ function listSection(
 	}
 
 	slides.forEach((slide, index) => {
-		const row = new Setting(containerEl).setClass("hearth-link-setting");
+		const row = new Setting(containerEl).setClass("zerohearth-link-setting");
 		row.addText((txt) =>
 			txt
 				.setPlaceholder(strings.picturePlaceholder)

@@ -69,21 +69,21 @@ describe("renderTaskMatrixFrame", () => {
 	it("draws the axes, the four quadrants in reading order and the strip", () => {
 		const host = document.body.createDiv();
 		renderTaskMatrixFrame(host, frame([]));
-		const labels = Array.from(host.querySelectorAll(".hearth-matrix-axis-label")).map((e) => e.textContent);
+		const labels = Array.from(host.querySelectorAll(".zerohearth-matrix-axis-label")).map((e) => e.textContent);
 		expect(labels).toEqual(["Urgent", "Not urgent", "Important", "Not important"]);
-		const quads = Array.from(host.querySelectorAll<HTMLElement>(".hearth-matrix-q"));
+		const quads = Array.from(host.querySelectorAll<HTMLElement>(".zerohearth-matrix-q"));
 		expect(quads.map((q) => q.dataset.quadrant)).toEqual(["do", "schedule", "delegate", "eliminate"]);
-		expect(quads.map((q) => q.querySelector(".hearth-matrix-q-count")?.textContent)).toEqual(["2", "0", "1", "0"]);
-		expect(quads[1].querySelector(".hearth-matrix-q-empty")?.textContent).toBe("Drop tasks here");
+		expect(quads.map((q) => q.querySelector(".zerohearth-matrix-q-count")?.textContent)).toEqual(["2", "0", "1", "0"]);
+		expect(quads[1].querySelector(".zerohearth-matrix-q-empty")?.textContent).toBe("Drop tasks here");
 		expect(quads[3].classList.contains("is-locked")).toBe(true);
-		expect(host.querySelector(".hearth-matrix-unsorted .item")?.textContent).toBe("loose");
-		expect(Array.from(host.querySelectorAll(".hearth-matrix-item")).every((e) => e.getAttribute("draggable") === "true")).toBe(true);
+		expect(host.querySelector(".zerohearth-matrix-unsorted .item")?.textContent).toBe("loose");
+		expect(Array.from(host.querySelectorAll(".zerohearth-matrix-item")).every((e) => e.getAttribute("draggable") === "true")).toBe(true);
 	});
 
 	it("lays the quadrants out in the order it is given", () => {
 		const host = document.body.createDiv();
 		renderTaskMatrixFrame(host, { ...frame([]), cells: ["eliminate", "delegate", "schedule", "do"] });
-		const quads = Array.from(host.querySelectorAll<HTMLElement>(".hearth-matrix-q"));
+		const quads = Array.from(host.querySelectorAll<HTMLElement>(".zerohearth-matrix-q"));
 		expect(quads.map((q) => q.dataset.quadrant)).toEqual(["eliminate", "delegate", "schedule", "do"]);
 	});
 
@@ -91,18 +91,18 @@ describe("renderTaskMatrixFrame", () => {
 		const host = document.body.createDiv();
 		const renamed: [TaskMatrixQuadrant, string][] = [];
 		renderTaskMatrixFrame(host, { ...frame([]), onRename: (id, label) => renamed.push([id, label]) });
-		const title = host.querySelector(".hearth-matrix-q.is-delegate .hearth-matrix-q-title") as HTMLElement;
+		const title = host.querySelector(".zerohearth-matrix-q.is-delegate .zerohearth-matrix-q-title") as HTMLElement;
 		expect(title.getAttribute("title")).toBe("Double-click to rename");
 		title.dispatchEvent(new MouseEvent("dblclick", { bubbles: true }));
-		const input = host.querySelector(".hearth-matrix-q-rename") as HTMLInputElement;
+		const input = host.querySelector(".zerohearth-matrix-q-rename") as HTMLInputElement;
 		expect(input.value).toBe("Delegate");
 		input.value = "Hand off";
 		input.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
 		expect(renamed).toEqual([["delegate", "Hand off"]]);
-		expect(host.querySelector(".hearth-matrix-q-rename")).toBeNull();
+		expect(host.querySelector(".zerohearth-matrix-q-rename")).toBeNull();
 		// Escape keeps the old name.
 		title.dispatchEvent(new MouseEvent("dblclick", { bubbles: true }));
-		const again = host.querySelector(".hearth-matrix-q-rename") as HTMLInputElement;
+		const again = host.querySelector(".zerohearth-matrix-q-rename") as HTMLInputElement;
 		again.value = "Nope";
 		again.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
 		expect(renamed).toHaveLength(1);
@@ -111,30 +111,30 @@ describe("renderTaskMatrixFrame", () => {
 	it("can't be renamed without a handler", () => {
 		const host = document.body.createDiv();
 		renderTaskMatrixFrame(host, frame([]));
-		const title = host.querySelector(".hearth-matrix-q-title") as HTMLElement;
+		const title = host.querySelector(".zerohearth-matrix-q-title") as HTMLElement;
 		title.dispatchEvent(new MouseEvent("dblclick", { bubbles: true }));
-		expect(host.querySelector(".hearth-matrix-q-rename")).toBeNull();
+		expect(host.querySelector(".zerohearth-matrix-q-rename")).toBeNull();
 	});
 
 	it("leaves the strip out when asked", () => {
 		const host = document.body.createDiv();
 		renderTaskMatrixFrame(host, frame([], null));
-		expect(host.querySelector(".hearth-matrix-unsorted")).toBeNull();
+		expect(host.querySelector(".zerohearth-matrix-unsorted")).toBeNull();
 	});
 
 	it("reports a drop on a quadrant and on the strip", () => {
 		const host = document.body.createDiv();
 		const drops: [string, TaskMatrixQuadrant | null][] = [];
 		renderTaskMatrixFrame(host, frame(drops));
-		const items = Array.from(host.querySelectorAll<HTMLElement>(".hearth-matrix-item"));
+		const items = Array.from(host.querySelectorAll<HTMLElement>(".zerohearth-matrix-item"));
 		const store = new Map<string, string>();
 		items[2].dispatchEvent(dragEvent("dragstart", store)); // "c"
-		const schedule = host.querySelector<HTMLElement>(".hearth-matrix-q.is-schedule") as HTMLElement;
+		const schedule = host.querySelector<HTMLElement>(".zerohearth-matrix-q.is-schedule") as HTMLElement;
 		schedule.dispatchEvent(dragEvent("dragover", store));
 		expect(schedule.classList.contains("is-drop-target")).toBe(true);
 		schedule.dispatchEvent(dragEvent("drop", store));
 		expect(schedule.classList.contains("is-drop-target")).toBe(false);
-		(host.querySelector(".hearth-matrix-unsorted") as HTMLElement).dispatchEvent(dragEvent("drop", store));
+		(host.querySelector(".zerohearth-matrix-unsorted") as HTMLElement).dispatchEvent(dragEvent("drop", store));
 		expect(drops).toEqual([
 			["c", "schedule"],
 			["c", null],
@@ -146,14 +146,14 @@ describe("renderTaskMatrixFrame", () => {
 		const drops: [string, TaskMatrixQuadrant | null][] = [];
 		renderTaskMatrixFrame(host, frame(drops));
 		const foreign = new Map([["text/plain", "0"]]);
-		const doQ = host.querySelector(".hearth-matrix-q.is-do") as HTMLElement;
+		const doQ = host.querySelector(".zerohearth-matrix-q.is-do") as HTMLElement;
 		const over = dragEvent("dragover", foreign);
 		doQ.dispatchEvent(over);
 		expect(over.defaultPrevented).toBe(false);
 		doQ.dispatchEvent(dragEvent("drop", foreign));
 		const store = new Map<string, string>();
-		host.querySelector<HTMLElement>(".hearth-matrix-item")?.dispatchEvent(dragEvent("dragstart", store));
-		(host.querySelector(".hearth-matrix-q.is-eliminate") as HTMLElement).dispatchEvent(dragEvent("drop", store));
+		host.querySelector<HTMLElement>(".zerohearth-matrix-item")?.dispatchEvent(dragEvent("dragstart", store));
+		(host.querySelector(".zerohearth-matrix-q.is-eliminate") as HTMLElement).dispatchEvent(dragEvent("drop", store));
 		expect(drops).toEqual([]);
 	});
 });

@@ -1,7 +1,7 @@
 import { findCardById } from "./types";
 import { planCardCommands } from "./cardcommandstate";
 import { openCardDialog } from "./cardmodal";
-import type HearthPlugin from "./main";
+import type ZeroHearthPlugin from "./main";
 
 /**
  * One command per card that asked for one (#491).
@@ -9,7 +9,7 @@ import type HearthPlugin from "./main";
  * Obsidian's `/` menu is not something a plugin registers into: the core
  * "Slash commands" plugin lists the command palette's commands and filters
  * them by name, so a command is all this has to add — it shows up in the
- * palette, in `/`, and in Hearth's own `>` mode by itself.
+ * palette, in `/`, and in ZeroHearth's own `>` mode by itself.
  *
  * The registry is rebuilt from settings rather than patched, so a card that was
  * deleted, un-switched or renamed cannot leave a stale command behind. Ids are
@@ -20,7 +20,7 @@ import type HearthPlugin from "./main";
  * object so it costs nothing when the feature is unused. */
 const registered = new WeakMap<object, Map<string, string>>();
 
-export function syncCardCommands(plugin: HearthPlugin): void {
+export function syncCardCommands(plugin: ZeroHearthPlugin): void {
 	const before = registered.get(plugin) ?? new Map<string, string>();
 	const plan = planCardCommands(before, plugin.settings);
 	for (const id of plan.remove) plugin.removeCommand(id);

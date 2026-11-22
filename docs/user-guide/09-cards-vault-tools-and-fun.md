@@ -1,11 +1,11 @@
 # 9. Cards for vault insight, tools and fun
 
-This chapter documents three categories from Hearth's Add card picker: **Vault
+This chapter documents three categories from ZeroHearth's Add card picker: **Vault
 insight** (Query, Search bar, Vault statistics, Activity heatmap), **Tools**
 (Links / launchpad, Text / jot-down, Calculator, Web page) and **Fun**
 (Pet, Vault Pet).
 
-Cards are added with **Arrange → Add card** in Hearth's Home view and configured
+Cards are added with **Arrange → Add card** in ZeroHearth's Home view and configured
 from each card's own gear button while arranging; see
 [chapter 6](06-arranging-cards.md).
 
@@ -24,7 +24,7 @@ changes.
 
 | Setting | Meaning |
 | --- | --- |
-| *Query* | The same syntax as Hearth's search bar: plain text matches names and bodies, `#tag` matches tags, `key:value` matches a frontmatter property |
+| *Query* | The same syntax as ZeroHearth's search bar: plain text matches names and bodies, `#tag` matches tags, `key:value` matches a frontmatter property |
 | *Display* | **List** (compact) or **Tiles** |
 | *Max results* | The most matches to show at once |
 
@@ -45,7 +45,7 @@ Empty states: *Set a query in card settings*, and *No matches*.
 
 ## The Search bar card
 
-**What it shows:** a search field on the board — the same search Hearth's header
+**What it shows:** a search field on the board — the same search ZeroHearth's header
 offers, placed wherever you want it.
 
 **Requires:** nothing.
@@ -63,7 +63,7 @@ offers, placed wherever you want it.
 The field is as thick as the card is tall, so you set the bar's chunkiness by
 dragging the card's edge in arrange mode.
 
-A chip hidden vault-wide under *Settings → Hearth → Search → Filter chips* is
+A chip hidden vault-wide under *Settings → ZeroHearth → Search → Filter chips* is
 hidden for every search bar, and the card says so — and with *Search only the
 shown types* on, hiding it keeps that type out of the results too.
 
@@ -170,14 +170,14 @@ own instead of the plugin's long one. The target is one of:
 | **Note** | A note path in your vault |
 | **URL** | Any web address |
 | **Command** | Any Obsidian command, chosen from a picker |
-| **Folder** | A folder path in your vault — *Pick a folder* chooses one from a list. The button opens it in Hearth's folder browser, the way a folder bookmark does |
+| **Folder** | A folder path in your vault — *Pick a folder* chooses one from a list. The button opens it in ZeroHearth's folder browser, the way a folder bookmark does |
 
 The icon field accepts a Lucide icon id (`home`, `star`, `calendar` — browse
 them at lucide.dev/icons) or the vault path of an image such as
 `Attachments/icon.png`, so you can use your own picture as a button icon.
 
 A **Folder** button goes wherever the card's *Opening a folder button* setting
-says: Hearth's folder browser (the default), or Obsidian's own file explorer in
+says: ZeroHearth's folder browser (the default), or Obsidian's own file explorer in
 the sidebar, which reveals the folder there. That setting appears in the card's
 settings once the card has a folder button on it — one choice for the card, not
 a control on every tile — and a reveal that can't be done falls back to the
@@ -208,7 +208,7 @@ and may overlap.
 
 ## The former Commands card
 
-Until 3.4.0 Hearth had a separate Commands card: the Links card narrowed to
+Until 3.4.0 ZeroHearth had a separate Commands card: the Links card narrowed to
 commands, whose buttons could not be renamed. It is now part of the Links /
 launchpad card. Every Commands card you had becomes a launchpad automatically
 the first time 3.4.0 loads — same place, title, button sizing, button sizes and
@@ -228,7 +228,7 @@ The text is stored with the card, not in a note. That makes it right for a
 running list you do not want to file anywhere, and wrong for anything you need
 to search or link to.
 
-Because the text lives on the card, it is one of the things Hearth removes when
+Because the text lives on the card, it is one of the things ZeroHearth removes when
 you export a board with *Leave out my private information* on, and it is always
 removed when you publish to the gallery; see
 [chapter 16](16-sharing-and-gallery.md).
@@ -356,10 +356,10 @@ plugin, on your board.
 **Requires:** the Vault Pet plugin. Without it the card shows a prompt, and its
 settings are kept for when the plugin arrives.
 
-This is not the card above. The Pet card is Hearth's own and needs nothing; the
+This is not the card above. The Pet card is ZeroHearth's own and needs nothing; the
 Vault Pet card is a *house* for someone else's plugin — one that keeps XP,
 levels, quests, badges, a dex, streaks and a wardrobe, all of which stay the
-plugin's. Hearth draws none of it and stores none of it, so nothing here can
+plugin's. ZeroHearth draws none of it and stores none of it, so nothing here can
 reset your pet or disagree with what the plugin shows elsewhere.
 
 | Setting | Meaning |
@@ -376,7 +376,7 @@ There are two ways to add it from the picker: **Vault Pet** starts small, on the
 pet; **Vault Pet house** starts larger, on the house. They are the same card,
 and the *Show* setting switches between them at any time.
 
-One note on movement: the pet is animated by Vault Pet, not by Hearth, so
-Hearth's performance tier and its reduced-motion handling do not reach it —
+One note on movement: the pet is animated by Vault Pet, not by ZeroHearth, so
+ZeroHearth's performance tier and its reduced-motion handling do not reach it —
 exactly as they do not reach any other plugin's view hosted in a card. How much
 the pet moves is Vault Pet's to decide.

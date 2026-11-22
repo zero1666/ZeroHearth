@@ -4,6 +4,7 @@ import { HomeView, VIEW_TYPE_HOME } from "./view";
 import { CardPaneView } from "./cardpaneview";
 import type { OpenFrom } from "./opener";
 import { syncCardCommands } from "./cardcommands";
+import { zerohearthCommandId } from "./cardcommandstate";
 import { PANE_VIEW_TYPE } from "./cardpanesidebar";
 import { VIEW_TYPE_FOLDER } from "./cards/folder";
 import { FolderView } from "./folderview";
@@ -15,10 +16,10 @@ import { effectiveHiddenInstantAnswers, HomeSettings, effectiveTerminalScheme, h
 import { SearchTipsModal } from "./searchtips";
 import { HomeSettingTab } from "./settings";
 import {
-	HEARTH_ICON_ID,
-	HEARTH_ICON_SVG,
-	HEARTH_ICON_THEMED_ID,
-	HEARTH_ICON_THEMED_SVG,
+	ZEROHEARTH_ICON_ID,
+	ZEROHEARTH_ICON_SVG,
+	ZEROHEARTH_ICON_THEMED_ID,
+	ZEROHEARTH_ICON_THEMED_SVG,
 	tabIconIdFor,
 } from "./icon";
 import type { WorkspacesInstance } from "./obsidian-ext";
@@ -52,7 +53,7 @@ const AUDIO_RECORDER_PLUGIN_ID = "audio-recorder";
  * Whether a leaf is actually on screen, rather than merely open.
  *
  * Obsidian takes an inactive leaf in a tab group out of layout, which is what
- * makes a backgrounded Hearth tab cost nothing to have open. `offsetParent` is
+ * makes a backgrounded ZeroHearth tab cost nothing to have open. `offsetParent` is
  * null for exactly that case (and for a collapsed sidebar), so it is the cheapest
  * honest test available — no geometry, no observer, no undocumented API.
  *
@@ -65,7 +66,7 @@ function leafIsVisible(leaf: WorkspaceLeaf): boolean {
 	return el.offsetParent !== null || el.isShown?.() === true;
 }
 
-export default class HearthPlugin extends Plugin {
+export default class ZeroHearthPlugin extends Plugin {
 	settings: HomeSettings;
 	/** True when this load had no persisted data at all (a brand-new install),
 	 * as opposed to an existing vault that simply predates a given setting.
@@ -75,7 +76,7 @@ export default class HearthPlugin extends Plugin {
 	 * themeColorTarget setting changes. */
 	private ribbonEl?: HTMLElement;
 
-	/** Hearth's single connection to the Operon plugin's Developer API. Shared
+	/** ZeroHearth's single connection to the Operon plugin's Developer API. Shared
 	 * by every Operon card and the settings tab so the vault sees one consumer,
 	 * one capability grant and one session — not one per card. Nothing is
 	 * negotiated here: the session opens lazily, the first time a card (or the
@@ -93,7 +94,7 @@ export default class HearthPlugin extends Plugin {
 	 * single re-render ~600ms after the last change. */
 	private liveRefreshDebounced = debounce(() => this.runLiveRefresh(), 600, true);
 
-	/** Vault-relative path of Hearth's own `data.json`, resolved once at load. */
+	/** Vault-relative path of ZeroHearth's own `data.json`, resolved once at load. */
 	private dataPath = "";
 
 	/** The exact text last written to (or read from) `data.json`, so a change on
@@ -122,21 +123,21 @@ export default class HearthPlugin extends Plugin {
 		// startup lives in this vault's storage on this device (src/currency.ts).
 		initCurrencyCache(this.app);
 
-		// Hearth's dialogs and menus take the design of wherever they are opened
+		// ZeroHearth's dialogs and menus take the design of wherever they are opened
 		// from, which needs the last press remembered (see src/uidesign.ts).
 		installUiDesign(
 			this,
 			() => this.settings.cardDesign ?? "classic",
 			() => (terminalModeActive(this.settings) ? effectiveTerminalScheme(this.settings) : null),
 		);
-		// Terminal mode draws Hearth's icons as characters (src/glyphs.ts).
+		// Terminal mode draws ZeroHearth's icons as characters (src/glyphs.ts).
 		installGlyphMode(() => terminalModeActive(this.settings));
 
-		// Register both Hearth crystals (brand purple and themeable) so either
+		// Register both ZeroHearth crystals (brand purple and themeable) so either
 		// can be used as the ribbon, tab and header icon per the
 		// themeColorTarget setting.
-		addIcon(HEARTH_ICON_ID, HEARTH_ICON_SVG);
-		addIcon(HEARTH_ICON_THEMED_ID, HEARTH_ICON_THEMED_SVG);
+		addIcon(ZEROHEARTH_ICON_ID, ZEROHEARTH_ICON_SVG);
+		addIcon(ZEROHEARTH_ICON_THEMED_ID, ZEROHEARTH_ICON_THEMED_SVG);
 
 		this.registerView(VIEW_TYPE_HOME, (leaf) => new HomeView(leaf, this));
 		// The folder browser, opened in a tab of its own (#375).
@@ -164,7 +165,7 @@ export default class HearthPlugin extends Plugin {
 
 		// The keyboard route into the search field (#446): a board that is
 		// already up only takes the cursor, a board that isn't is brought up
-		// first, and with no Hearth tab at all one is opened.
+		// first, and with no ZeroHearth tab at all one is opened.
 		this.addCommand({
 			id: "focus-search",
 			name: t().commands.focusSearch,
@@ -254,7 +255,7 @@ export default class HearthPlugin extends Plugin {
 			}),
 		);
 
-		// Hearth's own recent-file history (#228). Obsidian's getLastOpenFiles()
+		// ZeroHearth's own recent-file history (#228). Obsidian's getLastOpenFiles()
 		// stops at ten entries, so a Recent files card asking for more has to be
 		// told about opens as they happen; a rename is followed so a moved file
 		// keeps its place instead of vanishing from the list.
@@ -319,10 +320,10 @@ export default class HearthPlugin extends Plugin {
 		// drop it rather than leave a copy of the vault behind after unload.
 		clearContentSearchCache();
 		// The Operon session holds a reference to that plugin's instance; drop
-		// it so an unloaded Hearth isn't left holding a live handle.
+		// it so an unloaded ZeroHearth isn't left holding a live handle.
 		this.operon.invalidate();
 		// The music card's player owns a detached <audio> element for the whole
-		// plugin; without this an unloaded Hearth would keep a decoder alive.
+		// plugin; without this an unloaded ZeroHearth would keep a decoder alive.
 		disposeVaultPlayer();
 		// A TaskChute card keeps a hidden TaskChute view alive as its data
 		// source; leaving it behind would leave another plugin's timers running.
@@ -401,7 +402,7 @@ export default class HearthPlugin extends Plugin {
 	 *
 	 * Each position gets two commands. "Switch to dashboard N" changes the active
 	 * board and leaves it at that, which is what a hotkey pressed while already
-	 * looking at Hearth wants. "Open dashboard N" also brings the board up, so
+	 * looking at ZeroHearth wants. "Open dashboard N" also brings the board up, so
 	 * navigating to a specific dashboard from anywhere in the vault is one
 	 * command rather than a two-command macro (#286).
 	 */
@@ -486,7 +487,7 @@ export default class HearthPlugin extends Plugin {
 	 * button and this command all behave the same.
 	 *
 	 * `from` is the view the button was pressed in, so the note can replace that
-	 * Hearth tab when the user asked for "same tab" (#106); the command palette
+	 * ZeroHearth tab when the user asked for "same tab" (#106); the command palette
 	 * has no view and falls back to the active leaf. `query` is what the search
 	 * field held when the button beside it was pressed — a title typed there
 	 * names the note; the command has no field and passes nothing. */
@@ -545,7 +546,7 @@ export default class HearthPlugin extends Plugin {
 	/** Run any command by id, surfacing a Notice if it no longer resolves (e.g.
 	 * the plugin providing it was disabled). Used by the mobile action bar. */
 	runCommandOrNotice(commandId: string) {
-		if (!commandId || !this.app.commands.executeCommandById(commandId)) {
+		if (!commandId || !this.app.commands.executeCommandById(zerohearthCommandId(commandId))) {
 			new Notice(t().notices.commandNotFound(commandId));
 		}
 	}
@@ -615,7 +616,7 @@ export default class HearthPlugin extends Plugin {
 		this.refreshViews();
 	}
 
-	/** The mark Hearth wears in the ribbon and on its tab: the user's Lucide tab
+	/** The mark ZeroHearth wears in the ribbon and on its tab: the user's Lucide tab
 	 * icon, or the brand/themed crystal. */
 	private brandIconId(): string {
 		return tabIconIdFor(this.settings.themeColorTarget, this.settings.tabIcon);
@@ -625,7 +626,7 @@ export default class HearthPlugin extends Plugin {
 	 * icon or themeColorTarget setting changes. */
 	refreshBrandIcons() {
 		// Obsidian's own icon, not the terminal glyph: the ribbon is Obsidian's
-		// chrome, not Hearth's.
+		// chrome, not ZeroHearth's.
 		if (this.ribbonEl) setIcon(this.ribbonEl, this.brandIconId());
 		const updateHeader = (leaf: WorkspaceLeaf) =>
 			// updateHeader is undocumented; when absent the tab icon simply
@@ -699,7 +700,7 @@ export default class HearthPlugin extends Plugin {
 		// Belt and braces for the sync watcher: the `raw` event is what normally
 		// reports another device's settings landing, but a sync client Obsidian
 		// doesn't see the write from would leave the board stale until a restart —
-		// exactly the thing being fixed. Looking at the file when a Hearth tab is
+		// exactly the thing being fixed. Looking at the file when a ZeroHearth tab is
 		// focused costs a string compare in the ordinary case, and means the board
 		// is current by the time it is looked at.
 		this.externalSettingsDebounced();
@@ -792,7 +793,7 @@ export default class HearthPlugin extends Plugin {
 		if (!this.settings.liveRefresh) return;
 		// The minimal tier suppresses it without clearing the setting: a full board
 		// rebuild on every burst of vault writes is the most expensive thing
-		// Hearth does off its own render path. Views still refresh when their tab
+		// ZeroHearth does off its own render path. Views still refresh when their tab
 		// is focused again, so nothing goes permanently stale.
 		if (!timersAllowed(this.settings)) return;
 		this.app.workspace.getLeavesOfType(VIEW_TYPE_HOME).forEach((leaf) => {
@@ -803,7 +804,7 @@ export default class HearthPlugin extends Plugin {
 			//
 			// Visible boards only, for the same reason as refreshViews: rebuilding a
 			// board behind another tab on every burst of vault writes is the single
-			// most expensive thing Hearth does off its own render path, and the
+			// most expensive thing ZeroHearth does off its own render path, and the
 			// focus refresh brings it up to date before it is seen.
 			if (view instanceof HomeView && !view.arrangeMode && leafIsVisible(leaf)) {
 				view.liveRender();

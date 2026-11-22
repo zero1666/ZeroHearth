@@ -12,7 +12,7 @@ import { PANE_STATE_KEY, paneCardIdFromState } from "./cardpanestate";
  */
 
 /** The view type the pane registers under in a tab (`main.ts`). */
-export const PANE_VIEW_TYPE = "hearth-card-pane";
+export const PANE_VIEW_TYPE = "zerohearth-card-pane";
 
 /** Every open pane leaf, in workspace order. */
 export function cardPaneLeaves(app: App): WorkspaceLeaf[] {

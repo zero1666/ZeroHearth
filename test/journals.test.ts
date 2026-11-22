@@ -19,13 +19,13 @@ import {
  * The Journals integration (issue #318).
  *
  * No Obsidian API is mocked here, per the project's rule: the stand-in `app`
- * is the plugin *registry* — a plain object Hearth reads a foreign plugin off,
+ * is the plugin *registry* — a plain object ZeroHearth reads a foreign plugin off,
  * exactly as `integrations.test.ts` does — and the stand-in `api` is that
- * foreign plugin's own object, which Hearth treats as untrusted data whatever
+ * foreign plugin's own object, which ZeroHearth treats as untrusted data whatever
  * it turns out to be. Nothing here touches the vault, the workspace or a
  * render.
  *
- * What's covered is the part that decides *what Hearth believes about another
+ * What's covered is the part that decides *what ZeroHearth believes about another
  * plugin's data*, and it is the part with teeth, because the card renders
  * synchronously against an API that is entirely asynchronous: when a cached
  * answer is served, when it is refreshed, when the card is told to redraw, and

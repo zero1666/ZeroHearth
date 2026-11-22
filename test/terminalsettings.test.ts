@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_SETTINGS, graphicalBoardsInUse, type HomeSettings } from "../src/types";
+import { DEFAULT_SETTINGS, effectiveTerminalScheme, graphicalBoardsInUse, hydrateSettings, type HomeSettings } from "../src/types";
+
+it("keeps the original purple terminal palette for imported Hearth settings", () => {
+	const { settings } = hydrateSettings({ terminalScheme: "hearth" });
+	expect(effectiveTerminalScheme(settings)).toBe("zerohearth");
+});
 
 /**
  * Which settings the panes offer while terminal mode is on. Terminal mode

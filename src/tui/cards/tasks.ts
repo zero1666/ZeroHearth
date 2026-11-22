@@ -77,7 +77,7 @@ import {
 } from "../../tasktabs";
 import type { TaskMatrixQuadrant, TaskTabRow, TasksConfig } from "../../types";
 import { PromptModal } from "../../ui";
-import { hearthMenu } from "../../uidesign";
+import { zerohearthMenu } from "../../uidesign";
 import type { HomeView } from "../../view";
 import type { TuiContext, TuiItem, TuiOutput, TuiRenderer } from "../card";
 import { asciify, centerLine, fit, padEnd, spread, strWidth, styleLine, type Line, type Seg, type TuiStyle } from "../text";
@@ -517,7 +517,7 @@ function tabRowLines(ctx: TuiContext, resolved: readonly ResolvedTaskTabRow[]): 
 
 /** The `t` menu: every row's tabs as `<caption>: <tab>`, checked on show. */
 function tabMenu(ctx: TuiContext, resolved: readonly ResolvedTaskTabRow[], evt: MouseEvent | KeyboardEvent): void {
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	resolved.forEach((entry, r) => {
 		if (r > 0) menu.addSeparator();
 		const caption = tabCaption(entry.row);
@@ -563,7 +563,7 @@ function boardToggle(ctx: TuiContext, cfg: TasksConfig, load: Extract<TaskLoad, 
 }
 
 function columnMenu(ctx: TuiContext, cfg: TasksConfig, load: Extract<TaskLoad, { kind: "ok" }>, board: TaskBoard, col: TaskBoardColumn, evt: MouseEvent | KeyboardEvent): void {
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	const i = board.visible.indexOf(col);
 	const left = board.visible[i - 1];
 	const right = board.visible[i + 1];

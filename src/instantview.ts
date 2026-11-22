@@ -333,15 +333,15 @@ export class InstantAnswers {
 	render(parent: HTMLElement, idBase: string): InstantRow[] {
 		const intent = this.intent;
 		if (!intent) return [];
-		const wrap = parent.createDiv("hearth-instant");
+		const wrap = parent.createDiv("zerohearth-instant");
 		wrap.toggleClass("is-red-up", redUpForLanguage(detectLanguage()));
 		const rows: InstantRow[] = [];
 		const row = (icon: string, open: () => void): HTMLElement => {
-			const el = wrap.createDiv("hearth-result hearth-instant-row");
+			const el = wrap.createDiv("zerohearth-result zerohearth-instant-row");
 			el.id = `${idBase}-instant-${rows.length}`;
 			el.setAttribute("role", "option");
 			el.setAttribute("aria-selected", "false");
-			setIcon(el.createDiv("hearth-result-icon"), icon);
+			setIcon(el.createDiv("zerohearth-result-icon"), icon);
 			el.addEventListener("click", open);
 			rows.push({ el, open });
 			return el;
@@ -381,10 +381,10 @@ export class InstantAnswers {
 	/** The answer's text: a big value, a quiet line under it, and a hint of
 	 * what Enter does. */
 	private body(el: HTMLElement, value: string, note: string, hint?: string): HTMLElement {
-		const text = el.createDiv("hearth-result-text hearth-instant-text");
-		text.createDiv({ cls: "hearth-instant-value", text: value });
-		if (note) text.createDiv({ cls: "hearth-instant-note", text: note });
-		if (hint) el.createDiv({ cls: "hearth-instant-hint", text: hint });
+		const text = el.createDiv("zerohearth-result-text zerohearth-instant-text");
+		text.createDiv({ cls: "zerohearth-instant-value", text: value });
+		if (note) text.createDiv({ cls: "zerohearth-instant-note", text: note });
+		if (hint) el.createDiv({ cls: "zerohearth-instant-hint", text: hint });
 		return text;
 	}
 
@@ -454,24 +454,24 @@ export class InstantAnswers {
 			const picked = market.results[market.pick];
 			const symbol = picked?.display ?? displaySymbol(quote.target);
 			const el = row("trending-up", () => window.open(quotePageUrl(quote.target), "_blank"));
-			const text = el.createDiv("hearth-result-text hearth-instant-text");
-			const title = text.createDiv("hearth-instant-note");
+			const text = el.createDiv("zerohearth-result-text zerohearth-instant-text");
+			const title = text.createDiv("zerohearth-instant-note");
 			title.setText([quote.name || symbol, quote.name && quote.name !== symbol ? symbol : "", quote.exchange]
 				.filter(Boolean)
 				.join(" · "));
-			const line = text.createDiv("hearth-instant-quote");
+			const line = text.createDiv("zerohearth-instant-quote");
 			line.createSpan({
-				cls: "hearth-instant-value",
+				cls: "zerohearth-instant-value",
 				text: formatPrice(quote.price, quote.type, quote.currency),
 			});
 			if (quote.currency && quote.type !== "index") {
-				line.createSpan({ cls: "hearth-instant-ccy", text: quote.currency });
+				line.createSpan({ cls: "zerohearth-instant-ccy", text: quote.currency });
 			}
 			line.createSpan({
-				cls: `hearth-instant-move is-${direction(quote.change ?? quote.changePct)}`,
+				cls: `zerohearth-instant-move is-${direction(quote.change ?? quote.changePct)}`,
 				text: formatMove(quote, "both"),
 			});
-			el.createDiv({ cls: "hearth-instant-hint", text: strings.openHint });
+			el.createDiv({ cls: "zerohearth-instant-hint", text: strings.openHint });
 			this.chart(wrap, market.targets, quote.type === "currency" ? null : quote);
 		}
 
@@ -483,11 +483,11 @@ export class InstantAnswers {
 				this.pickMarket(i);
 				this.host.changed();
 			});
-			alt.addClass("hearth-instant-alt");
-			const text = alt.createDiv("hearth-result-text");
-			text.createDiv({ cls: "hearth-result-name", text: result.name || result.display });
+			alt.addClass("zerohearth-instant-alt");
+			const text = alt.createDiv("zerohearth-result-text");
+			text.createDiv({ cls: "zerohearth-result-name", text: result.name || result.display });
 			text.createDiv({
-				cls: "hearth-result-path",
+				cls: "zerohearth-result-path",
 				text: [result.display, result.exchange].filter(Boolean).join(" · "),
 			});
 		});
@@ -500,17 +500,17 @@ export class InstantAnswers {
 		quote: MarketQuote | null = null,
 	): void {
 		if (!targets.length) return;
-		const box = wrap.createDiv("hearth-instant-chart-wrap");
+		const box = wrap.createDiv("zerohearth-instant-chart-wrap");
 		const series: MarketSeries | null = cachedSeries(targets, this.range);
 		if (series && series.points.length > 1) {
 			drawChart(box, series, {
-				cls: "hearth-instant-chart",
+				cls: "zerohearth-instant-chart",
 				baseline: this.range === "1d",
 				interactive: { range: this.range, quote },
 			});
 		} else {
 			box.createDiv({
-				cls: "hearth-instant-chart hearth-instant-chart-empty",
+				cls: "zerohearth-instant-chart zerohearth-instant-chart-empty",
 				text: this.host.externalCallsDisabled() ? "" : t().search.instant.loading,
 			});
 		}
@@ -553,13 +553,13 @@ export class InstantAnswers {
 		const el = row(weatherIcon(now.code, now.isDay), () => copy(`${where}: ${value}`));
 		this.body(el, value, note, strings.copyHint);
 
-		const strip = wrap.createDiv("hearth-instant-days");
+		const strip = wrap.createDiv("zerohearth-instant-days");
 		for (const day of days) {
-			const cell = strip.createDiv("hearth-instant-day");
-			cell.createDiv({ cls: "hearth-instant-day-name", text: formatWeekday(day.date) });
-			setIcon(cell.createDiv("hearth-instant-day-icon"), weatherIcon(day.code, true));
+			const cell = strip.createDiv("zerohearth-instant-day");
+			cell.createDiv({ cls: "zerohearth-instant-day-name", text: formatWeekday(day.date) });
+			setIcon(cell.createDiv("zerohearth-instant-day-icon"), weatherIcon(day.code, true));
 			cell.createDiv({
-				cls: "hearth-instant-day-temp",
+				cls: "zerohearth-instant-day-temp",
 				text: `${formatTemp(day.max, req.tempUnit)} ${formatTemp(day.min, req.tempUnit)}`,
 			});
 		}
@@ -580,12 +580,12 @@ export class InstantAnswers {
 			return;
 		}
 		const el = row("book-open", () => window.open(summary.url, "_blank"));
-		el.addClass("hearth-instant-wiki");
+		el.addClass("zerohearth-instant-wiki");
 		const text = this.body(el, summary.title, summary.description, strings.openHint);
-		text.createDiv({ cls: "hearth-instant-extract", text: summary.extract });
+		text.createDiv({ cls: "zerohearth-instant-extract", text: summary.extract });
 		if (summary.thumbnail) {
 			el.createEl("img", {
-				cls: "hearth-instant-thumb",
+				cls: "zerohearth-instant-thumb",
 				attr: { src: summary.thumbnail, alt: "", loading: "lazy", referrerpolicy: "no-referrer" },
 			});
 		}

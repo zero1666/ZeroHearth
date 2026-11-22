@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to Hearth are documented in this file.
+All notable changes to ZeroHearth are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [semantic versioning](https://semver.org/)
@@ -9,7 +9,7 @@ tagged `MAJOR.MINOR.PATCH-beta.N` and are omitted here; each entry aggregates it
 preceding beta series.
 
 History begins at 1.5.0. For releases before 1.5.0, see the
-[GitHub Releases](https://github.com/ondreu/Hearth/releases) page.
+[GitHub Releases](https://github.com/zero1666/ZeroHearth/releases) page.
 
 ## [3.10.0]
 
@@ -60,8 +60,8 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
 - **Any card can be run as a command.** The card settings dialog gains *Add to
   command menu* (#491): the card appears in the command palette as
-  `Hearth: Open <card>`, in Obsidian's `/` menu when the core Slash commands
-  plugin is on, and in Hearth's own `>` search mode, and opens in a floating
+  `ZeroHearth: Open <card>`, in Obsidian's `/` menu when the core Slash commands
+  plugin is on, and in ZeroHearth's own `>` search mode, and opens in a floating
   dialog over the note. The switch is off by default and the command follows the
   card's title, so a rename renames it and deleting the card removes it. The
   card render contract was narrowed to `CardHost` so a card can be drawn by a
@@ -100,7 +100,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   queue of every track, in name order.
 
 
-- **Hearth speaks Traditional Chinese too.** A full `zh-tw` locale joins English,
+- **ZeroHearth speaks Traditional Chinese too.** A full `zh-tw` locale joins English,
   German, French, Korean and Simplified Chinese: Obsidian's own Traditional
   Chinese (`zh-TW`) display language now loads it, `zh` stays Simplified and
   `zh-CN` still falls back to it. The wording is Taiwan's — a vault is 儲存庫 —
@@ -121,7 +121,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
 
 - **The Pet card in Terminal design no longer grows Obsidian's memory until it
-  crashes** (#479). Its frames were the one animation in Hearth running on a
+  crashes** (#479). Its frames were the one animation in ZeroHearth running on a
   JavaScript timer instead of CSS, and every tick rebuilt the card's whole body
   — a span with a click and a key listener for every sprite cell — and, through
   the board's frame layer, every frame on the board. It did that in a background
@@ -133,7 +133,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   run, and the whole body is the click target, so patting it works as before.
 
 
-- **The toggles in Hearth's settings and dialogs are visible again in the TUI
+- **The toggles in ZeroHearth's settings and dialogs are visible again in the TUI
   style on Obsidian 1.15** (#480). That release gives every toggle an absolutely
   positioned, fully transparent `::before` as its click area; the TUI style draws
   the `[ ]` / `[x]` checkbox in that same pseudo-element and only set its content
@@ -199,7 +199,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
 ### Changed
 
-- **Spacing is now a three-step choice.** *Settings → Hearth → Dashboard* (and
+- **Spacing is now a three-step choice.** *Settings → ZeroHearth → Dashboard* (and
   each board's Layout tab, and the setup wizard) used to offer *Compact
   spacing* as an on/off switch; it is now *Spacing* — *Roomy*, *Compact*, or
   the new *Flush*, which drops the side and bottom gutters so the board and its
@@ -243,7 +243,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
 - **The Git card works again with obsidian-git 2.41.** That release moved its
   commit-and-push actions, which every earlier version kept flat on the
-  plugin, onto its own GitActions helper, so Hearth's support probe, which
+  plugin, onto its own GitActions helper, so ZeroHearth's support probe, which
   read the old flat names, decided the actions weren't there and disabled the
   commit, sync, push, pull, fetch, discard-all and branch buttons under
   *This version of the Git plugin doesn't support that*. The write actions
@@ -253,7 +253,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
 - **The commit scope the card editor chooses is respected again on
   obsidian-git 2.40 and later.** Since 2.40 renamed its commit options to
-  `mode`, Hearth kept sending the `onlyStaged` boolean those builds never
+  `mode`, ZeroHearth kept sending the `onlyStaged` boolean those builds never
   read, so *Smart*, *All* and *Staged* were all collapsing to the plugin's
   default (`all`). The card now names the scope, and dispatch translates it
   into both dialects: `mode` goes to obsidian-git 2.40+, where *Smart*
@@ -275,12 +275,12 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 - **A hotkey that puts the cursor in the board's search field.** *Focus board
   search* is bindable under Settings → Hotkeys: a board that is already in front
   only takes the cursor, one that is open behind a note is brought forward
-  first, and with no Hearth tab at all it opens one. The existing *Focus search
+  first, and with no ZeroHearth tab at all it opens one. The existing *Focus search
   on open* setting keeps covering only a board that is opening.
 - **A Music card, playing from the vault or from a Navidrome/Subsonic server.**
   Two sources behind one card. *Vault folder* takes every audio file in a folder
   (optionally including subfolders), *Vault files* a hand-picked list, and both
-  play through Hearth's own player — one `<audio>` for the whole plugin, so the
+  play through ZeroHearth's own player — one `<audio>` for the whole plugin, so the
   music carries on through a redraw of the board instead of stopping every time
   you change a setting. *Stereo* plays nothing itself: it is a remote control for
   the Stereo plugin's player, showing the track, the queue and the transport, so
@@ -302,7 +302,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   types: point it at an MP4 or WEBM in your vault and the board sits behind a
   muted, looping clip instead of an animated GIF or WEBP. The decode happens off
   the main thread, which is the reason those animated images stuttered — but a
-  clip is still the most expensive backdrop Hearth paints, so it is the one kind
+  clip is still the most expensive backdrop ZeroHearth paints, so it is the one kind
   the performance tier decides for you, and the setting says so where you choose
   it. On *Full* it plays. From *Balanced* down it holds still on its first frame
   — a still picture rather than a black hole — and the *Minimal* tier replaces
@@ -340,7 +340,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   Revealing puts the folder in the sidebar, opening the explorer there if it was
   closed. The reveal is the core file explorer's own `revealInFolder` —
   undocumented, so when it can't be done (plugin off, or the internal changes
-  shape) the click opens Hearth's folder browser instead of doing nothing.
+  shape) the click opens ZeroHearth's folder browser instead of doing nothing.
 
 ### Changed
 
@@ -438,7 +438,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   settings window. Text fields and dropdowns are left alone, since Escape
   already cancels an edit or closes the list there.
 
-- **Korean** (#423). Hearth's interface is translated into Korean — the settings
+- **Korean** (#423). ZeroHearth's interface is translated into Korean — the settings
   panes, card editors, boards, layout export/import, the gallery and terminal
   mode — beside the five locales it already had. Product names, filter syntax,
   placeholders and icon ids stay in English.
@@ -455,16 +455,16 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
 ### Fixed
 
-- Icons a file gets from an Iconic rulebook rule now show in Hearth's cards,
+- Icons a file gets from an Iconic rulebook rule now show in ZeroHearth's cards,
   not only icons set on the file by hand. Iconic keeps the two apart and never
   writes a rule's icon into its per-file map, so the Recent files card — and
-  every other card that draws file icons — fell back to Hearth's own file-type
+  every other card that draws file icons — fell back to ZeroHearth's own file-type
   icon for anything a rule governed (#421).
 
 - **Search jumps to the match** (#397). Opening a note from the search results
   now scrolls to the first matching line in its body and selects the text, for
   both the built-in and Omnisearch engines. *Scroll to search match* under
-  **Settings → Hearth → Appearance** turns it off; it is on by default.
+  **Settings → ZeroHearth → Appearance** turns it off; it is on by default.
 
 - The dashboard no longer over-scrolls when the Android keyboard opens in a card
   editor (#417). Editors sit deep in the scroll area, so the browser pans the
@@ -504,7 +504,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
     not round-trip to an earlier version, which shows the card's first file
     only.
 - **Keep view state on this device** (#392). A new switch under
-  **Settings → Hearth → Behaviour** for vaults synced with Git: the active
+  **Settings → ZeroHearth → Behaviour** for vaults synced with Git: the active
   dashboard is remembered on this device instead of in `data.json`, so
   switching boards no longer marks the plugin's settings as modified or drags
   another device's board along on the next sync, and scroll positions stay in
@@ -512,13 +512,13 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   forgotten when Obsidian restarts). Off by default, which keeps today's
   behaviour.
 - **Quick switcher search engine** (#393). *Search engine* under
-  **Settings → Hearth → Search** gains a third choice beside Hearth and
+  **Settings → ZeroHearth → Search** gains a third choice beside ZeroHearth and
   Omnisearch: **Quick switcher**, which answers plain queries the way
   Obsidian's own Quick switcher does — files only (no folders), one fuzzy
   match on the path, and frontmatter aliases matched too, with a matching
   alias shown under the note's name. Which file types appear follows the
   Quick switcher's own *Show attachments* and *Show all file types* options.
-  Tag, property and command syntax and the Folders chip keep using Hearth's
+  Tag, property and command syntax and the Folders chip keep using ZeroHearth's
   engine; note bodies are not searched in this mode.
 
 ### Changed
@@ -563,8 +563,8 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 ### Added
 
 - **Terminal mode (experimental).** A third design beside Classic and
-  Expressive (**Settings → Hearth → Appearance → Terminal**, and in the setup
-  wizard's look step) that draws the whole of Hearth as a text interface, the
+  Expressive (**Settings → ZeroHearth → Appearance → Terminal**, and in the setup
+  wizard's look step) that draws the whole of ZeroHearth as a text interface, the
   way a terminal tool such as `htop` looks: one character grid in a bundled
   monospaced font, every card a box drawn in line characters that joins its
   neighbours, and keys for everything.
@@ -587,8 +587,8 @@ History begins at 1.5.0. For releases before 1.5.0, see the
     the pet as its sprite in half blocks. Pictures, web pages, hosted views,
     Datacore and DataviewJS are drawn graphically inside their frame.
   - Emoji are replaced by ASCII where there is an equivalent and left out where
-    there isn't. Hearth's dialogs, menus and settings follow the same look.
-  - Five colour schemes (your Obsidian theme's colours, Htop, Hearth, Amber,
+    there isn't. ZeroHearth's dialogs, menus and settings follow the same look.
+  - Five colour schemes (your Obsidian theme's colours, Htop, ZeroHearth, Amber,
     Paper) and a font size. Switching terminal mode off brings every board
     back exactly as it was.
   - Settings that would change nothing while terminal mode is on are hidden
@@ -600,12 +600,12 @@ History begins at 1.5.0. For releases before 1.5.0, see the
     stay while a plugin board, which terminal mode leaves as it is, still uses
     them.
 - **Single-card dashboards.** A third *Dashboard type* beside Cards and Plugin
-  view: **Single card** gives the whole board to one of its own Hearth cards —
+  view: **Single card** gives the whole board to one of its own ZeroHearth cards —
   an RSS reader, a task list — at full size, the way a plugin view fills its
   board. Pick the card on the board's new **Card** tab (or add one there); a
   pencil on the switcher row opens the card's settings. The board keeps all of
   its cards, so switching back to Cards puts them back where they were.
-- **An RSS reader inside Hearth** (#377). Entries open in a reader — a large
+- **An RSS reader inside ZeroHearth** (#377). Entries open in a reader — a large
   dialog over the board, or a tab of its own — with the card's feeds along the
   top, the entries down the side and the entry at a reading width. Arrow keys
   (or j/k) step through the entries and `[` `]` through the feeds; buttons open
@@ -624,7 +624,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
     in the settings) lists only the unread, another marks the feed read, and
     right-clicking an entry offers every action. In terminal mode `u` toggles
     an entry, `A` marks the feed read and `f` filters. Read marks live in
-    Hearth's settings, so they sync with them.
+    ZeroHearth's settings, so they sync with them.
   - **Save entries as notes**, through a note template like the Obsidian Web
     Clipper's: a note name, a folder, typed properties (text, list, number,
     checkbox, date, date & time) and a body, each taking `{{variables}}` and
@@ -660,7 +660,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   [Front Matter Title](https://obsidian.md/plugins?id=obsidian-front-matter-title-plugin)
   plugin's file-explorer feature on, Folder cards and the folder browser list
   notes by the titles the explorer shows instead of their file names, through
-  the plugin's own API. On by default; **Settings → Hearth → Integrations →
+  the plugin's own API. On by default; **Settings → ZeroHearth → Integrations →
   Front Matter Title** turns it off.
 - **World tension card.** Kagi News' World Tension index — a language model's
   0–100 reading of the day's world news, from *Cool* to *Burning* — on the
@@ -678,8 +678,8 @@ History begins at 1.5.0. For releases before 1.5.0, see the
     external calls** stops it like every other request. Kagi publishes it once
     a day, so a card asks nothing until the next one is due, then checks
     hourly (by default) until it arrives.
-- **Hearth speaks French.** A full `fr` locale joins English, German and
-  Simplified Chinese: every string Hearth draws comes out in French when
+- **ZeroHearth speaks French.** A full `fr` locale joins English, German and
+  Simplified Chinese: every string ZeroHearth draws comes out in French when
   Obsidian's own display language is French, with no setting of its own.
   Anything untranslated falls back to English. Thanks to @jlclux71 (#374).
   - The search bar's instant answers understand French phrases too:
@@ -718,14 +718,14 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   - The search bar's results close when you tap or scroll outside them.
   - Live-preview note cards (Daily note) and hosted views lose the ~84px gap
     Obsidian's phone header left at their top.
-  - Toggles in Hearth's settings keep their own width at the end of the row
+  - Toggles in ZeroHearth's settings keep their own width at the end of the row
     instead of squeezing the setting's name.
 - **Icon buttons keep their icons in Obsidian's tablet layout.** On a tablet
   or an unfolded foldable, Obsidian pads every button 20px on each side, so
   the dashboard switcher, the calendar and schedule arrows and other small
   icon buttons showed as empty pills, and the rest swelled to twice their
   width. They now keep the size they have on a phone or desktop
-  ([#381](https://github.com/ondreu/Hearth/issues/381)).
+  ([#381](https://github.com/zero1666/ZeroHearth/issues/381)).
 - **Buttons on Launchpad, Commands and New note from template cards can be
   moved with a finger.** In arrange mode a touch drag on a button was taken
   for a scroll, so the button snapped back to where it was; only its resize
@@ -772,7 +772,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 - **Search tips.** One dialog lists everything the search bar understands —
   `#tags`, `key:value`, `>commands` and every instant answer — with examples
   that type themselves into the bar when clicked. Type `?` into any search
-  bar, run **Hearth: Show search tips**, or open it from Settings → Search. An
+  bar, run **ZeroHearth: Show search tips**, or open it from Settings → Search. An
   empty search bar offers it once after this update.
 
 - **Checkbox tasks on the calendars.** Both calendar cards can now draw
@@ -797,8 +797,8 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   it no longer reads as sitting flat on the cards below.
 
 - **The README has a Privacy & network section.** It lists every service
-  Hearth can contact, what triggers each request and what is sent, and what
-  Hearth does with your vault and clipboard.
+  ZeroHearth can contact, what triggers each request and what is sent, and what
+  ZeroHearth does with your vault and clipboard.
 
 ### Fixed
 
@@ -821,9 +821,9 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
 ### Added
 
-- **Material 3 Expressive: a second design for all of Hearth.** A new
-  **Design** setting — *Classic* or *Expressive* — heads **Settings → Hearth →
-  Appearance**. Expressive redraws everything Hearth draws in tonal steps of
+- **Material 3 Expressive: a second design for all of ZeroHearth.** A new
+  **Design** setting — *Classic* or *Expressive* — heads **Settings → ZeroHearth →
+  Appearance**. Expressive redraws everything ZeroHearth draws in tonal steps of
   your accent colour, in light and dark themes:
 
   - **Cards** sit on an opaque tonal surface with large rounded corners that
@@ -833,7 +833,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
     heavy or on a cookie shape. Both calendars and the weather card follow in
     every view.
   - **Everything around the cards** — the board's search row and buttons,
-    every dialog, picker and menu Hearth opens, and its settings pane, where
+    every dialog, picker and menu ZeroHearth opens, and its settings pane, where
     rows are gathered into tonal groups under accent headings. Obsidian's own
     interface and other plugins' are left to your theme.
 
@@ -872,7 +872,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   faces size themselves to the card and drop seconds and animation on the
   Reduced and Minimal performance tiers.
 
-- **Backgrounds drawn by Hearth.** *Hearth default* used to be a 1.5 MB photo
+- **Backgrounds drawn by ZeroHearth.** *ZeroHearth default* used to be a 1.5 MB photo
   fetched from GitHub, and so vanished with *Disable external calls* on. It is
   now drawn by the plugin: **Classic** is hills with a cabin and pines — a
   morning in a light theme, a moonlit night in a dark one — and **Expressive**
@@ -882,7 +882,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   The live weather sky gains an Expressive look too: a flat illustrated sky
   with rolling hills, bubbly clouds and pill raindrops.
 
-  The background's *Design* sits under **Settings → Hearth → Appearance →
+  The background's *Design* sits under **Settings → ZeroHearth → Appearance →
   Background**, and a board can override it. A new vault starts the drawn
   wallpaper at opacity 0.8 with no blur; switching between it and a photo
   moves those between 0.8/0 and 0.35/2. Values you've already saved are kept.
@@ -890,14 +890,14 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 - **A card for the Vault Pet plugin.** Shows
   [Vault Pet](https://github.com/elliott-json-park/obsidian-vault-pet)'s pet
   card or its whole pet house on the board, drawn by the plugin itself — so
-  the pet animates and can be petted, and Hearth keeps no copy of its data.
-  Find it in the "Add card" picker's Fun section. Hearth's own *Pet* card is
+  the pet animates and can be petted, and ZeroHearth keeps no copy of its data.
+  Find it in the "Add card" picker's Fun section. ZeroHearth's own *Pet* card is
   unchanged.
 
 ### Changed
 
 - **A shorter, visual setup wizard.** First-run setup is three steps instead of
-  six: what the vault is for (with the plugins Hearth found), the look — design
+  six: what the vault is for (with the plugins ZeroHearth found), the look — design
   (Expressive recommended), background and, for Classic, card style, each
   shown as a small painting — and a scale preview of the board about to be
   built. The boards it builds have no empty
@@ -915,11 +915,11 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 ### Fixed
 
 - **Settings keep your place.** Flipping a toggle or editing a list halfway
-  down Hearth's settings, a card's or board's settings, or the setup wizard no
+  down ZeroHearth's settings, a card's or board's settings, or the setup wizard no
   longer throws the pane back to the top. Long category names in the gallery
   and the add-card picker wrap instead of being cut off.
 
-- **A board set to *Hearth default* keeps it.** Choosing it in a board's own
+- **A board set to *ZeroHearth default* keeps it.** Choosing it in a board's own
   background settings painted nothing and was forgotten on restart.
 
 
@@ -956,15 +956,15 @@ History begins at 1.5.0. For releases before 1.5.0, see the
     columns stay put and thin out.
 
 - **Choose the width at which the board goes narrow.** *Narrow below*, under
-  **Settings → Hearth → Mobile → Layout** and per board in *Dashboard settings
+  **Settings → ZeroHearth → Mobile → Layout** and per board in *Dashboard settings
   → Layout*, sets the width at which the board becomes a single stacked
   column. It was fixed at 600 pixels; it now defaults to 700, because many
   phones report a viewport just over 600 and got the desktop layout. A pane
   between 600 and 700 pixels now stacks — set 600 to keep the old behaviour
   (#316, #326).
 
-- **Hearth speaks German.** A full `de` locale joins English and Simplified
-  Chinese: every string Hearth draws comes out in German when Obsidian's own
+- **ZeroHearth speaks German.** A full `de` locale joins English and Simplified
+  Chinese: every string ZeroHearth draws comes out in German when Obsidian's own
   display language is German, with no setting of its own. Anything
   untranslated falls back to English (#312).
 
@@ -978,7 +978,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 ### Fixed
 
 - **Every bookmark on the Bookmarks card works.** Bookmarked folders, searches
-  and graphs did nothing: a folder now opens Hearth's folder browser, a search
+  and graphs did nothing: a folder now opens ZeroHearth's folder browser, a search
   Obsidian's search pane, and a graph the graph view with its saved filters. A
   bookmarked heading or block opens right there instead of at the top of the
   note, and the card now updates as soon as your bookmarks change (#327).
@@ -1057,7 +1057,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   already chose takes it back. Worth being plain about: identities are free to
   mint, so votes are free to mint, and no amount of server-side mechanism fixes
   that. A gallery can make it tedious, and the one this repository ships does,
-  but a vote count means "some number of people who have Hearth installed".
+  but a vote count means "some number of people who have ZeroHearth installed".
 
   Three ways in, all of them absent until a gallery is configured: beside **Add
   card** in arrange mode, above **Request a card** in the picker's rail, and
@@ -1065,7 +1065,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   yet that installing a board could overwrite.
 
   **Nothing is fetched until you open it, and nothing is sent until you
-  publish.** Hearth points at `gallery.o-uhnavy.com` out of the box; the
+  publish.** ZeroHearth points at `gallery.o-uhnavy.com` out of the box; the
   address lives in Settings → Import / export → Dashboard gallery, and clearing
   it turns the gallery off entirely — no buttons, no requests — and keeps it off
   across upgrades. Point it at a different one, or at your own, in the same
@@ -1104,7 +1104,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   the button is there but greyed out and
   says why, rather than quietly making a second listing.
 
-  Which board an entry is, Hearth writes down when it publishes one, so the
+  Which board an entry is, ZeroHearth writes down when it publishes one, so the
   button works against whatever gallery you are pointed at rather than only a
   freshly updated one. For an entry published before it kept that note, pressing
   Update reads the entry itself to find out, once, and remembers the answer.
@@ -1157,11 +1157,11 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
 - **A signed, anonymous handle, instead of typing your name.** The export dialog
   used to ask for an author name. That is a bad question twice over: it is
-  personal information Hearth has no reason to hold, and it is a label anybody
+  personal information ZeroHearth has no reason to hold, and it is a label anybody
   can type — the first person to publish a board as somebody else's name is the
   last one anyone trusts a name from.
 
-  So nothing is asked. Hearth makes you one **recovery key** the first time you
+  So nothing is asked. ZeroHearth makes you one **recovery key** the first time you
   export something, keeps it in your vault, and everything public follows from
   it: a handle like `quiet-lantern-4kj2m8`, and a signature on every file you
   export. It says nothing about who you are, and it is the same on everything
@@ -1274,24 +1274,24 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
   Same button in all three, on purpose: white, with the Ko-fi red cup, opening
   <https://ko-fi.com/ondru>. Entirely optional, as it has always been — nothing
-  in Hearth is behind it.
+  in ZeroHearth is behind it.
 
-- **The board keeps your place.** Hearth rebuilds the whole board whenever you
+- **The board keeps your place.** ZeroHearth rebuilds the whole board whenever you
   come back to its tab, and that rebuild used to drop you at the top: follow a
   link out of a card, switch back, and a board you had scrolled halfway down
   started again from the beginning (#276). Each tab now remembers where it was
   scrolled to and puts itself back there.
 
-  Per tab and per dashboard: two Hearth tabs keep their own places, and each
+  Per tab and per dashboard: two ZeroHearth tabs keep their own places, and each
   board comes back where you left it rather than at the depth of the board you
   were on before. The memory rides along with the tab, so it survives a reload
-  of Obsidian — and a Hearth tab you *replace* by opening a note in it takes its
-  place with it, so opening Hearth fresh afterwards still starts at the top.
+  of Obsidian — and a ZeroHearth tab you *replace* by opening a note in it takes its
+  place with it, so opening ZeroHearth fresh afterwards still starts at the top.
 
 - **Sync arrives without a restart.** Edit a dashboard on the desktop, walk over
   to the laptop, and the board you get is the one that machine read when
   Obsidian started — the synced version only appeared after quitting and
-  reopening the app. Hearth now watches its own settings file and adopts another
+  reopening the app. ZeroHearth now watches its own settings file and adopts another
   device's changes as they land, boards, cards and card contents alike.
 
   It also closes the worse half of that problem. The window holding the stale
@@ -1333,13 +1333,13 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   nothing fetched in the background: the button opens a link in your browser
   exactly as it always did.
 
-- **"Open dashboard 1…9" — go to a particular board in one shortcut.** Hearth
-  could switch the active dashboard, and it could open Hearth, but going to a
+- **"Open dashboard 1…9" — go to a particular board in one shortcut.** ZeroHearth
+  could switch the active dashboard, and it could open ZeroHearth, but going to a
   named board from a note took both, which meant a macro plugin to chain them.
   There is now a second command per position that does the two together, so a
   hotkey or a note-toolbar button can land you on the board you want from
   anywhere in the vault. "Switch to dashboard N" is unchanged and keeps its
-  hotkeys, for when Hearth is already in front of you.
+  hotkeys, for when ZeroHearth is already in front of you.
 
 ### Changed
 
@@ -1372,7 +1372,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
 - **"Disable external calls" now also covers a background image and a title icon
   given as a web address.** The switch promises to block every outbound request
-  Hearth makes, and every card kept that promise — but a wallpaper whose kind is
+  ZeroHearth makes, and every card kept that promise — but a wallpaper whose kind is
   "Image URL", the bundled default wallpaper (which is served from GitHub rather
   than from the plugin folder), and a title icon pointed at an `https://` address
   were all set straight onto the page and fetched regardless. That was a footnote
@@ -1381,14 +1381,14 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   authored so that merely opening it reports your IP to a host of the author's
   choosing. All three are now blocked while the switch is on, and a blocked
   wallpaper falls back to no picture — a bannered board loses the strip rather
-  than reserving an empty one — while a blocked icon falls back to the Hearth
+  than reserving an empty one — while a blocked icon falls back to the ZeroHearth
   crystal. Nothing is rewritten: turn the switch off and the wallpaper and the
   icon come back. **If you have deliberately set a URL wallpaper or icon and have
   the switch on, that picture will disappear on upgrade** — either point it at a
   vault attachment, or turn the switch off.
 
 - **A full settings backup no longer forgets eleven settings.** Export every
-  Hearth setting, restore it into a fresh vault, and eleven of them came back at
+  ZeroHearth setting, restore it into a fresh vault, and eleven of them came back at
   their defaults instead of yours: the theme-colour target, the mobile
   performance tier, both chrome-visibility choices, focus-search-on-open, live
   refresh, pick-up-synced-changes, stack-when-narrow, custom file icons, the
@@ -1458,7 +1458,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   out early when there was nothing that *could* touch — so a board holding exactly
   one card came out with no frosted glass at all, however high its blur was set.
 
-- **Chaining "switch dashboard" and "open Hearth" showed the old board.** Two
+- **Chaining "switch dashboard" and "open ZeroHearth" showed the old board.** Two
   commands run back to back — by a Commander macro, a note-toolbar button,
   anything that chains them — switched the dashboard in settings and then
   revealed the previous one, while each command on its own behaved. A board that
@@ -1474,7 +1474,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
 ### Added
 
-- **Hearth works on a phone.** Mobile used to have exactly two settings: the
+- **ZeroHearth works on a phone.** Mobile used to have exactly two settings: the
   full desktop board, laid out for a screen ten times wider, or **Mobile mode**
   — the search field and nothing else. That was not a gap in the features, it
   was a gap in the *layout*. Cards are placed as fractions of the board's width,
@@ -1487,7 +1487,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   is untouched — the stacked view is worked out fresh on every render and never
   written back — so the same board is a launcher in your pocket and a wall of
   cards on your monitor, and neither reshapes the other. It can be turned off
-  under **Settings → Hearth → Mobile** (#205).
+  under **Settings → ZeroHearth → Mobile** (#205).
 
   The threshold is the **measured width of the board**, not the platform. A
   narrow desktop pane had exactly the same problem and gets exactly the same
@@ -1532,11 +1532,11 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   its label to a tooltip.
 
   **Its own category, and its own performance tier.** The mobile settings moved
-  out of **Behaviour** into a **Mobile** category of their own: Hearth runs on a
+  out of **Behaviour** into a **Mobile** category of their own: ZeroHearth runs on a
   phone as a first-class board now rather than as a reduced mode of the desktop
   one, and the settings pane is where that is either stated or quietly
   contradicted. It carries a performance tier of its own, defaulting to
-  **Balanced** — the animated sky is the most expensive thing Hearth draws, and
+  **Balanced** — the animated sky is the most expensive thing ZeroHearth draws, and
   on a phone it is drawn on the smallest screen there is and paid for out of a
   battery. Your desktop tier is stored separately and is not touched; set the
   mobile one to **Match desktop** for the previous behaviour.
@@ -1660,7 +1660,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   a long tab scrolls past, and a pinned strip has to paint over whatever passes
   underneath it. It painted with the *note* background — a colour plenty of
   themes reserve for notes alone — so on those themes the tabs sat on a
-  rectangle in the wrong shade. Hearth now measures the colour the dialog is
+  rectangle in the wrong shade. ZeroHearth now measures the colour the dialog is
   actually painted with as it opens, however the theme sets it, and pins the
   strip only when there is a colour it can match exactly. A dialog wearing no
   such colour — a glass or translucent theme, where painting even the dialog's
@@ -1703,7 +1703,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   - the **vault path of an image** (`Assets/logo.png`), pickable from a new 📷
     button — so a board can wear your own mark rather than a stock icon;
   - the **URL of an image on the web**;
-  - or nothing at all, for the Hearth crystal.
+  - or nothing at all, for the ZeroHearth crystal.
 
   A picture is sized off the same **Title icon size** slider (renamed from
   "Logo size") that a Lucide icon uses, so it lines up with the title at any
@@ -1717,7 +1717,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   icon keeps the icon, and one that had opted out of that icon keeps its text.
   A board whose merged value matches the vault-wide one drops its override
   entirely, so a later change to the global icon still reaches it. The fold is
-  one-way: downgrading below 3.0.0 afterwards shows the Hearth crystal again
+  one-way: downgrading below 3.0.0 afterwards shows the ZeroHearth crystal again
   until the old fields are set anew. A settings export taken before 3.0.0
   imports through the same fold (#252).
 
@@ -1755,9 +1755,9 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   button's **text** is configurable too, so it can read "Capture" or "New
   meeting note". Templater does the templating, exactly as it does from its own
   command: your user scripts, `tp.system.prompt()` dialogs and cursor placement
-  all behave unchanged, and the note opens the way Hearth opens notes rather
+  all behave unchanged, and the note opens the way ZeroHearth opens notes rather
   than replacing your board. The settings drive the header button, a search-bar
-  card's button and Hearth's "Create new note" command alike; leave them alone
+  card's button and ZeroHearth's "Create new note" command alike; leave them alone
   and the button does what it always did. Folder and filename apply to a blank
   note too, so it is configurable without Templater installed (#227).
 
@@ -1766,13 +1766,13 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   same move on each row's **right-click menu**, so it is reachable without a
   pointer — and the
   board and list cards offer a **+** that creates a task. Both are off until you
-  switch on **Allow changes** under Settings → Hearth → Integrations → Operon:
+  switch on **Allow changes** under Settings → ZeroHearth → Integrations → Operon:
   Operon's developer grant is all-or-nothing, so asking for write access by
   default would make every read-only vault approve it, and turning it on widens
   the request and needs a fresh approval in Operon's own Developer API
   Integrations.
 
-  Operon stays in charge of both. Hearth previews a change, Operon rates it and
+  Operon stays in charge of both. ZeroHearth previews a change, Operon rates it and
   applies it, and any plan it marks as needing consent — or as more than routine
   — is confirmed with you before it runs. A move carries the status the board
   was drawn from, so a drag on a board that has gone stale is refused instead of
@@ -1785,7 +1785,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   them can't be resolved. A refused create now names the target Operon was
   configured to use, so *"Configured Daily Note target is unavailable or
   invalid"* says which setting it means. And if Operon can't confirm whether
-  a change landed, Hearth resolves that one plan with Operon and then says the
+  a change landed, ZeroHearth resolves that one plan with Operon and then says the
   outcome is uncertain — it never re-applies, which is how a task ends up moved
   twice.
 
@@ -1802,16 +1802,16 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   Operon task due and list them in the agenda alongside external-calendar events.
 
   Unlike the TaskNotes integration, this reads nothing off disk: Operon ships an
-  in-process developer API, and Hearth uses it, so recurrence, statuses,
+  in-process developer API, and ZeroHearth uses it, so recurrence, statuses,
   priorities and what counts as done all stay Operon's to define and keep working
   as Operon changes. The integration is **read-only** — no card here modifies a
   task.
 
   Operon's developer API is **desktop-only, needs Obsidian 1.12.2 or newer**, and
-  requires **your approval**: Hearth's first request appears under Settings →
+  requires **your approval**: ZeroHearth's first request appears under Settings →
   Operon → Core → General → Developer API Integrations, and the cards say exactly
-  what they're waiting for until you approve it. Settings → Hearth →
-  Integrations shows the connection status, the read access Hearth asks for, and
+  what they're waiting for until you approve it. Settings → ZeroHearth →
+  Integrations shows the connection status, the read access ZeroHearth asks for, and
   a switch to turn the whole thing off.
 
 - **Filter TaskNotes tasks by Context and Project.** The Tasks card's filter
@@ -1825,10 +1825,10 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   Developer API is desktop-only and needs Obsidian 1.12.2, so the wizard uses
   the same two checks the Add card picker does rather than merely noticing the
   plugin is installed. It is off by default, and says up front that Operon will
-  ask you to approve Hearth the first time the card loads.
+  ask you to approve ZeroHearth the first time the card loads.
 
-- **Hearth speaks Simplified Chinese.** A full `zh` locale joins English, so
-  every string Hearth draws — commands, notices, the setup wizard, all of the
+- **ZeroHearth speaks Simplified Chinese.** A full `zh` locale joins English, so
+  every string ZeroHearth draws — commands, notices, the setup wizard, all of the
   plugin and card settings, card bodies and the add-card picker — comes out in
   简体中文 when Obsidian's own display language is Chinese. It is picked up from
   Obsidian's language at load and needs no setting of its own; regional codes
@@ -1839,12 +1839,12 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
 - **Hovering the search bar no longer lights a grey slab inside it.** Obsidian
   paints every text input on hover, and that rule outranked the one that makes
-  Hearth's search field transparent, so a second rounded rectangle — carrying
+  ZeroHearth's search field transparent, so a second rounded rectangle — carrying
   the field's own corner radius, not the bar's — appeared inset inside the bar.
   The bar keeps drawing its own hover and focus affordance; only the stray
   rectangle is gone.
 - **The setup wizard no longer changes your vault-wide settings.** Running setup
-  — or re-running it later from **Settings → Hearth → About → Build a
+  — or re-running it later from **Settings → ZeroHearth → About → Build a
   dashboard** — used to write its answers straight into the global settings: the
   title, logo and accent, the card surface preset, compact spacing, the
   background, and the TaskNotes field mapping. On a fresh install that was
@@ -1855,18 +1855,18 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   touch another board or a vault-wide preference. Two new per-board overrides
   came out of it, both also available from a board's own settings: **Compact
   spacing** and **Accent colour on the title**. And the wizard no longer asks
-  about the things that can only be vault-wide — opening Hearth on startup,
+  about the things that can only be vault-wide — opening ZeroHearth on startup,
   using it for new tabs, focusing search on open, where notes open, Omnisearch
   as the search engine, and Iconic/Iconize file icons — since it cannot set them
-  without changing Hearth everywhere; each is one toggle in **Settings →
-  Hearth**.
+  without changing ZeroHearth everywhere; each is one toggle in **Settings →
+  ZeroHearth**.
 - **Daily notes are found even when their name spells the weekday in another
   language.** A daily-note format with a locale-dependent token — `dd`, `dddd`,
   `Do` — was resolved by formatting the date in whatever locale Obsidian is
   running in now, so a note written under a different one ("Wed, 19.08.2026"
   next to a moment locale that spells it "Mi") looked missing: the day streak
   read 0, the calendar day lost its dot and the daily card offered to create a
-  note that already existed. For those formats Hearth now reads the date back
+  note that already existed. For those formats ZeroHearth now reads the date back
   out of the filenames in the daily-note folder, ignoring the parts only the
   locale decides, so notes made by Periodic Notes with its own locale override
   — or carried over from another machine — resolve the same as any other
@@ -1884,15 +1884,15 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   (or edit or delete just that one) and the calendar card listed it in both
   places at once. The feed says as much in two parts — the series keeps its
   repeat rule untouched, and a second entry carries the same event with the
-  original time it replaces — and Hearth read those as two separate events.
-  Hearth now folds the second entry back into the series: the occurrence appears
+  original time it replaces — and ZeroHearth read those as two separate events.
+  ZeroHearth now folds the second entry back into the series: the occurrence appears
   where you moved it and nowhere else, a deleted one disappears, and an edit
   that takes over "this and all following events" splits the series at that
   point (#232).
 - **Recent files shows every file you asked for — or as many as the card is
   tall.** Setting **Number of files** to 15 listed ten and left the rest of the
   card empty, because Obsidian's own recent-files list stops at ten entries and
-  no amount of asking afterwards makes it longer. Hearth now keeps its own
+  no amount of asking afterwards makes it longer. ZeroHearth now keeps its own
   recent-file history — up to 50 files, deduplicated, most recent first, stored
   per vault on this machine like Obsidian's own and following renames — so a
   larger number is a number the card can actually fill. The setting is clamped
@@ -1937,10 +1937,10 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   features that had their own rules for it. Card blur defaults to 0 for new
   vaults; existing vaults keep the value they have (#223).
 
-- **Deprecated Obsidian APIs cleared out of the settings UI.** Hearth no longer
+- **Deprecated Obsidian APIs cleared out of the settings UI.** ZeroHearth no longer
   calls `setDynamicTooltip()` on its sliders: Obsidian draws a slider's value
   inline itself as of 1.13, where the call did nothing. On Obsidian 1.8.7–1.12.x
-  — still Hearth's declared minimum — a slider now shows no number while you
+  — still ZeroHearth's declared minimum — a slider now shows no number while you
   drag it; the value it lands on is the one the setting keeps, as before.
 
 - **"What's new" reads as a list of headlines, not a wall of text.** The dialog
@@ -1958,7 +1958,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
 ### Added
 
-- **A launchpad that makes notes: the Templater card.** Hearth's third tile card
+- **A launchpad that makes notes: the Templater card.** ZeroHearth's third tile card
   sits beside Links and Commands, but each of its buttons creates a note. A tile
   carries three things — one of your
   [Templater](https://github.com/SilentVoid13/Templater) templates, the folder
@@ -1976,11 +1976,11 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   is one click and one line typed. Leave the field empty and Templater names the
   note, as it does from its own command.
 
-  **Templater does the templating.** Hearth calls
+  **Templater does the templating.** ZeroHearth calls
   `create_new_note_from_template` on the running plugin and nothing else: your
   user scripts, `tp.system.prompt()` dialogs, folder templates and
   `tp.file.cursor()` placement all behave exactly as they do everywhere else.
-  What Hearth adds is where the note *opens* — through its own "Open notes in"
+  What ZeroHearth adds is where the note *opens* — through its own "Open notes in"
   setting, so a click from the dashboard no longer replaces the dashboard.
 
   Tiles drag, resize and overlap like every other launchpad tile, take a Lucide
@@ -1990,7 +1990,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   template you already have.
 
 - **A setup wizard that builds your first dashboard.** A new install no longer
-  lands on a generic starter grid and a wallpaper nobody chose. Hearth asks
+  lands on a generic starter grid and a wallpaper nobody chose. ZeroHearth asks
   instead — a title and logo, a card style and a background, what you actually
   use the vault for, how it should behave on startup — and lays out a board from
   the answers.
@@ -2005,7 +2005,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   inside the other plugin.
 
   **TaskNotes is read properly, not merely noticed.** Its field names are
-  remappable and its statuses are user-defined, so Hearth reads the running
+  remappable and its statuses are user-defined, so ZeroHearth reads the running
   plugin's own configuration — the status, due and priority properties, and
   every status it counts as complete — and copies them across. The step shows
   you exactly what it found. A vault that renamed `due` to `deadline`, or that
@@ -2019,19 +2019,19 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
   **And it says so up front.** The final step *opens* by saying that the board
   it is about to build is a starting point rather than a preset: enough to show
-  what Hearth can do for you, but only a fraction of what there is. Every card
+  what ZeroHearth can do for you, but only a fraction of what there is. Every card
   can be moved, resized, retitled, recoloured, reconfigured or thrown out, and
   there is a great deal more in the settings than the wizard asks about — so go
   and edit all of it to your liking.
 
-  Run it again any time from **Settings → Hearth → About → Build a dashboard**
-  or the **Set up Hearth** command. Run that way it **always adds a new
+  Run it again any time from **Settings → ZeroHearth → About → Build a dashboard**
+  or the **Set up ZeroHearth** command. Run that way it **always adds a new
   dashboard** and never touches an existing one, so it is safe to press just to
   see what it would make. Only the first-run prompt offers to replace the
   untouched starter board.
 
   Existing vaults are never interrupted: the wizard is offered only to an
-  install with no saved Hearth settings at all, and dismissing it counts as an
+  install with no saved ZeroHearth settings at all, and dismissing it counts as an
   answer, so it can't nag.
 
 - **A board that wears its background as a banner.** **Appearance → Background →
@@ -2060,9 +2060,9 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   leaves the *layout* alone: a bannered board keeps its banner, so toggling the
   mode no longer moves every card on it.
 
-- **Lucide icons for the tab and the title.** Hearth's crystal is no longer the
+- **Lucide icons for the tab and the title.** ZeroHearth's crystal is no longer the
   only mark it can wear. **Appearance → Home → Tab icon** picks any Lucide icon
-  for Hearth's tab header and ribbon button, and **Title icon** does the same for
+  for ZeroHearth's tab header and ribbon button, and **Title icon** does the same for
   the icon beside the big title on the board. Leave either empty and nothing
   changes: the crystal, and the emoji/text logo, stay exactly as they were.
 
@@ -2312,7 +2312,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   not the Git plugin is installed — without it, the card says so and points at
   it — and Git joins the Integrations catalogue.
 - **Datacore card.** Dataview is winding down in favour of
-  [Datacore](https://github.com/blacksmithgu/datacore), so Hearth now has a card
+  [Datacore](https://github.com/blacksmithgu/datacore), so ZeroHearth now has a card
   for it, in the same shape as the Dataview card: pick a query type, write a
   query, get a live result. **Query** is the no-code mode — type a Datacore
   query like `@page and #project` and the card renders the matches as a list of
@@ -2324,13 +2324,13 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   is offered whether or not Datacore is installed — without it, the card says so
   and points at it. Datacore also joins the Integrations catalogue.
 - **Every integration in one place.** **Settings → Integrations** now opens with
-  a complete catalogue of everything Hearth works with — community plugins
+  a complete catalogue of everything ZeroHearth works with — community plugins
   (Omnisearch, TaskNotes, Dataview, Git, Iconic, Iconize, Excalidraw), Obsidian's own
   core plugins (Bases, Canvas, Daily notes, Bookmarks, Search, File explorer,
   Workspaces, Audio recorder, plus any plugin whose side panel a Plugin view
   card can host) and the external services some cards fetch from (Jira, RSS and Atom
   feeds, iCalendar subscriptions, exchange rates, web search). Every one is
-  listed whether or not it's installed, so the tab answers "what does Hearth
+  listed whether or not it's installed, so the tab answers "what does ZeroHearth
   work with?" and not just "what did I already set up". Each row says what the
   integration does, carries a live status (enabled, disabled, not installed),
   and points at where its settings actually live — the section below on that
@@ -2338,7 +2338,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   card itself, the other plugin's own settings, or nowhere at all. Rows link
   straight there, and anything not installed gets a one-click Install button.
 - **Low power mode.** One switch at the top of **Settings → Appearance** trades
-  Hearth's visual effects for battery life and smoothness on slower hardware.
+  ZeroHearth's visual effects for battery life and smoothness on slower hardware.
   While it is on the background becomes a flat colour (a muted grey-purple by
   default, and you can change it) instead of an image, GIF, opacity layer and
   blur; cards go opaque with no frosted glass behind them; transitions, hover
@@ -2374,23 +2374,23 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   TaskNotes records it), and the event popup shows the task's status, priority,
   contexts, projects and estimate with an **Open task** button that hands off to
   TaskNotes' own editor.
-- **Choose where Hearth opens notes.** Settings → Hearth → Behaviour → **Opening
-  notes** has a single **Open notes in** choice that governs every note Hearth
+- **Choose where ZeroHearth opens notes.** Settings → ZeroHearth → Behaviour → **Opening
+  notes** has a single **Open notes in** choice that governs every note ZeroHearth
   opens: **a new tab** (what it has always done), **the current tab**, which
-  replaces the home view so Hearth behaves like any other tab and the back
+  replaces the home view so ZeroHearth behaves like any other tab and the back
   arrow brings it straight back, **a split pane**, or **a new window**. Four
   optional rows under it take exceptions, each starting on *Same as above*, so
-  links, search results, notes listed in cards and notes Hearth creates can each
-  land somewhere different — a search hit taking over the Hearth tab while a
+  links, search results, notes listed in cards and notes ZeroHearth creates can each
+  land somewhere different — a search hit taking over the ZeroHearth tab while a
   link from a card opens beside it. Ctrl/Cmd-click still opens a new tab
   whatever the setting says, and the modifier combinations Obsidian understands
   for a split or a window work here too.
 
-  A last row covers what Hearth doesn't control: **Notes opened from outside
-  Hearth** — the file explorer, the quick switcher, the graph — which Obsidian
-  hands to whichever tab is focused, taking a Hearth tab over. It still does by
+  A last row covers what ZeroHearth doesn't control: **Notes opened from outside
+  ZeroHearth** — the file explorer, the quick switcher, the graph — which Obsidian
+  hands to whichever tab is focused, taking a ZeroHearth tab over. It still does by
   default (the dashboard acts like an ordinary tab, and the explorer's selection
-  follows what you open), but set it to **A new tab** and the Hearth tab is left
+  follows what you open), but set it to **A new tab** and the ZeroHearth tab is left
   alone. Links inside an embedded Bases table now follow the **Links** rule too,
   instead of always replacing the dashboard (#106).
 - **An embedded note can be opened in its own tab.** Note embed cards have a new
@@ -2398,13 +2398,13 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   opens the embedded file properly — following the open-behaviour setting above.
   Off by default, so no existing board changes (#144).
 - **Build your own task fields.** Turn on **Customize task fields** under
-  Settings → Hearth → Integrations and the fixed metadata Tasks cards show is
+  Settings → ZeroHearth → Integrations and the fixed metadata Tasks cards show is
   replaced by fields you define yourself. You start from a blank slate — a task
   shows its text and nothing else — and add fields one at a time:
 
   - **Name** the field, and choose how it's drawn: a **chip**, a bare
     **colored dot**, or **plain text**.
-  - Give it a **key**: any frontmatter property, or one of the values Hearth
+  - Give it a **key**: any frontmatter property, or one of the values ZeroHearth
     reads itself (a checkbox line's ⏫ priority, a Kanban board column, a due
     date, the TaskNotes status). A field can have several keys, and each one
     that has a value shows one — so related metadata can live under one name.
@@ -2441,7 +2441,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 - **Editable notes can use Obsidian's Live Preview editor.** An editable Note
   embed or Daily note card has a new **Live preview** toggle beside
   **Editable**. Turned on, the card hosts Obsidian's own editor instead of
-  Hearth's plain raw-Markdown box: formatting renders as you type, there's no
+  ZeroHearth's plain raw-Markdown box: formatting renders as you type, there's no
   double-click to get into edit mode, and links, embeds, undo and your editor
   plugins all behave exactly as they do in a normal tab. The card's own settings
   make the choice per card and per embed view, so a scratchpad can stay in raw
@@ -2460,9 +2460,9 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 - **Request a card, from inside the picker.** The last entry in the rail is
   **Request a card**, for the moment you have looked through the whole catalogue
   and the card you wanted isn't in it. It offers two routes — a **GitHub issue**,
-  opened on Hearth's feature-request form, or an **email** to the maintainer —
+  opened on ZeroHearth's feature-request form, or an **email** to the maintainer —
   and both open pre-filled: a few prompts about what the card should show and
-  where its data would come from, plus your Hearth and Obsidian versions. Edit
+  where its data would come from, plus your ZeroHearth and Obsidian versions. Edit
   anything before you send it.
 - **A search bar you can put anywhere on the board.** **Vault insight → Search
   bar** is the header's search field as a card — the same field, not a lesser
@@ -2594,7 +2594,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 - **No grey box under an editable note.** Double-clicking an editable Note
   embed, Daily note or jot card to edit it dropped a grey form-field panel
   behind the text — permanently so on mobile, where Obsidian's own textarea
-  rule outranked the transparent background Hearth asks for. The raw editor
+  rule outranked the transparent background ZeroHearth asks for. The raw editor
   now keeps the card's surface in every state, so switching between the
   rendered note and its source no longer changes the card's background (#160).
 - **Note-content search results are readable.** A hit inside a note's body
@@ -2631,7 +2631,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 - **Omnisearch results highlight the matched words again.** Omnisearch reports
   the words it matched stemmed and stripped of their accents (`banan` for a note
   that says *Banánové*), so looking for them literally found nothing and both
-  the title and the excerpt came back unhighlighted. Hearth now also reads the
+  the title and the excerpt came back unhighlighted. ZeroHearth now also reads the
   spans Omnisearch itself marked in the excerpt — which carry the words exactly
   as the note spells them — and matches without accents on top of that.
 - **Searching with the folders filter no longer comes up empty on Omnisearch.**
@@ -2643,7 +2643,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   nothing. It now searches files only.
 - **Omnisearch failing is no longer shown as "no matches".** If Omnisearch was
   disabled mid-query or its API threw, the dropdown emptied as though the note
-  didn't exist. Hearth now quietly answers with its own engine instead.
+  didn't exist. ZeroHearth now quietly answers with its own engine instead.
 
 ### Changed
 
@@ -2651,7 +2651,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   Dataview, Datacore, Git — used to be *hidden* from the "Add card" menu until
   their plugin happened to be installed, so a third of the catalogue was
   invisible to the people most likely to want to know it existed: you could not
-  find out Hearth had a Git card without already having the Git plugin. They are
+  find out ZeroHearth had a Git card without already having the Git plugin. They are
   all listed now, marked **Needs Dataview** (or Datacore, or Git) while the
   plugin is missing, with a one-click jump to it in Obsidian's plugin browser
   when you add one. Nothing about the cards themselves changed — each one has
@@ -2671,10 +2671,10 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   as the board is open, and every extra card costs again. With low power mode on
   it adds that this is the card that mode can't help with.
 - **Links inside tasks now open where every other link does.** A `[[wikilink]]`
-  in a task's text took over the current tab, which in a Hearth tab meant
+  in a task's text took over the current tab, which in a ZeroHearth tab meant
   replacing the home view — while the same link on a card opened a new tab. Both
   now follow **Open notes in** (a new tab by default). To keep tasks behaving as
-  they did, set **Links** under Settings → Hearth → Behaviour → Opening notes to
+  they did, set **Links** under Settings → ZeroHearth → Behaviour → Opening notes to
   *The current tab* (#106).
 - **Today is marked more quietly in the calendar's agenda.** The current day's
   row no longer takes a heavy accent fill that made its text hard to read.
@@ -2688,17 +2688,17 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 
 ### Added
 
-- **Your Iconic and Iconize icons now show up in Hearth.** A file that has a
-  custom icon set with either plugin keeps that icon everywhere Hearth draws
+- **Your Iconic and Iconize icons now show up in ZeroHearth.** A file that has a
+  custom icon set with either plugin keeps that icon everywhere ZeroHearth draws
   one — Recent files, Favorites, Bookmarks, saved-search cards and the search
   bar — instead of the generic file-type icon. Bookmarks pointing at a note or
   folder now also follow the file's *type* icon rather than always showing the
   same page glyph, so a bookmarked PDF or canvas looks like one. Lucide icons and emoji are both shown; a file
-  using an icon from one of Iconize's downloaded icon packs keeps Hearth's own
+  using an icon from one of Iconize's downloaded icon packs keeps ZeroHearth's own
   icon, since those are SVG files rather than named icons. Neither plugin offers
-  an API, so Hearth reads their settings directly and quietly falls back to the
+  an API, so ZeroHearth reads their settings directly and quietly falls back to the
   file-type icon if it can't. Turn it off, or point it at a renamed Iconize
-  frontmatter property, under Settings → Hearth → Integrations (#132).
+  frontmatter property, under Settings → ZeroHearth → Integrations (#132).
 
 ### Fixed
 
@@ -2713,7 +2713,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 - **Checkboxes now stay checked.** Ticking a task in an embedded note, a daily
   note or a jot card looked like it worked and was lost on the next render:
   Obsidian only writes a checkbox click back to the file inside a real preview
-  view, and the boxes Hearth renders into a card were live but inert. They now
+  view, and the boxes ZeroHearth renders into a card were live but inert. They now
   edit their source — the note for embed and daily cards, the card's own text
   for jots — so the state sticks, whether or not the card is set to editable.
   A tick is reverted if the write can't land, and a click on a checkbox no
@@ -2722,7 +2722,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   any theme that styles input focus with a body-class-prefixed selector), the
   home-screen search input picked up the theme's own focus ring, so a blue
   outline hugged the text field instead of the search bar lighting up as a
-  whole. Those themes' selectors outrank the plain class selectors Hearth used
+  whole. Those themes' selectors outrank the plain class selectors ZeroHearth used
   to suppress the ring. The controls that draw their own focus affordance — the
   search input, the jot/embed editors, the calculator, the card-title field and
   the task-detail title editor — now hold that suppression against any theme.
@@ -2775,7 +2775,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   desktop's active board along on the next sync (#120).
 - **"Focus search on open" option.** An opt-in Behaviour setting that puts
   keyboard focus in the search field whenever a home view opens, so a fresh
-  Hearth tab can be typed into straight away. Focus is applied on open only, so
+  ZeroHearth tab can be typed into straight away. Focus is applied on open only, so
   a background refresh never steals it mid-interaction. Desktop only — the
   setting is hidden on mobile, where auto-focus would pop the on-screen keyboard
   on every open (#115).
@@ -2891,7 +2891,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
 - **Link a dashboard to a core Workspace (auto-switch).** Each dashboard gets an
   optional linked workspace, chosen from the core Workspaces plugin's saved
   workspaces in the dashboard settings (General tab). When that workspace loads,
-  Hearth switches to the linked dashboard automatically. Sync is one-way
+  ZeroHearth switches to the linked dashboard automatically. Sync is one-way
   (workspace → dashboard) and fires once per workspace change; the link survives
   layout export/import, and duplicating a dashboard deliberately does not copy it
   (#91).
@@ -2956,7 +2956,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   TaskNotes task from a Tasks card handed TaskNotes' edit modal the note's
   `TFile` instead of its own task object, leaving the modal with a broken
   change-detection baseline: every button but Delete was trapped and the window
-  couldn't be closed (#72). Hearth now resolves TaskNotes' task info for the
+  couldn't be closed (#72). ZeroHearth now resolves TaskNotes' task info for the
   note first (via its cache manager or public API) and only opens the modal when
   it can, falling back to opening the note otherwise.
 
@@ -2987,7 +2987,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   shared frosted-glass layer follows the same radius so nothing seams.
 - **RSS feed card — add feeds from a GitHub repo.** The RSS card's editor now
   has an **Add from GitHub** shortcut: type a repository as `owner/repo` (or
-  paste its URL), pick **Releases**, **Commits**, or both, and Hearth adds the
+  paste its URL), pick **Releases**, **Commits**, or both, and ZeroHearth adds the
   matching `releases.atom` / `commits.atom` feeds for you — no need to
   hand-write the feed URLs.
 
@@ -3024,7 +3024,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   since the category-ribbon redesign, the settings tab had a private helper
   named `renderTab(body, tab)` — and Obsidian 1.13's reworked settings window
   calls an *internal, undocumented* `SettingTab.renderTab()` method (no
-  arguments) as the entry point for opening a tab. Hearth's same-named helper
+  arguments) as the entry point for opening a tab. ZeroHearth's same-named helper
   silently shadowed it: Obsidian invoked it with no arguments, the
   `switch (undefined)` inside matched no category, and the pane rendered
   nothing — no error, on every reopen, on macOS and iPad alike (#52). And
@@ -3096,7 +3096,7 @@ History begins at 1.5.0. For releases before 1.5.0, see the
   fallback. On load, such buttons are now migrated in place to the current
   `target` field and the result is written back to storage, so the legacy field
   finally leaves your `settings.json`. **This migration is one-way:** if you
-  upgrade and then downgrade Hearth below this version, any mobile action button
+  upgrade and then downgrade ZeroHearth below this version, any mobile action button
   whose action was stored *only* as `commandId` loses its action (the button
   appears blank and must be reassigned). Buttons edited or created in a recent
   version are unaffected.
@@ -3170,49 +3170,49 @@ A major Tasks-card release, plus search and release-notes additions
 ### Fixed
 
 - Maintenance and bug-fix release
-  ([1.6.6…1.6.7](https://github.com/ondreu/Hearth/compare/1.6.6...1.6.7)).
+  ([1.6.6…1.6.7](https://github.com/zero1666/ZeroHearth/compare/1.6.6...1.6.7)).
 
 ## [1.6.6] - 2026-07-08
 
 ### Fixed
 
 - Maintenance and bug-fix release
-  ([1.6.5…1.6.6](https://github.com/ondreu/Hearth/compare/1.6.5...1.6.6)).
+  ([1.6.5…1.6.6](https://github.com/zero1666/ZeroHearth/compare/1.6.5...1.6.6)).
 
 ## [1.6.5] - 2026-07-07
 
 ### Fixed
 
 - Maintenance and bug-fix release
-  ([1.6.4…1.6.5](https://github.com/ondreu/Hearth/compare/1.6.4...1.6.5)).
+  ([1.6.4…1.6.5](https://github.com/zero1666/ZeroHearth/compare/1.6.4...1.6.5)).
 
 ## [1.6.4] - 2026-07-07
 
 ### Fixed
 
 - Maintenance and bug-fix release
-  ([1.6.3…1.6.4](https://github.com/ondreu/Hearth/compare/1.6.3...1.6.4)).
+  ([1.6.3…1.6.4](https://github.com/zero1666/ZeroHearth/compare/1.6.3...1.6.4)).
 
 ## [1.6.3] - 2026-07-07
 
 ### Fixed
 
 - Maintenance and bug-fix release
-  ([1.6.2…1.6.3](https://github.com/ondreu/Hearth/compare/1.6.2...1.6.3)).
+  ([1.6.2…1.6.3](https://github.com/zero1666/ZeroHearth/compare/1.6.2...1.6.3)).
 
 ## [1.6.2] - 2026-07-07
 
 ### Fixed
 
 - Maintenance and bug-fix release
-  ([1.6.1…1.6.2](https://github.com/ondreu/Hearth/compare/1.6.1...1.6.2)).
+  ([1.6.1…1.6.2](https://github.com/zero1666/ZeroHearth/compare/1.6.1...1.6.2)).
 
 ## [1.6.1] - 2026-07-07
 
 ### Fixed
 
 - Maintenance and bug-fix release
-  ([1.5.2…1.6.1](https://github.com/ondreu/Hearth/compare/1.5.2...1.6.1)).
+  ([1.5.2…1.6.1](https://github.com/zero1666/ZeroHearth/compare/1.5.2...1.6.1)).
 
 ## [1.6.0] - 2026-07-06
 
@@ -3256,14 +3256,14 @@ A major Tasks-card release, plus search and release-notes additions
 ### Fixed
 
 - Maintenance and bug-fix release
-  ([1.5.1…1.5.2](https://github.com/ondreu/Hearth/compare/1.5.1...1.5.2)).
+  ([1.5.1…1.5.2](https://github.com/zero1666/ZeroHearth/compare/1.5.1...1.5.2)).
 
 ## [1.5.1] - 2026-07-05
 
 ### Fixed
 
 - Maintenance and bug-fix release
-  ([1.5.0…1.5.1](https://github.com/ondreu/Hearth/compare/1.5.0...1.5.1)).
+  ([1.5.0…1.5.1](https://github.com/zero1666/ZeroHearth/compare/1.5.0...1.5.1)).
 
 ## [1.5.0] - 2026-07-05
 
@@ -3301,19 +3301,19 @@ A redesigned dashboard experience, plus recurring tasks and many polish fixes.
 - Default background uses a CDN URL (raw.githubusercontent was blocked by
   Obsidian's CSP).
 
-[1.11.0]: https://github.com/ondreu/Hearth/compare/1.10.0...1.11.0
-[1.10.0]: https://github.com/ondreu/Hearth/compare/1.9.0...1.10.0
-[1.9.0]: https://github.com/ondreu/Hearth/compare/1.8.1...1.9.0
-[1.8.0]: https://github.com/ondreu/Hearth/compare/1.7.0...1.8.0
-[1.7.0]: https://github.com/ondreu/Hearth/compare/1.6.7...1.7.0
-[1.6.7]: https://github.com/ondreu/Hearth/compare/1.6.6...1.6.7
-[1.6.6]: https://github.com/ondreu/Hearth/compare/1.6.5...1.6.6
-[1.6.5]: https://github.com/ondreu/Hearth/compare/1.6.4...1.6.5
-[1.6.4]: https://github.com/ondreu/Hearth/compare/1.6.3...1.6.4
-[1.6.3]: https://github.com/ondreu/Hearth/compare/1.6.2...1.6.3
-[1.6.2]: https://github.com/ondreu/Hearth/compare/1.6.1...1.6.2
-[1.6.1]: https://github.com/ondreu/Hearth/compare/1.5.2...1.6.1
-[1.6.0]: https://github.com/ondreu/Hearth/compare/1.5.2...1.6.0
-[1.5.2]: https://github.com/ondreu/Hearth/compare/1.5.1...1.5.2
-[1.5.1]: https://github.com/ondreu/Hearth/compare/1.5.0...1.5.1
-[1.5.0]: https://github.com/ondreu/Hearth/releases/tag/1.5.0
+[1.11.0]: https://github.com/zero1666/ZeroHearth/compare/1.10.0...1.11.0
+[1.10.0]: https://github.com/zero1666/ZeroHearth/compare/1.9.0...1.10.0
+[1.9.0]: https://github.com/zero1666/ZeroHearth/compare/1.8.1...1.9.0
+[1.8.0]: https://github.com/zero1666/ZeroHearth/compare/1.7.0...1.8.0
+[1.7.0]: https://github.com/zero1666/ZeroHearth/compare/1.6.7...1.7.0
+[1.6.7]: https://github.com/zero1666/ZeroHearth/compare/1.6.6...1.6.7
+[1.6.6]: https://github.com/zero1666/ZeroHearth/compare/1.6.5...1.6.6
+[1.6.5]: https://github.com/zero1666/ZeroHearth/compare/1.6.4...1.6.5
+[1.6.4]: https://github.com/zero1666/ZeroHearth/compare/1.6.3...1.6.4
+[1.6.3]: https://github.com/zero1666/ZeroHearth/compare/1.6.2...1.6.3
+[1.6.2]: https://github.com/zero1666/ZeroHearth/compare/1.6.1...1.6.2
+[1.6.1]: https://github.com/zero1666/ZeroHearth/compare/1.5.2...1.6.1
+[1.6.0]: https://github.com/zero1666/ZeroHearth/compare/1.5.2...1.6.0
+[1.5.2]: https://github.com/zero1666/ZeroHearth/compare/1.5.1...1.5.2
+[1.5.1]: https://github.com/zero1666/ZeroHearth/compare/1.5.0...1.5.1
+[1.5.0]: https://github.com/zero1666/ZeroHearth/releases/tag/1.5.0

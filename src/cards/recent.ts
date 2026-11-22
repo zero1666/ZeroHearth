@@ -24,7 +24,7 @@ export function renderRecent(
 	body: HTMLElement,
 	component?: Component,
 ): void {
-	// "Fit to card height" asks for everything Hearth remembers and then hides
+	// "Fit to card height" asks for everything ZeroHearth remembers and then hides
 	// whatever doesn't fit, so the row count follows the card's size. A fixed
 	// count is clamped to what the history can actually hold, so the card shows
 	// the number the editor accepted (#228).
@@ -88,7 +88,7 @@ export function recentEditor(ctx: CardEditorContext, containerEl: HTMLElement): 
 			txt.inputEl.type = "number";
 			txt.inputEl.min = String(RECENT_COUNT_MIN);
 			txt.inputEl.max = String(RECENT_HISTORY_MAX);
-			txt.inputEl.addClass("hearth-count-input");
+			txt.inputEl.addClass("zerohearth-count-input");
 		});
 		addResetButton(ctx, recent, t().settings.resetField, () => {
 			card.count = undefined;
@@ -113,15 +113,15 @@ export function recentTypesEditor(ctx: CardEditorContext, containerEl: HTMLEleme
 	});
 
 	const selected = new Set(card.recentTypes ?? []);
-	const row = containerEl.createDiv("hearth-type-filter");
+	const row = containerEl.createDiv("zerohearth-type-filter");
 	// Folders can never appear among recently-opened files, so offer every
 	// search-filter type except that one.
 	const groups = FILE_TYPE_GROUPS.filter((g) => g.id !== FOLDERS_GROUP_ID);
 	for (const group of groups) {
-		const chip = row.createDiv("hearth-type-filter-chip");
+		const chip = row.createDiv("zerohearth-type-filter-chip");
 		chip.toggleClass("is-active", selected.has(group.id));
-		setIcon(chip.createDiv("hearth-type-filter-icon"), group.icon);
-		chip.createDiv({ cls: "hearth-type-filter-label", text: fileTypeLabel(group) });
+		setIcon(chip.createDiv("zerohearth-type-filter-icon"), group.icon);
+		chip.createDiv({ cls: "zerohearth-type-filter-label", text: fileTypeLabel(group) });
 		chip.setAttribute("role", "button");
 		chip.setAttribute("tabindex", "0");
 		chip.setAttribute("aria-pressed", String(selected.has(group.id)));

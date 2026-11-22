@@ -37,8 +37,8 @@ describe("embedImageFit", () => {
 		}
 	});
 
-	it("falls back to natural for a mode Hearth doesn't have", () => {
-		// A hand-edited data.json, or a board exported by a newer Hearth.
+	it("falls back to natural for a mode ZeroHearth doesn't have", () => {
+		// A hand-edited data.json, or a board exported by a newer ZeroHearth.
 		const rogue = { imageFit: "parallax" as unknown as EmbedImageFit };
 		expect(embedImageFit(rogue)).toBe("natural");
 	});
@@ -81,7 +81,7 @@ describe("embedImagePositionApplies", () => {
 	});
 
 	it("does not apply where there is nothing to position", () => {
-		// Stretch pins all four edges; natural isn't framed by Hearth at all.
+		// Stretch pins all four edges; natural isn't framed by ZeroHearth at all.
 		expect(embedImagePositionApplies("stretch")).toBe(false);
 		expect(embedImagePositionApplies("natural")).toBe(false);
 	});
@@ -124,42 +124,42 @@ describe("embedImageScale", () => {
 describe("embedImageStyle", () => {
 	it("turns an anchor point into an object-position and a transform origin", () => {
 		const style = embedImageStyle("cover", "top-left", 1);
-		expect(style["--hearth-embed-img-pos"]).toBe("left top");
-		expect(style["--hearth-embed-img-justify"]).toBe("flex-start");
-		expect(style["--hearth-embed-img-align"]).toBe("flex-start");
+		expect(style["--zerohearth-embed-img-pos"]).toBe("left top");
+		expect(style["--zerohearth-embed-img-justify"]).toBe("flex-start");
+		expect(style["--zerohearth-embed-img-align"]).toBe("flex-start");
 	});
 
 	it("centres every mode that has nothing to position", () => {
 		for (const fit of ["stretch", "natural"] as EmbedImageFit[]) {
 			const style = embedImageStyle(fit, "bottom-right", 1);
-			expect(style["--hearth-embed-img-pos"]).toBe("center center");
+			expect(style["--zerohearth-embed-img-pos"]).toBe("center center");
 		}
 	});
 
 	it("carries the zoom factor for a framed picture", () => {
-		expect(embedImageStyle("cover", "center", 1.5)["--hearth-embed-img-scale"]).toBe("1.5");
-		expect(embedImageStyle("width", "center", 0.75)["--hearth-embed-img-scale"]).toBe("0.75");
+		expect(embedImageStyle("cover", "center", 1.5)["--zerohearth-embed-img-scale"]).toBe("1.5");
+		expect(embedImageStyle("width", "center", 0.75)["--zerohearth-embed-img-scale"]).toBe("0.75");
 	});
 
 	it("never zooms an unframed picture through these properties", () => {
 		// Natural keeps the host's own `zoom`, so the image scale stays neutral.
-		expect(embedImageStyle("natural", "center", 1.5)["--hearth-embed-img-scale"]).toBe("1");
+		expect(embedImageStyle("natural", "center", 1.5)["--zerohearth-embed-img-scale"]).toBe("1");
 	});
 
 	it("neutralises a nonsense zoom factor", () => {
-		expect(embedImageStyle("cover", "center", 0)["--hearth-embed-img-scale"]).toBe("1");
+		expect(embedImageStyle("cover", "center", 0)["--zerohearth-embed-img-scale"]).toBe("1");
 	});
 
 	it("emits every anchor point as a usable CSS pair", () => {
 		for (const position of EMBED_IMAGE_POSITIONS) {
 			const style = embedImageStyle("contain", position, 1);
-			expect(style["--hearth-embed-img-pos"]).toMatch(
+			expect(style["--zerohearth-embed-img-pos"]).toMatch(
 				/^(left|center|right) (top|center|bottom)$/,
 			);
-			expect(style["--hearth-embed-img-justify"]).toMatch(
+			expect(style["--zerohearth-embed-img-justify"]).toMatch(
 				/^(flex-start|safe center|safe flex-end)$/,
 			);
-			expect(style["--hearth-embed-img-align"]).toMatch(
+			expect(style["--zerohearth-embed-img-align"]).toMatch(
 				/^(flex-start|safe center|safe flex-end)$/,
 			);
 		}
@@ -167,7 +167,7 @@ describe("embedImageStyle", () => {
 });
 
 describe("isImagePath", () => {
-	it("recognises the picture formats Hearth draws", () => {
+	it("recognises the picture formats ZeroHearth draws", () => {
 		expect(isImagePath("Attachments/photo.png")).toBe(true);
 		expect(isImagePath("cover.JPG")).toBe(true);
 		expect(isImagePath("a/b/diagram.svg")).toBe(true);

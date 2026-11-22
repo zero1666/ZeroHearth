@@ -53,7 +53,7 @@ import {
 	type OperonTimerState,
 } from "../../operon";
 import type { OperonConfig } from "../../types";
-import { hearthMenu } from "../../uidesign";
+import { zerohearthMenu } from "../../uidesign";
 import { bigLines, bigWidth, BIG_ROWS } from "../bigtext";
 import type { TuiContext, TuiItem, TuiMount, TuiOutput, TuiRenderer } from "../card";
 import { asciify, centerLine, fit, spread, type Line, type Seg } from "../text";
@@ -170,7 +170,7 @@ function taskLine(cfg: OperonConfig, task: OperonTask, taxonomy: OperonTaxonomy 
 
 /** A task's menu: open it, and on a board every other column to move it to. */
 function taskMenu(ctx: TuiContext, task: OperonTask, columns: readonly OperonStatus[] | null, evt: MouseEvent | KeyboardEvent): void {
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	menu.addItem((i) => i.setTitle(t().tui.open).setIcon("file").onClick(() => void openOperonTask(ctx.view.app, task)));
 	if (columns && writesEnabled(ctx.view) && isMutable(task)) {
 		menu.addSeparator();
@@ -210,10 +210,10 @@ function addField(ctx: TuiContext, cfg: OperonConfig, line: number, statusId: st
 		line,
 		rows: 1,
 		mount: (host) => {
-			const prompt = host.createDiv("hearth-tui-line hearth-tui-calc-prompt");
-			prompt.createSpan({ cls: "hearth-tui-accent hearth-tui-bold", text: "+ " });
+			const prompt = host.createDiv("zerohearth-tui-line zerohearth-tui-calc-prompt");
+			prompt.createSpan({ cls: "zerohearth-tui-accent zerohearth-tui-bold", text: "+ " });
 			const input = prompt.createEl("input", {
-				cls: "hearth-tui-calc-input",
+				cls: "zerohearth-tui-calc-input",
 				attr: { type: "text", spellcheck: "false", placeholder: t().cards.operon.addTaskPlaceholder, "aria-label": t().cards.operon.addTask },
 			});
 			const close = () => {

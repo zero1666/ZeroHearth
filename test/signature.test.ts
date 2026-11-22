@@ -4,7 +4,7 @@ import { identityFromKey, newAuthorKey } from "../src/identity";
 import {
 	canonicalJson,
 	captureDashboard,
-	type HearthPackage,
+	type ZeroHearthPackage,
 	packageAuthor,
 	readPackage,
 	serializePackage,
@@ -47,7 +47,7 @@ function vault(): HomeSettings {
 	return s;
 }
 
-function signedPackage(key = KEY): HearthPackage {
+function signedPackage(key = KEY): ZeroHearthPackage {
 	const s = vault();
 	const pkg = captureDashboard(s, s.dashboards[0]);
 	expect(signPackage(pkg, key)).toBe(true);
@@ -85,7 +85,7 @@ describe("a signed package", () => {
 		// insertion order — so without canonicalisation a rebuilt package would
 		// hash differently from the one that was signed.
 		const pkg = signedPackage();
-		const reordered: HearthPackage = {
+		const reordered: ZeroHearthPackage = {
 			payload: pkg.payload,
 			requires: pkg.requires,
 			meta: Object.fromEntries(Object.entries(pkg.meta ?? {}).reverse()),
@@ -96,18 +96,18 @@ describe("a signed package", () => {
 	});
 
 	/**
-	 * Forward compatibility. A newer Hearth may add an envelope field this build
+	 * Forward compatibility. A newer ZeroHearth may add an envelope field this build
 	 * does not know, and `readPackage` drops what it does not know — so a
 	 * signature covering "everything" would fail on every such file and report
 	 * a legitimate author as a forgery.
 	 */
-	it("still verifies when a newer Hearth's unknown fields have been dropped", () => {
+	it("still verifies when a newer ZeroHearth's unknown fields have been dropped", () => {
 		const pkg = signedPackage();
 		const fromTheFuture = {
 			...pkg,
 			hearth: { ...pkg.hearth, somethingNewer: true },
 			unknownTopLevel: { whatever: 1 },
-		} as unknown as HearthPackage;
+		} as unknown as ZeroHearthPackage;
 		expect(verifyPackageSignature(fromTheFuture)).toBe("valid");
 	});
 });

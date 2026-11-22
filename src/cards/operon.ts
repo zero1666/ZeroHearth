@@ -1,7 +1,7 @@
 import { type App, Notice, Setting, type Component } from "obsidian";
 import type { CardHost } from "../cardhost";
 import { setIcon } from "../glyphs";
-import { hearthMenu } from "../uidesign";
+import { zerohearthMenu } from "../uidesign";
 import { emptyState } from "../cardbodies";
 import { formatRelativeDate, localDayKey } from "../dates";
 import { addResetButton } from "../editors";
@@ -57,7 +57,7 @@ import { type CardDefinition, type CardEditorContext } from "./definition";
  * Cards backed by the Operon plugin's in-process Developer API.
  *
  * Everything shown here is a typed snapshot Operon handed over: its tasks, its
- * pipelines and statuses, its priority scale, its timer. Hearth never reads
+ * pipelines and statuses, its priority scale, its timer. ZeroHearth never reads
  * Operon's notes or reimplements its rules — it asks, orders, and draws. That
  * keeps the integration honest against a plugin that ships often, and it is why
  * a missing grant or an older Obsidian shows an explanation rather than a
@@ -92,7 +92,7 @@ export function sortKeyOf(cfg: OperonConfig): OperonSortKey {
 // ---- Access gating -------------------------------------------------------
 
 /** The empty state for every reason an Operon card can't show data. Each state
- * names its own next step: "install Operon" and "approve Hearth in Operon's
+ * names its own next step: "install Operon" and "approve ZeroHearth in Operon's
  * settings" are very different problems and a shared message helps neither. */
 function renderAccessNotice(
 	body: HTMLElement,
@@ -116,12 +116,12 @@ function renderAccessNotice(
 	emptyState(body, icon, text);
 
 	// Operon's own code and sentence, verbatim, under *every* state it explained
-	// — not just the ones Hearth failed to categorise. Hearth's summary is an
+	// — not just the ones ZeroHearth failed to categorise. ZeroHearth's summary is an
 	// interpretation of that error, and when the interpretation is wrong this
 	// line is the only thing that says so.
 	if (error) {
 		body.createDiv({
-			cls: "hearth-operon-errordetail",
+			cls: "zerohearth-operon-errordetail",
 			text: t().cards.operon.errorDetail(error.reasonCode ?? error.code, error.reason),
 		});
 	}
@@ -148,7 +148,7 @@ function mountAsync<T>(
 	load: () => Promise<T>,
 	draw: (value: T, host: HTMLElement, reload: () => void) => void,
 ): void {
-	const host = body.createDiv("hearth-operon");
+	const host = body.createDiv("zerohearth-operon");
 	let alive = true;
 	component.register(() => {
 		alive = false;
@@ -165,7 +165,7 @@ function mountAsync<T>(
 	const run = () => {
 		const mine = ++generation;
 		host.empty();
-		host.createDiv({ cls: "hearth-operon-loading", text: t().cards.operon.loading });
+		host.createDiv({ cls: "zerohearth-operon-loading", text: t().cards.operon.loading });
 		void load()
 			.then((value) => {
 				if (!alive || mine !== generation) return;
@@ -246,7 +246,7 @@ type OperonChipKey =
 	| "showFile";
 
 /** Metadata chips are opt-out: a card that has never been configured shows the
- * lot, which is what a fresh task card looks like elsewhere in Hearth. */
+ * lot, which is what a fresh task card looks like elsewhere in ZeroHearth. */
 export function chipEnabled(value: boolean | undefined): boolean {
 	return value !== false;
 }
@@ -257,11 +257,11 @@ function renderStatusChip(row: HTMLElement, status: OperonStatus | null, fallbac
 	// cluster; renderTaskStatus in the tasks card sets it the same way.
 	row.addClass("has-statuschip");
 	const chip = row.createDiv({
-		cls: "hearth-task-status hearth-task-statuschip",
+		cls: "zerohearth-task-status zerohearth-task-statuschip",
 		text: status?.label ?? fallback,
 	});
 	// Operon owns the palette; a status the user recoloured there recolours here.
-	if (status?.color) chip.style.setProperty("--hearth-operon-color", status.color);
+	if (status?.color) chip.style.setProperty("--zerohearth-operon-color", status.color);
 }
 
 function renderPriorityChip(
@@ -272,16 +272,16 @@ function renderPriorityChip(
 	const priority = findPriority(taxonomy, task.priority?.id);
 	const label = priority?.label ?? task.priority?.label;
 	if (!label) return;
-	const chip = row.createDiv("hearth-task-priority hearth-operon-priority");
-	const dot = chip.createDiv("hearth-task-priority-dot");
-	if (priority?.color) dot.style.setProperty("--hearth-operon-color", priority.color);
-	chip.createSpan({ cls: "hearth-task-priority-label", text: label });
+	const chip = row.createDiv("zerohearth-task-priority zerohearth-operon-priority");
+	const dot = chip.createDiv("zerohearth-task-priority-dot");
+	if (priority?.color) dot.style.setProperty("--zerohearth-operon-color", priority.color);
+	chip.createSpan({ cls: "zerohearth-task-priority-label", text: label });
 }
 
 function renderDueChip(row: HTMLElement, task: OperonTask, today: string): void {
 	const day = taskDay(task);
 	if (!day) return;
-	const chip = row.createDiv({ cls: "hearth-task-due", text: formatRelativeDate(day) });
+	const chip = row.createDiv({ cls: "zerohearth-task-due", text: formatRelativeDate(day) });
 	// Only the two states the stylesheet distinguishes, matching the tasks
 	// card's vocabulary — a class per bucket would put four inert names in the
 	// DOM for one that does anything.
@@ -312,7 +312,7 @@ function renderTaskRow(
 	today: string,
 	move?: OperonMove,
 ): void {
-	const row = parent.createDiv("hearth-list-item hearth-task hearth-operon-task");
+	const row = parent.createDiv("zerohearth-list-item zerohearth-task zerohearth-operon-task");
 	row.toggleClass("is-done", isClosed(task));
 
 	// A task Operon flags as unsafe to target (a duplicated or legacy id) stays
@@ -334,7 +334,7 @@ function renderTaskRow(
 		row.addEventListener("contextmenu", (e) => {
 			e.preventDefault();
 			e.stopPropagation();
-			const menu = hearthMenu();
+			const menu = zerohearthMenu();
 			menu.addItem((item) => item.setTitle(t().cards.operon.moveTo).setIsLabel(true));
 			for (const status of move.columns) {
 				if (status.id === task.workflow?.status.id) continue;
@@ -350,7 +350,7 @@ function renderTaskRow(
 	}
 
 	const title = task.description || t().cards.operon.untitled;
-	row.createDiv({ cls: "hearth-list-label hearth-task-text", text: title });
+	row.createDiv({ cls: "zerohearth-list-label zerohearth-task-text", text: title });
 
 	if (chipEnabled(cfg.showStatus) && task.workflow) {
 		renderStatusChip(row, findStatus(taxonomy, task.workflow.status.id), task.workflow.status.label);
@@ -358,24 +358,24 @@ function renderTaskRow(
 	if (chipEnabled(cfg.showPriority)) renderPriorityChip(row, taxonomy, task);
 	if (chipEnabled(cfg.showDue)) renderDueChip(row, task, today);
 
-	const meta = row.createDiv("hearth-operon-meta");
+	const meta = row.createDiv("zerohearth-operon-meta");
 	if (chipEnabled(cfg.showPinned) && task.pinned) {
-		setIcon(meta.createSpan("hearth-operon-flag"), "pin");
+		setIcon(meta.createSpan("zerohearth-operon-flag"), "pin");
 	}
 	if (chipEnabled(cfg.showRecurrence) && task.recurrence.repeating) {
-		setIcon(meta.createSpan("hearth-operon-flag"), "repeat");
+		setIcon(meta.createSpan("zerohearth-operon-flag"), "repeat");
 	}
 	if (chipEnabled(cfg.showTracker) && task.tracker.active) {
-		setIcon(meta.createSpan("hearth-operon-flag is-active"), "timer");
+		setIcon(meta.createSpan("zerohearth-operon-flag is-active"), "timer");
 	}
 	if (task.relationships.blockedByOperonIds.length > 0) {
-		setIcon(meta.createSpan("hearth-operon-flag is-blocked"), "octagon-alert");
+		setIcon(meta.createSpan("zerohearth-operon-flag is-blocked"), "octagon-alert");
 	}
 	if (!meta.hasChildNodes()) meta.remove();
 
 	if (chipEnabled(cfg.showFile)) {
 		const name = task.locator.filePath.split("/").pop() ?? task.locator.filePath;
-		row.createDiv({ cls: "hearth-operon-file", text: name.replace(/\.md$/i, "") });
+		row.createDiv({ cls: "zerohearth-operon-file", text: name.replace(/\.md$/i, "") });
 	}
 
 	const open = () => void openOperonTask(view.app, task);
@@ -400,7 +400,7 @@ export function writesEnabled(view: CardHost): boolean {
 }
 
 /** Ask before applying a plan Operon flagged as needing consent or as more than
- * routine. Operon owns the risk assessment; Hearth just relays it. */
+ * routine. Operon owns the risk assessment; ZeroHearth just relays it. */
 export function confirmPlan(view: CardHost): OperonConfirm {
 	return (plan) =>
 		new Promise<boolean>((resolve) => {
@@ -423,7 +423,7 @@ export function confirmPlan(view: CardHost): OperonConfirm {
  * Report a finished write and refresh the card.
  *
  * The `unknown` outcome gets its own message on purpose. Operon uses it to say
- * the mutation may have landed, and Hearth has already spent its one legal
+ * the mutation may have landed, and ZeroHearth has already spent its one legal
  * recovery attempt by this point — so the honest thing is to say the state is
  * uncertain and let the reload show whatever Operon now reports, rather than
  * claiming success or offering a retry that could write twice.
@@ -494,7 +494,7 @@ export function noticeCreateFailure(cfg: OperonConfig, reason: string): void {
 /** The MIME-ish key a dragged Operon task travels under. Distinct from the
  * tasks card's `text/plain` index so the two boards can never accept each
  * other's drags — the payload is an Operon id, meaningless anywhere else. */
-const DRAG_TYPE = "application/hearth-operon-task";
+const DRAG_TYPE = "application/zerohearth-operon-task";
 
 /**
  * A one-line "+ Add task" control, mirroring the Kanban quick-add in the tasks
@@ -511,19 +511,19 @@ function renderQuickAdd(
 	statusId: string | undefined,
 	reload: () => void,
 ): void {
-	const addBtn = parent.createDiv({ cls: "hearth-kanban-add hearth-operon-add" });
-	setIcon(addBtn.createSpan("hearth-kanban-add-icon"), "plus");
-	addBtn.createSpan({ cls: "hearth-kanban-add-label", text: t().cards.operon.addTask });
+	const addBtn = parent.createDiv({ cls: "zerohearth-kanban-add zerohearth-operon-add" });
+	setIcon(addBtn.createSpan("zerohearth-kanban-add-icon"), "plus");
+	addBtn.createSpan({ cls: "zerohearth-kanban-add-label", text: t().cards.operon.addTask });
 	addBtn.addEventListener("click", (e) => {
 		e.stopPropagation();
 		addBtn.hide();
-		const form = parent.createDiv({ cls: "hearth-kanban-add-form hearth-operon-add-form" });
+		const form = parent.createDiv({ cls: "zerohearth-kanban-add-form zerohearth-operon-add-form" });
 		const input = form.createEl("input", {
-			cls: "hearth-kanban-add-input",
+			cls: "zerohearth-kanban-add-input",
 			attr: { type: "text", placeholder: t().cards.operon.addTaskPlaceholder },
 		});
 		const due = form.createEl("input", {
-			cls: "hearth-operon-add-due",
+			cls: "zerohearth-operon-add-due",
 			attr: { type: "date", "aria-label": t().cards.operon.addTaskDue },
 		});
 
@@ -583,7 +583,7 @@ function renderQuickAdd(
 function renderTruncation(host: HTMLElement, page: OperonTaskPage["page"]): void {
 	if (!page.truncated) return;
 	host.createDiv({
-		cls: "hearth-operon-truncated",
+		cls: "zerohearth-operon-truncated",
 		text: t().cards.operon.truncated(page.returnedCount, page.actualCount),
 	});
 }
@@ -592,8 +592,8 @@ function renderTruncation(host: HTMLElement, page: OperonTaskPage["page"]): void
  * out of date says so instead of appearing simply wrong. */
 function renderStaleness(host: HTMLElement, verified: boolean): void {
 	if (verified) return;
-	const el = host.createDiv({ cls: "hearth-operon-stale" });
-	setIcon(el.createSpan("hearth-operon-stale-icon"), "refresh-cw");
+	const el = host.createDiv({ cls: "zerohearth-operon-stale" });
+	setIcon(el.createSpan("zerohearth-operon-stale-icon"), "refresh-cw");
 	el.createSpan({ text: t().cards.operon.settling });
 }
 
@@ -627,7 +627,7 @@ function renderList(
 				return;
 			}
 			renderStaleness(host, result.freshness.verified);
-			const listEl = host.createDiv("hearth-list hearth-tasks");
+			const listEl = host.createDiv("zerohearth-list zerohearth-tasks");
 			for (const task of tasks) renderTaskRow(view, cfg, listEl, task, taxonomy, today);
 			renderTruncation(host, result.value.page);
 			// No status: a list spans every column, so the new task takes
@@ -665,11 +665,11 @@ function renderAgenda(
 			}
 			renderStaleness(host, result.freshness.verified);
 			for (const group of groups) {
-				const section = host.createDiv("hearth-operon-day");
-				const head = section.createDiv("hearth-operon-day-head");
-				head.createSpan({ cls: "hearth-operon-day-label", text: formatRelativeDate(group.day) });
-				head.createSpan({ cls: "hearth-operon-day-count", text: String(group.tasks.length) });
-				const listEl = section.createDiv("hearth-list hearth-tasks");
+				const section = host.createDiv("zerohearth-operon-day");
+				const head = section.createDiv("zerohearth-operon-day-head");
+				head.createSpan({ cls: "zerohearth-operon-day-label", text: formatRelativeDate(group.day) });
+				head.createSpan({ cls: "zerohearth-operon-day-count", text: String(group.tasks.length) });
+				const listEl = section.createDiv("zerohearth-list zerohearth-tasks");
 				const tasks = sortTasks(group.tasks, sortKeyOf(cfg), !!cfg.sortReverse, taxonomy);
 				for (const task of tasks) renderTaskRow(view, cfg, listEl, task, taxonomy, today);
 			}
@@ -741,20 +741,20 @@ function renderBoard(
 			const dragged = new Map<string, OperonTask>();
 			for (const task of result.value.tasks) dragged.set(task.identity.operonId, task);
 
-			board = host.createDiv("hearth-kanban hearth-operon-board");
+			board = host.createDiv("zerohearth-kanban zerohearth-operon-board");
 			for (const status of columns) {
-				const colEl = board.createDiv("hearth-kanban-col");
-				const head = colEl.createDiv("hearth-kanban-col-head");
-				const title = head.createSpan({ cls: "hearth-kanban-col-title", text: status.label });
-				if (status.color) title.style.setProperty("--hearth-operon-color", status.color);
+				const colEl = board.createDiv("zerohearth-kanban-col");
+				const head = colEl.createDiv("zerohearth-kanban-col-head");
+				const title = head.createSpan({ cls: "zerohearth-kanban-col-title", text: status.label });
+				if (status.color) title.style.setProperty("--zerohearth-operon-color", status.color);
 				const tasks = sortTasks(
 					byStatus.get(status.id) ?? [],
 					sortKeyOf(cfg),
 					!!cfg.sortReverse,
 					taxonomy,
 				);
-				head.createSpan({ cls: "hearth-kanban-col-count", text: String(tasks.length) });
-				const colBody = colEl.createDiv("hearth-kanban-col-body");
+				head.createSpan({ cls: "zerohearth-kanban-col-count", text: String(tasks.length) });
+				const colBody = colEl.createDiv("zerohearth-kanban-col-body");
 
 				if (writes) {
 					colBody.addEventListener("dragover", (e) => {
@@ -819,14 +819,14 @@ function renderTimer(
 				return;
 			}
 			const state = result.value;
-			const wrap = host.createDiv("hearth-operon-timer");
+			const wrap = host.createDiv("zerohearth-operon-timer");
 			if (!state.active) {
-				const idle = wrap.createDiv("hearth-operon-timer-idle");
-				setIcon(idle.createDiv("hearth-operon-timer-icon"), "timer-off");
-				idle.createDiv({ cls: "hearth-operon-timer-label", text: t().cards.operon.timerIdle });
+				const idle = wrap.createDiv("zerohearth-operon-timer-idle");
+				setIcon(idle.createDiv("zerohearth-operon-timer-icon"), "timer-off");
+				idle.createDiv({ cls: "zerohearth-operon-timer-label", text: t().cards.operon.timerIdle });
 				if (state.transition) {
 					idle.createDiv({
-						cls: "hearth-operon-timer-note",
+						cls: "zerohearth-operon-timer-note",
 						text:
 							state.transition.kind === "starting"
 								? t().cards.operon.timerStarting
@@ -836,13 +836,13 @@ function renderTimer(
 				return;
 			}
 
-			setIcon(wrap.createDiv("hearth-operon-timer-icon is-running"), "timer");
+			setIcon(wrap.createDiv("zerohearth-operon-timer-icon is-running"), "timer");
 			const clock = wrap.createDiv({
-				cls: "hearth-operon-timer-clock",
+				cls: "zerohearth-operon-timer-clock",
 				text: formatElapsed(state.active.elapsedSeconds),
 			});
 			wrap.createDiv({
-				cls: "hearth-operon-timer-label",
+				cls: "zerohearth-operon-timer-label",
 				text: state.active.isUnassigned ? t().cards.operon.timerUnassigned : state.active.source,
 			});
 
@@ -963,13 +963,13 @@ function chipPicker(
 	onChange: (next: string[]) => void,
 ): void {
 	const setting = new Setting(container).setName(name).setDesc(desc);
-	const host = setting.controlEl.createDiv("hearth-taskfilter-chips");
+	const host = setting.controlEl.createDiv("zerohearth-taskfilter-chips");
 	if (options.length === 0) {
-		host.createSpan({ cls: "hearth-operon-hint", text: t().editors.operon.noOptions });
+		host.createSpan({ cls: "zerohearth-operon-hint", text: t().editors.operon.noOptions });
 		return;
 	}
 	for (const option of options) {
-		const chip = host.createEl("button", { cls: "hearth-taskfilter-chip", text: option.label });
+		const chip = host.createEl("button", { cls: "zerohearth-taskfilter-chip", text: option.label });
 		chip.toggleClass("is-on", selected.includes(option.id));
 		chip.addEventListener("click", () => {
 			const next = selected.includes(option.id)
@@ -1042,7 +1042,7 @@ export function operonEditor(ctx: CardEditorContext, containerEl: HTMLElement): 
 		// invalid" into something actionable — it names the target the setting
 		// above is choosing between.
 		const where = describeCreateTarget(createTarget(cachedPolicies(), cfg.createAs));
-		if (where) target.descEl.createDiv({ cls: "hearth-operon-target", text: where });
+		if (where) target.descEl.createDiv({ cls: "zerohearth-operon-target", text: where });
 	}
 
 	if (operonView(cfg) === "list") {

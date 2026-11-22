@@ -52,9 +52,9 @@ describe("search tips dialog", () => {
 		const modal = new tips.SearchTipsModal(a as never);
 		modal.open();
 		expect(modal.titleEl.textContent).toBe("What the search bar can do");
-		expect(modal.contentEl.querySelectorAll(".hearth-tips-row").length).toBe(4 + 8);
+		expect(modal.contentEl.querySelectorAll(".zerohearth-tips-row").length).toBe(4 + 8);
 		// Opened from a command there's no bar to type into: plain examples.
-		expect(modal.contentEl.querySelector("button.hearth-tips-example")).toBeNull();
+		expect(modal.contentEl.querySelector("button.zerohearth-tips-example")).toBeNull();
 		expect(tips.searchTipsSeen(a as never)).toBe(true);
 	});
 
@@ -62,7 +62,7 @@ describe("search tips dialog", () => {
 		const tried: string[] = [];
 		const modal = new tips.SearchTipsModal(app() as never, { onTry: (e) => tried.push(e) });
 		modal.open();
-		const chip = Array.from(modal.contentEl.querySelectorAll<HTMLButtonElement>("button.hearth-tips-example")).find(
+		const chip = Array.from(modal.contentEl.querySelectorAll<HTMLButtonElement>("button.zerohearth-tips-example")).find(
 			(b) => b.textContent === "1+1",
 		);
 		chip?.click();
@@ -76,9 +76,9 @@ describe("search tips dialog", () => {
 			onTry: () => {},
 		});
 		modal.open();
-		const off = Array.from(modal.contentEl.querySelectorAll(".hearth-tips-row.is-off"));
+		const off = Array.from(modal.contentEl.querySelectorAll(".zerohearth-tips-row.is-off"));
 		expect(off.length).toBe(1);
-		expect(off[0].querySelector(".hearth-tips-off")?.textContent).toBe("Off");
+		expect(off[0].querySelector(".zerohearth-tips-off")?.textContent).toBe("Off");
 		expect(off[0].querySelector("button")).toBeNull();
 	});
 });

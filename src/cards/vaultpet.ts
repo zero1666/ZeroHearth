@@ -16,7 +16,7 @@ import { type CardDefinition, type CardEditorContext } from "./definition";
 
 // ---- Vault Pet ----------------------------------------------------------
 //
-// A house on the board for the Vault Pet community plugin. Hearth's own "Pet"
+// A house on the board for the Vault Pet community plugin. ZeroHearth's own "Pet"
 // card is a different animal entirely — it is drawn here, feeds on vault
 // timestamps and keeps no state. This card keeps no state either, but for the
 // opposite reason: everything it shows belongs to Vault Pet, which owns the XP,
@@ -29,7 +29,7 @@ import { type CardDefinition, type CardEditorContext } from "./definition";
 //     card its "Insert pet card" command writes into a note. Rendering a block
 //     rather than reading the plugin's numbers means the sprite animates, the
 //     level bar fills and clicking pets the pet, all under the plugin's control,
-//     and Hearth never polls: the plugin repaints its own blocks.
+//     and ZeroHearth never polls: the plugin repaints its own blocks.
 //   • "house" — the `vault-pet-house` side-panel view, hosted as a detached
 //     leaf exactly as the Plugin view card hosts any registered view. Quests,
 //     dex, badges, wardrobe and stats, in a card instead of the sidebar.
@@ -66,7 +66,7 @@ export function renderVaultPet(
 		return;
 	}
 
-	const host = body.createDiv("hearth-vaultpet-block");
+	const host = body.createDiv("zerohearth-vaultpet-block");
 	// The plugin's processor ignores the block's contents and renders into `el`,
 	// registering the child on the render context so it is torn down with
 	// `component` — the same lifetime every other card body has.
@@ -84,19 +84,19 @@ function renderVaultPetHouse(
 		emptyState(body, "egg", t().cards.empty.vaultPetNoHouse);
 		return;
 	}
-	// No class of its own: `.hearth-leaf-host` carries everything a hosted view
+	// No class of its own: `.zerohearth-leaf-host` carries everything a hosted view
 	// needs, and the card root already announces its kind (`data-kind`) for a
 	// CSS snippet that wants to single this one out.
-	const host = body.createDiv("hearth-leaf-host");
+	const host = body.createDiv("zerohearth-leaf-host");
 	// The house scrolls and sizes itself, so let it fill the card edge to edge
 	// like every other hosted view.
-	body.addClass("hearth-card-body-live");
+	body.addClass("zerohearth-card-body-live");
 	// Its leaf header is a title bar meant for the sidebar; the card already has
 	// one of its own, so drop it unless the user asks for it back.
-	if (!card.vaultPet?.showHeader) host.addClass("hearth-leaf-hide-header");
+	if (!card.vaultPet?.showHeader) host.addClass("zerohearth-leaf-hide-header");
 	if (!mountLeafView(view.app, VAULT_PET_HOUSE_VIEW, host, component)) {
 		host.remove();
-		body.removeClass("hearth-card-body-live");
+		body.removeClass("zerohearth-card-body-live");
 		emptyState(body, "egg", t().cards.empty.vaultPetNoHouse);
 	}
 }
@@ -112,7 +112,7 @@ export function vaultPetEditor(ctx: CardEditorContext, containerEl: HTMLElement)
 		// offering settings that cannot do anything yet. The card is still
 		// configurable — the settings below apply the moment the plugin arrives.
 		const note = new Setting(containerEl).setName(strings.missing).setDesc(strings.missingDesc);
-		note.settingEl.addClass("hearth-setting-note");
+		note.settingEl.addClass("zerohearth-setting-note");
 	}
 
 	new Setting(containerEl)

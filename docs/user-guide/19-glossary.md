@@ -1,16 +1,16 @@
-# 19. Glossary of Hearth terms
+# 19. Glossary of ZeroHearth terms
 
-Terms used throughout this guide and inside the Hearth plugin, defined. Entries
-are alphabetical. Where a term is Obsidian's rather than Hearth's, that is said.
+Terms used throughout this guide and inside the ZeroHearth plugin, defined. Entries
+are alphabetical. Where a term is Obsidian's rather than ZeroHearth's, that is said.
 
 ---
 
 **Action bar** — In Mobile mode (search only), a row of buttons under the search
 field, replacing the button that would otherwise sit beside it. Each button can
 run a command, open a note or file, or open a URL. Configured at *Settings →
-Hearth → Mobile → Mobile action bar*.
+ZeroHearth → Mobile → Mobile action bar*.
 
-**Arrange mode** — Hearth's edit mode for a dashboard, entered with the
+**Arrange mode** — ZeroHearth's edit mode for a dashboard, entered with the
 **Arrange** button in the top-right of the Home view. Cards can be added, moved,
 resized, configured and removed only while arranging.
 
@@ -23,7 +23,7 @@ overlap.
 of the board, with the cards below it on the theme's own surface, the way a cover
 image sits above a note. The alternative is *Full background*.
 
-**Board** — A synonym for dashboard, used throughout Hearth's own wording.
+**Board** — A synonym for dashboard, used throughout ZeroHearth's own wording.
 
 **Card** — One panel on a dashboard. A card has a kind, an optional title, a
 position and size, optional style overrides, and optional behaviour when the
@@ -33,7 +33,7 @@ board is stacked into one column.
 shares: opacity, blur, corner radius and border width. They exist vault-wide, per
 dashboard and per card.
 
-**Cascade** — Hearth's three-level settings model: a vault-wide default, an
+**Cascade** — ZeroHearth's three-level settings model: a vault-wide default, an
 optional per-dashboard override, and (for card properties) an optional per-card
 override. The most specific level with an opinion wins.
 
@@ -51,7 +51,7 @@ a launcher for any command registered in Obsidian.
 **Dashboard** — One arrangement of cards, with its own name, switcher icon, and
 optional overrides of almost every visual setting. A vault can hold many.
 
-**Dashboard gallery** — A server that stores published dashboards, which Hearth
+**Dashboard gallery** — A server that stores published dashboards, which ZeroHearth
 can browse, install from and publish to. Off entirely if no gallery address is
 set. Anyone can run their own.
 
@@ -61,15 +61,15 @@ one per dashboard, plus a `+` to create one.
 **Dashboard type** — Either **Cards** (the normal board) or **Plugin view** (the
 whole board given over to one other plugin's view).
 
-**Disable external calls** — The master privacy switch at *Settings → Hearth →
+**Disable external calls** — The master privacy switch at *Settings → ZeroHearth →
 Behaviour → Privacy & network*, which blocks every outbound network request
-Hearth makes.
+ZeroHearth makes.
 
 **Edge-merging** — When two cards are snapped edge to edge, their shared border
 drops out so the pair reads as one continuous tile, and they blur as one seamless
 sheet. Automatic; there is nothing to switch on.
 
-**Favorites** — Hearth's own list of starred notes, separate from Obsidian's
+**Favorites** — ZeroHearth's own list of starred notes, separate from Obsidian's
 Bookmarks. Shown by the Favorites card, which normally follows one vault-wide
 list but can be given a list of its own.
 
@@ -81,7 +81,7 @@ onto the dashboard itself so it looks the same in another vault instead of
 picking up that vault's settings. Controlled by *Copy this vault's appearance
 settings onto the dashboard*.
 
-**Free-form layout** — Hearth's board geometry: cards are stored as a position, a
+**Free-form layout** — ZeroHearth's board geometry: cards are stored as a position, a
 width as a percentage of the board, and a height in pixels, and may sit anywhere.
 Not a rigid row-and-column grid.
 
@@ -94,14 +94,14 @@ gallery; not needed to browse or install.
 
 **Headerless card** — A card whose *Title* is empty, drawn without a header row.
 
-**Home view** — The Obsidian view Hearth registers. It contains the switcher, the
+**Home view** — The Obsidian view ZeroHearth registers. It contains the switcher, the
 Arrange button, the title block, the search section and the dashboard.
 
 **Karma** — On a gallery profile, every upvote across everything that handle has
 published, minus every downvote.
 
-**Kill switch** — Used in Hearth's own wording for *Connect to Operon*: turning
-it off stops Operon cards reading and stops Hearth ever asking Operon for
+**Kill switch** — Used in ZeroHearth's own wording for *Connect to Operon*: turning
+it off stops Operon cards reading and stops ZeroHearth ever asking Operon for
 access.
 
 **Launchpad** — The Links card: a grid of buttons opening notes, URLs or
@@ -112,19 +112,19 @@ following the real conditions and time of day over a place you pick, or pinned t
 one condition. A pinned sky needs no location and never goes online.
 
 **Lucide icon** — An icon from the [Lucide](https://lucide.dev/icons) set, which
-Obsidian uses. Hearth accepts Lucide ids in title icons, tab icons, switcher
+Obsidian uses. ZeroHearth accepts Lucide ids in title icons, tab icons, switcher
 icons and tile icons, and provides a searchable picker so you do not have to
 remember ids.
 
 **Minimal tier** — The lowest performance tier: a flat colour instead of the
 wallpaper, opaque cards, no motion, and no card refreshing itself on a timer.
 
-**Mobile mode (search only)** — An optional mode in which Hearth on phones and
+**Mobile mode (search only)** — An optional mode in which ZeroHearth on phones and
 tablets hides the dashboard entirely and shows only the search field with an
 action bar. Distinct from the stacked column, which is the default behaviour on a
 narrow board.
 
-**Package** — The JSON file format Hearth's export produces and its import
+**Package** — The JSON file format ZeroHearth's export produces and its import
 consumes, describing one dashboard, one whole layout, or one vault's settings.
 Documented in [`docs/dashboard-package.md`](../dashboard-package.md).
 
@@ -138,7 +138,7 @@ and position. Distinct from *Copy to dashboard*, which makes an independent
 duplicate.
 
 **Plugin view card** — A card that hosts another plugin's registered side-panel
-view. By far the heaviest card Hearth has, because it runs that plugin's full
+view. By far the heaviest card ZeroHearth has, because it runs that plugin's full
 view live.
 
 **Plugin view dashboard** — A whole board given over to one plugin's view at full
@@ -163,7 +163,7 @@ board.
 
 **Setup wizard** — The six-step flow that builds your first dashboard from a
 handful of questions and from what it finds installed in your vault. Rerunnable
-from *Settings → Hearth → About*, where it always adds a new board.
+from *Settings → ZeroHearth → About*, where it always adds a new board.
 
 **Snap** — The magnetic alignment of a dragged card to the edges and centres of
 its neighbours and of the board. The threshold is 8 pixels.
@@ -178,7 +178,7 @@ or status). Rows cascade, a row counts only against the rows above it, and a tab
 click filters the tasks already loaded — it is never written to the vault.
 
 **Terminal mode** — The third design, beside Classic and Expressive, set
-vault-wide at *Settings → Hearth → Appearance*: all of Hearth drawn as a text
+vault-wide at *Settings → ZeroHearth → Appearance*: all of ZeroHearth drawn as a text
 interface on one character grid, cards as box-drawn frames, with keys for
 everything. See the Terminal mode section of the Appearance chapter.
 
@@ -192,10 +192,10 @@ beside it.
 
 **Title icon** — The mark beside the title. Accepts a Lucide icon id, an emoji or
 a couple of characters, a vault image path, or an image URL. Empty means the
-Hearth crystal.
+ZeroHearth crystal.
 
-**Transparent modes** — Hearth's description of its search modes: you do not
+**Transparent modes** — ZeroHearth's description of its search modes: you do not
 switch between them with a control, the mode is decided by what you type.
 
 **Vault-wide** — A setting that applies to every dashboard unless a dashboard
-overrides it. Vault-wide settings live under *Settings → Hearth*.
+overrides it. Vault-wide settings live under *Settings → ZeroHearth*.

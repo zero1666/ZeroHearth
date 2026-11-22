@@ -16,7 +16,7 @@ import { type CardKind, type DashboardCard, DEFAULT_SETTINGS, effectiveCardDesig
 const vault = (): HomeSettings => structuredClone(DEFAULT_SETTINGS);
 
 describe("which kinds draw an Expressive design", () => {
-	it("is every kind whose content Hearth draws itself, and none that shows the user's own", () => {
+	it("is every kind whose content ZeroHearth draws itself, and none that shows the user's own", () => {
 		const expressive = (Object.keys(CARD_DEFINITIONS) as CardKind[]).filter(
 			(kind) => CARD_DEFINITIONS[kind].expressive,
 		);

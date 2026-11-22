@@ -1,7 +1,7 @@
 /**
- * Hearth's icons, with terminal mode's text stand-ins.
+ * ZeroHearth's icons, with terminal mode's text stand-ins.
  *
- * Every Hearth module draws its icons through {@link setIcon} here instead of
+ * Every ZeroHearth module draws its icons through {@link setIcon} here instead of
  * Obsidian's own. Outside terminal mode it *is* Obsidian's: the same call, the
  * same SVG. In terminal mode an icon is a character instead — `+` for "plus",
  * `▾` for "chevron-down", `✓` for "check" — so a button reads the way it would
@@ -20,7 +20,7 @@ import { setIcon as obsidianSetIcon } from "obsidian";
 
 /** The class a glyph-drawn icon element wears; styles.css sizes it to one
  * cell and clears the SVG sizing an icon container normally carries. */
-export const GLYPH_CLASS = "hearth-glyph";
+export const GLYPH_CLASS = "zerohearth-glyph";
 
 /** What an icon becomes when nothing in the tables below matches it. */
 export const FALLBACK_GLYPH = "·";
@@ -335,10 +335,10 @@ const FAMILIES: [RegExp, string][] = [
 
 /** The character standing in for `iconId` in terminal mode. Accepts bare
  * Lucide names and the `lucide-` prefixed ids Obsidian registers them under;
- * Hearth's own crystal marks become a diamond. */
+ * ZeroHearth's own crystal marks become a diamond. */
 export function iconGlyph(iconId: string): string {
 	const id = iconId.trim().toLowerCase().replace(/^lucide-/, "");
-	if (id.startsWith("hearth")) return "◆";
+	if (id.startsWith("zerohearth")) return "◆";
 	const exact = EXACT[id];
 	if (exact) return exact;
 	for (const [pattern, glyph] of FAMILIES) if (pattern.test(id)) return glyph;
@@ -348,7 +348,7 @@ export function iconGlyph(iconId: string): string {
 // ---- Icons Obsidian draws itself ----------------------------------------------
 
 /** Where a real icon is the point: the icon picker's rows and preview. */
-const REAL_ICONS = ".hearth-icon-suggestion-icon, .hearth-icon-preview";
+const REAL_ICONS = ".zerohearth-icon-suggestion-icon, .zerohearth-icon-preview";
 
 /** Roots already being watched, so dressing one twice watches it once. */
 const watched = new WeakSet<HTMLElement>();

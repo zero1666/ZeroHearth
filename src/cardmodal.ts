@@ -4,8 +4,8 @@ import { renderDashboard, openCardSettings } from "./dashboard";
 import type { BoardHost } from "./cardhost";
 import { paneBoard } from "./cardpanestate";
 import { t } from "./i18n";
-import { HearthModal } from "./uidesign";
-import type HearthPlugin from "./main";
+import { ZeroHearthModal } from "./uidesign";
+import type ZeroHearthPlugin from "./main";
 import { findCardById, type DashboardCard } from "./types";
 
 /**
@@ -29,7 +29,7 @@ class CardDialogHost implements BoardHost {
 
 	constructor(
 		readonly app: App,
-		readonly plugin: HearthPlugin,
+		readonly plugin: ZeroHearthPlugin,
 		private readonly el: HTMLElement,
 		private readonly redraw: () => void,
 	) {
@@ -53,7 +53,7 @@ class CardDialogHost implements BoardHost {
 	}
 }
 
-export class CardDialog extends HearthModal {
+export class CardDialog extends ZeroHearthModal {
 	private cardComponent: Component | null = null;
 
 	/** The card is held by id, not by reference: its settings dialog can delete
@@ -63,7 +63,7 @@ export class CardDialog extends HearthModal {
 
 	constructor(
 		app: App,
-		private readonly plugin: HearthPlugin,
+		private readonly plugin: ZeroHearthPlugin,
 		card: DashboardCard,
 	) {
 		super(app);
@@ -71,7 +71,7 @@ export class CardDialog extends HearthModal {
 	}
 
 	onOpen(): void {
-		this.modalEl.addClass("hearth-card-dialog");
+		this.modalEl.addClass("zerohearth-card-dialog");
 		this.draw();
 	}
 
@@ -94,7 +94,7 @@ export class CardDialog extends HearthModal {
 		this.titleEl.setText(card.title?.trim() || t().editors.kinds[card.kind]);
 		this.cardComponent?.unload();
 		this.contentEl.empty();
-		const body = this.contentEl.createDiv("hearth-card-dialog-body");
+		const body = this.contentEl.createDiv("zerohearth-card-dialog-body");
 		const component = new Component();
 		component.load();
 		this.cardComponent = component;
@@ -102,9 +102,9 @@ export class CardDialog extends HearthModal {
 		renderDashboard(host, body, component, paneBoard(card));
 		// The card that fills the dialog has no arrange header, so its settings
 		// need somewhere to live: the same hover control the sidebar pane uses.
-		const actions = body.createDiv("hearth-pane-actions");
+		const actions = body.createDiv("zerohearth-pane-actions");
 		const gear = actions.createEl("button", {
-			cls: "hearth-pane-action",
+			cls: "zerohearth-pane-action",
 			attr: { "aria-label": t().cardPane.settings, type: "button" },
 		});
 		setIcon(gear, "settings-2");
@@ -113,6 +113,6 @@ export class CardDialog extends HearthModal {
 }
 
 /** Open `card` in a floating dialog. */
-export function openCardDialog(app: App, plugin: HearthPlugin, card: DashboardCard): void {
+export function openCardDialog(app: App, plugin: ZeroHearthPlugin, card: DashboardCard): void {
 	new CardDialog(app, plugin, card).open();
 }

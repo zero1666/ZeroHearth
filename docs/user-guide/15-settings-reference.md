@@ -1,10 +1,10 @@
 # 15. Complete settings reference
 
-This chapter lists every setting on Hearth's own settings page, in the order the
+This chapter lists every setting on ZeroHearth's own settings page, in the order the
 page presents them, with what each one does and its default value where the
 default is meaningful.
 
-To reach it: **Obsidian Settings → Hearth**. The page opens on an index of eight
+To reach it: **Obsidian Settings → ZeroHearth**. The page opens on an index of eight
 categories, grouped into four headings. Choosing one opens that category; the
 back link at the top of the page, Escape, or the mouse's back button returns to
 the index. On the index itself those gestures keep their usual meaning, so
@@ -27,14 +27,14 @@ the top of its page:
 | Dashboard | Grid, card surface, and the controls around the board |
 | Behaviour | Startup, how notes open, and privacy |
 | Mobile | The stacked layout on a phone, and the action bar |
-| Integrations | TaskNotes, file icons, and every plugin Hearth reads |
+| Integrations | TaskNotes, file icons, and every plugin ZeroHearth reads |
 | Backup | Export and import your layout and settings |
 | About | Version, what's new, and where to report things |
 
 Sliders and text fields whose factory default is meaningful carry a **Reset to
 default** button.
 
-If a single section fails to render, Hearth shows a message in its place —
+If a single section fails to render, ZeroHearth shows a message in its place —
 *The "<name>" section couldn't be shown* — with a hint to open the developer
 console and report it. The other settings are unaffected.
 
@@ -66,7 +66,7 @@ mode* section follows (see the Terminal mode section of
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| *Colour scheme* | Obsidian theme | **Obsidian theme** takes every colour from your theme; **Htop**, **Hearth**, **Amber** and **Paper** are fixed palettes |
+| *Colour scheme* | Obsidian theme | **Obsidian theme** takes every colour from your theme; **Htop**, **ZeroHearth**, **Amber** and **Paper** are fixed palettes |
 | *Font size* | 13 px | The size of the terminal's text, 10–20 px. Every card keeps its place on the grid |
 
 ### Home
@@ -78,8 +78,8 @@ mode* section follows (see the Terminal mode section of
 | *Show title* | On | Display the big title and its icon at the top |
 | *Show search section* | On | Display the search and command bar with its results and filter buttons. Individual dashboards can override this |
 | *Title* | `Obsidian` | The heading text at the top of the home view |
-| *Title icon* | empty (the Hearth crystal) | Takes a Lucide icon id, an emoji or a couple of characters, a vault image path, or an image URL. Each dashboard can override it |
-| *Tab icon* | empty (the Hearth crystal) | A Lucide icon for Hearth's tab header and ribbon button |
+| *Title icon* | empty (the ZeroHearth crystal) | Takes a Lucide icon id, an emoji or a couple of characters, a vault image path, or an image URL. Each dashboard can override it |
+| *Tab icon* | empty (the ZeroHearth crystal) | A Lucide icon for ZeroHearth's tab header and ribbon button |
 | *Follow theme icon color* | Off | Draw the crystal icon and/or the title text in your theme's icon colour. **Off**, **Icon**, **Title**, **Icon and title** |
 | *Full width* | Off | Let the content fill the pane instead of stopping at the width below |
 | *Content width* | 1600 px | The widest the home content may grow. A ceiling, not a width — content still shrinks to fit a narrower pane |
@@ -90,7 +90,7 @@ mode* section follows (see the Terminal mode section of
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| *Background type* | Hearth default | **Hearth default**, **Harbour town**, **None**, **Solid color**, **Vault image**, **Image URL**, **Live weather sky** |
+| *Background type* | ZeroHearth default | **ZeroHearth default**, **Harbour town**, **None**, **Solid color**, **Vault image**, **Image URL**, **Live weather sky** |
 | *Background value* | — | A CSS colour, a vault image path, or a direct image URL, depending on the type |
 | *Opacity* | 0.8 | How much the background shows through |
 | *Blur* | 0 px | Background blur |
@@ -125,14 +125,14 @@ Two sections: Search bar, Filter chips.
 | *Instant answers* | On | Answer the query itself above the notes — sums, currencies, stocks, weather, Wikipedia, chance, dates and the time elsewhere. One toggle per answer under it; boards and Search bar cards can switch more off. See [chapter 4](04-search.md#instant-answers) |
 | *Search tips* | — | Opens the dialog listing everything the search bar understands |
 | *Search note contents* | On | Also match text inside note bodies, not just names, tags and properties. Body matches appear after name matches with a snippet |
-| *Search engine* | Hearth (built-in) | **Hearth (built-in)**, **Omnisearch** or **Quick switcher** (matches like Obsidian's Quick switcher: files only, aliases included). Omnisearch requires that community plugin to be installed and enabled |
+| *Search engine* | ZeroHearth (built-in) | **ZeroHearth (built-in)**, **Omnisearch** or **Quick switcher** (matches like Obsidian's Quick switcher: files only, aliases included). Omnisearch requires that community plugin to be installed and enabled |
 | *Show "New note" button* | On | Show the action button beside the search field |
 | *Search-bar button* | New note | What the button does: **New note** or **Search online** |
 | *Online search engine* | DuckDuckGo | Which engine the *Search online* button opens. Also available: DuckDuckGo without AI, Brave, Kagi, Google, Mojeek, Ecosia, Qwant. The arrow beside the button searches with any of the others for one query without changing this |
 
 Then a sub-heading, **The "New note" button** — what the button makes, and where.
 The same settings drive the button beside the search bar, the one on a Search bar
-card, and Hearth's *Create new note* command.
+card, and ZeroHearth's *Create new note* command.
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
@@ -169,7 +169,7 @@ Three sections plus an informational row.
 | *Fit to page* | On | Keep the dashboard to one screen instead of allowing it to scroll |
 | *Spacing* | Roomy | How much padding the board leaves: *Roomy*, *Compact* (tighter gaps and insets) or *Flush* (no side or bottom gutter — the board and its cards run to the edge of the pane, so the *Content width* ceiling below does not apply to it) |
 
-The board itself is free-form, so there is no column count to set here. Hearth
+The board itself is free-form, so there is no column count to set here. ZeroHearth
 keeps an internal column count (12) and seed row height (92 px) that it uses only
 when it has to place a new card for you; neither is exposed as a control.
 
@@ -210,16 +210,16 @@ Three sections: Startup & tabs, Opening notes, Privacy & network.
 | *Open on startup* | On | Open the home view when the vault loads |
 | *Replace new tabs* | On | Show the home view instead of an empty new tab |
 | *Focus search on open* | Off | Place the cursor in the search field whenever a home view opens. Desktop only |
-| *Live refresh on vault changes* | Off | Keep an open home view current as the vault changes — Recent and saved-query cards update without reopening the tab. Switching back to the Hearth tab always refreshes it regardless |
+| *Live refresh on vault changes* | Off | Keep an open home view current as the vault changes — Recent and saved-query cards update without reopening the tab. Switching back to the ZeroHearth tab always refreshes it regardless |
 | *Pick up synced changes* | On | Apply dashboard changes made on another device as soon as sync brings them in, instead of at the next Obsidian restart |
 
 ### Opening notes
 
-*Where a note opens when you click it in Hearth.*
+*Where a note opens when you click it in ZeroHearth.*
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| *Open notes in* | A new tab | **A new tab**, **The current tab (replace Hearth)**, **A split pane**, **A new window**. Ctrl/Cmd-click always opens a new tab regardless |
+| *Open notes in* | A new tab | **A new tab**, **The current tab (replace ZeroHearth)**, **A split pane**, **A new window**. Ctrl/Cmd-click always opens a new tab regardless |
 
 Four per-source overrides, each of which may also be set to *Same as above*:
 
@@ -228,19 +228,19 @@ Four per-source overrides, each of which may also be set to *Same as above*:
 | *Links* | Links inside notes, tasks and the Links card |
 | *Search results* | Hits from the search bar and the Search card |
 | *Notes in cards* | Notes listed by Recent, Bookmarks, Favourites, Calendar, Heatmap and Tasks cards, and by mobile action buttons |
-| *Notes Hearth creates* | New notes, daily notes and event notes, opened as they are made |
+| *Notes ZeroHearth creates* | New notes, daily notes and event notes, opened as they are made |
 
 One further setting:
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| *Notes opened from outside Hearth* | The current tab (replace Hearth) | Covers the file explorer, the quick switcher, the graph, and anything a card embeds that opens links itself. Obsidian hands those to whichever tab is focused, so a Hearth tab gets taken over. Choose **A new tab (keep Hearth open)** to keep the Hearth tab — the file explorer then stops following what you open |
+| *Notes opened from outside ZeroHearth* | The current tab (replace ZeroHearth) | Covers the file explorer, the quick switcher, the graph, and anything a card embeds that opens links itself. Obsidian hands those to whichever tab is focused, so a ZeroHearth tab gets taken over. Choose **A new tab (keep ZeroHearth open)** to keep the ZeroHearth tab — the file explorer then stops following what you open |
 
 ### Privacy & network
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| *Disable external calls* | Off | Block all outbound network requests Hearth makes, including Jira, external calendars, RSS feeds, the calculator's currency-rate lookup, and background images and title icons given as a web address — those fall back to no picture and the Hearth crystal |
+| *Disable external calls* | Off | Block all outbound network requests ZeroHearth makes, including Jira, external calendars, RSS feeds, the calculator's currency-rate lookup, and background images and title icons given as a web address — those fall back to no picture and the ZeroHearth crystal |
 
 ---
 
@@ -279,12 +279,12 @@ Four sections: All integrations, Tasks / TaskNotes, Operon, File icons.
 
 ### All integrations
 
-The catalogue: everything Hearth can work with, listed whether or not it is
+The catalogue: everything ZeroHearth can work with, listed whether or not it is
 installed, in three groups — **Community plugins**, **Obsidian core plugins**
 and **External services**. Each row shows a status pill, a description, where its
 settings live, and either an **Install** button (for a missing plugin), a
 **Show** button (jumping to its section below) or an **Open** button (jumping to
-another Hearth settings tab).
+another ZeroHearth settings tab).
 
 The full catalogue is documented in [chapter 14](14-integrations.md).
 
@@ -309,10 +309,10 @@ Custom task fields are documented in [chapter 8](08-cards-planning.md).
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| *Connect to Operon* | On (but inert until an Operon card exists) | Off is a kill switch: Operon cards stop reading and Hearth never asks Operon for access |
+| *Connect to Operon* | On (but inert until an Operon card exists) | Off is a kill switch: Operon cards stop reading and ZeroHearth never asks Operon for access |
 | *Connection* | — | Reports the current state, with Operon's own error text where relevant |
-| *Allow changes* | Off | Lets the board card move a task by dragging, and adds a **+** for creating one. Widens what Hearth requests, so it needs a fresh approval in Operon |
-| *Requested access* | — | What Hearth asks for, and anything not yet granted |
+| *Allow changes* | Off | Lets the board card move a task by dragging, and adds a **+** for creating one. Widens what ZeroHearth requests, so it needs a fresh approval in Operon |
+| *Requested access* | — | What ZeroHearth asks for, and anything not yet granted |
 | *Recheck* | — | Reopen the connection after approving, revoking or reloading Operon |
 
 Operon is documented in full in [chapter 14](14-integrations.md).
@@ -321,7 +321,7 @@ Operon is documented in full in [chapter 14](14-integrations.md).
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| *Use icons from Iconic / Iconize* | On | Off shows Hearth's file-type icon for every file, ignoring both plugins |
+| *Use icons from Iconic / Iconize* | On | Off shows ZeroHearth's file-type icon for every file, ignoring both plugins |
 | *Iconize frontmatter property* | `icon` | The property Iconize stores a note's icon in, for icons set through frontmatter rather than its menu |
 
 ### Front Matter Title
@@ -343,9 +343,9 @@ One section, plus the gallery settings.
 | Setting | Meaning |
 | --- | --- |
 | *Export this dashboard* | Save the dashboard you are on as a file others can import. Everything about how it looks travels with it, and you choose whether to include its wallpaper |
-| *Import* | Open a Hearth file — one dashboard, a layout, or a full backup. It tells you what is in it before anything changes, and a single dashboard is added alongside your own rather than replacing anything |
+| *Import* | Open a ZeroHearth file — one dashboard, a layout, or a full backup. It tells you what is in it before anything changes, and a single dashboard is added alongside your own rather than replacing anything |
 | *Export layout* | Download every dashboard plus the grid and layout settings as a JSON file |
-| *Export settings* | Download every Hearth setting — the full layout plus header, background, behaviour, appearance and TaskNotes options — as a JSON backup file |
+| *Export settings* | Download every ZeroHearth setting — the full layout plus header, background, behaviour, appearance and TaskNotes options — as a JSON backup file |
 
 On mobile, an export file is saved to your vault's root folder rather than
 downloaded.
@@ -354,7 +354,7 @@ downloaded.
 
 | Setting | Meaning |
 | --- | --- |
-| *Gallery address* | The gallery Hearth browses and publishes to. Nothing is fetched until you open it and nothing is sent until you publish. **Clearing this field turns the gallery off entirely, and it stays off.** HTTPS only, or HTTP on localhost for a gallery you run yourself |
+| *Gallery address* | The gallery ZeroHearth browses and publishes to. Nothing is fetched until you open it and nothing is sent until you publish. **Clearing this field turns the gallery off entirely, and it stays off.** HTTPS only, or HTTP on localhost for a gallery you run yourself |
 | *Browse the gallery* | Opens the gallery browser |
 
 Export, import and the gallery are documented in
@@ -366,35 +366,35 @@ Export, import and the gallery are documented in
 
 | Row | What it does |
 | --- | --- |
-| *Set up Hearth* / *Build a dashboard* | Runs the setup wizard. It is always added as a new board, so your existing dashboards are never touched |
+| *Set up ZeroHearth* / *Build a dashboard* | Runs the setup wizard. It is always added as a new board, so your existing dashboards are never touched |
 | *What's new* | Read the release notes for this and every past version |
 | *GitHub repository* | Browse the source, star the project, or read the changelog |
 | *Report an issue* | Open an issue on GitHub |
-| *Support Hearth* | A Ko-fi tip link. Completely optional; no features are locked |
-| *Version* | The Hearth build you are running |
+| *Support ZeroHearth* | A Ko-fi tip link. Completely optional; no features are locked |
+| *Version* | The ZeroHearth build you are running |
 
 ---
 
 ## Commands
 
-Hearth registers these commands. They appear in Obsidian's command palette and
+ZeroHearth registers these commands. They appear in Obsidian's command palette and
 can be bound to hotkeys under **Settings → Hotkeys**.
 
 | Command | What it does |
 | --- | --- |
 | *Open home dashboard* | Opens the Home view |
-| *Focus board search* | Puts the cursor in the board's search field, bringing Hearth forward — or opening it — first if needed |
+| *Focus board search* | Puts the cursor in the board's search field, bringing ZeroHearth forward — or opening it — first if needed |
 | *Create new note (default location)* | Makes a note using the *The "New note" button* settings |
 | *Create new Excalidraw drawing* | Runs Excalidraw's own new-drawing command |
 | *Start/stop voice recording* | Uses Obsidian's core Audio recorder |
 | *Open today's daily note* | Uses Obsidian's core Daily notes plugin |
-| *Set up Hearth (first-run wizard)* | Runs the setup wizard, always adding a new board |
+| *Set up ZeroHearth (first-run wizard)* | Runs the setup wizard, always adding a new board |
 | *Switch to dashboard 1 … 9* | Changes the active board |
-| *Open dashboard 1 … 9* | Changes the active board **and** brings Hearth up |
+| *Open dashboard 1 … 9* | Changes the active board **and** brings ZeroHearth up |
 | *Next dashboard* | Moves to the next board |
 | *Previous dashboard* | Moves to the previous board |
 
-The ribbon button is labelled *Open Hearth home*.
+The ribbon button is labelled *Open ZeroHearth home*.
 
 ## Keyboard shortcuts inside the view
 

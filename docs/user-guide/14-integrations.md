@@ -1,11 +1,11 @@
-# 14. Integrations: every plugin and service Hearth works with
+# 14. Integrations: every plugin and service ZeroHearth works with
 
-Hearth integrates with twenty-six other things: community plugins, Obsidian's
+ZeroHearth integrates with twenty-six other things: community plugins, Obsidian's
 own core plugins, and external services. Almost all of them are picked up
 automatically — nothing to connect, no keys to paste. The exceptions are named
 explicitly below.
 
-The full live catalogue is inside the plugin at **Settings → Hearth →
+The full live catalogue is inside the plugin at **Settings → ZeroHearth →
 Integrations**. It lists every integration whether or not it is installed,
 shows its current status, and says where its settings live. Rows for
 integrations that need a setting link straight down to it; rows for missing
@@ -16,9 +16,9 @@ community plugin browser.
 
 | Pill | Meaning |
 | --- | --- |
-| **Enabled** | Installed and enabled — Hearth is using it |
-| **Disabled** | Installed but turned off, so Hearth cannot use it right now |
-| **Not installed** | Not installed. Everything else in Hearth works without it |
+| **Enabled** | Installed and enabled — ZeroHearth is using it |
+| **Disabled** | Installed but turned off, so ZeroHearth cannot use it right now |
+| **Not installed** | Not installed. Everything else in ZeroHearth works without it |
 | **Network** | An outbound request, not a plugin |
 | **Always available** | Nothing to install |
 
@@ -27,9 +27,9 @@ community plugin browser.
 | Note on the row | Meaning |
 | --- | --- |
 | *Settings below on this tab* | It has a section further down the Integrations tab |
-| *Settings under <tab>* | It is configured on another Hearth settings tab |
+| *Settings under <tab>* | It is configured on another ZeroHearth settings tab |
 | *Configured on the card itself, on your dashboard* | Open the card's gear in arrange mode |
-| *Uses that plugin's own settings — nothing to set in Hearth* | Hearth reads the other plugin's configuration |
+| *Uses that plugin's own settings — nothing to set in ZeroHearth* | ZeroHearth reads the other plugin's configuration |
 | *Nothing to configure* | It just works |
 
 ---
@@ -38,26 +38,26 @@ community plugin browser.
 
 ### Omnisearch
 
-**What Hearth does with it:** swaps the search bar over to
+**What ZeroHearth does with it:** swaps the search bar over to
 [Omnisearch](https://github.com/scambier/obsidian-omnisearch)'s fuzzy, full-text
-index instead of Hearth's built-in engine.
+index instead of ZeroHearth's built-in engine.
 
-**Configured in:** *Settings → Hearth → Search → Search bar → Search engine*.
+**Configured in:** *Settings → ZeroHearth → Search → Search bar → Search engine*.
 
 The choice only sticks while Omnisearch is enabled — disable the plugin and
-Hearth falls back to its own engine rather than showing you an empty search.
+ZeroHearth falls back to its own engine rather than showing you an empty search.
 
 ### TaskNotes
 
-**What Hearth does with it:** Tasks cards read one-note-per-task vaults — status,
+**What ZeroHearth does with it:** Tasks cards read one-note-per-task vaults — status,
 due date and priority straight from frontmatter. Mini calendar cards can also
 draw TaskNotes items: scheduled tasks, due dates, recurring occurrences,
 timeblocks, and the calendars subscribed inside TaskNotes.
 
-**Configured in:** *Settings → Hearth → Integrations → Tasks / TaskNotes*.
+**Configured in:** *Settings → ZeroHearth → Integrations → Tasks / TaskNotes*.
 
-TaskNotes has no stable API for other plugins, so Hearth reads its frontmatter
-directly, which means it has to be told the field names. Hearth's defaults are
+TaskNotes has no stable API for other plugins, so ZeroHearth reads its frontmatter
+directly, which means it has to be told the field names. ZeroHearth's defaults are
 TaskNotes' own defaults (`status`, `due`, `priority`, `done`); if you renamed a
 field inside TaskNotes, match it here. The setup wizard reads these from
 TaskNotes for you when it builds a Tasks card.
@@ -66,7 +66,7 @@ See [chapter 8](08-cards-planning.md).
 
 ### Dataview
 
-**What Hearth does with it:** the Dataview card runs DQL queries and DataviewJS
+**What ZeroHearth does with it:** the Dataview card runs DQL queries and DataviewJS
 blocks and renders them with
 [Dataview](https://github.com/blacksmithgu/obsidian-dataview)'s own renderers,
 refreshing as its index changes.
@@ -75,7 +75,7 @@ refreshing as its index changes.
 
 ### Datacore
 
-**What Hearth does with it:** the Datacore card runs a
+**What ZeroHearth does with it:** the Datacore card runs a
 [Datacore](https://github.com/blacksmithgu/datacore) query — or a JS, JSX, TS or
 TSX script — and renders it with Datacore's own live views. Datacore is
 Dataview's successor.
@@ -84,13 +84,13 @@ Dataview's successor.
 
 ### Templater
 
-**What Hearth does with it:** the *New note from template* card turns your
+**What ZeroHearth does with it:** the *New note from template* card turns your
 [Templater](https://github.com/SilentVoid13/Templater) templates into buttons,
 each carrying its own template, destination folder and filename pattern.
 Templater's *New note* integration is also available for the search bar's action
 button.
 
-**Configured in:** the card itself, and *Settings → Hearth → Search → Search
+**Configured in:** the card itself, and *Settings → ZeroHearth → Search → Search
 bar*.
 
 Templater does the templating throughout: your user scripts,
@@ -99,7 +99,7 @@ Templater's own command.
 
 ### Periodic Notes
 
-**What Hearth does with it:** the Periodic note card shows this week's, month's,
+**What ZeroHearth does with it:** the Periodic note card shows this week's, month's,
 quarter's or year's note, resolved — and created, from your own template — by
 [Periodic Notes](https://github.com/liamcain/obsidian-periodic-notes) itself.
 
@@ -107,7 +107,7 @@ quarter's or year's note, resolved — and created, from your own template — b
 
 ### Journals
 
-**What Hearth does with it:** the same Periodic note card reads from
+**What ZeroHearth does with it:** the same Periodic note card reads from
 [Journals](https://github.com/srg-kostyrko/obsidian-journal) too. Set the card's
 *Source* to Journals and pick one of your journals, and it shows that journal's
 current note — resolved, and created with its own template and prompts, through
@@ -117,7 +117,7 @@ the Journals plugin's own API.
 
 ### Git
 
-**What Hearth does with it:** the Git card shows your repository's branch,
+**What ZeroHearth does with it:** the Git card shows your repository's branch,
 changes and recent commits, and commits, syncs, pushes and pulls through the
 [Git](https://github.com/Vinzent03/obsidian-git) plugin itself — its remote,
 credentials and commit-message template all apply unchanged.
@@ -126,18 +126,18 @@ credentials and commit-message template all apply unchanged.
 
 ### Operon
 
-**What Hearth does with it:** four cards — tasks, board, agenda and timer — read
+**What ZeroHearth does with it:** four cards — tasks, board, agenda and timer — read
 through [Operon](https://github.com/hasanyilmaz/operon)'s own Developer API, so
 its statuses, priorities and recurrence stay its to define.
 
-**Configured in:** *Settings → Hearth → Integrations → Operon*.
+**Configured in:** *Settings → ZeroHearth → Integrations → Operon*.
 
 This is the one integration that needs a step from you. It has its own section
 below.
 
 ### TaskChute Plus
 
-**What Hearth does with it:** three cards read
+**What ZeroHearth does with it:** three cards read
 [TaskChute Plus](https://github.com/hiroyaiizuka/taskchute-for-obsidian)'s own
 data — today's task list with start and stop, a week's overview, and its
 activity heatmap. Tasks, routines, the running timer and the log stay
@@ -147,41 +147,41 @@ TaskChute's; the cards are windows, and every action goes through the plugin.
 
 TaskChute Plus publishes no API, so the task list drives the members its view
 exposes and the other two read its monthly record file. Nothing is written by
-Hearth directly.
+ZeroHearth directly.
 
 ### Iconic and Iconize
 
-**What Hearth does with them:** per-file icons set with
+**What ZeroHearth does with them:** per-file icons set with
 [Iconic](https://obsidian.md/plugins?id=iconic) or
 [Iconize](https://obsidian.md/plugins?id=obsidian-icon-folder) (formerly
-Obsidian Icon Folder) show up wherever Hearth lists a file — Recent, Favorites,
+Obsidian Icon Folder) show up wherever ZeroHearth lists a file — Recent, Favorites,
 saved searches and search results. Iconize icons set through a frontmatter
 property are included.
 
-**Configured in:** *Settings → Hearth → Integrations → File icons / Iconic /
+**Configured in:** *Settings → ZeroHearth → Integrations → File icons / Iconic /
 Iconize*.
 
 Lucide icons and emoji are shown; a file using an icon from a downloaded icon
-pack keeps Hearth's own file-type icon. Turning the setting off shows Hearth's
+pack keeps ZeroHearth's own file-type icon. Turning the setting off shows ZeroHearth's
 file-type icon for every file, ignoring both plugins. Leaving it on in a vault
 with neither plugin installed changes nothing and starts working as soon as one
 is installed.
 
-If you renamed Iconize's frontmatter property, tell Hearth the new name;
+If you renamed Iconize's frontmatter property, tell ZeroHearth the new name;
 Iconize's own default is `icon`.
 
 ### Front Matter Title
 
-**What Hearth does with it:** when
+**What ZeroHearth does with it:** when
 [Front Matter Title](https://obsidian.md/plugins?id=obsidian-front-matter-title-plugin)
 shows a note in the file explorer by a title from its frontmatter, Folder cards
 and the folder browser list the note by that same title instead of its file
 name — and sort by it under the name orders. Recent files and Favorites cards
 fall back to it too, for any note whose file name they would otherwise show.
 
-**Configured in:** *Settings → Hearth → Integrations → Front Matter Title*.
+**Configured in:** *Settings → ZeroHearth → Integrations → Front Matter Title*.
 
-Hearth asks the plugin through its own API for the title its **explorer**
+ZeroHearth asks the plugin through its own API for the title its **explorer**
 feature shows, so the card follows the plugin's settings: while that feature is
 off, the explorer shows file names and so does the card. Only notes are
 retitled; folders keep their names. Turning the setting off lists
@@ -189,7 +189,7 @@ every note by its file name. Leaving it on without the plugin changes nothing.
 
 ### Excalidraw
 
-**What Hearth does with it:** Embed cards render
+**What ZeroHearth does with it:** Embed cards render
 [Excalidraw](https://github.com/zsviczian/obsidian-excalidraw-plugin) drawings
 live with native pan and zoom, and the *New drawing* action creates one through
 Excalidraw's own command.
@@ -198,25 +198,25 @@ Excalidraw's own command.
 
 ### Kanban
 
-**What Hearth does with it:** Tasks cards read and write
+**What ZeroHearth does with it:** Tasks cards read and write
 [Kanban](https://github.com/obsidian-community/obsidian-kanban) board notes in
-Kanban's own format, so a board dragged around in Hearth stays fully editable in
+Kanban's own format, so a board dragged around in ZeroHearth stays fully editable in
 Kanban.
 
 **Configured in:** the card itself.
 
 ### Vault Pet
 
-**What Hearth does with it:** the **Vault Pet** card gives
+**What ZeroHearth does with it:** the **Vault Pet** card gives
 [Vault Pet](https://github.com/elliott-json-park/obsidian-vault-pet) a place on
 the board — either the plugin's own pet card (its sprite, level bar, today's
 count and streak, clickable to pet) or its whole pet house, with quests, dex,
 badges, wardrobe and stats, hosted in the card instead of the sidebar.
 
-Both are the plugin's own surfaces: Hearth draws no pet of its own here and
+Both are the plugin's own surfaces: ZeroHearth draws no pet of its own here and
 stores nothing about yours. The pet, its XP, everything it unlocks and all of
 its settings stay in Vault Pet, and nothing here resets or duplicates them. (For
-Hearth's *own* pixel pet, which needs no plugin at all, see
+ZeroHearth's *own* pixel pet, which needs no plugin at all, see
 [chapter 9](09-cards-vault-tools-and-fun.md#the-pet-card).)
 
 **Configured in:** the card itself — plus Vault Pet's own settings for
@@ -227,16 +227,16 @@ everything about the pet.
 ## Obsidian core plugins
 
 These are built into Obsidian. Enable them in **Settings → Core plugins** if a
-Hearth card says one is missing.
+ZeroHearth card says one is missing.
 
-| Core plugin | What Hearth does with it |
+| Core plugin | What ZeroHearth does with it |
 | --- | --- |
 | **Daily notes** | The Daily note, Mini calendar and Vault statistics cards resolve today's note from Daily notes' own folder, date format and template |
 | **Bases** | Embed cards can show a `.base` view on the dashboard |
 | **Canvas** | Embed cards can show a canvas, interactive and edge to edge |
 | **Bookmarks** | The Bookmarks card lists your Obsidian bookmarks, groups and all |
 | **Search** | Hands a query over to Obsidian's own search pane when you ask for the full results |
-| **File explorer** | Powers *Reveal in file explorer* on Hearth's search results |
+| **File explorer** | Powers *Reveal in file explorer* on ZeroHearth's search results |
 | **Workspaces** | A dashboard can switch to a saved workspace when you open it |
 | **Audio recorder** | The *Record voice* mobile action button starts and stops Obsidian's own recorder |
 | **Any plugin with a side panel** | The Plugin view card hosts another plugin's registered view inside a card; a whole dashboard can also be given over to one |
@@ -246,7 +246,7 @@ Hearth card says one is missing.
 ## External services
 
 Every one of these is an outbound network request. **All of them are silenced at
-once** by *Disable external calls* under **Settings → Hearth → Behaviour →
+once** by *Disable external calls* under **Settings → ZeroHearth → Behaviour →
 Privacy & network**. See [chapter 17](17-privacy-and-network.md).
 
 | Service | Used by | Account or key needed |
@@ -260,7 +260,7 @@ Privacy & network**. See [chapter 17](17-privacy-and-network.md).
 | ICS and webcal feeds | Mini calendar subscriptions — Google, iCloud, Fastmail, Nextcloud and others | The feed URL |
 | DuckDuckGo, Brave, Kagi, Google, Mojeek, Ecosia, Qwant | The search bar's optional web-search button | None |
 | Whatever host you name | A background image or title icon given as a web address | None |
-| A dashboard gallery server | The gallery browser and publisher | An anonymous handle Hearth generates locally, needed only for voting and publishing |
+| A dashboard gallery server | The gallery browser and publisher | An anonymous handle ZeroHearth generates locally, needed only for voting and publishing |
 
 ---
 
@@ -274,16 +274,16 @@ Operon requires plugins to be approved before they may read anything.
 | | |
 | --- | --- |
 | **Platform** | Desktop only, Obsidian 1.12.2 or newer |
-| **Approval** | Hearth's request appears in **Settings → Operon → Core → General → Developer API Integrations** — approve it there. Until then the cards say exactly what they are waiting for |
+| **Approval** | ZeroHearth's request appears in **Settings → Operon → Core → General → Developer API Integrations** — approve it there. Until then the cards say exactly what they are waiting for |
 | **Widening it** | Operon grants all-or-nothing, so turning on *Allow changes* needs a fresh approval |
-| **Status and kill switch** | **Settings → Hearth → Integrations → Operon** shows the connection, what was requested, and how to cut it |
+| **Status and kill switch** | **Settings → ZeroHearth → Integrations → Operon** shows the connection, what was requested, and how to cut it |
 
 ### How the connection works
 
-*Connect to Operon* under **Settings → Hearth → Integrations → Operon** is on by
+*Connect to Operon* under **Settings → ZeroHearth → Integrations → Operon** is on by
 default, but it is inert until an Operon card exists: no session is opened, and
 so no grant is requested, until one renders. Switching it off is a kill switch —
-Operon cards stop reading and Hearth never asks Operon for access.
+Operon cards stop reading and ZeroHearth never asks Operon for access.
 
 The *Connection* row reports one of these states:
 
@@ -292,8 +292,8 @@ The *Connection* row reports one of these states:
 | Operon isn't installed or enabled | Nothing to connect to |
 | Operon's developer API is desktop-only and needs Obsidian 1.12.2 or newer | The platform does not support it |
 | Operon is running but still starting up | Wait |
-| Waiting for approval | Approve Hearth in Operon's Developer API Integrations |
-| Access is suspended | Review Hearth's pending scope in Operon's Developer API Integrations |
+| Waiting for approval | Approve ZeroHearth in Operon's Developer API Integrations |
+| Access is suspended | Review ZeroHearth's pending scope in Operon's Developer API Integrations |
 | Access was revoked | Grant it again |
 | Connected — Operon cards can read tasks | Working |
 | Not connected yet | Add an Operon card to open a session |
@@ -305,7 +305,7 @@ Operon.
 
 ### Requested access
 
-Hearth asks for all of its capabilities at once, because Operon does not open a
+ZeroHearth asks for all of its capabilities at once, because Operon does not open a
 partly approved session. The request is read-only unless *Allow changes* is on,
 which adds the task-transition and task-creation permissions. The settings
 section lists what has been requested and names anything not yet granted.
@@ -314,24 +314,24 @@ section lists what has been requested and names anything not yet granted.
 
 *Allow changes* lets the board card move a task to another status by dragging
 it, and adds a **+** for creating one. Operon decides where a new task goes and
-whether a move is legal; Hearth only asks.
+whether a move is legal; ZeroHearth only asks.
 
-Turning this on **widens what Hearth requests**, so you will need to approve
-Hearth again in Operon's Developer API Integrations. Until you do, reading keeps
-working and the cards stay read-only, and Hearth says so.
+Turning this on **widens what ZeroHearth requests**, so you will need to approve
+ZeroHearth again in Operon's Developer API Integrations. Until you do, reading keeps
+working and the cards stay read-only, and ZeroHearth says so.
 
-Off means Hearth can only read.
+Off means ZeroHearth can only read.
 
 ### How writes are handled
 
-Hearth previews the change, Operon rates it, and Operon applies it. Anything
+ZeroHearth previews the change, Operon rates it, and Operon applies it. Anything
 more than routine is confirmed with you first, using Operon's own summary of
-what would happen rather than Hearth's guess at it.
+what would happen rather than ZeroHearth's guess at it.
 
 A move carries the status the board was drawn from, so a drag onto a stale board
 is refused rather than quietly undoing someone else's change.
 
-If Operon cannot confirm whether a change was applied, Hearth reports "unknown"
+If Operon cannot confirm whether a change was applied, ZeroHearth reports "unknown"
 rather than "failed", re-reads the card, and does **not** offer a retry — a retry
 could apply the change twice.
 
@@ -342,7 +342,7 @@ See [chapter 10](10-cards-integrations.md) for the four Operon cards themselves.
 ## Integrations that need no setup at all
 
 For completeness, this is the set that simply works once the other plugin is
-enabled, with nothing to configure in Hearth: Dataview, Datacore, Excalidraw,
+enabled, with nothing to configure in ZeroHearth: Dataview, Datacore, Excalidraw,
 Kanban, Periodic Notes, Journals, Git, Bases, Canvas, Bookmarks, Daily notes,
 Search, File explorer, Workspaces, Audio recorder, and any plugin with a side
 panel.

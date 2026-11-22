@@ -9,7 +9,7 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { installObsidianDom } from "./support/obsidian-dom";
 import { DEFAULT_SETTINGS, type HomeSettings } from "../src/types";
-import type { HearthModalTab } from "../src/tabbedmodal";
+import type { ZeroHearthModalTab } from "../src/tabbedmodal";
 
 let CardSettingsModal: typeof import("../src/editors").CardSettingsModal;
 
@@ -27,9 +27,9 @@ function settings(terminal: boolean): HomeSettings {
 /** The tabs a card's dialog offers. Built without Obsidian's Modal, whose
  * constructor needs the app: the tab list reads nothing but the options. */
 function cardTabs(terminal: boolean): string[] {
-	const modal = Object.create(CardSettingsModal.prototype) as { opts: unknown; hearthTabs(): HearthModalTab[] };
+	const modal = Object.create(CardSettingsModal.prototype) as { opts: unknown; zerohearthTabs(): ZeroHearthModalTab[] };
 	modal.opts = { settings: settings(terminal) };
-	return modal.hearthTabs().map((tab) => tab.id);
+	return modal.zerohearthTabs().map((tab) => tab.id);
 }
 
 describe("card settings tabs", () => {

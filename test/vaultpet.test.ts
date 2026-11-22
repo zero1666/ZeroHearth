@@ -14,7 +14,7 @@ import type { DashboardCard } from "../src/types";
 /**
  * The Vault Pet integration. Rendering is Obsidian API and stays untested (per
  * the no-mocks rule); what is covered here is everything that decides *whether*
- * Hearth touches the plugin at all — the availability probe, the two routes
+ * ZeroHearth touches the plugin at all — the availability probe, the two routes
  * into its house, and the display a card resolves to — because each one is a
  * guard against a plugin that is missing, disabled or a version ahead.
  */
@@ -110,13 +110,13 @@ describe("vaultPetDisplay", () => {
 		expect(vaultPetDisplay(card({ display: "house" }))).toBe("house");
 	});
 
-	it("falls back to the pet for a value from a newer (or edited) Hearth", () => {
+	it("falls back to the pet for a value from a newer (or edited) ZeroHearth", () => {
 		const fromTheFuture = card({ display: "aviary" as never });
 		expect(vaultPetDisplay(fromTheFuture)).toBe("pet");
 	});
 });
 
-describe("what Hearth hands the plugin", () => {
+describe("what ZeroHearth hands the plugin", () => {
 	it("renders the plugin's own empty fenced block", () => {
 		// The processor is registered on the language and ignores the contents,
 		// so the block is exactly what its "Insert pet card" command writes.

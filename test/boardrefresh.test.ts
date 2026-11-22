@@ -86,15 +86,15 @@ describe("BoardRefreshTracker", () => {
 	});
 
 	// The bug itself (#286). "Switch to dashboard 2" then "Open home dashboard",
-	// chained by a Commander macro from a note, with Hearth open behind the note
+	// chained by a Commander macro from a note, with ZeroHearth open behind the note
 	// and already the active leaf in its group — so nothing fires the focus
 	// refresh and the reveal is the only chance to render the new board.
 	it("renders the newly switched board when a chained open reveals it", () => {
 		const t = new BoardRefreshTracker();
-		const hearth = leaf();
-		t.focus(hearth, false); // opened and looked at earlier in the session
+		const zerohearth = leaf();
+		t.focus(zerohearth, false); // opened and looked at earlier in the session
 
-		t.refresh(hearth, false); // switch-dashboard-2, board off screen
-		expect(t.reveal(hearth)).toBe(true); // open-home reveals it: render
+		t.refresh(zerohearth, false); // switch-dashboard-2, board off screen
+		expect(t.reveal(zerohearth)).toBe(true); // open-home reveals it: render
 	});
 });

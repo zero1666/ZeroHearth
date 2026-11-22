@@ -1,11 +1,11 @@
-# The Hearth gallery API
+# The ZeroHearth gallery API
 
-The wire contract between Hearth and a dashboard gallery. The client half is
+The wire contract between ZeroHearth and a dashboard gallery. The client half is
 `src/gallery/`; a working server is in [ondreu/hearth-gallery](https://github.com/ondreu/hearth-gallery), and
 [`gallery-hosting.md`](gallery-hosting.md) is how to run it.
 
 This document is the contract, not a description of that implementation. A
-different server that answers these routes the same way is a gallery Hearth can
+different server that answers these routes the same way is a gallery ZeroHearth can
 use, and that repository's `test/smoke.ts` is a conformance suite you can point
 at one.
 
@@ -14,17 +14,17 @@ at one.
 - One version prefix: everything is under `/v1`.
 - JSON in, JSON out, UTF-8, no envelope — a route's response *is* its object.
 - Errors are `{ "error": "a sentence" }` with a meaningful status. The status
-  decides how Hearth phrases it; the sentence is shown verbatim only for `422`.
-- No CORS headers, and that is deliberate. Hearth talks to a gallery through
+  decides how ZeroHearth phrases it; the sentence is shown verbatim only for `422`.
+- No CORS headers, and that is deliberate. ZeroHearth talks to a gallery through
   Obsidian's `requestUrl`, which is not a browser fetch and is not subject to
   CORS — so a gallery has no reason to open itself to arbitrary web pages, and
   every reason not to.
-- `https` only, except that Hearth accepts plain `http` on a loopback address so
+- `https` only, except that ZeroHearth accepts plain `http` on a loopback address so
   a gallery you are running locally can be tried without a certificate.
 
-### Status codes Hearth understands
+### Status codes ZeroHearth understands
 
-| Status | Means | What Hearth says |
+| Status | Means | What ZeroHearth says |
 | --- | --- | --- |
 | `400` | malformed request | a generic problem |
 | `401` / `403` | not signed in, or not yours | "didn't accept this vault's identity", and the held token is dropped |
@@ -52,7 +52,7 @@ and one phishing page then publishes as anyone, permanently.
 
 **Derive the handle; never store it.** `handleFromPublicKey(key)` is a pure
 function of the key, so a stored copy is a second truth that can be wrong.
-Servers should return it in responses for convenience, and Hearth recomputes
+Servers should return it in responses for convenience, and ZeroHearth recomputes
 nothing but does hold it to the shape the derivation produces —
 `word-word-suffix` — so a gallery that returns a name somebody typed has its
 authors dropped rather than displayed.
@@ -88,8 +88,8 @@ None of these needs a token. All of them accept one, and use it only to fill in
 
 ```jsonc
 {
-  "name": "A Hearth gallery",
-  "api": 1,                       // Hearth requires exactly 1
+  "name": "A ZeroHearth gallery",
+  "api": 1,                       // ZeroHearth requires exactly 1
   "limits": {
     "maxPackageBytes": 16777216,
     "maxNameLength": 80,
@@ -157,7 +157,7 @@ An entry's picture is a **snapshot**: the author's own screenshot of the board,
 taken at publish. A long board is scrolled through and stitched, so the picture
 is the whole of it rather than the screenful that happened to be visible.
 
-Before the shutter, Hearth replaces the text inside every card that holds
+Before the shutter, ZeroHearth replaces the text inside every card that holds
 anything personal — everything but a clock — and blurs the pictures in them. The board's chrome (its header, toolbar, switcher and each
 card's own title) stays readable, because that is the board rather than what is
 on it.
@@ -197,7 +197,7 @@ The summary, plus:
 `sourceId` is the entry's `meta.id`: which dashboard, in the author's vault,
 this entry was published from. **Send it only to the author** — the signed-in
 key that owns the entry — and leave it out for everybody else. It is what lets
-their copy of Hearth find the board behind a listing, so "update this entry"
+their copy of ZeroHearth find the board behind a listing, so "update this entry"
 can open the publish dialog on the right board instead of making a second
 listing beside it. It names something in somebody's vault, and a reader
 browsing a gallery has no use for one.
@@ -215,7 +215,7 @@ run up in a loop is not a number worth sorting by.
 The author's redacted photograph of the board, as an image. Raster types only,
 same allowlist as below. `404` when they didn't publish one.
 
-Both picture routes take an optional `?v=` — Hearth stamps a token derived from
+Both picture routes take an optional `?v=` — ZeroHearth stamps a token derived from
 the entry's `updatedAt` into it. **Cache accordingly:** a request carrying `v`
 may be answered `public, max-age=86400, immutable`, because for one version of
 an entry the bytes really are fixed; a request without one must not be, because
@@ -265,7 +265,7 @@ The pipeline, in order, and every step is a refusal rather than a repair:
 3. **`hearth.kind` must be `dashboard`.** A gallery entry is one board.
 4. **Check the strip — don't perform one.** `describeReferences()` must find
    nothing in `vaultPath`, `asset`, `privateUrl`, `privateHost` or `place`.
-   Hearth's publish path always strips before signing, so a well-behaved client
+   ZeroHearth's publish path always strips before signing, so a well-behaved client
    never sees this; a client that skipped it gets told, which is better than a
    gallery that silently launders bad uploads.
 5. **Re-check the assets.** MIME against the allowlist, *encoded* length before
@@ -312,7 +312,7 @@ Withdraws the caller's own entry. `204`.
 Mark it rather than deleting the row: an id that can be reused is an id that can
 be made to point at a different board than the one somebody installed. People
 who already installed it keep their copy — nothing about publishing is
-retractable from other people's vaults, and Hearth says so before you publish.
+retractable from other people's vaults, and ZeroHearth says so before you publish.
 
 ## Voting
 
@@ -341,7 +341,7 @@ forum.
 
 A comment body is the **only free prose in this API that somebody other than the
 board's own author wrote**. Store it as typed, serve it as typed, and never
-interpret it: Hearth renders it into a text node. Cap it on the way in — 1000
+interpret it: ZeroHearth renders it into a text node. Cap it on the way in — 1000
 characters, which is the figure both sides use — so a megabyte of it cannot be
 stored in the first place.
 
@@ -386,7 +386,7 @@ moderation is something the moderated party can undo by pressing Publish again.
 ## Rate limiting
 
 Applied per address and per key, and per address *first* — a limit that only
-counts keys is a limit anybody gets around by minting one. Answer `429`; Hearth
+counts keys is a limit anybody gets around by minting one. Answer `429`; ZeroHearth
 tells the reader to try again in a few minutes and does not retry on its own.
 
 Read `X-Forwarded-For` only when a proxy you control is in front of the server.

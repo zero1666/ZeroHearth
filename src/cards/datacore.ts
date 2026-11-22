@@ -20,14 +20,14 @@ import { type CardDefinition, type CardEditorContext } from "./definition";
 /** A card that renders a Datacore query or script through Datacore's own
  * Preact renderer, so tables, lists and cards look exactly as they do in a
  * note. Datacore is the successor to Dataview, and this card is the successor
- * to Hearth's Dataview card: same shape (a query, a language, a live result),
+ * to ZeroHearth's Dataview card: same shape (a query, a language, a live result),
  * different engine.
  *
  * Depends on the Datacore community plugin — the "Add card" picker only offers
  * this card when Datacore is installed, and the card shows a friendly prompt if
  * Datacore is later disabled. Datacore attaches its own render child to
  * `component` and its hooks subscribe to the index, so results update live as
- * the vault changes without Hearth re-running anything. */
+ * the vault changes without ZeroHearth re-running anything. */
 export function renderDatacore(
 	view: CardHost,
 	card: DashboardCard,
@@ -61,7 +61,7 @@ export function renderDatacore(
 		source = datacoreQueryScript(query, cfg.pageSize);
 	}
 
-	const host = body.createDiv("hearth-datacore");
+	const host = body.createDiv("zerohearth-datacore");
 	try {
 		runDatacoreScript(
 			api,
@@ -82,7 +82,7 @@ export function renderDatacore(
 	}
 	// Datacore renders internal links as anchors; wire them up so they open like
 	// links elsewhere on the dashboard. Captured, because Datacore's own `dc.Link`
-	// carries a click handler that opens the note in the active tab — the Hearth
+	// carries a click handler that opens the note in the active tab — the ZeroHearth
 	// tab — so it has to be intercepted before it runs rather than after (#106).
 	wireMarkdownLinks(view, host, origin, { capture: true });
 }
@@ -98,11 +98,11 @@ export function renderDatacore(
  * noise, which is exactly the moment a user most needs to read it.
  */
 function datacoreError(body: HTMLElement, title: string, detail: string): void {
-	const wrap = body.createDiv("hearth-datacore-error");
-	const head = wrap.createDiv("hearth-datacore-error-head");
-	setIcon(head.createSpan("hearth-datacore-error-icon"), "alert-triangle");
-	head.createSpan({ cls: "hearth-datacore-error-title", text: title });
-	wrap.createEl("pre", { cls: "hearth-datacore-error-detail", text: detail });
+	const wrap = body.createDiv("zerohearth-datacore-error");
+	const head = wrap.createDiv("zerohearth-datacore-error-head");
+	setIcon(head.createSpan("zerohearth-datacore-error-icon"), "alert-triangle");
+	head.createSpan({ cls: "zerohearth-datacore-error-title", text: title });
+	wrap.createEl("pre", { cls: "zerohearth-datacore-error-detail", text: detail });
 }
 
 /** The headline for a query that didn't parse. One that spans lines gets a more
@@ -163,11 +163,11 @@ export function datacoreEditor(ctx: CardEditorContext, containerEl: HTMLElement)
 				ctx.opts.save();
 			});
 		txt.inputEl.rows = 6;
-		txt.inputEl.addClass("hearth-datacore-input");
+		txt.inputEl.addClass("zerohearth-datacore-input");
 	});
-	query.settingEl.addClass("hearth-setting-stacked");
+	query.settingEl.addClass("zerohearth-setting-stacked");
 
-	// Paging only applies to the list Hearth generates for a query; a script
+	// Paging only applies to the list ZeroHearth generates for a query; a script
 	// draws its own view and decides its own paging.
 	if (!isQuery) return;
 	const paging = new Setting(containerEl)

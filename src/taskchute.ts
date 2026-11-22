@@ -1,11 +1,11 @@
 /**
- * Everything Hearth knows about TaskChute Plus.
+ * Everything ZeroHearth knows about TaskChute Plus.
  *
  * Two very different sources, deliberately kept in one module:
  *
  * 1. **The plugin's live model** (`taskChuteSession`). TaskChute exposes its
  *    day view's model and its execution services publicly on the view instance
- *    — `taskInstances`, `startInstance`, `stopInstance` — so Hearth can start
+ *    — `taskInstances`, `startInstance`, `stopInstance` — so ZeroHearth can start
  *    and stop a task through the plugin that owns the timer, the log, the
  *    heatmap and the reminders instead of writing any of that itself. A hidden
  *    detached leaf keeps one such session alive while a TaskChute card is on a
@@ -58,7 +58,7 @@ export interface TaskChuteInstance {
 	order?: number | null;
 }
 
-/** The slice of `TaskChuteView` Hearth drives. Structural, so a plugin update
+/** The slice of `TaskChuteView` ZeroHearth drives. Structural, so a plugin update
  * that keeps these members working keeps the card working; a missing member is
  * detected before anything is drawn. The optional services are the card's
  * create/organise actions: each is offered only while the plugin exposes it. */
@@ -485,7 +485,7 @@ export async function taskChuteSession(app: App): Promise<TaskChuteView | null> 
 	if (sessionUnavailable) return null;
 	if (!isTaskChuteAvailable(app)) return null;
 	try {
-		const container = document.body.createDiv("hearth-taskchute-session");
+		const container = document.body.createDiv("zerohearth-taskchute-session");
 		const LeafCtor = WorkspaceLeaf as unknown as { new (app: App): WorkspaceLeaf };
 		const leaf = new LeafCtor(app);
 		container.appendChild(leaf.containerEl);
@@ -498,7 +498,7 @@ export async function taskChuteSession(app: App): Promise<TaskChuteView | null> 
 		return view;
 	} catch (error) {
 		sessionUnavailable = true;
-		console.warn("[Hearth] TaskChute session unavailable", error);
+		console.warn("[ZeroHearth] TaskChute session unavailable", error);
 		return null;
 	}
 }
@@ -548,7 +548,7 @@ export async function setTaskChuteDay(app: App, date: Date): Promise<boolean> {
 		sessionDay = day;
 		return true;
 	} catch (error) {
-		console.warn("[Hearth] TaskChute could not switch day", error);
+		console.warn("[ZeroHearth] TaskChute could not switch day", error);
 		return false;
 	}
 }
@@ -559,7 +559,7 @@ export async function shiftTaskChuteDay(app: App, days: number): Promise<boolean
 	return setTaskChuteDay(app, new Date(base.getFullYear(), base.getMonth(), base.getDate() + days));
 }
 
-/** Drop the hidden view. Called when Hearth unloads, so an unloaded Hearth does
+/** Drop the hidden view. Called when ZeroHearth unloads, so an unloaded ZeroHearth does
  * not leave another plugin's whole view (and its timers) running. */
 export function disposeTaskChuteSession(): void {
 	disposeSession();

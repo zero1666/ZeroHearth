@@ -15,7 +15,7 @@ import {
 } from "../src/types";
 
 /**
- * A single-card board — a dashboard whose whole board is one of its own Hearth
+ * A single-card board — a dashboard whose whole board is one of its own ZeroHearth
  * cards, drawn at full size.
  *
  * What is pinned down here is which card that is, what the board renders, and

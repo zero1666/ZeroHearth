@@ -7,12 +7,12 @@ import { DEFAULT_SETTINGS, retuneBackground } from "../src/types";
  * between the two families moves them once; the sliders do the rest.
  */
 describe("retuneBackground", () => {
-	it("starts Hearth's own wallpaper unblurred and barely dimmed", () => {
+	it("starts ZeroHearth's own wallpaper unblurred and barely dimmed", () => {
 		expect(DEFAULT_SETTINGS.backgroundOpacity).toBe(0.8);
 		expect(DEFAULT_SETTINGS.backgroundBlur).toBe(0);
 	});
 
-	it("tunes the harbour town as it tunes Hearth's own wallpaper", () => {
+	it("tunes the harbour town as it tunes ZeroHearth's own wallpaper", () => {
 		expect(retuneBackground("image", "harbour", { opacity: 0.35, blur: 2 })).toEqual({
 			opacity: 0.8,
 			blur: 0,

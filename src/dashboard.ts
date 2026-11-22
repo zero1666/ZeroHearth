@@ -125,7 +125,7 @@ export function renderDashboard(
 	// switcher row instead, as a plugin board's do.
 	if (!single) renderToolbar(view, container);
 
-	const grid = container.createDiv("hearth-grid");
+	const grid = container.createDiv("zerohearth-grid");
 	grid.toggleClass("is-single", single);
 	grid.toggleClass("is-arranging", view.arrangeMode);
 	grid.toggleClass("is-stacked", stacked);
@@ -134,7 +134,7 @@ export function renderDashboard(
 	// Board-wide corner radius (px). Every card reads this via CSS; the frost
 	// mask in grid.ts reads the resolved value back off the grid so its rounding
 	// matches. Merged-edge corners still flatten to 0 regardless (see styles.css).
-	grid.style.setProperty("--hearth-card-radius", `${effectiveCardRadius(s)}px`);
+	grid.style.setProperty("--zerohearth-card-radius", `${effectiveCardRadius(s)}px`);
 	grid.style.setProperty("--card-border-width", `${effectiveCardBorderWidth(s)}px`);
 	// Fit-to-page locks the board to one screen, which a stacked board — a list
 	// that is meant to run past the bottom — cannot be; the view drops the class
@@ -195,7 +195,7 @@ export function renderDashboard(
 		// arranging it back into view must not be the thing that runs it.
 		const hidden = arrangingStack && card.mobile?.hidden === true;
 
-		const el = grid.createDiv("hearth-card");
+		const el = grid.createDiv("zerohearth-card");
 		el.toggleClass("is-mobile-hidden", hidden);
 		// The drag engine and the fitted layout place one element per card. A
 		// split card's further parts only ever appear in the stacked column,
@@ -205,7 +205,7 @@ export function renderDashboard(
 		// as the stacked layout says — bar a collapsed one, which is as tall as
 		// its own header until it is opened. Everywhere else they are placed
 		// absolutely from their stored geometry.
-		// A single card fills the whole board (`.hearth-grid.is-single` in
+		// A single card fills the whole board (`.zerohearth-grid.is-single` in
 		// styles.css) and takes none of these: any inline size would override it.
 		if (!single) {
 			if (!stacked) applyCardPosition(el, card);
@@ -254,7 +254,7 @@ export function renderDashboard(
 			// or menu opened from the card takes the card's design (src/uidesign.ts).
 			stateDesign(el, design);
 			// Cards whose resolved blur is > 0 feed the shared frost layer (see
-			// updateFrostLayers / the .hearth-frost note in styles.css). The value is
+			// updateFrostLayers / the .zerohearth-frost note in styles.css). The value is
 			// stashed on the element so the frost rebuild can group cards by blur
 			// without re-reading settings, and blur-off cards never enter a layer.
 			// A seamless card paints no surface of its own, so frosting the wallpaper
@@ -270,7 +270,7 @@ export function renderDashboard(
 		const firstShown = part ?? activeViewCard(card);
 		dress(firstShown);
 
-		const head = el.createDiv("hearth-card-head");
+		const head = el.createDiv("zerohearth-card-head");
 		// A split part is headed by its view's label: the column shows them one
 		// under another, and the card's one title over each would say nothing.
 		const heading = part ? viewIdentity(view, part).label : (card.title ?? "");
@@ -279,7 +279,7 @@ export function renderDashboard(
 			renderCardControls(view, card, head, commit, stacked ? cards : null);
 		} else {
 			head.toggleClass("is-untitled", !named);
-			const titleEl = head.createDiv({ cls: "hearth-card-title", text: heading });
+			const titleEl = head.createDiv({ cls: "zerohearth-card-title", text: heading });
 			// An untitled card is headerless on a normal board, so collapsing one
 			// would leave a blank bar with nothing to tap and nothing to read.
 			// Fall back to the card kind's own name — "Tasks", "Calendar".
@@ -289,7 +289,7 @@ export function renderDashboard(
 			}
 		}
 
-		const body = el.createDiv("hearth-card-body");
+		const body = el.createDiv("zerohearth-card-body");
 		if (card.background) body.addClass("has-bg");
 
 		// A hidden card names its kind and stops there: nothing is mounted, so
@@ -372,7 +372,7 @@ export function renderDashboard(
 			// column that has to be scrolled with a finger would make the board
 			// unscrollable. This one lets a vertical scroll through and swallows
 			// everything else.
-			el.createDiv("hearth-card-shield");
+			el.createDiv("zerohearth-card-shield");
 			if (!collapsed) enableStackedResize(el, card, component, () => persistAndRender(view));
 		}
 	};
@@ -522,7 +522,7 @@ export function mountCardBody(
 			// fallback for an unknown kind, one level down: contain the failure
 			// to the one card and say so on its face, with the real error on the
 			// console for a bug report.
-			console.error(`Hearth: the ${card.kind} card failed to render`, err);
+			console.error(`ZeroHearth: the ${card.kind} card failed to render`, err);
 			// Clear whatever the half-finished render left behind — its marks on
 			// the body included — so the failure notice draws in a plain card.
 			resetCardBody(body, baseClasses);
@@ -641,7 +641,7 @@ function enableCollapseToggle(
 	mount: () => void,
 ): void {
 	const chevron = head.createEl("button", {
-		cls: "hearth-card-expand",
+		cls: "zerohearth-card-expand",
 		attr: {
 			"aria-label": t().dashboard.expandCard,
 			"aria-expanded": "false",
@@ -696,7 +696,7 @@ function renderCardControls(
 	head.addClass("is-editing");
 
 	const title = head.createEl("input", {
-		cls: "hearth-card-title-input",
+		cls: "zerohearth-card-title-input",
 		attr: { type: "text", placeholder: "Title", spellcheck: "false" },
 	});
 	title.value = card.title ?? "";
@@ -708,7 +708,7 @@ function renderCardControls(
 	title.addEventListener("change", commit);
 	title.addEventListener("blur", commit);
 
-	const actions = head.createDiv("hearth-card-actions");
+	const actions = head.createDiv("zerohearth-card-actions");
 
 	// A stacked board has no free geometry to drag, so its one layout question
 	// — what comes before what — is answered here instead. The buttons write
@@ -726,7 +726,7 @@ function renderCardControls(
 			[1, "arrow-down", t().dashboard.moveCardDown],
 		] as const) {
 			const btn = actions.createEl("button", {
-				cls: "hearth-card-action",
+				cls: "zerohearth-card-action",
 				attr: { "aria-label": label, type: "button" },
 			});
 			setIcon(btn, icon);
@@ -741,7 +741,7 @@ function renderCardControls(
 		// this button on it, so hiding is reversible from the phone that did it.
 		const hidden = card.mobile?.hidden === true;
 		const vis = actions.createEl("button", {
-			cls: "hearth-card-action",
+			cls: "zerohearth-card-action",
 			attr: {
 				"aria-label": hidden ? t().dashboard.showOnNarrow : t().dashboard.hideOnNarrow,
 				"aria-pressed": String(hidden),
@@ -762,7 +762,7 @@ function renderCardControls(
 		const views = cardViews(card);
 		const next = views[stepViewIndex(card, 1)];
 		const cycle = actions.createEl("button", {
-			cls: "hearth-card-action",
+			cls: "zerohearth-card-action",
 			attr: { "aria-label": t().views.nextViewAria(viewIdentity(view, next).label), type: "button" },
 		});
 		setIcon(cycle, "layers");
@@ -774,7 +774,7 @@ function renderCardControls(
 	}
 
 	const settingsBtn = actions.createEl("button", {
-		cls: "hearth-card-action",
+		cls: "zerohearth-card-action",
 		attr: { "aria-label": t().dashboard.cardSettings },
 	});
 	setIcon(settingsBtn, "settings-2");
@@ -782,7 +782,7 @@ function renderCardControls(
 	settingsBtn.addEventListener("click", () => openCardSettings(view, card));
 
 	const remove = actions.createEl("button", {
-		cls: "hearth-card-action is-danger",
+		cls: "zerohearth-card-action is-danger",
 		attr: { "aria-label": t().dashboard.removeCard },
 	});
 	setIcon(remove, "trash-2");
@@ -880,7 +880,7 @@ export function openCardSettings(view: BoardHost, card: DashboardCard): void {
 		},
 		addNewView: (onAdded) => {
 			openCardPicker(view.app, {
-				hearthVersion: view.plugin.manifest.version,
+				zerohearthVersion: view.plugin.manifest.version,
 				onChoose: (template) => {
 					const index = addViewFromTemplate(card, template);
 					setActiveViewIndex(card, index);
@@ -927,7 +927,7 @@ function addViewFromTemplate(card: DashboardCard, template: CardTemplateDef): nu
  * gallery entry is offered only where the caller has room for it. */
 export function openAddCard(view: BoardHost, withGallery: boolean, onAdded?: (card: DashboardCard) => void): void {
 	openCardPicker(view.app, {
-		hearthVersion: view.plugin.manifest.version,
+		zerohearthVersion: view.plugin.manifest.version,
 		onGallery: withGallery && galleryConfigured(view.plugin) ? () => openGallery(view.plugin) : undefined,
 		onChoose: (template) => {
 			const s = view.plugin.settings;
@@ -964,27 +964,27 @@ export function confirmRemoveCard(view: BoardHost, card: DashboardCard): void {
 }
 
 function renderToolbar(view: BoardHost, container: HTMLElement): void {
-	const bar = container.createDiv("hearth-toolbar");
+	const bar = container.createDiv("zerohearth-toolbar");
 	// Track arrange mode so the toolbar can switch between its compact and full controls.
 	bar.toggleClass("is-arranging", view.arrangeMode);
 
 	if (view.arrangeMode) {
-		const add = bar.createEl("button", { cls: "hearth-tool-btn" });
-		setIcon(add.createSpan("hearth-tool-icon"), "plus");
-		add.createSpan({ cls: "hearth-tool-label", text: t().dashboard.addCard });
+		const add = bar.createEl("button", { cls: "zerohearth-tool-btn" });
+		setIcon(add.createSpan("zerohearth-tool-icon"), "plus");
+		add.createSpan({ cls: "zerohearth-tool-label", text: t().dashboard.addCard });
 		add.setAttribute("aria-label", t().dashboard.addCardAria);
 		add.addEventListener("click", () => openAddCard(view, true));
 
 		// Beside "Add card", because they are the same question at two scales:
 		// one card you place yourself, or a whole board somebody has already
-		// arranged. Only shown when a gallery is configured — Hearth ships
+		// arranged. Only shown when a gallery is configured — ZeroHearth ships
 		// pointing at none, and a button that only ever says "no gallery is set
 		// up" is a button that has never done anything.
 		if (galleryConfigured(view.plugin)) {
-			const gallery = bar.createEl("button", { cls: "hearth-tool-btn" });
-			setIcon(gallery.createSpan("hearth-tool-icon"), "layout-template");
+			const gallery = bar.createEl("button", { cls: "zerohearth-tool-btn" });
+			setIcon(gallery.createSpan("zerohearth-tool-icon"), "layout-template");
 			gallery.createSpan({
-				cls: "hearth-tool-label",
+				cls: "zerohearth-tool-label",
 				text: t().gallery.browse.openLabel,
 			});
 			gallery.setAttribute("aria-label", t().gallery.browse.openAria);
@@ -993,10 +993,10 @@ function renderToolbar(view: BoardHost, container: HTMLElement): void {
 
 		// Same editor the dashboard switcher's right-click menu opens, surfaced
 		// here so arrange mode is a self-contained way to configure the board.
-		const dashSettings = bar.createEl("button", { cls: "hearth-tool-btn" });
-		setIcon(dashSettings.createSpan("hearth-tool-icon"), "settings-2");
+		const dashSettings = bar.createEl("button", { cls: "zerohearth-tool-btn" });
+		setIcon(dashSettings.createSpan("zerohearth-tool-icon"), "settings-2");
 		dashSettings.createSpan({
-			cls: "hearth-tool-label",
+			cls: "zerohearth-tool-label",
 			text: t().dashboard.dashboardSettings,
 		});
 		dashSettings.setAttribute("aria-label", t().dashboard.dashboardSettingsAria);
@@ -1007,14 +1007,14 @@ function renderToolbar(view: BoardHost, container: HTMLElement): void {
 		// Toggle the per-card headers (title input + actions) off so each
 		// card's full body is visible while arranging. Only available while
 		// arranging; the headers come back automatically when arranging ends.
-		const hideHdr = bar.createEl("button", { cls: "hearth-tool-btn" });
+		const hideHdr = bar.createEl("button", { cls: "zerohearth-tool-btn" });
 		hideHdr.toggleClass("is-active", view.hideHeaderInArrange);
 		setIcon(
-			hideHdr.createSpan("hearth-tool-icon"),
+			hideHdr.createSpan("zerohearth-tool-icon"),
 			view.hideHeaderInArrange ? "eye-off" : "eye",
 		);
 		hideHdr.createSpan({
-			cls: "hearth-tool-label",
+			cls: "zerohearth-tool-label",
 			text: view.hideHeaderInArrange
 				? t().dashboard.showTitles
 				: t().dashboard.hideTitles,
@@ -1031,7 +1031,7 @@ function renderToolbar(view: BoardHost, container: HTMLElement): void {
 		});
 
 		// Constrain the board to phone width so the narrow layout can be built
-		// and checked from the desk it is being built at. Hearth's narrow layout
+		// and checked from the desk it is being built at. ZeroHearth's narrow layout
 		// is chosen by measured width rather than by platform precisely so this
 		// is possible: the preview is not a simulation of the phone layout, it is
 		// the phone layout, at the width that triggers it.
@@ -1039,11 +1039,11 @@ function renderToolbar(view: BoardHost, container: HTMLElement): void {
 		// Not offered on a board already narrow enough to be stacked, where
 		// clamping the width further would preview nothing new.
 		if (!view.isNarrow() || view.phonePreview) {
-			const phone = bar.createEl("button", { cls: "hearth-tool-btn" });
+			const phone = bar.createEl("button", { cls: "zerohearth-tool-btn" });
 			phone.toggleClass("is-active", view.phonePreview);
-			setIcon(phone.createSpan("hearth-tool-icon"), "smartphone");
+			setIcon(phone.createSpan("zerohearth-tool-icon"), "smartphone");
 			phone.createSpan({
-				cls: "hearth-tool-label",
+				cls: "zerohearth-tool-label",
 				text: view.phonePreview
 					? t().dashboard.phonePreviewOff
 					: t().dashboard.phonePreview,
@@ -1062,24 +1062,24 @@ function renderToolbar(view: BoardHost, container: HTMLElement): void {
 		}
 	}
 
-	const arrangeZone = bar.createDiv("hearth-arrange-zone");
+	const arrangeZone = bar.createDiv("zerohearth-arrange-zone");
 	arrangeZone.toggleClass(
 		"is-auto-hide",
 		!view.arrangeMode &&
 			effectiveArrangeButtonVisibility(view.plugin.settings) === "hover",
 	);
-	const arrange = arrangeZone.createEl("button", { cls: "hearth-tool-btn" });
+	const arrange = arrangeZone.createEl("button", { cls: "zerohearth-tool-btn" });
 	arrange.toggleClass("is-active", view.arrangeMode);
 	// Outside arrange mode keep it as a small, unobtrusive icon button; while
 	// arranging, show the labelled "Done arranging" action.
 	arrange.toggleClass("is-icon", !view.arrangeMode);
 	setIcon(
-		arrange.createSpan("hearth-tool-icon"),
+		arrange.createSpan("zerohearth-tool-icon"),
 		view.arrangeMode ? "check" : "move",
 	);
 	if (view.arrangeMode) {
 		arrange.createSpan({
-			cls: "hearth-tool-label",
+			cls: "zerohearth-tool-label",
 			text: t().dashboard.doneArranging,
 		});
 	}

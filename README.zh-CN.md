@@ -1,15 +1,14 @@
-# Hearth — Obsidian 的主屏幕
+# ZeroHearth — Obsidian 的主屏幕
 
 [English](README.md) · **简体中文**
 
-[![Build](https://img.shields.io/github/actions/workflow/status/ondreu/Hearth/ci.yml?branch=main&label=build)](https://github.com/ondreu/Hearth/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/ondreu/Hearth?sort=semver)](https://github.com/ondreu/Hearth/releases/latest)
-[![Downloads](https://img.shields.io/badge/dynamic/json?logo=obsidian&color=%23483699&url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24.hearth.downloads&label=downloads)](https://obsidian.md/plugins?id=hearth)
-[![License](https://img.shields.io/github/license/ondreu/Hearth)](LICENSE)
+[![Build](https://img.shields.io/github/actions/workflow/status/zero1666/ZeroHearth/ci.yml?branch=main&label=build)](https://github.com/zero1666/ZeroHearth/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/zero1666/ZeroHearth?sort=semver)](https://github.com/zero1666/ZeroHearth/releases/latest)
+[![License](https://img.shields.io/github/license/zero1666/ZeroHearth)](LICENSE)
 
-![Hearth — 可自定义的 Obsidian 面板、搜索与启动器](assets/Header.png)
+![ZeroHearth — 可自定义的 Obsidian 面板、搜索与启动器](assets/Header.png)
 
-**Hearth 把您的 Obsidian 仓库变成一个温暖的首页。** 一个快速的模糊搜索栏、
+**ZeroHearth 把您的 Obsidian 仓库变成一个温暖的首页。** 一个快速的模糊搜索栏、
 便捷的文件类型筛选，以及一片可自由排布的实时小组件网格 —— 笔记、任务、看板、
 日历、网页、统计、时钟和启动器 —— 桌面端和移动端皆可使用。
 
@@ -27,6 +26,8 @@
 
 ## 截图
 
+以下上游 Hearth 截图展示了 ZeroHearth 继承的布局。
+
 | | |
 | --- | --- |
 | ![完整面板](assets/Full_Dash.png) | ![纯搜索启动器](assets/Just_search.png) |
@@ -41,47 +42,47 @@
 | ![Expressive 设计，绿色强调色](assets/M3_Green.png) | ![Expressive 设计，紫色强调色](assets/M3_Purple.png) |
 | ![Expressive 设计，红色强调色](assets/M3_Red.png) | ![Expressive 设计，青绿色强调色](assets/M3_Torq.png) |
 
-<img src="assets/phone.png" width="280" alt="移动端上的 Hearth" />
+<img src="assets/phone.png" width="280" alt="移动端上的 ZeroHearth" />
 
 ## 目录
 
 [快速开始](#快速开始) · [设置向导](#设置向导) ·
 [搜索](#搜索) · [卡片](#卡片) · [集成](#集成) ·
 [布局](#布局) · [外观](#外观) · [移动端](#移动端) ·
-[设置与快捷键](#设置与快捷键) · [开发](#开发) ·
-[参与贡献](#参与贡献)
+[设置与快捷键](#设置与快捷键) · [开发](#开发)
 
 ## 快速开始
 
-1. 从 Obsidian 的社区插件浏览器安装 **Hearth** —— 或者把 `main.js`、
-   `manifest.json` 和 `styles.css` 放进
-   `<vault>/.obsidian/plugins/hearth/` 并启用它。
-2. Hearth 会在启动时打开，并替换空白的新标签页（两者都可在
-   **设置 → Hearth** 中切换）。
+1. 从 [ZeroHearth 发布页](https://github.com/zero1666/ZeroHearth/releases)下载
+   `main.js`、`manifest.json` 和 `styles.css`，或[从源码构建](docs/user-guide/02-getting-started.md#build-from-source)。
+   把三个文件放入 `<vault>/.obsidian/plugins/zerohearth/`，然后在
+   **设置 → 社区插件**中启用 **ZeroHearth**。
+2. ZeroHearth 会在启动时打开，并替换空白的新标签页（两者都可在
+   **设置 → ZeroHearth** 中切换）。
 3. 随时可以通过侧边栏的 **home** 图标或 **打开主控面板** 命令打开它。
 4. 点击 **排列**（右上角），即可直接在面板上添加、移动、缩放和配置卡片。
 
 ## 设置向导
 
-全新安装时，Hearth 会主动为您搭建第一个面板。它会问几个问题 —— 标题、外观、
+全新安装时，ZeroHearth 会主动为您搭建第一个面板。它会问几个问题 —— 标题、外观、
 您用仓库做什么 —— 然后根据答案排布出一个面板，而不是把您丢在一片通用的起始网格上。
 
 它还会**看看您已经有什么**。下面每个已安装并启用的插件都会被提出，
 并说明接受它会带来的那一件事：
 
-| 已发现 | Hearth 会怎么用它 |
+| 已发现 | ZeroHearth 会怎么用它 |
 | --- | --- |
 | **TaskNotes** | 添加一张以 TaskNotes 为来源的任务卡片，使用 TaskNotes *自己的*字段名和完成状态 |
 | **Kanban** | 添加一张任务卡片，把看板显示为可拖动的列 |
 | **Dataview** / **Datacore** | 添加一张卡片，并预置一条可编辑的查询 |
 | **Templater** | 添加一个启动台，为您已有的每个模板配一个按钮 |
 | **Git** | 添加一张带状态、提交和同步的 Git 卡片 |
-| **Operon** | 添加一张 Operon 任务卡片（仅桌面端 —— Operon 仍会要求您批准 Hearth） |
+| **Operon** | 添加一张 Operon 任务卡片（仅桌面端 —— Operon 仍会要求您批准 ZeroHearth） |
 | **Bases** | 嵌入仓库中的一个 base |
 | **日记** / **书签** | 添加对应的卡片 |
 
 TaskNotes 这一项值得特别一提：它的字段名可由用户重映射、状态可由用户自定义，
-因此 Hearth 会从该插件读取这些设置并复制到它搭建的卡片上。
+因此 ZeroHearth 会从该插件读取这些设置并复制到它搭建的卡片上。
 即使您把 `due` 改名为 `deadline`，任务卡片在首次渲染时也能正常工作。
 
 向导只提供上面这些集成；[集成](#集成)中的其他一切都通过 **添加卡片**
@@ -91,13 +92,13 @@ TaskNotes 这一项值得特别一提：它的字段名可由用户重映射、�
 都会作为*按面板的覆盖设置*落在那一个面板上，而 TaskNotes 的字段映射则落在
 任务卡片本身 —— 因此您的仓库全局设置，以及您已有的其他每个面板，
 在一次设置运行前后完全一致。这也是它不再询问那些只能全局生效的事项的原因
-（Hearth 是否在启动时打开、笔记在哪里打开、使用哪个搜索引擎、显示谁的文件图标）：
-这些都在 **设置 → Hearth** 中，每项一个开关，按设计对所有内容生效。
+（ZeroHearth 是否在启动时打开、笔记在哪里打开、使用哪个搜索引擎、显示谁的文件图标）：
+这些都在 **设置 → ZeroHearth** 中，每项一个开关，按设计对所有内容生效。
 
 最后一步会在写入任何内容之前预览面板 —— 一张按比例的示意图，加上每张卡片
 及其入选理由的列表。在您按下 **搭建我的面板** 之前，什么都不会被应用。
 
-您随时可以从 **设置 → Hearth → 关于 → 搭建一个面板** 或 **设置 Hearth**
+您随时可以从 **设置 → ZeroHearth → 关于 → 搭建一个面板** 或 **设置 ZeroHearth**
 命令再次运行它。以这种方式运行时它*总是*添加一个新面板：
 您已有的每个面板都保持原样。
 
@@ -150,7 +151,7 @@ TaskNotes 这一项值得特别一提：它的字段名可由用户重映射、�
 | **嵌入 base** | 一个 `.base` 文件，由 Obsidian 的 Bases 渲染 | Bases（核心） |
 | **最近文件** | 您最近打开的文件 | — |
 | **文件夹** | 文件夹下一层的内容，按文件管理器自身的顺序排列；并可打开浏览页：带面包屑导航、每个子文件夹展开一层，页面上的任意文件夹都可继续进入 | — |
-| **收藏** | 您在 Hearth 中标星的笔记 | — |
+| **收藏** | 您在 ZeroHearth 中标星的笔记 | — |
 | **书签** | 您的 Obsidian 书签，带站点图标 | 书签（核心） |
 
 ### 计划
@@ -225,7 +226,7 @@ Templater 卡片能做到 Templater 自己的按模板命令做不到的事：�
 
 Git 和 Operon 都是*通过*另一个插件工作，而不是绕过它：Git 提交会走 Git 插件
 自己的任务队列，因此您的远端、凭据和提交信息模板都原样适用，
-而 Hearth 从不解析 Operon 的笔记。它的设置见 [Operon](#operon)，
+而 ZeroHearth 从不解析 Operon 的笔记。它的设置见 [Operon](#operon)，
 那也是唯一需要您动手一步的集成。
 
 ### 趣味
@@ -241,12 +242,12 @@ Git 和 Operon 都是*通过*另一个插件工作，而不是绕过它：Git �
 
 ## 集成
 
-Hearth 会自行识别这些插件 —— 无需连接，也不用粘贴任何密钥。完整列表，
-连同实时状态和各自设置所在的位置，都在 **设置 → Hearth → 集成** 下。
+ZeroHearth 会自行识别这些插件 —— 无需连接，也不用粘贴任何密钥。完整列表，
+连同实时状态和各自设置所在的位置，都在 **设置 → ZeroHearth → 集成** 下。
 
 **社区插件**
 
-| 插件 | Hearth 会怎么用它 | 配置位置 |
+| 插件 | ZeroHearth 会怎么用它 | 配置位置 |
 | --- | --- | --- |
 | [Omnisearch](https://github.com/scambier/obsidian-omnisearch) | 成为搜索栏背后的引擎 | 搜索标签页 |
 | [TaskNotes](https://obsidian.md/plugins?id=tasknotes) | 任务卡片读取“一任务一笔记”的仓库 —— 状态、到期日和优先级来自 frontmatter，使用 TaskNotes 自己的字段名 | 集成标签页 |
@@ -256,7 +257,7 @@ Hearth 会自行识别这些插件 —— 无需连接，也不用粘贴任何�
 | [Periodic Notes](https://github.com/liamcain/obsidian-periodic-notes) | 周期笔记卡片：本周、本月、本季度或本年的笔记，由该插件自己定位并创建 | 卡片本身 |
 | [Git](https://github.com/Vinzent03/obsidian-git) | Git 卡片，通过该插件自己的任务队列执行 | 卡片本身 |
 | [Operon](https://github.com/hasanyilmaz/operon) | 基于 Operon 开发者 API 的四张卡片 —— [详情见下](#operon) | 集成标签页 |
-| [Iconic](https://obsidian.md/plugins?id=iconic) / [Iconize](https://obsidian.md/plugins?id=obsidian-icon-folder) | 您的按文件图标会出现在 Hearth 列出文件的任何位置 | 集成标签页 |
+| [Iconic](https://obsidian.md/plugins?id=iconic) / [Iconize](https://obsidian.md/plugins?id=obsidian-icon-folder) | 您的按文件图标会出现在 ZeroHearth 列出文件的任何位置 | 集成标签页 |
 | [Front Matter Title](https://obsidian.md/plugins?id=obsidian-front-matter-title-plugin) | 文件夹卡片按文件列表中显示的标题列出笔记 | 集成标签页 |
 | [Excalidraw](https://github.com/zsviczian/obsidian-excalidraw-plugin) | 绘图在嵌入卡片中实时渲染；“新建绘图”会运行它的命令 | 卡片本身 |
 | [Kanban](https://github.com/obsidian-community/obsidian-kanban) | 任务卡片以它自己的格式读写其看板笔记 | 卡片本身 |
@@ -264,7 +265,7 @@ Hearth 会自行识别这些插件 —— 无需连接，也不用粘贴任何�
 
 **Obsidian 核心插件**
 
-| 核心插件 | Hearth 会怎么用它 |
+| 核心插件 | ZeroHearth 会怎么用它 |
 | --- | --- |
 | **日记** | 日记、迷你日历和仓库统计会依据它的文件夹、格式和模板定位今天的笔记 |
 | **Bases** | 嵌入卡片可显示 `.base` 视图 |
@@ -297,21 +298,21 @@ Hearth 会自行识别这些插件 —— 无需连接，也不用粘贴任何�
 点击任务会在准确的行上打开它的笔记。
 
 **读取是默认，更改是选择。** 开启 *允许更改*
-（**设置 → Hearth → 集成 → Operon**），看板卡片就允许您把任务拖到另一个状态列 ——
+（**设置 → ZeroHearth → 集成 → Operon**），看板卡片就允许您把任务拖到另一个状态列 ——
 或者从该行的右键菜单中选择，因此无需鼠标也能操作 —— 并且每张卡片都会多出一个
-**+**，用于在 Operon 自己设置指定的位置创建任务。Hearth 预览更改，
+**+**，用于在 Operon 自己设置指定的位置创建任务。ZeroHearth 预览更改，
 Operon 评定并应用它，任何超出常规的操作都会先与您确认。一次移动会带上看板绘制时
 的状态，因此在过期看板上的拖动会被拒绝，而不是悄悄撤销他人的更改。
-把开关保持关闭，Hearth 就只能读取。
+把开关保持关闭，ZeroHearth 就只能读取。
 
 在添加之前：
 
 | | |
 | --- | --- |
 | **平台** | 仅桌面端，Obsidian 1.12.2 或更新版本 |
-| **批准** | Hearth 的请求会出现在 **设置 → Operon → Core → General → Developer API Integrations** 中 —— 请在那里批准。在此之前卡片会说明它在等什么 |
+| **批准** | ZeroHearth 的请求会出现在 **设置 → Operon → Core → General → Developer API Integrations** 中 —— 请在那里批准。在此之前卡片会说明它在等什么 |
 | **扩大权限** | Operon 采用全有或全无的授予方式，因此开启 *允许更改* 需要重新批准 |
-| **状态与总开关** | **设置 → Hearth → 集成** 会显示连接情况、请求了什么，以及如何切断它 |
+| **状态与总开关** | **设置 → ZeroHearth → 集成** 会显示连接情况、请求了什么，以及如何切断它 |
 
 ## 布局
 
@@ -344,7 +345,7 @@ Operon 评定并应用它，任何超出常规的操作都会先与您确认。�
 - **固定卡片** —— 把某张卡片固定为在每个面板上显示，共享同一份定义和位置。
 - **适应页面** —— 把面板锁定在一屏内，或让它滚动。
 - **导入 / 导出** —— 把单个仪表板导出为文件，在别人的库中也呈现相同的样子
-  （壁纸可选择一并打包），并用 Hearth 为你生成的匿名代号签名，别人无法冒用；
+  （壁纸可选择一并打包），并用 ZeroHearth 为你生成的匿名代号签名，别人无法冒用；
   一个开关即可把笔记路径、日历链接与位置排除在外——也可将所有面板与设置备份为 JSON。
 - **仪表板画廊** —— 浏览别人发布的仪表板，按分类、搜索或评分查找，一键安装；
   在你已经用来导出的同一个对话框里发布自己的作品，发布时会移除你的路径与私有
@@ -377,12 +378,12 @@ Operon 评定并应用它，任何超出常规的操作都会先与您确认。�
 - **一个标题图标，四种设置方式** —— 面板标题旁的标识可以是 **Lucide 图标**
   （可在选择器中搜索，而不必凭记忆输入）、**表情或一两个字符**、
   **仓库中图片的路径**，或**网络图片的网址**。每个面板都可以覆盖它；
-  留空则保持 Hearth 水晶图标不变。Hearth 的**标签页和侧边栏**按钮
+  留空则保持 ZeroHearth 水晶图标不变。ZeroHearth 的**标签页和侧边栏**按钮
   则有自己的 Lucide 图标设置。
 
 ## 移动端
 
-Hearth 的面板采用自由布局 —— 卡片停在你放下的位置，宽度是面板宽度的一个比例。
+ZeroHearth 的面板采用自由布局 —— 卡片停在你放下的位置，宽度是面板宽度的一个比例。
 当宽度低于约 **600px** 时，这种布局便失去了意义，因此面板会**重排为单列通栏**，
 自上而下，顺序与桌面端面板的阅读顺序一致。你的布局绝不会被改写：同一个面板，
 在手机上是启动器，在显示器上仍是一整墙卡片。
@@ -390,7 +391,7 @@ Hearth 的面板采用自由布局 —— 卡片停在你放下的位置，宽�
 判断依据是**实际测得的面板宽度**，而非平台 —— 因此桌面端的窄窗格同样适用，
 你也可以把窗格拖窄来查看手机布局。
 
-- **堆叠单列** —— 卡片通栏，每行一张。可在 **设置 → Hearth → 移动端**
+- **堆叠单列** —— 卡片通栏，每行一张。可在 **设置 → ZeroHearth → 移动端**
   中关闭，以保留自由布局。
 - **逐卡片覆盖** —— 在卡片设置中（布局 → *窄屏面板上*）：**隐藏**该卡片、
   指定它在列中的**位置**、设置**高度**，或让它**默认折叠**为标题行，
@@ -403,7 +404,7 @@ Hearth 的面板采用自由布局 —— 卡片停在你放下的位置，宽�
 - **通栏搜索** —— 筛选按钮和结果列表占满整屏，而不只是搜索框那一份宽度；
   搜索框旁的按钮收为图标。
 - **独立的性能档位** —— 移动端默认为*均衡*；桌面端档位单独保存，不受影响。
-- **独立的设置分类** —— 以上全部位于 **设置 → Hearth → 移动端**。
+- **独立的设置分类** —— 以上全部位于 **设置 → ZeroHearth → 移动端**。
 - **移动模式** —— 依然保留：可选的纯搜索启动器，如果你在手机上只需要这些。
 - **操作栏** —— 搜索框下方的一排按钮（默认为新建笔记、新建绘图、录音、
   打开日记），每个都可替换为任意命令。
@@ -411,7 +412,7 @@ Hearth 的面板采用自由布局 —— 卡片停在你放下的位置，宽�
 
 ## 设置与快捷键
 
-所有设置都在 **设置 → Hearth** 下，按分类栏分组：
+所有设置都在 **设置 → ZeroHearth** 下，按分类栏分组：
 **外观**、**搜索**、**面板**、**行为**（启动、新标签页、笔记打开位置、
 移动端、隐私）、**集成**、**备份** 和 **关于**。
 每张卡片的设置在排列模式下从卡片本身编辑。
@@ -420,7 +421,7 @@ Hearth 的面板采用自由布局 —— 卡片停在你放下的位置，宽�
 
 - **打开主控面板**
 - **切换到面板 1…9** — 切换当前面板
-- **打开面板 1…9** — 切换当前面板 *并* 打开 Hearth，因此从仓库任何位置
+- **打开面板 1…9** — 切换当前面板 *并* 打开 ZeroHearth，因此从仓库任何位置
   跳转到指定面板只需一个快捷键
 - **切换到下一个 / 上一个面板**
 
@@ -443,26 +444,14 @@ npm run typecheck
 ```
 
 若要在仓库中测试，请把 `main.js`、`manifest.json` 和 `styles.css`
-软链接或复制到 `<vault>/.obsidian/plugins/hearth/`。
+软链接或复制到 `<vault>/.obsidian/plugins/zerohearth/`。
 
 **翻译** —— 用户可见的字符串都在 [`src/locales/`](src/locales/) 中。
 英文（`en.ts`）是唯一的准绳；复制它、翻译其中的值并注册该文件即可。
 详见 [`src/locales/README.md`](src/locales/README.md)。
 
-## 参与贡献
-
-Hearth 迭代很快，因此目前最有价值的贡献是**问题反馈**、**功能想法**和**翻译**。
-小而明确的修复始终欢迎；对于更大的改动，请先开一个 issue ——
-在快速演进的代码库上，大型 PR 很容易过时。详见
-[CONTRIBUTING.md](CONTRIBUTING.md)。
-
-## 支持
-
-Hearth 是自由开源软件。如果它值得留在您仓库的首页上，
-欢迎请我喝一杯咖啡 —— 这确实有助于让更新持续下去。
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B7K822EW68)
-
 ## 许可
 
-MIT © ondreu · [更新日志](CHANGELOG.md) · [安全](SECURITY.md)
+ZeroHearth 基于 [ondreu 的 Hearth](https://github.com/ondreu/Hearth)。
+
+[MIT 许可证](LICENSE) · [更新日志](CHANGELOG.md) · [安全](SECURITY.md)

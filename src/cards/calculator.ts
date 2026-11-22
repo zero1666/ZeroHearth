@@ -71,10 +71,10 @@ export function renderCalculator(view: CardHost, card: DashboardCard, body: HTML
 	// The card follows the vault's number format unless it was given its own.
 	const decimalSeparator = cfg.decimalSeparator ?? view.plugin.settings.numberFormat ?? ".";
 
-	const wrap = body.createDiv("hearth-calc");
+	const wrap = body.createDiv("zerohearth-calc");
 
 	const input = wrap.createEl("input", {
-		cls: "hearth-calc-input",
+		cls: "zerohearth-calc-input",
 		attr: {
 			type: "text",
 			placeholder: t().cards.calculator.placeholder,
@@ -84,9 +84,9 @@ export function renderCalculator(view: CardHost, card: DashboardCard, body: HTML
 	});
 	input.value = cfg.lastInput ?? "";
 
-	const resultEl = wrap.createDiv("hearth-calc-result");
-	const noteEl = wrap.createDiv("hearth-calc-note");
-	const keysEl = wrap.createDiv("hearth-calc-keys");
+	const resultEl = wrap.createDiv("zerohearth-calc-result");
+	const noteEl = wrap.createDiv("zerohearth-calc-note");
+	const keysEl = wrap.createDiv("zerohearth-calc-keys");
 
 	// What the result line currently shows, or null when there is nothing to
 	// copy. Read by the copy button so the two can never disagree.
@@ -94,9 +94,9 @@ export function renderCalculator(view: CardHost, card: DashboardCard, body: HTML
 
 	// A copy control in the card's top-right corner, revealed on hover like the
 	// task card's add button; hidden until there is a result to copy.
-	const actions = body.createDiv("hearth-calc-actions is-hidden");
+	const actions = body.createDiv("zerohearth-calc-actions is-hidden");
 	const copyBtn = actions.createEl("button", {
-		cls: "hearth-calc-copy",
+		cls: "zerohearth-calc-copy",
 		attr: {
 			type: "button",
 			"aria-label": t().cards.calculator.copyResult,
@@ -216,7 +216,7 @@ export function renderCalculator(view: CardHost, card: DashboardCard, body: HTML
 		const keys = calcKeys(tier, decimalSeparator);
 		for (const key of keys) {
 			const btn = keysEl.createEl("button", {
-				cls: `hearth-calc-key${key.cls ? " " + key.cls : ""}`,
+				cls: `zerohearth-calc-key${key.cls ? " " + key.cls : ""}`,
 				text: key.label,
 				attr: { type: "button" },
 			});

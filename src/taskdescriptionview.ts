@@ -36,11 +36,11 @@ export function fillDescriptionLine(el: HTMLElement, line: string, open?: Descri
 				el.createEl("code", { text: seg.text });
 				break;
 			case "tag":
-				el.createSpan({ cls: "hearth-task-desc-tag", text: seg.text });
+				el.createSpan({ cls: "zerohearth-task-desc-tag", text: seg.text });
 				break;
 			case "wikilink":
 			case "link": {
-				const link = el.createSpan({ cls: "hearth-task-link", text: seg.text });
+				const link = el.createSpan({ cls: "zerohearth-task-link", text: seg.text });
 				if (!open) break;
 				const external = seg.kind === "link" && /^https?:\/\//i.test(seg.target);
 				const target = seg.target;
@@ -59,11 +59,11 @@ export function fillDescriptionLine(el: HTMLElement, line: string, open?: Descri
 export function renderDescriptionLines(parent: HTMLElement, description: string, open?: DescriptionLinkOpener): void {
 	const lines = descriptionLines(description);
 	if (!lines.length) return;
-	const wrap = parent.createDiv("hearth-task-desc");
+	const wrap = parent.createDiv("zerohearth-task-desc");
 	for (const line of lines) {
-		const item = wrap.createDiv("hearth-task-desc-line");
-		item.createSpan({ cls: "hearth-task-desc-bullet", text: "•" });
-		fillDescriptionLine(item.createSpan({ cls: "hearth-task-desc-text" }), line, open);
+		const item = wrap.createDiv("zerohearth-task-desc-line");
+		item.createSpan({ cls: "zerohearth-task-desc-bullet", text: "•" });
+		fillDescriptionLine(item.createSpan({ cls: "zerohearth-task-desc-text" }), line, open);
 	}
 }
 
@@ -81,40 +81,40 @@ export function descriptionEditor(
 	value: string,
 ): { area: HTMLTextAreaElement; setGuided: (on: boolean) => void } {
 	const help = t().cards.tasks.descHelp;
-	const field = row.createDiv("hearth-taskdesc-field");
+	const field = row.createDiv("zerohearth-taskdesc-field");
 	const area = field.createEl("textarea", {
-		cls: "hearth-taskdetail-desc",
+		cls: "zerohearth-taskdetail-desc",
 		attr: { rows: "3", placeholder: t().cards.tasks.descriptionPlaceholder },
 	});
 	area.value = value;
-	const guide = field.createDiv("hearth-taskdesc-help");
-	const issues = guide.createDiv({ cls: "hearth-taskdesc-issues", attr: { "aria-live": "polite" } });
-	const details = guide.createEl("details", { cls: "hearth-taskdesc-guide" });
+	const guide = field.createDiv("zerohearth-taskdesc-help");
+	const issues = guide.createDiv({ cls: "zerohearth-taskdesc-issues", attr: { "aria-live": "polite" } });
+	const details = guide.createEl("details", { cls: "zerohearth-taskdesc-guide" });
 	details.createEl("summary", { text: help.summary });
-	details.createDiv({ cls: "hearth-taskdesc-intro", text: help.intro });
-	const cols = details.createDiv("hearth-taskdesc-cols");
+	details.createDiv({ cls: "zerohearth-taskdesc-intro", text: help.intro });
+	const cols = details.createDiv("zerohearth-taskdesc-cols");
 
 	const column = (cls: string, icon: string, title: string) => {
-		const col = cols.createDiv(`hearth-taskdesc-col ${cls}`);
-		const head = col.createDiv("hearth-taskdesc-col-head");
-		setIcon(head.createSpan("hearth-taskdesc-col-icon"), icon);
+		const col = cols.createDiv(`zerohearth-taskdesc-col ${cls}`);
+		const head = col.createDiv("zerohearth-taskdesc-col-head");
+		setIcon(head.createSpan("zerohearth-taskdesc-col-icon"), icon);
 		head.createSpan({ text: title });
 		return col;
 	};
 	const works = column("is-works", "check", help.works);
 	for (const [sample, name] of help.worksItems) {
-		const item = works.createDiv("hearth-taskdesc-item");
-		item.createEl("code", { cls: "hearth-taskdesc-sample", text: sample });
+		const item = works.createDiv("zerohearth-taskdesc-item");
+		item.createEl("code", { cls: "zerohearth-taskdesc-sample", text: sample });
 		// What it turns into, then what it is called.
-		const result = item.createSpan("hearth-taskdesc-result");
-		fillDescriptionLine(result.createSpan("hearth-taskdesc-preview"), sample);
-		result.createSpan({ cls: "hearth-taskdesc-name", text: name });
+		const result = item.createSpan("zerohearth-taskdesc-result");
+		fillDescriptionLine(result.createSpan("zerohearth-taskdesc-preview"), sample);
+		result.createSpan({ cls: "zerohearth-taskdesc-name", text: name });
 	}
 	const fails = column("is-fails", "x", help.fails);
 	for (const [sample, name] of help.failsItems) {
-		const item = fails.createDiv("hearth-taskdesc-item");
-		item.createEl("code", { cls: "hearth-taskdesc-sample", text: sample });
-		item.createSpan({ cls: "hearth-taskdesc-name", text: name });
+		const item = fails.createDiv("zerohearth-taskdesc-item");
+		item.createEl("code", { cls: "zerohearth-taskdesc-sample", text: sample });
+		item.createSpan({ cls: "zerohearth-taskdesc-name", text: name });
 	}
 
 	let guided = true;
@@ -124,11 +124,11 @@ export function descriptionEditor(
 		issues.toggleClass("is-empty", found.length === 0);
 		area.toggleClass("has-issues", found.length > 0);
 		for (const f of found.slice(0, 3)) {
-			const line = issues.createDiv("hearth-taskdesc-issue");
-			setIcon(line.createSpan("hearth-taskdesc-issue-icon"), "alert-triangle");
+			const line = issues.createDiv("zerohearth-taskdesc-issue");
+			setIcon(line.createSpan("zerohearth-taskdesc-issue-icon"), "alert-triangle");
 			line.createSpan({ text: help.issueLine(f.line, help.issues[f.issue]) });
 		}
-		if (found.length > 3) issues.createDiv({ cls: "hearth-taskdesc-issue is-more", text: help.moreIssues(found.length - 3) });
+		if (found.length > 3) issues.createDiv({ cls: "zerohearth-taskdesc-issue is-more", text: help.moreIssues(found.length - 3) });
 	};
 	area.addEventListener("input", check);
 	check();

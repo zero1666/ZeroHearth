@@ -38,11 +38,11 @@ export function renderDaily(
 	const file = dailyNoteFinder(view, options)(moment());
 
 	if (!file) {
-		const empty = body.createDiv("hearth-card-empty");
-		setIcon(empty.createDiv("hearth-card-empty-icon"), "calendar-plus");
-		empty.createDiv({ cls: "hearth-card-empty-text", text: t().cards.daily.noNoteYet });
+		const empty = body.createDiv("zerohearth-card-empty");
+		setIcon(empty.createDiv("zerohearth-card-empty-icon"), "calendar-plus");
+		empty.createDiv({ cls: "zerohearth-card-empty-text", text: t().cards.daily.noNoteYet });
 		const create = empty.createEl("button", {
-			cls: "hearth-daily-create",
+			cls: "zerohearth-daily-create",
 			text: t().cards.daily.createToday,
 		});
 		create.addEventListener("click", () => {
@@ -70,7 +70,7 @@ export function renderDaily(
 		return;
 	}
 
-	const host = body.createDiv("hearth-embed markdown-rendered");
+	const host = body.createDiv("zerohearth-embed markdown-rendered");
 	body.addClass("is-embed-host");
 	void renderMarkdownFile(view, file, host, component);
 }

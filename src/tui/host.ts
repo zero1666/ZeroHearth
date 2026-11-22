@@ -23,11 +23,11 @@ import { ACTION_CLASS, drawLine, LINE_CLASS } from "./draw";
 import { fit, styles, styleLine, styleRange, type Line } from "./text";
 
 /** The class of the element that holds a body's rows. */
-const LINES_CLASS = "hearth-tui-lines";
+const LINES_CLASS = "zerohearth-tui-lines";
 /** The class of the block of lines that stays put while the body scrolls. */
-const STICKY_CLASS = "hearth-tui-sticky";
+const STICKY_CLASS = "zerohearth-tui-sticky";
 /** The class of a non-text mount placed on the body grid. */
-const MOUNT_CLASS = "hearth-tui-mount";
+const MOUNT_CLASS = "zerohearth-tui-mount";
 
 export interface TuiHostOptions {
 	zoomed: boolean;
@@ -66,13 +66,13 @@ export class TuiCardHost {
 		readonly el: HTMLElement,
 		private opts: TuiHostOptions,
 	) {
-		el.addClass("hearth-tui-textbody");
+		el.addClass("zerohearth-tui-textbody");
 		this.linesEl = el.createDiv(LINES_CLASS);
-		this.mountsEl = el.createDiv("hearth-tui-mounts");
+		this.mountsEl = el.createDiv("zerohearth-tui-mounts");
 		el.addEventListener("scroll", () => this.opts.onScroll?.(), { passive: true });
 		el.addEventListener("dblclick", (evt) => {
 			const handler = this.output.onDoubleClick;
-			if (!handler || (evt.target instanceof HTMLElement && evt.target.closest(".hearth-tui-mount"))) return;
+			if (!handler || (evt.target instanceof HTMLElement && evt.target.closest(".zerohearth-tui-mount"))) return;
 			evt.preventDefault();
 			handler();
 		});

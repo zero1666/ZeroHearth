@@ -36,7 +36,7 @@ describe("the flat sky", () => {
 					});
 					expect(sky.classList.contains("is-expressive")).toBe(true);
 					// Every expressive sky stands on its hills.
-					expect(sky.querySelectorAll(".hearth-weather-hills ellipse")).toHaveLength(3);
+					expect(sky.querySelectorAll(".zerohearth-weather-hills ellipse")).toHaveLength(3);
 				}
 			}
 		}
@@ -45,7 +45,7 @@ describe("the flat sky", () => {
 	it("leaves the classic sky as it was", () => {
 		const sky = drawSky(document.body.createDiv(), { code: 0, isDay: true, animate: false });
 		expect(sky.classList.contains("is-expressive")).toBe(false);
-		expect(sky.querySelector(".hearth-weather-hills")).toBeNull();
+		expect(sky.querySelector(".zerohearth-weather-hills")).toBeNull();
 	});
 });
 
@@ -58,11 +58,11 @@ describe("the weather glyphs", () => {
 						document.body.createDiv(),
 						skyGroupCode(group),
 						isDay,
-						"hearth-weather-glyph",
+						"zerohearth-weather-glyph",
 						backdrop,
 					);
 					expect(icon.querySelector("svg")?.childElementCount).toBeGreaterThan(0);
-					expect(icon.querySelector(".hearth-wx-backdrop") !== null).toBe(backdrop);
+					expect(icon.querySelector(".zerohearth-wx-backdrop") !== null).toBe(backdrop);
 				}
 			}
 		}

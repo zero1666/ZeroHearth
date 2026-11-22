@@ -27,7 +27,7 @@ function substring(query: string): (text: string) => SearchResult | null {
 
 describe("switcherText", () => {
 	it("drops .md from notes, like the switcher", () => {
-		expect(switcherText("Projects/Hearth.md", "md")).toBe("Projects/Hearth");
+		expect(switcherText("Projects/ZeroHearth.md", "md")).toBe("Projects/ZeroHearth");
 	});
 	it("keeps other extensions", () => {
 		expect(switcherText("Boards/Plan.canvas", "canvas")).toBe("Boards/Plan.canvas");
@@ -40,7 +40,7 @@ describe("switcherName", () => {
 		expect(switcherName("Archive/2026/Plan.canvas")).toBe("Plan.canvas");
 	});
 	it("keeps a root file whole", () => {
-		expect(switcherName("Hearth")).toBe("Hearth");
+		expect(switcherName("ZeroHearth")).toBe("ZeroHearth");
 	});
 });
 
@@ -86,7 +86,7 @@ describe("switcherListsExtension", () => {
 
 describe("tailRanges", () => {
 	it("re-bases ranges onto the file name and drops folder-only ones", () => {
-		// "Notes/Hearth": "Notes/" is 6 chars, "Hearth" starts at 6.
+		// "Notes/ZeroHearth": "Notes/" is 6 chars, "ZeroHearth" starts at 6.
 		expect(tailRanges([[0, 2], [6, 8], [10, 12]], 12, 6)).toEqual([[0, 2], [4, 6]]);
 	});
 	it("clips a range straddling the folder boundary", () => {

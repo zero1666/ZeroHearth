@@ -1,4 +1,4 @@
-# Releasing Hearth
+# Releasing ZeroHearth
 
 Releases are cut **exclusively by the
 [`Release Obsidian plugin`](.github/workflows/release.yml) workflow**, which
@@ -32,9 +32,14 @@ the community store never touches. CI enforces this: a non-`x.y.z` version in
 | `manifest-beta.json` | BRAT only | latest **beta** `x.y.z-beta.N` |
 | `versions.json` | store (compatibility fallback) | **stable** versions only |
 
+ZeroHearth currently uses its GitHub Releases and source builds for
+distribution. The stable manifest retains the format required for a future
+community-store listing. Tags inherited from Hearth point to upstream source.
+Use an unused version tag to publish the first build with the ZeroHearth identity.
+
 ## Release cadence: a train, not a freeze
 
-Hearth releases run as a **train**. `main` never freezes:
+ZeroHearth releases run as a **train**. `main` never freezes:
 
 1. Work lands on `main` and is tested there commit by commit.
 2. When a version's worth of work is ready, **cut a beta snapshot** of `main`

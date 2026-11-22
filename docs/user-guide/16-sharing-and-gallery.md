@@ -1,6 +1,6 @@
 # 16. Sharing dashboards: export, import and the gallery
 
-Hearth can save a dashboard as a file that looks the same in someone else's
+ZeroHearth can save a dashboard as a file that looks the same in someone else's
 vault, back up your whole setup as JSON, and — if a gallery server is configured
 — publish a board where other people can browse, rate, comment on and install it
 in one click.
@@ -10,7 +10,7 @@ developers in [`docs/dashboard-package.md`](../dashboard-package.md).
 
 ## Why a dashboard needs a special file format
 
-A Hearth dashboard never described itself completely. Half its appearance lives
+A ZeroHearth dashboard never described itself completely. Half its appearance lives
 on the board and half in the vault's global settings, which the board falls back
 to for anything it has not overridden. A board handed to another vault would
 therefore arrive wearing *that* vault's grid, card opacity, wallpaper and search
@@ -24,7 +24,7 @@ lands. This is a switch you control.
 
 ## Exporting one dashboard
 
-**Where:** *Settings → Hearth → Backup → Export this dashboard*, or right-click
+**Where:** *Settings → ZeroHearth → Backup → Export this dashboard*, or right-click
 a dashboard's switcher button → *Export dashboard…*.
 
 The dialog is titled **Share dashboard** and has two destinations: **Save a
@@ -46,7 +46,7 @@ file**, and **Publish** to a gallery if one is configured.
 | *Include the wallpaper and images* | On | Carries the board's background picture, any image icons and any explicit slideshow pictures **inside** the file, so it looks right in a vault that has never seen them. Makes the file bigger. Turn it off for a backup of your own vault, where the pictures are already in place |
 | *Leave out my private information* | Off for a file, forced on for a publish | Removes the parts of the board that are about you rather than about the design |
 
-Hearth tells you exactly what the current settings mean in numbers — for
+ZeroHearth tells you exactly what the current settings mean in numbers — for
 example, "As it stands, this file will mention 4 paths from this vault and 1
 calendar feed URL."
 
@@ -79,7 +79,7 @@ check rather than a promise you have to trust. It also carries:
 switch described above. Turn it off and the board carries only its own overrides
 and adapts to wherever it lands.
 
-Hearth tells you how many values will be removed, and warns you if any exported
+ZeroHearth tells you how many values will be removed, and warns you if any exported
 value **still looks like a vault path** after the strip: "Exported, but N values
 still look like vault paths. Worth opening the file before you share it."
 
@@ -91,33 +91,33 @@ is always removed. This is not a switch.
 ### Where the file goes
 
 On desktop, the file downloads. On mobile, it is saved to your vault's root
-folder and Hearth tells you the filename.
+folder and ZeroHearth tells you the filename.
 
 ---
 
 ## Backing up everything
 
-Two further exports live at **Settings → Hearth → Backup**:
+Two further exports live at **Settings → ZeroHearth → Backup**:
 
 - *Export layout* — every dashboard plus the grid and layout settings, as JSON.
-- *Export settings* — every Hearth setting: the full layout plus header,
+- *Export settings* — every ZeroHearth setting: the full layout plus header,
   background, behaviour, appearance and TaskNotes options.
 
-These are backups of your vault's Hearth configuration, not things to share.
+These are backups of your vault's ZeroHearth configuration, not things to share.
 
 ---
 
 ## Importing
 
-**Where:** *Settings → Hearth → Backup → Import*, or right-click a dashboard's
+**Where:** *Settings → ZeroHearth → Backup → Import*, or right-click a dashboard's
 switcher button → *Import dashboard…*.
 
-Hearth reads the file and **tells you what is in it before anything changes**:
+ZeroHearth reads the file and **tells you what is in it before anything changes**:
 
 - which of the three kinds it is — *One dashboard*, *A dashboard layout*, or *A
   full settings backup*,
 - who made it, if it carries a checkable signature,
-- which Hearth version it was made with,
+- which ZeroHearth version it was made with,
 - how many kinds of card it holds,
 - how many pictures it brings with it,
 - how many vault paths it points at,
@@ -130,11 +130,11 @@ Hearth reads the file and **tells you what is in it before anything changes**:
 | *Add as a new dashboard* | Adds it alongside your own. Leaves every one of your settings alone |
 | *Add its dashboards to mine* | For a multi-board file |
 | *Update "<name>" in place* | Replaces one existing board |
-| *Replace all my settings* | Replaces your dashboards and every Hearth setting with the ones in the file. **This cannot be undone**, and Hearth says so |
+| *Replace all my settings* | Replaces your dashboards and every ZeroHearth setting with the ones in the file. **This cannot be undone**, and ZeroHearth says so |
 
 ### Worth knowing
 
-Before importing, Hearth lists anything that will not work perfectly:
+Before importing, ZeroHearth lists anything that will not work perfectly:
 
 - plugins the file wants that are not installed or not enabled here — those cards
   will be empty until they are,
@@ -144,16 +144,16 @@ Before importing, Hearth lists anything that will not work perfectly:
 None of this stops the import. The cards come through and you can point them at
 your own notes.
 
-After importing, Hearth may add further warnings: that its task cards use custom
+After importing, ZeroHearth may add further warnings: that its task cards use custom
 fields and you will need to turn on task field customisation to see them, that
-some cards need a newer Hearth and were left out, or that some of its pictures
+some cards need a newer ZeroHearth and were left out, or that some of its pictures
 were missing from the file.
 
 ### Signatures
 
 A file that claims an author but whose signature does not check out — because it
 was edited after signing, or somebody put another maker's handle on it — is
-imported **without** an author, and Hearth says so plainly. Everything else about
+imported **without** an author, and ZeroHearth says so plainly. Everything else about
 the import is unaffected.
 
 ---
@@ -163,7 +163,7 @@ the import is unaffected.
 To publish to a gallery, or to vote on someone else's dashboard, you need a
 **handle**.
 
-A Hearth handle is an anonymous name derived from a signing key that is
+A ZeroHearth handle is an anonymous name derived from a signing key that is
 generated in your vault and never leaves it. There is no account, no email, and
 nothing about who you are. Because each file you publish is signed with that
 key, **nobody else can publish under your handle**.
@@ -175,7 +175,7 @@ key, **nobody else can publish under your handle**.
   nobody to ask, and the handle — along with everything published under it —
   would be gone.
 - *Use a key from another install* pastes a key in, so you can carry your handle
-  to another vault. If you have not copied your current key first, Hearth warns
+  to another vault. If you have not copied your current key first, ZeroHearth warns
   you: replacing it cannot be undone, anything already published under the old
   handle stays published, but you could never post as it again.
 
@@ -185,11 +185,11 @@ Browsing and installing from a gallery need no handle at all.
 
 ## The dashboard gallery
 
-The gallery is a server that stores published dashboards. Hearth ships pointed
+The gallery is a server that stores published dashboards. ZeroHearth ships pointed
 at one, and the address is a setting.
 
 **Nothing is fetched until you open the gallery, and nothing is sent until you
-publish.** Clearing the *Gallery address* field under *Settings → Hearth →
+publish.** Clearing the *Gallery address* field under *Settings → ZeroHearth →
 Backup → Dashboard gallery* turns the gallery off for good.
 
 Anyone can run their own: the server is a separate open-source project and starts
@@ -212,14 +212,14 @@ view.
 ### A dashboard's detail page
 
 Opening one shows the full picture, the description and tags, when it was
-published and last updated, the author's version, the Hearth version it was made
+published and last updated, the author's version, the ZeroHearth version it was made
 with, and the theme it is recommended with if any.
 
 It also shows two lists that matter before you install:
 
 - **What's on this board** — the cards it contains.
 - **What it needs** — the plugins, hosted views and settings it depends on, or
-  *Nothing beyond Hearth itself*.
+  *Nothing beyond ZeroHearth itself*.
 
 And an explicit network statement: either *Nothing on this board is loaded from
 the internet*, or *N things on this board are loaded from the internet*.
@@ -232,7 +232,7 @@ cannot be established.
 ### Voting, comments and profiles
 
 You can upvote or downvote a dashboard, and leave a comment. Both need a handle;
-Hearth offers to make you one at that moment.
+ZeroHearth offers to make you one at that moment.
 
 An author's profile page shows their **karma** (every upvote across everything
 they have published, minus every downvote), their total installs, how many
@@ -243,7 +243,7 @@ dashboards they have published, and when they first published.
 Publishing happens from the same dialog you export from, with a **Category**
 picker added.
 
-Before it uploads, Hearth says plainly: *This board becomes public: anyone using
+Before it uploads, ZeroHearth says plainly: *This board becomes public: anyone using
 this gallery can find and install it. You can withdraw it at any time, though
 people who already installed it keep their copy.*
 
@@ -256,14 +256,14 @@ Two things are enforced for a publish that are optional for a file:
 
 ### The screenshot, and why you have to look at it
 
-Publishing needs a picture of the board. Hearth takes it by scrolling through the
+Publishing needs a picture of the board. ZeroHearth takes it by scrolling through the
 board, so a long board is captured whole.
 
 **Every word inside your cards is blanked out before the shot is taken.** The
 header, the toolbar and each card's own title stay, and so does a card with
 nothing of yours in it, such as a clock.
 
-Then Hearth asks you to look. Click the picture to see it full size and read it.
+Then ZeroHearth asks you to look. Click the picture to see it full size and read it.
 Card titles, the header and anything a card shows that is not yours are meant to
 be there; a note's text, a task, a file name, an event, a number from your life
 is not. Publishing waits until you switch on *I've looked — nothing private is
@@ -274,9 +274,9 @@ cannot be taken back once people have installed it. Report it instead — that i
 bug in the blanking, and it is worth fixing before it happens to somebody else.
 There is a *Report it on GitHub* link right there.
 
-Screenshots need the desktop application; on mobile, Hearth says so and suggests
+Screenshots need the desktop application; on mobile, ZeroHearth says so and suggests
 saving the dashboard as a file and publishing it later from a desktop vault.
-Hearth can also only photograph the board that is currently open, so you have to
+ZeroHearth can also only photograph the board that is currently open, so you have to
 switch to a board before publishing it.
 
 ### After publishing
@@ -288,20 +288,20 @@ keep their copy.
 
 If the gallery accepts a board but its own check sees something that still looks
 like a path from your vault, the board is **held for review** rather than listed,
-and Hearth tells you.
+and ZeroHearth tells you.
 
 ### Gallery errors, and what they mean
 
 | Message | Meaning |
 | --- | --- |
-| *No gallery is set up* | Put a gallery address in Hearth's settings |
+| *No gallery is set up* | Put a gallery address in ZeroHearth's settings |
 | *The gallery is a server on the internet, and this vault has "Disable external calls" turned on* | Turn that setting off to browse or publish |
 | *Couldn't reach the gallery* | It may be down, or this device may be offline |
-| *That address answered, but not like a Hearth gallery* | Wrong address |
+| *That address answered, but not like a ZeroHearth gallery* | Wrong address |
 | *The gallery didn't accept this vault's identity* | An authentication problem |
 | *The gallery is asking you to slow down* | Rate limited; try again in a few minutes |
 | *That dashboard is too large for this gallery* | Turn off the wallpaper, or shrink it |
-| *Hearth couldn't sign the file, so it wasn't published* | An unsigned board has no provable author. Your recovery key may be damaged; try pasting it in again |
+| *ZeroHearth couldn't sign the file, so it wasn't published* | An unsigned board has no provable author. Your recovery key may be damaged; try pasting it in again |
 
 ---
 

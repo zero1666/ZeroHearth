@@ -9,7 +9,7 @@
  * `dashboard` package, every look-affecting setting is resolved and written onto
  * the board itself. The board stops inheriting and starts stating.
  *
- * That resolution goes through Hearth's own `effective*()` readers rather than a
+ * That resolution goes through ZeroHearth's own `effective*()` readers rather than a
  * copy of their rules, by handing them a snapshot of the settings whose active
  * board is the one being exported. Two things fall out of it for free: the
  * plugin-board special cases (a hosted view hides the title and fills the pane
@@ -74,7 +74,7 @@ import { withViews } from "../cardviews";
 import {
 	CARD_PLUGIN_REQUIREMENTS,
 	type DashboardPayload,
-	type HearthPackage,
+	type ZeroHearthPackage,
 	PACKAGE_FORMAT,
 	type PackageCapture,
 	type PackageMeta,
@@ -192,7 +192,7 @@ export function flattenBoardLook(s: HomeSettings, dash: Dashboard): Dashboard {
 /**
  * Fold the vault's pinned cards into the board's own card list.
  *
- * A pinned card is a Hearth bookkeeping distinction, not a visible one: it is
+ * A pinned card is a ZeroHearth bookkeeping distinction, not a visible one: it is
  * rendered in the same grid, at its own coordinates, alongside the board's
  * cards (see `allCards`), and nothing on screen says which list a card came
  * from. So a package that carried the board's half and left the other half
@@ -253,7 +253,7 @@ function uniqueCardId(base: string, taken: Set<string>): string {
 /**
  * Give every favourites card its own copy of the list it was showing.
  *
- * The favourites list is Hearth's own — the note paths a "favourites" card
+ * The favourites list is ZeroHearth's own — the note paths a "favourites" card
  * renders — and it lives vault-wide, so a favourites card exported on its own
  * arrives empty or, worse, showing the importer's notes. Neither is the board
  * its author had.
@@ -406,7 +406,7 @@ export function captureDashboard(
 	s: HomeSettings,
 	dash: Dashboard,
 	opts: CaptureDashboardOptions = {},
-): HearthPackage {
+): ZeroHearthPackage {
 	const board = opts.flatten === false ? clone(dash) : flattenBoardLook(s, dash);
 	// The same scrub the layout and settings payloads run. A board can be
 	// exported on its own, so it needs it on its own — this is the one path a
@@ -441,7 +441,7 @@ export function captureDashboard(
 
 /** Package every board plus the layout globals: the backup that restores a
  * dashboard setup without touching header, background or behaviour. */
-export function captureLayout(s: HomeSettings, opts: CaptureOptions = {}): HearthPackage {
+export function captureLayout(s: HomeSettings, opts: CaptureOptions = {}): ZeroHearthPackage {
 	const payload = layoutPayload(s);
 	const cards = [...payload.dashboards.flatMap((d) => d.cards), ...payload.pinnedCards];
 	return {
@@ -466,7 +466,7 @@ export function captureLayout(s: HomeSettings, opts: CaptureOptions = {}): Heart
  * the settings that travel alongside them — which is what makes a restore
  * restore rather than approximate.
  */
-export function captureSettings(s: HomeSettings, opts: CaptureOptions = {}): HearthPackage {
+export function captureSettings(s: HomeSettings, opts: CaptureOptions = {}): ZeroHearthPackage {
 	const payload = exportSettingsPayload(s);
 	const dashboards = (payload.dashboards ?? []) as Dashboard[];
 	const cards = [
@@ -500,8 +500,8 @@ export function newSourceId(): string {
 	return `hd-${random()}${random()}`;
 }
 
-/** Serialize a package the way every Hearth export is written: pretty JSON, so
+/** Serialize a package the way every ZeroHearth export is written: pretty JSON, so
  * a shared board can be read and diffed by hand. */
-export function serializePackage(pkg: HearthPackage): string {
+export function serializePackage(pkg: ZeroHearthPackage): string {
 	return JSON.stringify(pkg, null, 2);
 }

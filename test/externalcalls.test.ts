@@ -39,7 +39,7 @@ describe("backgroundIsRemote", () => {
 	});
 
 	it("leaves the local kinds alone", () => {
-		// Hearth's own wallpaper is drawn in the plugin, not downloaded.
+		// ZeroHearth's own wallpaper is drawn in the plugin, not downloaded.
 		expect(backgroundIsRemote("default")).toBe(false);
 		expect(backgroundIsRemote("none")).toBe(false);
 		expect(backgroundIsRemote("color")).toBe(false);

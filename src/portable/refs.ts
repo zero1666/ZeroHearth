@@ -31,7 +31,7 @@
 
 import type { CardKind, Dashboard, DashboardCard } from "../types";
 import {
-	type HearthPackage,
+	type ZeroHearthPackage,
 	type DashboardPayload,
 	isAssetRef,
 } from "./schema";
@@ -431,7 +431,7 @@ export function boardReferences(
  * original intact.
  */
 export function packageReferences(
-	pkg: HearthPackage,
+	pkg: ZeroHearthPackage,
 	options: WalkOptions = {},
 ): FoundReference[] {
 	const found: FoundReference[] = [];
@@ -483,7 +483,7 @@ export function packageReferences(
 export interface ReferenceReport {
 	/** Distinct values per scope, in the order first seen. */
 	byScope: Record<ReferenceScope, string[]>;
-	/** Card kinds present, so an older Hearth can say what it can't draw. */
+	/** Card kinds present, so an older ZeroHearth can say what it can't draw. */
 	cardKinds: string[];
 	/** Whether the package embeds any files. */
 	assetCount: number;
@@ -505,7 +505,7 @@ const EMPTY_SCOPES = (): Record<ReferenceScope, string[]> => ({
 });
 
 /** Summarize a package without changing it. */
-export function describeReferences(pkg: HearthPackage): ReferenceReport {
+export function describeReferences(pkg: ZeroHearthPackage): ReferenceReport {
 	const byScope = EMPTY_SCOPES();
 	for (const ref of packageReferences(pkg)) {
 		const list = byScope[ref.scope];
@@ -618,7 +618,7 @@ export interface StripReport {
  * `pkg` is modified. Copy it first if the original matters.
  */
 export function stripReferences(
-	pkg: HearthPackage,
+	pkg: ZeroHearthPackage,
 	opts: StripOptions = { paths: true, private: true, content: true },
 ): StripReport {
 	const scopes = scopesToStrip(opts);
@@ -668,7 +668,7 @@ export interface StrippedValue {
  * returns the values themselves, in the order the walker finds them, from a
  * copy that is then thrown away.
  */
-export function previewStrip(pkg: HearthPackage, opts: StripOptions): StrippedValue[] {
+export function previewStrip(pkg: ZeroHearthPackage, opts: StripOptions): StrippedValue[] {
 	const scopes = scopesToStrip(opts);
 	const found: StrippedValue[] = [];
 	for (const ref of packageReferences(pkg)) {
@@ -699,7 +699,7 @@ export function previewStrip(pkg: HearthPackage, opts: StripOptions): StrippedVa
  * folding the list onto the card exists to avoid. An emptied list is not a
  * choice anybody made, so it comes off with its contents.
  */
-function dropEmptiedOverrides(pkg: HearthPackage): void {
+function dropEmptiedOverrides(pkg: ZeroHearthPackage): void {
 	const strip = (cards: DashboardCard[] | undefined): void => {
 		for (const card of cards ?? []) {
 			if (Array.isArray(card?.favorites) && card.favorites.length === 0) {
@@ -753,7 +753,7 @@ const VAULT_EXTENSIONS =
  * gallery can treat a non-empty result as "hold this for review"; a false
  * positive costs a look, a false negative would publish someone's folder tree.
  */
-export function residualPaths(pkg: HearthPackage): string[] {
+export function residualPaths(pkg: ZeroHearthPackage): string[] {
 	const found: string[] = [];
 	const seen = new Set<unknown>();
 

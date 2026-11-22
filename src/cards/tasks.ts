@@ -12,7 +12,7 @@ import {
 } from "obsidian";
 import { glyphModeActive, setIcon } from "../glyphs";
 import type { CardHost } from "../cardhost";
-import { hearthMenu, HearthModal } from "../uidesign";
+import { zerohearthMenu, ZeroHearthModal } from "../uidesign";
 import { emptyState, moment } from "../cardbodies";
 import { formatRelativeDate, parseNaturalDate } from "../dates";
 import { addResetButton } from "../editors";
@@ -273,7 +273,7 @@ export function renderTasks(
 ): void {
 	const cfg = card.tasks ?? {};
 	expressiveConfigs.set(cfg, effectiveCardDesign(view.plugin.settings, card.design) === "expressive");
-	const container = body.createDiv("hearth-tasks-wrap");
+	const container = body.createDiv("zerohearth-tasks-wrap");
 	// The strip owns a ResizeObserver and a pending frame; a card thrown away
 	// without a redraw has to let them go.
 	component?.register(() => disposeTaskTabStrip(container));
@@ -292,9 +292,9 @@ function renderTasksPluginMissing(
 	refresh: () => void,
 ): void {
 	emptyState(container, "list-todo", t().cards.empty.tasksPluginEnable);
-	const switcher = container.createDiv("hearth-tasks-plugin-missing-actions");
+	const switcher = container.createDiv("zerohearth-tasks-plugin-missing-actions");
 	const btn = switcher.createEl("button", {
-		cls: "hearth-tasks-plugin-missing-switch",
+		cls: "zerohearth-tasks-plugin-missing-switch",
 		text: t().cards.empty.tasksPluginSwitch,
 	});
 	btn.addEventListener("click", () => {
@@ -409,22 +409,22 @@ interface TasksScroll {
 
 function captureTasksScroll(container: HTMLElement): TasksScroll {
 	return {
-		listTop: container.querySelector(".hearth-list")?.scrollTop ?? 0,
-		boardLeft: container.querySelector(".hearth-kanban")?.scrollLeft ?? 0,
-		boardTop: container.querySelector(".hearth-kanban")?.scrollTop ?? 0,
-		columns: Array.from(container.querySelectorAll(".hearth-kanban-col-body"), (el) => el.scrollTop),
+		listTop: container.querySelector(".zerohearth-list")?.scrollTop ?? 0,
+		boardLeft: container.querySelector(".zerohearth-kanban")?.scrollLeft ?? 0,
+		boardTop: container.querySelector(".zerohearth-kanban")?.scrollTop ?? 0,
+		columns: Array.from(container.querySelectorAll(".zerohearth-kanban-col-body"), (el) => el.scrollTop),
 	};
 }
 
 function restoreTasksScroll(container: HTMLElement, scroll: TasksScroll): void {
-	const list = container.querySelector(".hearth-list");
+	const list = container.querySelector(".zerohearth-list");
 	if (list) list.scrollTop = scroll.listTop;
-	const board = container.querySelector(".hearth-kanban");
+	const board = container.querySelector(".zerohearth-kanban");
 	if (board) {
 		board.scrollLeft = scroll.boardLeft;
 		board.scrollTop = scroll.boardTop;
 	}
-	Array.from(container.querySelectorAll(".hearth-kanban-col-body")).forEach((el, i) => {
+	Array.from(container.querySelectorAll(".zerohearth-kanban-col-body")).forEach((el, i) => {
 		if (i < scroll.columns.length) el.scrollTop = scroll.columns[i] ?? 0;
 	});
 }
@@ -458,25 +458,25 @@ export function renderTaskTabStrip(
 ): () => void {
 	const disposers: Array<() => void> = [];
 	const strings = t().cards.tasks.tabs;
-	const host = parent.createDiv("hearth-tasktabs");
+	const host = parent.createDiv("zerohearth-tasktabs");
 	host.setAttribute("role", "group");
 	host.setAttribute("aria-label", strings.title);
 	for (const entry of resolved) {
 		const facetName = strings.facets[entry.row.facet] ?? entry.row.facet;
 		const captionText = entry.row.label?.trim() || "";
-		const rowEl = host.createDiv("hearth-tasktab-row");
+		const rowEl = host.createDiv("zerohearth-tasktab-row");
 		// The caption never scrolls with the tabs: icon always, label until
 		// the card gets narrow (then the stylesheet keeps just the icon).
-		const caption = rowEl.createDiv("hearth-tasktab-caption");
-		setIcon(caption.createSpan("hearth-tasktab-caption-icon"), TASK_TAB_FACET_ICONS[entry.row.facet] ?? "tag");
-		if (captionText) caption.createSpan({ cls: "hearth-tasktab-caption-label", text: captionText });
+		const caption = rowEl.createDiv("zerohearth-tasktab-caption");
+		setIcon(caption.createSpan("zerohearth-tasktab-caption-icon"), TASK_TAB_FACET_ICONS[entry.row.facet] ?? "tag");
+		if (captionText) caption.createSpan({ cls: "zerohearth-tasktab-caption-label", text: captionText });
 		caption.setAttribute("title", captionText ? `${captionText} · ${facetName}` : facetName);
 		caption.setAttribute("aria-hidden", "true");
 
 		// A group of toggle buttons, not a tablist: these filter one list that
 		// carries no panel role, and "tab" without a tabpanel is a promise the
 		// card cannot keep (APG). aria-pressed carries the state instead.
-		const list = rowEl.createDiv("hearth-tasktab-list");
+		const list = rowEl.createDiv("zerohearth-tasktab-list");
 		list.setAttribute("role", "group");
 		list.setAttribute("aria-label", captionText || facetName);
 		const buttons: HTMLButtonElement[] = [];
@@ -484,15 +484,15 @@ export function renderTaskTabStrip(
 			const label = taskTabLabel(tab);
 			const active = tab.id === entry.active;
 			const btn = list.createEl("button", {
-				cls: `hearth-tasktab${active ? " is-active" : ""}`,
+				cls: `zerohearth-tasktab${active ? " is-active" : ""}`,
 				attr: {
 					type: "button",
 					"aria-pressed": active ? "true" : "false",
 					title: label,
 				},
 			});
-			btn.createSpan({ cls: "hearth-tasktab-label", text: label });
-			const count = btn.createSpan({ cls: "hearth-tasktab-count", text: taskTabCountText(tab.count) });
+			btn.createSpan({ cls: "zerohearth-tasktab-label", text: label });
+			const count = btn.createSpan({ cls: "zerohearth-tasktab-count", text: taskTabCountText(tab.count) });
 			// A zero count stays on the tab, dimmed — it says the tab would
 			// show nothing, which is itself worth knowing.
 			count.toggleClass("is-zero", tab.count === 0);
@@ -503,7 +503,7 @@ export function renderTaskTabStrip(
 		// "+N": the tabs not fully in view, with a menu listing them, so one
 		// is never more than two clicks away however narrow the card.
 		const more = rowEl.createEl("button", {
-			cls: "hearth-tasktab-more",
+			cls: "zerohearth-tasktab-more",
 			attr: {
 				type: "button",
 				"aria-label": strings.more,
@@ -511,12 +511,12 @@ export function renderTaskTabStrip(
 				title: strings.more,
 			},
 		});
-		setIcon(more.createSpan("hearth-tasktab-more-icon"), "chevron-down");
-		const moreCount = more.createSpan("hearth-tasktab-more-count");
+		setIcon(more.createSpan("zerohearth-tasktab-more-icon"), "chevron-down");
+		const moreCount = more.createSpan("zerohearth-tasktab-more-count");
 		more.addEventListener("click", (evt) => {
 			const hidden = hiddenTaskTabs(list, buttons).map((i) => entry.values[i]);
 			if (!hidden.length) return;
-			const menu = hearthMenu();
+			const menu = zerohearthMenu();
 			for (const tab of hidden) {
 				const label = taskTabLabel(tab);
 				menu.addItem((item) =>
@@ -613,7 +613,7 @@ export function renderTaskTabStrip(
  * `parent`. */
 function taskNotesAddButton(view: CardHost, parent: HTMLElement): void {
 	const btn = parent.createEl("button", {
-		cls: "hearth-task-add",
+		cls: "zerohearth-task-add",
 		attr: { "aria-label": t().cards.tasks.createNewTask, title: t().cards.tasks.createNewTask },
 	});
 	setIcon(btn, "plus");
@@ -665,7 +665,7 @@ function renderTasksListHeader(
 		// Kanban add expands into a form, so give it a full-width row below the
 		// header; new cards go into the board's first column.
 		const target = boardColumns[0];
-		const addHost = container.createDiv("hearth-tasks-listadd");
+		const addHost = container.createDiv("zerohearth-tasks-listadd");
 		renderKanbanAddCard(view, cfg, target, addHost, refresh, {
 			extended: cfg.kanbanExtended ?? false,
 			markDone: (cfg.kanbanDoneColumns ?? []).includes(target.toLowerCase()),
@@ -683,19 +683,19 @@ function renderTasksListHeader(
 function resolveTaskActionsHost(view: CardHost, container: HTMLElement): HTMLElement {
 	const head = view.arrangeMode
 		? null
-		: container.closest(".hearth-card")?.querySelector<HTMLElement>(".hearth-card-head");
+		: container.closest(".zerohearth-card")?.querySelector<HTMLElement>(".zerohearth-card-head");
 	if (head && !head.classList.contains("is-untitled")) {
-		const existing = head.querySelector<HTMLElement>(":scope > .hearth-tasks-headactions");
+		const existing = head.querySelector<HTMLElement>(":scope > .zerohearth-tasks-headactions");
 		if (existing) {
 			existing.empty();
 			return existing;
 		}
-		return head.createDiv("hearth-tasks-headactions hearth-tasks-listhead-actions");
+		return head.createDiv("zerohearth-tasks-headactions zerohearth-tasks-listhead-actions");
 	}
 	// Untitled (or arranging): float the controls over the card's top-right
 	// corner, revealed on hover — matching the add button and embed switcher on
 	// headerless cards, and never reserving a row of its own.
-	return container.createDiv("hearth-tasks-head hearth-tasks-listhead-actions");
+	return container.createDiv("zerohearth-tasks-head zerohearth-tasks-listhead-actions");
 }
 
 /** A short, human-readable label for a recurrence rule (e.g. "FREQ=WEEKLY;
@@ -761,13 +761,13 @@ function renderValueChip(
 		extraCls?: string;
 	},
 ): HTMLElement {
-	const cls = `hearth-task-chip is-${opts.style}${opts.extraCls ? ` ${opts.extraCls}` : ""}`;
+	const cls = `zerohearth-task-chip is-${opts.style}${opts.extraCls ? ` ${opts.extraCls}` : ""}`;
 	const el = parent.createDiv(cls);
 	if (opts.style === "dot") {
-		el.createDiv("hearth-task-chip-dot");
+		el.createDiv("zerohearth-task-chip-dot");
 	} else {
-		if (opts.prefix) el.createSpan({ cls: "hearth-task-chip-label", text: opts.prefix });
-		el.createSpan({ cls: "hearth-task-chip-value", text: opts.text });
+		if (opts.prefix) el.createSpan({ cls: "zerohearth-task-chip-label", text: opts.prefix });
+		el.createSpan({ cls: "zerohearth-task-chip-value", text: opts.text });
 	}
 	applyChipColor(el, opts.color ?? null);
 	el.setAttribute("title", opts.title ?? opts.text);
@@ -792,13 +792,13 @@ function renderPriorityChip(
 	color: string | null = null,
 	label = priorityDisplayLabel(priority),
 ): HTMLElement {
-	const chip = parent.createDiv(`hearth-task-priority is-${priorityClass(priority)} is-${style}`);
+	const chip = parent.createDiv(`zerohearth-task-priority is-${priorityClass(priority)} is-${style}`);
 	// The historical class for the compact board form, kept so the existing
 	// stylesheet rule (and any theme overriding it) still matches.
 	if (style === "dot") chip.addClass("is-dot-only");
 	// The dot belongs to the two forms built around it and to nothing else.
-	if (style === "dot" || style === "dotlabel") chip.createDiv("hearth-task-priority-dot");
-	if (style !== "dot") chip.createSpan({ cls: "hearth-task-priority-label", text: label });
+	if (style === "dot" || style === "dotlabel") chip.createDiv("zerohearth-task-priority-dot");
+	if (style !== "dot") chip.createSpan({ cls: "zerohearth-task-priority-label", text: label });
 	applyChipColor(chip, color);
 	chip.setAttribute("title", `Priority: ${label}`);
 	return chip;
@@ -818,8 +818,8 @@ function renderStatusChip(
 	color: string | null,
 	label = status.trim(),
 ): HTMLElement {
-	const chip = parent.createDiv(`hearth-task-status hearth-task-statuschip is-${style}`);
-	if (style === "dot") chip.createDiv("hearth-task-chip-dot");
+	const chip = parent.createDiv(`zerohearth-task-status zerohearth-task-statuschip is-${style}`);
+	if (style === "dot") chip.createDiv("zerohearth-task-chip-dot");
 	else chip.setText(label);
 	applyChipColor(chip, color);
 	chip.setAttribute("title", `Status: ${label}`);
@@ -863,11 +863,11 @@ function renderTaskDateChip(
 		// A relation label ("Overdue") replaces the date's own wording; the ↻ that
 		// marks a recurring task's next occurrence stays either way.
 		const text = shown.label ? `${shown.label}${hit.recurrence ? " ↻" : ""}` : dueLabel;
-		const due = parent.createDiv({ cls: `hearth-task-due is-${style}` });
+		const due = parent.createDiv({ cls: `zerohearth-task-due is-${style}` });
 		// The dot form drops the wording and keeps only the colour — the relation
 		// colour, or the overdue red when none was set — with the label moved into
 		// the tooltip so nothing is lost.
-		if (style === "dot") due.createDiv("hearth-task-chip-dot");
+		if (style === "dot") due.createDiv("zerohearth-task-chip-dot");
 		else due.setText(text);
 		// An explicit colour for the relation supersedes the built-in overdue red,
 		// which is the point of being able to set one.
@@ -900,13 +900,13 @@ function renderTaskDateChip(
 				: t().cards.tasks.doneDate;
 	// "done" rather than "doneDate" keeps the long-standing class name.
 	const kind = id === "doneDate" ? "done" : id;
-	const el = parent.createDiv({ cls: `hearth-task-meta hearth-task-meta-${kind} is-${style}` });
+	const el = parent.createDiv({ cls: `zerohearth-task-meta zerohearth-task-meta-${kind} is-${style}` });
 	// A dot stands for the whole thing: no emoji marker, no words. Which date it
 	// is, and what it says, are in the tooltip every form carries anyway.
 	if (style === "dot") {
-		el.createDiv("hearth-task-chip-dot");
+		el.createDiv("zerohearth-task-chip-dot");
 	} else {
-		el.createSpan({ cls: "hearth-task-meta-emoji", text: emoji });
+		el.createSpan({ cls: "zerohearth-task-meta-emoji", text: emoji });
 		el.appendText(shown.label || formatRelativeDate(date));
 	}
 	el.setAttribute("title", `${title}: ${date}`);
@@ -938,7 +938,7 @@ function renderCustomDateChip(
 		color: shown.color,
 		prefix,
 		title: style === "dot" ? dotTitle : date,
-		extraCls: "hearth-task-datechip",
+		extraCls: "zerohearth-task-datechip",
 	});
 	if (!shown.color && !done && date.slice(0, 10) < today) el.addClass("is-overdue");
 	return el;
@@ -1050,7 +1050,7 @@ async function writeTaskFieldValue(
  * beside it cover what people actually pick — today, tomorrow, next week — and
  * Clear removes the date entirely.
  */
-class TaskDatePickerModal extends HearthModal {
+class TaskDatePickerModal extends ZeroHearthModal {
 	private value: string;
 
 	constructor(
@@ -1066,7 +1066,7 @@ class TaskDatePickerModal extends HearthModal {
 
 	onOpen(): void {
 		const { contentEl } = this;
-		contentEl.addClass("hearth-taskdate-modal");
+		contentEl.addClass("zerohearth-taskdate-modal");
 		contentEl.createEl("h3", { text: t().cards.tasks.dateTitle });
 
 		const commit = (value: string | null) => {
@@ -1087,9 +1087,9 @@ class TaskDatePickerModal extends HearthModal {
 			window.setTimeout(() => txt.inputEl.focus(), 0);
 		});
 
-		const shortcuts = contentEl.createDiv("hearth-taskdate-shortcuts");
+		const shortcuts = contentEl.createDiv("zerohearth-taskdate-shortcuts");
 		const shortcut = (label: string, days: number) => {
-			const btn = shortcuts.createEl("button", { cls: "hearth-taskfilter-chip", text: label });
+			const btn = shortcuts.createEl("button", { cls: "zerohearth-taskfilter-chip", text: label });
 			btn.addEventListener("click", () => {
 				const date = moment().add(days, "days").format("YYYY-MM-DD");
 				this.value = date;
@@ -1118,7 +1118,7 @@ class TaskDatePickerModal extends HearthModal {
 
 /** Ask for a value the vault hasn't seen yet — the only way to introduce, say,
  * a first "blocked" status without editing the note by hand. */
-class TaskValuePromptModal extends HearthModal {
+class TaskValuePromptModal extends ZeroHearthModal {
 	private value: string;
 
 	constructor(
@@ -1201,7 +1201,7 @@ async function openTaskValuePicker(
 	const found = await discoverSourceValues(view, cfg, key.source);
 	const rest = found.filter((v) => !seen.has(v.trim().toLowerCase()));
 
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	const item = (value: string, label: string) =>
 		menu.addItem((mi) =>
 			mi
@@ -1350,7 +1350,7 @@ function renderLegacyTaskFields(
 		// Kanban cards show the board column they belong to as a small badge.
 		if (hit.boardColumn) {
 			hosts.inline.createDiv({
-				cls: "hearth-task-status hearth-task-column",
+				cls: "zerohearth-task-status zerohearth-task-column",
 				text: hit.boardColumn,
 			});
 		}
@@ -1386,7 +1386,7 @@ function renderLegacyTaskFields(
  * Draws nothing when the task has none. */
 function renderTaskTagChips(host: HTMLElement, hit: TaskHit): void {
 	for (const tag of hit.tags ?? []) {
-		host.createDiv({ cls: "hearth-task-tag", text: `#${tag}` });
+		host.createDiv({ cls: "zerohearth-task-tag", text: `#${tag}` });
 	}
 }
 
@@ -1397,7 +1397,7 @@ function fieldSourceFile(hit: TaskHit): TFile {
 	return hit.linkedFile ?? hit.file;
 }
 
-/** The raw values one of Hearth's own parsed sources holds for a task. Dates
+/** The raw values one of ZeroHearth's own parsed sources holds for a task. Dates
  * and the description are drawn by their own renderers and never come through
  * here. */
 function builtinSourceValues(hit: TaskHit, id: TaskBuiltinSource): string[] {
@@ -1446,7 +1446,7 @@ function renderCustomTaskFields(
 		// An ambient field paints the whole task instead of adding to it, so it
 		// needs the colour and nothing else.
 		const ambient = isAmbientStyle(display);
-		// Tasks-plugin tasks keep the vault's task format: Hearth never writes
+		// Tasks-plugin tasks keep the vault's task format: ZeroHearth never writes
 		// their lines, so no chip opens a value picker — display only.
 		const readOnly = (cfg.source ?? "checkbox") === "obsidian-tasks";
 		const paint = (color: string | null) => {
@@ -1539,7 +1539,7 @@ function renderCustomTaskFields(
 						color: shown.color,
 						prefix,
 						title: prefix ? `${prefix} ${shown.label}` : shown.label,
-						extraCls: builtin === "column" ? "hearth-task-status hearth-task-column" : undefined,
+						extraCls: builtin === "column" ? "zerohearth-task-status zerohearth-task-column" : undefined,
 					});
 				}
 				// Click the chip to change the value in place, rather than opening
@@ -1571,7 +1571,7 @@ function renderTaskDescription(
  * Kanban cards (identified by `boardColumn`) follow `kanbanExtended` (off by
  * default); plain checkboxes follow `checkboxExtended` (on by default).
  * Tasks-plugin tasks always parse their metadata for display (the plugin's own
- * format), but Hearth never writes it back — toggles and edits go through the
+ * format), but ZeroHearth never writes it back — toggles and edits go through the
  * plugin — so this stays true for them for display/tag purposes. */
 export function taskMetaEnabled(cfg: TasksConfig, hit: TaskHit): boolean {
 	if ((cfg.source ?? "checkbox") === "obsidian-tasks") return true;
@@ -1709,16 +1709,16 @@ function renderTaskSortControl(
 	const active = current.key ?? "smart";
 	const labels = t().cards.tasks.sortLabels;
 	const btn = parent.createEl("button", {
-		cls: compact ? "hearth-kanban-col-sort" : "hearth-tasks-sort",
+		cls: compact ? "zerohearth-kanban-col-sort" : "zerohearth-tasks-sort",
 		attr: { "aria-label": t().cards.tasks.sort, title: t().cards.tasks.sort },
 	});
 	setIcon(btn, "arrow-up-down");
-	if (!compact) btn.createSpan({ cls: "hearth-tasks-sort-label", text: labels[active] });
+	if (!compact) btn.createSpan({ cls: "zerohearth-tasks-sort-label", text: labels[active] });
 	if (current.reverse) btn.addClass("is-reversed");
 	if (active !== "smart" || current.reverse) btn.addClass("is-active");
 	btn.addEventListener("click", (e) => {
 		e.stopPropagation();
-		const menu = hearthMenu();
+		const menu = zerohearthMenu();
 		for (const key of TASK_SORT_KEYS) {
 			menu.addItem((item) =>
 				item
@@ -1761,12 +1761,12 @@ function renderTaskListSortControl(
 	const labels = t().cards.tasks.sortLabels;
 
 	const btn = parent.createEl("button", {
-		cls: "hearth-tasks-sort",
+		cls: "zerohearth-tasks-sort",
 		attr: { "aria-label": t().cards.tasks.sort, title: t().cards.tasks.sort },
 	});
 	setIcon(btn, "arrow-up-down");
 	btn.createSpan({
-		cls: "hearth-tasks-sort-label",
+		cls: "zerohearth-tasks-sort-label",
 		text: custom ? t().cards.tasks.sortCustom : labels[active],
 	});
 	if (!custom && cfg.sortReverse) btn.addClass("is-reversed");
@@ -1788,7 +1788,7 @@ export function taskSortMenu(view: CardHost, cfg: TasksConfig, availableStatuses
 		void view.plugin.saveData(view.plugin.settings);
 		refresh();
 	};
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	for (const key of TASK_SORT_KEYS) {
 		menu.addItem((item) =>
 			item
@@ -1838,7 +1838,7 @@ export function taskSortMenu(view: CardHost, cfg: TasksConfig, availableStatuses
  * in sequence, plus add / reorder / remove controls. Mirrors the filter modal —
  * edits apply on "Apply", "Clear" empties the list, "Cancel" discards them.
  */
-class TaskSortModal extends HearthModal {
+class TaskSortModal extends ZeroHearthModal {
 	private rules: TaskSortRule[];
 	private body: HTMLElement | null = null;
 
@@ -1861,10 +1861,10 @@ class TaskSortModal extends HearthModal {
 
 	onOpen(): void {
 		const { contentEl } = this;
-		contentEl.addClass("hearth-tasksort-modal");
+		contentEl.addClass("zerohearth-tasksort-modal");
 		contentEl.createEl("h3", { text: t().cards.tasks.sortTitle });
-		contentEl.createEl("p", { cls: "hearth-tasksort-hint", text: t().cards.tasks.sortHint });
-		this.body = contentEl.createDiv("hearth-tasksort-body");
+		contentEl.createEl("p", { cls: "zerohearth-tasksort-hint", text: t().cards.tasks.sortHint });
+		this.body = contentEl.createDiv("zerohearth-tasksort-body");
 		this.renderBody();
 		this.renderFooter(contentEl);
 	}
@@ -1878,7 +1878,7 @@ class TaskSortModal extends HearthModal {
 		const available = this.fields();
 
 		this.rules.forEach((rule, index) => {
-			const row = new Setting(body).setClass("hearth-tasksort-rule");
+			const row = new Setting(body).setClass("zerohearth-tasksort-rule");
 			row.setName(index === 0 ? labels.sortLevelFirst : labels.sortLevelNext);
 			row.addDropdown((d) => {
 				for (const f of available) d.addOption(f, fieldLabels[f]);
@@ -1923,7 +1923,7 @@ class TaskSortModal extends HearthModal {
 		});
 
 		if (!this.rules.length) {
-			body.createDiv({ cls: "hearth-tasksort-empty", text: labels.sortEmpty });
+			body.createDiv({ cls: "zerohearth-tasksort-empty", text: labels.sortEmpty });
 		}
 
 		new Setting(body).addButton((b) =>
@@ -2041,11 +2041,11 @@ function renderTaskFilterControl(
 	refresh: () => void,
 ): void {
 	const btn = parent.createEl("button", {
-		cls: "hearth-tasks-filter",
+		cls: "zerohearth-tasks-filter",
 		attr: { "aria-label": t().cards.tasks.filter, title: t().cards.tasks.filter },
 	});
 	setIcon(btn, "list-filter");
-	btn.createSpan({ cls: "hearth-tasks-filter-label", text: t().cards.tasks.filter });
+	btn.createSpan({ cls: "zerohearth-tasks-filter-label", text: t().cards.tasks.filter });
 	if (isTaskFilterActive(cfg.taskFilter)) btn.addClass("is-active");
 	btn.addEventListener("click", (e) => {
 		e.stopPropagation();
@@ -2077,7 +2077,7 @@ function setChipState(chip: HTMLElement, on: boolean): void {
 /** The filter modal: quick presets across the top, then editable criteria
  * (due, priority, status, text). Edits are applied on "Apply"; "Cancel"
  * discards them and "Clear" empties every field. */
-class TaskFilterModal extends HearthModal {
+class TaskFilterModal extends ZeroHearthModal {
 	private working: TaskFilterConfig;
 	private body: HTMLElement | null = null;
 	/** Re-reads each preset chip's on/off state from `working`. Kept so a chip
@@ -2105,10 +2105,10 @@ class TaskFilterModal extends HearthModal {
 
 	onOpen(): void {
 		const { contentEl } = this;
-		contentEl.addClass("hearth-taskfilter-modal");
+		contentEl.addClass("zerohearth-taskfilter-modal");
 		contentEl.createEl("h3", { text: t().cards.tasks.filterTitle });
 		this.renderPresets(contentEl);
-		this.body = contentEl.createDiv("hearth-taskfilter-body");
+		this.body = contentEl.createDiv("zerohearth-taskfilter-body");
 		this.renderBody();
 		this.renderFooter(contentEl);
 	}
@@ -2119,11 +2119,11 @@ class TaskFilterModal extends HearthModal {
 	 * undo, reads as broken. */
 	private renderPresets(parent: HTMLElement): void {
 		const labels = t().cards.tasks.filterPresets;
-		const row = parent.createDiv("hearth-taskfilter-presets");
+		const row = parent.createDiv("zerohearth-taskfilter-presets");
 		this.presetSyncs = [];
 		const preset = (label: string, isOn: () => boolean, apply: (on: boolean) => void) => {
 			const chip = row.createDiv({
-				cls: "hearth-taskfilter-chip",
+				cls: "zerohearth-taskfilter-chip",
 				attr: { role: "button", tabindex: "0" },
 				text: label,
 			});
@@ -2189,8 +2189,8 @@ class TaskFilterModal extends HearthModal {
 		});
 
 		// Priority buckets (multi-select chips).
-		const prioRow = new Setting(body).setName(labels.filterPriority).setClass("hearth-taskfilter-row");
-		const prioHost = prioRow.controlEl.createDiv("hearth-taskfilter-chips");
+		const prioRow = new Setting(body).setName(labels.filterPriority).setClass("zerohearth-taskfilter-row");
+		const prioHost = prioRow.controlEl.createDiv("zerohearth-taskfilter-chips");
 		const levels = this.filterChoices.priorities.length
 			? this.filterChoices.priorities
 			: TASK_PRIORITY_LEVELS;
@@ -2206,8 +2206,8 @@ class TaskFilterModal extends HearthModal {
 		// Status/column chips (only when the source exposes statuses).
 		const statuses = this.chipOptions(this.filterChoices.statuses, this.working.statuses);
 		if (statuses.length) {
-			const statusRow = new Setting(body).setName(labels.filterStatus).setClass("hearth-taskfilter-row");
-			const statusHost = statusRow.controlEl.createDiv("hearth-taskfilter-chips");
+			const statusRow = new Setting(body).setName(labels.filterStatus).setClass("zerohearth-taskfilter-row");
+			const statusHost = statusRow.controlEl.createDiv("zerohearth-taskfilter-chips");
 			for (const status of statuses) {
 				this.toggleChip(statusHost, status, () => (this.working.statuses ?? []).some((s) => s.toLowerCase() === status.toLowerCase()), () => {
 					const cur = this.working.statuses ?? [];
@@ -2221,8 +2221,8 @@ class TaskFilterModal extends HearthModal {
 		if (this.filterChoices.source === "tasknotes") {
 			const contexts = this.chipOptions(this.filterChoices.contexts, this.working.contexts);
 			if (contexts.length) {
-				const contextRow = new Setting(body).setName(labels.filterContexts).setClass("hearth-taskfilter-row");
-				const contextHost = contextRow.controlEl.createDiv("hearth-taskfilter-chips");
+				const contextRow = new Setting(body).setName(labels.filterContexts).setClass("zerohearth-taskfilter-row");
+				const contextHost = contextRow.controlEl.createDiv("zerohearth-taskfilter-chips");
 				for (const context of contexts) {
 					this.toggleTagChip(contextHost, context, () => this.working.contexts, (next) => {
 						this.working.contexts = next;
@@ -2232,8 +2232,8 @@ class TaskFilterModal extends HearthModal {
 
 			const projects = this.chipOptions(this.filterChoices.projects, this.working.projects);
 			if (projects.length) {
-				const projectRow = new Setting(body).setName(labels.filterProjects).setClass("hearth-taskfilter-row");
-				const projectHost = projectRow.controlEl.createDiv("hearth-taskfilter-chips");
+				const projectRow = new Setting(body).setName(labels.filterProjects).setClass("zerohearth-taskfilter-row");
+				const projectHost = projectRow.controlEl.createDiv("zerohearth-taskfilter-chips");
 				for (const project of projects) {
 					this.toggleTagChip(projectHost, project, () => this.working.projects, (next) => {
 						this.working.projects = next;
@@ -2247,8 +2247,8 @@ class TaskFilterModal extends HearthModal {
 		// hashtags.
 		const tags = this.chipOptions(this.filterChoices.tags, this.working.tags);
 		if (tags.length) {
-			const tagRow = new Setting(body).setName(labels.filterTags).setClass("hearth-taskfilter-row");
-			const tagHost = tagRow.controlEl.createDiv("hearth-taskfilter-chips");
+			const tagRow = new Setting(body).setName(labels.filterTags).setClass("zerohearth-taskfilter-row");
+			const tagHost = tagRow.controlEl.createDiv("zerohearth-taskfilter-chips");
 			for (const tag of tags) {
 				this.toggleTagChip(tagHost, tag, () => this.working.tags, (next) => {
 					this.working.tags = next;
@@ -2320,7 +2320,7 @@ class TaskFilterModal extends HearthModal {
 		title?: string,
 	): void {
 		const chip = host.createDiv({
-			cls: "hearth-taskfilter-chip",
+			cls: "zerohearth-taskfilter-chip",
 			attr: {
 				role: "button",
 				tabindex: "0",
@@ -2595,8 +2595,8 @@ function renderTasksContent(
 			renderTasksContent(view, cfg, container, refresh, load);
 			restoreTasksScroll(container, scroll);
 			if (refocus !== null) {
-				const rowEl = container.querySelectorAll(".hearth-tasktab-row")[refocus];
-				rowEl?.querySelector<HTMLElement>(".hearth-tasktab.is-active")?.focus();
+				const rowEl = container.querySelectorAll(".zerohearth-tasktab-row")[refocus];
+				rowEl?.querySelector<HTMLElement>(".zerohearth-tasktab.is-active")?.focus();
 			}
 		};
 		const dispose = renderTaskTabStrip(container, resolved, redraw);
@@ -2639,7 +2639,7 @@ function renderTasksContent(
 		return;
 	}
 
-	const listEl = container.createDiv("hearth-list hearth-tasks");
+	const listEl = container.createDiv("zerohearth-list zerohearth-tasks");
 	for (const hit of list) renderTaskRow(view, cfg, listEl, hit, today, refresh, openStatus);
 }
 
@@ -2647,7 +2647,7 @@ function renderTasksContent(
  * writing into the card's destination note. */
 function tasksPluginAddButton(view: CardHost, cfg: TasksConfig, parent: HTMLElement): void {
 	const btn = parent.createEl("button", {
-		cls: "hearth-task-add",
+		cls: "zerohearth-task-add",
 		attr: { "aria-label": t().cards.tasks.createNewTask, title: t().cards.tasks.createNewTask },
 	});
 	setIcon(btn, "plus");
@@ -2666,7 +2666,7 @@ function renderTaskRow(
 	refresh: () => void,
 	openStatus: string,
 ): void {
-	const row = listEl.createDiv("hearth-list-item hearth-task");
+	const row = listEl.createDiv("zerohearth-list-item zerohearth-task");
 	row.toggleClass("is-done", hit.done);
 
 	const isTasksPlugin = (cfg.source ?? "checkbox") === "obsidian-tasks";
@@ -2674,7 +2674,7 @@ function renderTaskRow(
 		// The plugin owns the toggle semantics (custom statuses, recurrence,
 		// done dates in the vault's task format): the checkbox goes through it.
 		const check = row.createEl("input", {
-			cls: "hearth-task-check",
+			cls: "zerohearth-task-check",
 			attr: { type: "checkbox" },
 		});
 		check.checked = hit.done;
@@ -2696,7 +2696,7 @@ function renderTaskRow(
 		renderLineRecurringCheckbox(view, hit, today, row, refresh);
 	} else if (hit.line >= 0) {
 		const check = row.createEl("input", {
-			cls: "hearth-task-check",
+			cls: "zerohearth-task-check",
 			attr: { type: "checkbox" },
 		});
 		check.checked = hit.done;
@@ -2732,9 +2732,9 @@ function renderTaskRow(
 	// line — a long title ellipsizes instead of pushing the chips onto a line of
 	// their own (#156). The card's configured field order still reads
 	// left-to-right, since a list draws all its chips into the one meta group.
-	const main = row.createDiv("hearth-task-main");
-	const meta = row.createDiv("hearth-task-metas");
-	const label = main.createDiv({ cls: "hearth-list-label hearth-task-text" });
+	const main = row.createDiv("zerohearth-task-main");
+	const meta = row.createDiv("zerohearth-task-metas");
+	const label = main.createDiv({ cls: "zerohearth-list-label zerohearth-task-text" });
 	fillTaskText(view, label, hit.text || hit.file.basename, hit.file.path);
 	// The description is the one field that gets its own line, so it goes to the
 	// row itself rather than into either group.
@@ -2745,7 +2745,7 @@ function renderTaskRow(
 	makeClickable(row, open, hit.text || hit.file.basename);
 	// Line-based tasks (Kanban cards and plain checkboxes) get the right-click
 	// menu; checkboxes get the edit-details item, Kanban also convert/delete.
-	// Tasks-plugin tasks get the plugin's own edit dialog instead of Hearth's
+	// Tasks-plugin tasks get the plugin's own edit dialog instead of ZeroHearth's
 	// metadata editor, so the note keeps the vault's task format.
 	if (hit.line >= 0) {
 		if (isTasksPlugin) attachTasksPluginCardMenu(view, cfg, hit, row, refresh);
@@ -3016,16 +3016,16 @@ function renderTaskKanban(
 	// drops: moving a task would need the plugin's own write path (its toggle
 	// only flips done state), so columns group — they don't take cards.
 	const readOnlyBoard = source === "obsidian-tasks";
-	const board = container.createDiv("hearth-kanban");
+	const board = container.createDiv("zerohearth-kanban");
 	if (readOnlyBoard) board.addClass("is-readonly");
 
 	for (const col of visible) {
 		const colSort = model.columnSort(col);
 
-		const colEl = board.createDiv("hearth-kanban-col");
+		const colEl = board.createDiv("zerohearth-kanban-col");
 		colEl.toggleClass("is-done-col", doneColumns.has(col.key) || !!col.statusDone);
-		const head = colEl.createDiv("hearth-kanban-col-head");
-		const titleEl = head.createSpan({ cls: "hearth-kanban-col-title", text: col.label });
+		const head = colEl.createDiv("zerohearth-kanban-col-head");
+		const titleEl = head.createSpan({ cls: "zerohearth-kanban-col-title", text: col.label });
 		// Kanban source: double-click the title to rename the board column.
 		if (source === "kanban") {
 			titleEl.setAttribute("title", t().cards.tasks.renameColumnHint);
@@ -3035,7 +3035,7 @@ function renderTaskKanban(
 				startColumnRename(view, cfg, head, titleEl, col.label, refresh);
 			});
 		}
-		head.createSpan({ cls: "hearth-kanban-col-count", text: String(col.hits.length) });
+		head.createSpan({ cls: "zerohearth-kanban-col-count", text: String(col.hits.length) });
 		// Per-column sort control (icon-only). Writes into kanbanColumnSort under
 		// this column's key; clearing back to Smart/forward removes the override.
 		renderTaskSortControl(head, colSort, true, (next) => model.setColumnSort(col, next));
@@ -3043,7 +3043,7 @@ function renderTaskKanban(
 		if (source === "kanban") {
 			const isDoneCol = doneColumns.has(col.key);
 			const doneBtn = head.createEl("button", {
-				cls: "hearth-kanban-col-done",
+				cls: "zerohearth-kanban-col-done",
 				attr: {
 					"aria-label": isDoneCol
 						? t().cards.tasks.unsetDoneColumn(col.label)
@@ -3058,7 +3058,7 @@ function renderTaskKanban(
 			});
 		}
 		const hideBtn = head.createEl("button", {
-			cls: "hearth-kanban-col-hide",
+			cls: "zerohearth-kanban-col-hide",
 			attr: { "aria-label": t().cards.tasks.hideColumn(col.label) },
 		});
 		setIcon(hideBtn, "eye-off");
@@ -3072,19 +3072,19 @@ function renderTaskKanban(
 		if (!readOnlyBoard) {
 			head.setAttribute("draggable", "true");
 			head.addEventListener("dragstart", (e) => {
-				e.dataTransfer?.setData("application/hearth-col", col.key);
+				e.dataTransfer?.setData("application/zerohearth-col", col.key);
 				colEl.addClass("is-dragging");
 			});
 			head.addEventListener("dragend", () => colEl.removeClass("is-dragging"));
 			head.addEventListener("dragover", (e) => {
-				if (e.dataTransfer?.types.includes("application/hearth-col")) {
+				if (e.dataTransfer?.types.includes("application/zerohearth-col")) {
 					e.preventDefault();
 					colEl.addClass("is-col-drop-target");
 				}
 			});
 			head.addEventListener("dragleave", () => colEl.removeClass("is-col-drop-target"));
 			head.addEventListener("drop", (e) => {
-				const fromKey = e.dataTransfer?.getData("application/hearth-col");
+				const fromKey = e.dataTransfer?.getData("application/zerohearth-col");
 				colEl.removeClass("is-col-drop-target");
 				if (fromKey) {
 					e.preventDefault();
@@ -3094,11 +3094,11 @@ function renderTaskKanban(
 			});
 		}
 
-		const colBody = colEl.createDiv("hearth-kanban-col-body");
+		const colBody = colEl.createDiv("zerohearth-kanban-col-body");
 		if (!readOnlyBoard) {
 			colBody.addEventListener("dragover", (e) => {
 				// Only task-card drags target the column body (not header reorders).
-				if (e.dataTransfer?.types.includes("application/hearth-col")) return;
+				if (e.dataTransfer?.types.includes("application/zerohearth-col")) return;
 				e.preventDefault();
 				colBody.addClass("is-drop-target");
 			});
@@ -3116,7 +3116,7 @@ function renderTaskKanban(
 
 		for (const hit of col.hits) {
 			const idx = hits.indexOf(hit);
-			const cardEl = colBody.createDiv("hearth-kanban-card");
+			const cardEl = colBody.createDiv("zerohearth-kanban-card");
 			cardEl.toggleClass("is-done", hit.done);
 			if (!readOnlyBoard) {
 				cardEl.setAttribute("draggable", "true");
@@ -3128,7 +3128,7 @@ function renderTaskKanban(
 				// Highlight the task card a dragged task would land on (the card
 				// being hovered), with the same dashed outline as column drop.
 				cardEl.addEventListener("dragover", (e) => {
-					if (e.dataTransfer?.types.includes("application/hearth-col")) return;
+					if (e.dataTransfer?.types.includes("application/zerohearth-col")) return;
 					e.preventDefault();
 					e.stopPropagation();
 					cardEl.addClass("is-drop-target");
@@ -3136,7 +3136,7 @@ function renderTaskKanban(
 				cardEl.addEventListener("dragleave", () => cardEl.removeClass("is-drop-target"));
 				cardEl.addEventListener("drop", (e) => {
 					cardEl.removeClass("is-drop-target");
-					if (e.dataTransfer?.types.includes("application/hearth-col")) return;
+					if (e.dataTransfer?.types.includes("application/zerohearth-col")) return;
 					const raw = e.dataTransfer?.getData("text/plain") ?? "";
 					if (!raw) return;
 					e.preventDefault();
@@ -3157,11 +3157,11 @@ function renderTaskKanban(
 		// inline with the task text (in a row), in addition to drag: checking
 		// it completes today's instance and advances scheduled without
 		// retiring the task.
-		const textRow = cardEl.createDiv("hearth-kanban-card-row");
+		const textRow = cardEl.createDiv("zerohearth-kanban-card-row");
 		if (source === "obsidian-tasks" && hit.line >= 0) {
 			// The plugin owns the toggle: the board checkbox goes through it.
 			const check = textRow.createEl("input", {
-				cls: "hearth-task-check",
+				cls: "zerohearth-task-check",
 				attr: { type: "checkbox" },
 			});
 			check.checked = hit.done;
@@ -3189,7 +3189,7 @@ function renderTaskKanban(
 			// Kanban cards are Markdown checkboxes: a checkbox toggles the card's
 			// done state in place, independent of which column it's in.
 			const check = textRow.createEl("input", {
-				cls: "hearth-task-check",
+				cls: "zerohearth-task-check",
 				attr: { type: "checkbox" },
 			});
 			check.checked = hit.done;
@@ -3210,7 +3210,7 @@ function renderTaskKanban(
 				// first column on untick, mirroring how a task progresses its status
 				// (#111). moveTo writes the target column's status to the note.
 				const check = textRow.createEl("input", {
-					cls: "hearth-task-check",
+					cls: "zerohearth-task-check",
 					attr: { type: "checkbox" },
 				});
 				check.checked = hit.done;
@@ -3225,14 +3225,14 @@ function renderTaskKanban(
 					else refresh();
 				});
 		}
-		const cardText = textRow.createDiv({ cls: "hearth-kanban-card-text" });
+		const cardText = textRow.createDiv({ cls: "zerohearth-kanban-card-text" });
 		fillTaskText(view, cardText, hit.text || hit.file.basename, hit.file.path);
 			// A board card is three stacked areas, so the hosts are created up front
 			// and each field lands in the one its style suits: a bare dot fits beside
 			// the title, the description is its own block, everything else is a chip
 			// in the meta row (where the configured order applies).
-			const block = cardEl.createDiv("hearth-kanban-card-block");
-			const meta = cardEl.createDiv("hearth-kanban-card-meta");
+			const block = cardEl.createDiv("zerohearth-kanban-card-block");
+			const meta = cardEl.createDiv("zerohearth-kanban-card-meta");
 			renderTaskFields(view, cfg, hit, { inline: textRow, meta, block, root: cardEl }, today, "kanban", refresh);
 			const open = () => void openTask(view, cfg, hit, refresh);
 			// A real board/checkbox line (not a note-linked card) can have its title
@@ -3349,7 +3349,7 @@ export function resolvedMatrix(app: App, cfg: TasksConfig): ResolvedTaskMatrix {
 /** Whether a card's tasks carry a priority the matrix can read and write. A
  * Kanban board or a checkbox card read as plain text has no priority marks.
  * Tasks-plugin tasks always parse theirs, but the matrix stays read-only for
- * them (rewriting a priority would need Hearth's own line rewrite, which would
+ * them (rewriting a priority would need ZeroHearth's own line rewrite, which would
  * convert the vault's task format) — reading is what matters here. */
 export function matrixReadsPriorities(cfg: TasksConfig): boolean {
 	const source = matrixSource(cfg);
@@ -3373,7 +3373,7 @@ export function moveTaskToQuadrant(
 	target: TaskMatrixQuadrant | null,
 	refresh: () => void,
 ): void {
-	// Read-only for Tasks-plugin tasks: grouping, not moving. Hearth never
+	// Read-only for Tasks-plugin tasks: grouping, not moving. ZeroHearth never
 	// rewrites their lines (that would convert the vault's task format).
 	if (matrixSource(cfg) === "obsidian-tasks") return;
 	const source = matrixSource(cfg);
@@ -3397,7 +3397,7 @@ export function matrixTaskMenu(
 	hit: TaskHit,
 	refresh: () => void,
 ): Menu {
-	const menu = hearthMenu();
+	const menu = zerohearthMenu();
 	const source = matrixSource(cfg);
 	const tm = t().cards.tasks.matrix;
 	if (source !== "obsidian-tasks") {
@@ -3440,11 +3440,11 @@ function renderMatrixCard(
 	openStatus: string,
 	refresh: () => void,
 ): HTMLElement {
-	const cardEl = host.createDiv("hearth-kanban-card hearth-matrix-card");
+	const cardEl = host.createDiv("zerohearth-kanban-card zerohearth-matrix-card");
 	cardEl.toggleClass("is-done", hit.done);
-	const textRow = cardEl.createDiv("hearth-kanban-card-row");
+	const textRow = cardEl.createDiv("zerohearth-kanban-card-row");
 	const check = textRow.createEl("input", {
-		cls: hit.recurrence ? "hearth-task-check hearth-task-check-recurring" : "hearth-task-check",
+		cls: hit.recurrence ? "zerohearth-task-check zerohearth-task-check-recurring" : "zerohearth-task-check",
 		attr: { type: "checkbox" },
 	});
 	check.checked = taskChecked(cfg, hit, today);
@@ -3454,10 +3454,10 @@ function renderMatrixCard(
 	check.addEventListener("mousedown", stop);
 	check.addEventListener("pointerdown", stop);
 	check.addEventListener("change", () => toggleTask(view, cfg, hit, today, openStatus, refresh));
-	const cardText = textRow.createDiv({ cls: "hearth-kanban-card-text" });
+	const cardText = textRow.createDiv({ cls: "zerohearth-kanban-card-text" });
 	fillTaskText(view, cardText, hit.text || hit.file.basename, hit.file.path);
-	const block = cardEl.createDiv("hearth-kanban-card-block");
-	const meta = cardEl.createDiv("hearth-kanban-card-meta");
+	const block = cardEl.createDiv("zerohearth-kanban-card-block");
+	const meta = cardEl.createDiv("zerohearth-kanban-card-meta");
 	renderTaskFields(view, cfg, hit, { inline: textRow, meta, block, root: cardEl }, today, "kanban", refresh, true);
 	const open = () => void openTask(view, cfg, hit, refresh);
 	cardEl.addEventListener("click", open);
@@ -3536,10 +3536,10 @@ function renderTaskMatrix(
 	// locked (not droppable); cards must not start a drag either, or the locked
 	// quadrants would be dead drop targets.
 	if (readOnlyMatrix) {
-		for (const el of Array.from(container.querySelectorAll<HTMLElement>(".hearth-matrix-item"))) {
+		for (const el of Array.from(container.querySelectorAll<HTMLElement>(".zerohearth-matrix-item"))) {
 			el.setAttribute("draggable", "false");
 		}
-		container.querySelector(".hearth-matrix")?.addClass("is-readonly");
+		container.querySelector(".zerohearth-matrix")?.addClass("is-readonly");
 	}
 }
 
@@ -3556,15 +3556,15 @@ function renderKanbanAddCard(
 	refresh: () => void,
 	opts: { extended: boolean; markDone: boolean },
 ): void {
-	const addBtn = colBody.createDiv({ cls: "hearth-kanban-add" });
-	setIcon(addBtn.createSpan("hearth-kanban-add-icon"), "plus");
-	addBtn.createSpan({ cls: "hearth-kanban-add-label", text: t().cards.tasks.addCard });
+	const addBtn = colBody.createDiv({ cls: "zerohearth-kanban-add" });
+	setIcon(addBtn.createSpan("zerohearth-kanban-add-icon"), "plus");
+	addBtn.createSpan({ cls: "zerohearth-kanban-add-label", text: t().cards.tasks.addCard });
 	addBtn.addEventListener("click", (e) => {
 		e.stopPropagation();
 		addBtn.hide();
-		const form = colBody.createDiv({ cls: "hearth-kanban-add-form" });
+		const form = colBody.createDiv({ cls: "zerohearth-kanban-add-form" });
 		const input = form.createEl("textarea", {
-			cls: "hearth-kanban-add-input",
+			cls: "zerohearth-kanban-add-input",
 			attr: { rows: "1", placeholder: t().cards.tasks.addCardPlaceholder },
 		});
 
@@ -3575,7 +3575,7 @@ function renderKanbanAddCard(
 			: () => ({ meta: emptyMeta(), description: "" });
 
 		// "Create as note" toggle (per-add; defaults to the card's setting).
-		const noteLabel = form.createEl("label", { cls: "hearth-kanban-add-note" });
+		const noteLabel = form.createEl("label", { cls: "zerohearth-kanban-add-note" });
 		const noteToggle = noteLabel.createEl("input", { attr: { type: "checkbox" } });
 		noteToggle.checked = !!cfg.newTaskAsNote;
 		noteLabel.createSpan({ text: t().cards.tasks.createAsNote });
@@ -3583,9 +3583,9 @@ function renderKanbanAddCard(
 		// Body / description field. When creating as a note it's the note body,
 		// prefilled from the configured template so it's visible and editable
 		// before the note is created; otherwise it's the card's inline description.
-		const bodyWrap = form.createDiv({ cls: "hearth-taskdetail" });
-		const bodyRow = bodyWrap.createDiv({ cls: "hearth-taskdetail-row is-description" });
-		const bodyLabel = bodyRow.createSpan({ cls: "hearth-taskdetail-label" });
+		const bodyWrap = form.createDiv({ cls: "zerohearth-taskdetail" });
+		const bodyRow = bodyWrap.createDiv({ cls: "zerohearth-taskdetail-row is-description" });
+		const bodyLabel = bodyRow.createSpan({ cls: "zerohearth-taskdetail-label" });
 		const bodyEditor = descriptionEditor(bodyRow, "");
 		const bodyArea = bodyEditor.area;
 
@@ -3727,16 +3727,16 @@ function buildTaskDetailFields(
 	description: string,
 	allowDescription = true,
 ): () => { meta: TaskMeta; description: string } {
-	const grid = parent.createDiv({ cls: "hearth-taskdetail" });
+	const grid = parent.createDiv({ cls: "zerohearth-taskdetail" });
 
 	const row = (labelText: string) => {
-		const r = grid.createDiv({ cls: "hearth-taskdetail-row" });
-		r.createSpan({ cls: "hearth-taskdetail-label", text: labelText });
+		const r = grid.createDiv({ cls: "zerohearth-taskdetail-row" });
+		r.createSpan({ cls: "zerohearth-taskdetail-label", text: labelText });
 		return r;
 	};
 
 	const prioRow = row(t().cards.tasks.priority);
-	const prio = prioRow.createEl("select", { cls: "hearth-taskdetail-input", attr: { "aria-label": t().cards.tasks.priority } });
+	const prio = prioRow.createEl("select", { cls: "zerohearth-taskdetail-input", attr: { "aria-label": t().cards.tasks.priority } });
 	for (const [value, label] of [
 		["", t().cards.tasks.priorityNone],
 		["highest", t().cards.tasks.priorityHighest],
@@ -3751,24 +3751,24 @@ function buildTaskDetailFields(
 	// Repeat: unit dropdown + interval number (deterministic, no free text).
 	const parsed = parseRecurrence(meta.recurrence);
 	const repeatRow = row(t().cards.tasks.recurrenceLabel);
-	const repeatUnit = repeatRow.createEl("select", { cls: "hearth-taskdetail-input", attr: { "aria-label": t().cards.tasks.recurrenceLabel } });
+	const repeatUnit = repeatRow.createEl("select", { cls: "zerohearth-taskdetail-input", attr: { "aria-label": t().cards.tasks.recurrenceLabel } });
 	repeatUnit.createEl("option", { value: "", text: t().cards.tasks.recurrenceNever });
 	for (const u of RECURRENCE_UNITS)
 		repeatUnit.createEl("option", { value: u, text: t().cards.tasks.recurrenceUnits[u] });
 	repeatUnit.value = parsed.unit;
-	const repeatEvery = repeatRow.createSpan({ cls: "hearth-taskdetail-every", text: t().cards.tasks.recurrenceEvery });
+	const repeatEvery = repeatRow.createSpan({ cls: "zerohearth-taskdetail-every", text: t().cards.tasks.recurrenceEvery });
 	const repeatInterval = repeatRow.createEl("input", {
-		cls: "hearth-taskdetail-interval",
+		cls: "zerohearth-taskdetail-interval",
 		attr: { type: "number", min: "1", "aria-label": t().cards.tasks.recurrenceInterval },
 	});
 	repeatInterval.value = String(parsed.interval);
 
 	const dateField = (emoji: string, label: string, value: string) => {
-		const r = grid.createDiv({ cls: "hearth-taskdetail-row" });
+		const r = grid.createDiv({ cls: "zerohearth-taskdetail-row" });
 		// The Tasks plugin's emoji name the field outside terminal mode, which
 		// draws no emoji.
-		r.createSpan({ cls: "hearth-taskdetail-label", text: glyphModeActive() ? label : `${emoji} ${label}` });
-		const inp = r.createEl("input", { cls: "hearth-taskdetail-input", attr: { type: "date", "aria-label": label } });
+		r.createSpan({ cls: "zerohearth-taskdetail-label", text: glyphModeActive() ? label : `${emoji} ${label}` });
+		const inp = r.createEl("input", { cls: "zerohearth-taskdetail-input", attr: { type: "date", "aria-label": label } });
 		inp.value = value;
 		return inp;
 	};
@@ -3815,18 +3815,18 @@ function buildTaskDetailFields(
 	// possible — a picker could only ever offer tags that already exist.
 	const tagRow = row(t().cards.tasks.tags);
 	const tagInput = tagRow.createEl("input", {
-		cls: "hearth-taskdetail-input",
+		cls: "zerohearth-taskdetail-input",
 		attr: { type: "text", placeholder: t().cards.tasks.tagsPlaceholder, "aria-label": t().cards.tasks.tags },
 	});
 	tagInput.value = formatTagInput(meta.tags ?? []);
 
 	// Description: plain multiline text, one sub-bullet per line under the task's
-	// own line. Offered wherever those nested lines are Hearth's to rewrite — a
+	// own line. Offered wherever those nested lines are ZeroHearth's to rewrite — a
 	// Kanban card or a checkbox — but not for a task that lives in its own note.
 	let descArea: HTMLTextAreaElement | null = null;
 	if (allowDescription) {
-		const descRow = grid.createDiv({ cls: "hearth-taskdetail-row is-description" });
-		descRow.createSpan({ cls: "hearth-taskdetail-label", text: t().cards.tasks.description });
+		const descRow = grid.createDiv({ cls: "zerohearth-taskdetail-row is-description" });
+		descRow.createSpan({ cls: "zerohearth-taskdetail-label", text: t().cards.tasks.description });
 		descArea = descriptionEditor(descRow, description).area;
 	}
 
@@ -3848,7 +3848,7 @@ function buildTaskDetailFields(
 
 /** A modal to edit a Kanban card's dates, priority and description via {@link
  * buildTaskDetailFields}, prefilled from the card; submits the new values. */
-class TaskMetadataModal extends HearthModal {
+class TaskMetadataModal extends ZeroHearthModal {
 	private read: (() => { meta: TaskMeta; description: string }) | null = null;
 	constructor(
 		app: App,
@@ -3861,7 +3861,7 @@ class TaskMetadataModal extends HearthModal {
 	}
 	onOpen(): void {
 		const { contentEl } = this;
-		contentEl.addClass("hearth-taskdetail-modal");
+		contentEl.addClass("zerohearth-taskdetail-modal");
 		contentEl.createEl("h3", { text: t().cards.tasks.editMetadata });
 		this.read = buildTaskDetailFields(contentEl, this.initial, this.initialDescription, this.allowDescription);
 		new Setting(contentEl)
@@ -3897,7 +3897,7 @@ function createNoteTooltip(cfg: TasksConfig): string {
  * offers to open the full note or delete the task. When the task's metadata is
  * managed (checkbox extended / Kanban extended) the fields are editable and a
  * Save button writes them back; otherwise the metadata is shown read-only. */
-class TaskDetailModal extends HearthModal {
+class TaskDetailModal extends ZeroHearthModal {
 	private read: (() => { meta: TaskMeta; description: string }) | null = null;
 	/** For a linked card, the editable description textarea (its content is
 	 * written back to the note body on save). */
@@ -3920,7 +3920,7 @@ class TaskDetailModal extends HearthModal {
 	onOpen(): void {
 		const { contentEl } = this;
 		const { view, cfg, hit } = this;
-		contentEl.addClass("hearth-taskdetail-modal");
+		contentEl.addClass("zerohearth-taskdetail-modal");
 		const isKanban = !!hit.boardColumn;
 		const editable = taskMetaEnabled(cfg, hit);
 		// A card linked to a note stores its metadata in that note's frontmatter
@@ -3933,13 +3933,13 @@ class TaskDetailModal extends HearthModal {
 
 		if (canEditTitle) {
 			const titleInput = contentEl.createEl("textarea", {
-				cls: "hearth-taskdetail-title-edit",
+				cls: "zerohearth-taskdetail-title-edit",
 				attr: { rows: "1", "aria-label": t().cards.tasks.editTitle, placeholder: t().cards.tasks.titlePlaceholder },
 			});
 			titleInput.value = hit.text || "";
 			this.titleInput = titleInput;
 		} else {
-			const title = contentEl.createEl("h3", { cls: "hearth-taskdetail-title" });
+			const title = contentEl.createEl("h3", { cls: "zerohearth-taskdetail-title" });
 			fillTaskText(view, title, hit.text || hit.file.basename, hit.file.path);
 		}
 
@@ -3954,16 +3954,16 @@ class TaskDetailModal extends HearthModal {
 				scheduled: hit.scheduled ?? "",
 				due: hit.due ?? "",
 			};
-			// The description is edited here for any task whose lines Hearth owns —
+			// The description is edited here for any task whose lines ZeroHearth owns —
 			// a Kanban card and a plain checkbox alike. A linked card keeps its in the
 			// note, so it gets the separate textarea below instead.
 			this.read = buildTaskDetailFields(contentEl, current, hit.description ?? "", canEditTitle);
 			if (linked && hit.linkedFile) {
 				// Description lives inside the linked note — edit it in its own
 				// textarea, prefilled from the note body once it loads.
-				const descWrap = contentEl.createDiv({ cls: "hearth-taskdetail" });
-				const descRow = descWrap.createDiv({ cls: "hearth-taskdetail-row is-description" });
-				descRow.createSpan({ cls: "hearth-taskdetail-label", text: t().cards.tasks.description });
+				const descWrap = contentEl.createDiv({ cls: "zerohearth-taskdetail" });
+				const descRow = descWrap.createDiv({ cls: "zerohearth-taskdetail-row is-description" });
+				descRow.createSpan({ cls: "zerohearth-taskdetail-label", text: t().cards.tasks.description });
 				const area = descriptionEditor(descRow, "").area;
 				this.linkedDescArea = area;
 				void readNoteDescription(view, hit.linkedFile).then((desc) => {
@@ -3980,7 +3980,7 @@ class TaskDetailModal extends HearthModal {
 			// behind the "Dates & priorities" toggle. The description, however, is
 			// editable here for Kanban cards even with that toggle off.
 			const today: string = moment().format("YYYY-MM-DD");
-			const chips = contentEl.createDiv("hearth-taskdetail-readonly");
+			const chips = contentEl.createDiv("zerohearth-taskdetail-readonly");
 			// The quick view is the task's detail sheet, so it shows every piece of
 			// metadata in its default style — independent of which fields the card
 			// it was opened from happens to display.
@@ -3989,13 +3989,13 @@ class TaskDetailModal extends HearthModal {
 				renderTaskDateChip(chips, hit, id, today, "text");
 			}
 			if (!chips.childNodes.length)
-				chips.createSpan({ cls: "hearth-taskdetail-empty", text: t().cards.tasks.noMetadata });
+				chips.createSpan({ cls: "zerohearth-taskdetail-empty", text: t().cards.tasks.noMetadata });
 			if (isKanban || canEditTitle) {
 				// A line-based task: an editable description (sub-bullets under the card
 				// or checkbox, or the note body for a linked card).
-				const descWrap = contentEl.createDiv({ cls: "hearth-taskdetail" });
-				const descRow = descWrap.createDiv({ cls: "hearth-taskdetail-row is-description" });
-				descRow.createSpan({ cls: "hearth-taskdetail-label", text: t().cards.tasks.description });
+				const descWrap = contentEl.createDiv({ cls: "zerohearth-taskdetail" });
+				const descRow = descWrap.createDiv({ cls: "zerohearth-taskdetail-row is-description" });
+				descRow.createSpan({ cls: "zerohearth-taskdetail-label", text: t().cards.tasks.description });
 				const area = descriptionEditor(descRow, linked ? "" : (hit.description ?? "")).area;
 				this.descArea = area;
 				if (linked && hit.linkedFile) {
@@ -4008,7 +4008,7 @@ class TaskDetailModal extends HearthModal {
 					});
 				}
 			} else if (hit.description) {
-				// A task note's description isn't Hearth's to rewrite — show it as it is.
+				// A task note's description isn't ZeroHearth's to rewrite — show it as it is.
 				renderTaskDescription(contentEl, hit.description, view, hit.file.path);
 			}
 		}
@@ -4296,7 +4296,7 @@ async function collectTasksPluginTasks(view: CardHost, cfg: TasksConfig): Promis
  * A card may carry its own mapping (the setup wizard writes one, read from
  * TaskNotes itself, so a vault that renamed its fields gets a working card
  * without a global setting being changed for every other board too); otherwise
- * the global mapping from Settings → Hearth applies, and an empty global falls
+ * the global mapping from Settings → ZeroHearth applies, and an empty global falls
  * back to whatever the caller knows — TaskNotes' own live setting where it has
  * been read, or the stock field name.
  */
@@ -4334,7 +4334,7 @@ export function taskNotesDoneValue(settings: HomeSettings, cfg: TasksConfig | nu
 /** Build a predicate deciding whether a TaskNotes status value counts as
  * complete. If the card lists its own complete statuses (`taskNotesDoneStatuses`,
  * e.g. "done" + "canceled") those win; otherwise the single global done value
- * (Settings → Hearth) is used. Comparison is case-insensitive. */
+ * (Settings → ZeroHearth) is used. Comparison is case-insensitive. */
 function doneStatusMatcher(cfg: TasksConfig, globalDoneValue: string): (status: string) => boolean {
 	const custom = (cfg.taskNotesDoneStatuses ?? [])
 		.map((v) => v.trim().toLowerCase())
@@ -4786,7 +4786,7 @@ async function collectKanbanTasks(
 	return { hits, columns, file };
 }
 
-/** The subset of metadata emoji Hearth's editor manages (due/scheduled/start/
+/** The subset of metadata emoji ZeroHearth's editor manages (due/scheduled/start/
  * recurrence/priority). Completion (✅), created (➕) and cancelled (❌) markers
  * are left untouched when rewriting a card's metadata. */
 const MANAGED_EMOJI_CLASS = "📅⏳🛫🔁⏫🔼🔽🔺⏬";
@@ -4813,7 +4813,7 @@ function readEmojiDate(text: string, emoji: string): string {
 	return resolveDate(expr) ?? "";
 }
 
-/** Whether a line on disk is still the card we read, ignoring anything Hearth
+/** Whether a line on disk is still the card we read, ignoring anything ZeroHearth
  * itself rewrites — the metadata markers and the inline tags. Both are edited
  * through this card, so a change to either is ours, not a sign that the file
  * moved on underneath us. */
@@ -5093,8 +5093,8 @@ async function markCardsDone(view: CardHost, hits: TaskHit[], doneDate?: string)
 
 /** Attach a right-click menu to a Tasks-plugin task: edit in the plugin's own
  * dialog (so the note keeps the vault's task format), open the note, delete.
- * Hearth's own metadata editor and convert-to-note are deliberately not
- * offered here — both would rewrite the line in Hearth's shape. */
+ * ZeroHearth's own metadata editor and convert-to-note are deliberately not
+ * offered here — both would rewrite the line in ZeroHearth's shape. */
 function attachTasksPluginCardMenu(
 	view: CardHost,
 	cfg: TasksConfig,
@@ -5114,7 +5114,7 @@ function attachTasksPluginCardMenu(
  * terminal mode's. */
 export function tasksPluginMenu(view: CardHost, hit: TaskHit, refresh: () => void, into?: Menu): Menu | null {
 	if (hit.line < 0) return into ?? null;
-	const menu = into ?? hearthMenu();
+	const menu = into ?? zerohearthMenu();
 	if (into) into.addSeparator();
 	menu.addItem((item) =>
 		item
@@ -5204,7 +5204,7 @@ export function taskMenu(
 	if (!canEditMeta && !isKanban) return into ?? null;
 	// Appending to another menu (the matrix's) sets this one's items apart.
 	if (into) into.addSeparator();
-	const menu = into ?? hearthMenu();
+	const menu = into ?? zerohearthMenu();
 	if (canEditMeta) {
 		menu.addItem((item) =>
 			item
@@ -5275,14 +5275,14 @@ function fillTaskText(view: CardHost, el: HTMLElement, text: string, sourcePath:
 		if (m.index > last) el.appendText(text.slice(last, m.index));
 		if (m[1] != null) {
 			const [target, alias] = m[1].split("|");
-			const link = el.createSpan({ cls: "hearth-task-link", text: (alias ?? target).trim() });
+			const link = el.createSpan({ cls: "zerohearth-task-link", text: (alias ?? target).trim() });
 			link.addEventListener("click", (ev) => {
 				ev.stopPropagation();
 				ev.preventDefault();
 				void openLink(view, target.trim(), sourcePath, "link", ev);
 			});
 		} else {
-			const link = el.createSpan({ cls: "hearth-task-link", text: m[2] });
+			const link = el.createSpan({ cls: "zerohearth-task-link", text: m[2] });
 			const url = m[3];
 			link.addEventListener("click", (ev) => {
 				ev.stopPropagation();
@@ -5458,7 +5458,7 @@ function startCardTitleEdit(
 	card.setAttribute("draggable", "false");
 	textEl.hide();
 	const input = row.createEl("textarea", {
-		cls: "hearth-kanban-card-edit",
+		cls: "zerohearth-kanban-card-edit",
 		attr: { rows: "1", "aria-label": t().cards.tasks.editTitleHint },
 	});
 	row.insertBefore(input, textEl);
@@ -5520,7 +5520,7 @@ function startColumnRename(
 	head.setAttribute("draggable", "false");
 	titleEl.hide();
 	const input = head.createEl("input", {
-		cls: "hearth-kanban-col-rename",
+		cls: "zerohearth-kanban-col-rename",
 		attr: { type: "text", "aria-label": t().cards.tasks.renameColumnHint },
 	});
 	head.insertBefore(input, titleEl);
@@ -5816,7 +5816,7 @@ function renderTaskNotesCheckbox(
 	openStatus: string,
 ): void {
 	const check = row.createEl("input", {
-		cls: "hearth-task-check",
+		cls: "zerohearth-task-check",
 		attr: { type: "checkbox" },
 	});
 	check.checked = hit.done;
@@ -5996,7 +5996,7 @@ function renderRecurringCheckbox(
 	targetFile?: TFile,
 ): void {
 	const check = parent.createEl("input", {
-		cls: "hearth-task-check hearth-task-check-recurring",
+		cls: "zerohearth-task-check zerohearth-task-check-recurring",
 		attr: { type: "checkbox", "aria-label": t().cards.tasks.markOccurrence },
 	});
 	// Move it to the very front so it leads the task text regardless of what
@@ -6033,7 +6033,7 @@ function renderLineRecurringCheckbox(
 	refresh: () => void,
 ): void {
 	const check = parent.createEl("input", {
-		cls: "hearth-task-check hearth-task-check-recurring",
+		cls: "zerohearth-task-check zerohearth-task-check-recurring",
 		attr: { type: "checkbox", "aria-label": t().cards.tasks.markOccurrence },
 	});
 	parent.insertBefore(check, parent.firstChild);
@@ -6052,8 +6052,8 @@ function renderLineRecurringCheckbox(
 
 export async function openTask(view: CardHost, cfg: TasksConfig, hit: TaskHit, refresh: () => void): Promise<void> {
 	// Tasks-plugin tasks edit in the plugin's own modal, so the note keeps the
-	// vault's task format. Clicking opens that dialog rather than Hearth's
-	// quick view (which would rewrite the line in Hearth's own shape).
+	// vault's task format. Clicking opens that dialog rather than ZeroHearth's
+	// quick view (which would rewrite the line in ZeroHearth's own shape).
 	if ((cfg.source ?? "checkbox") === "obsidian-tasks" && hit.line >= 0) {
 		const ok = await editTasksPluginTask(view, hit.file, hit.line, hit.text);
 		if (ok) refresh();
@@ -6214,9 +6214,9 @@ function sourceLabel(source: string): string {
 /**
  * The fields editor.
  *
- * Nothing here is a fixed list of Hearth's metadata: a field is built by the
+ * Nothing here is a fixed list of ZeroHearth's metadata: a field is built by the
  * user — a name, a display style, and the keys that feed it. Each key reads one
- * frontmatter property or one of Hearth's own parsed values, and can map each
+ * frontmatter property or one of ZeroHearth's own parsed values, and can map each
  * raw value to a nicer label and a colour. Values with no mapping still show,
  * as themselves.
  *
@@ -6225,7 +6225,7 @@ function sourceLabel(source: string): string {
  * and below stay on screen throughout. Building a second field that mirrors the
  * first is the common case, and it needs both visible.
  */
-export class TaskFieldsModal extends HearthModal {
+export class TaskFieldsModal extends ZeroHearthModal {
 	private fields: TaskFieldDef[];
 	private body: HTMLElement | null = null;
 	private discovery: TaskFieldDiscovery = { properties: [], values: new Map() };
@@ -6239,7 +6239,7 @@ export class TaskFieldsModal extends HearthModal {
 
 	/**
 	 * @param cfg  The card being edited, or null when editing the global list in
-	 *             Settings → Hearth. A card scopes the vault scan to its folders;
+	 *             Settings → ZeroHearth. A card scopes the vault scan to its folders;
 	 *             the global list belongs to no card and scans everything.
 	 */
 	constructor(
@@ -6270,11 +6270,11 @@ export class TaskFieldsModal extends HearthModal {
 		// default modal width cannot hold without crowding every row. Fall back
 		// to the content when the frame isn't exposed, rather than throwing and
 		// opening with nothing drawn.
-		(modalEl ?? contentEl).addClass("hearth-taskfields-modal");
-		contentEl.addClass("hearth-taskfields");
+		(modalEl ?? contentEl).addClass("zerohearth-taskfields-modal");
+		contentEl.addClass("zerohearth-taskfields");
 		contentEl.createEl("h3", { text: t().editors.tasks.fieldsTitle });
-		contentEl.createDiv({ cls: "hearth-taskfields-hint", text: t().editors.tasks.fieldsHint });
-		this.body = contentEl.createDiv("hearth-taskfields-body");
+		contentEl.createDiv({ cls: "zerohearth-taskfields-hint", text: t().editors.tasks.fieldsHint });
+		this.body = contentEl.createDiv("zerohearth-taskfields-body");
 		this.renderBody();
 		this.renderFooter(contentEl);
 		// Values arrive from a vault scan; redraw once they do so the mappings
@@ -6321,13 +6321,13 @@ export class TaskFieldsModal extends HearthModal {
 	): HTMLElement {
 		const labels = t().editors.tasks;
 		const open = this.isExpanded(openKey);
-		const head = panel.createDiv("hearth-taskfields-head");
-		const chevron = head.createDiv("hearth-taskfields-chevron");
+		const head = panel.createDiv("zerohearth-taskfields-head");
+		const chevron = head.createDiv("zerohearth-taskfields-chevron");
 		if (expandable) setIcon(chevron, open ? "chevron-down" : "chevron-right");
-		const text = head.createDiv("hearth-taskfields-headtext");
-		text.createDiv({ cls: "hearth-taskfields-title", text: title });
-		text.createDiv({ cls: "hearth-taskfields-summary", text: summary });
-		const actions = head.createDiv("hearth-taskfields-actions");
+		const text = head.createDiv("zerohearth-taskfields-headtext");
+		text.createDiv({ cls: "zerohearth-taskfields-title", text: title });
+		text.createDiv({ cls: "zerohearth-taskfields-summary", text: summary });
+		const actions = head.createDiv("zerohearth-taskfields-actions");
 		// The buttons sit inside the strip that toggles, so their clicks must not
 		// reach it — moving a field would otherwise collapse it.
 		actions.addEventListener("click", (e) => e.stopPropagation());
@@ -6372,13 +6372,13 @@ export class TaskFieldsModal extends HearthModal {
 			try {
 				this.renderField(body, field, index);
 			} catch (error) {
-				console.error("Hearth: a task field failed to render", error);
+				console.error("ZeroHearth: a task field failed to render", error);
 				this.renderBrokenField(body, field, index, error);
 			}
 		});
 
 		if (!this.fields.length) {
-			body.createDiv({ cls: "hearth-taskfields-empty", text: labels.fieldsEmpty });
+			body.createDiv({ cls: "zerohearth-taskfields-empty", text: labels.fieldsEmpty });
 		}
 
 		this.renderAddField(body);
@@ -6394,19 +6394,19 @@ export class TaskFieldsModal extends HearthModal {
 		error?: unknown,
 	): void {
 		const labels = t().editors.tasks;
-		const panel = body.createDiv("hearth-taskfields-field is-broken");
-		const head = panel.createDiv("hearth-taskfields-head");
+		const panel = body.createDiv("zerohearth-taskfields-field is-broken");
+		const head = panel.createDiv("zerohearth-taskfields-head");
 		const name =
 			field && typeof field.name === "string" && field.name.trim()
 				? field.name.trim()
 				: labels.fieldUnnamed;
-		head.createDiv({ cls: "hearth-taskfields-headtext", text: `${name} · ${labels.fieldBroken}` });
+		head.createDiv({ cls: "zerohearth-taskfields-headtext", text: `${name} · ${labels.fieldBroken}` });
 		// The reason is shown rather than swallowed: a broken field the user
 		// cannot explain is a bug report with nothing in it.
 		const reason =
 			error instanceof Error ? error.message : typeof error === "string" ? error : "";
-		if (reason) head.createDiv({ cls: "hearth-taskfields-summary", text: reason });
-		const actions = head.createDiv("hearth-taskfields-actions");
+		if (reason) head.createDiv({ cls: "zerohearth-taskfields-summary", text: reason });
+		const actions = head.createDiv("zerohearth-taskfields-actions");
 		this.iconButton(actions, "trash-2", labels.fieldRemove, false, () => {
 			this.fields.splice(index, 1);
 			this.renderBody();
@@ -6418,7 +6418,7 @@ export class TaskFieldsModal extends HearthModal {
 	 * of adding it. */
 	private renderAddField(body: HTMLElement): void {
 		const labels = t().editors.tasks;
-		const foot = body.createDiv("hearth-taskfields-foot is-add");
+		const foot = body.createDiv("zerohearth-taskfields-foot is-add");
 		new ButtonComponent(foot)
 			.setIcon("plus")
 			.setButtonText(labels.fieldAdd)
@@ -6441,7 +6441,7 @@ export class TaskFieldsModal extends HearthModal {
 
 		// A card per field, so where one ends and the next begins is obvious
 		// without counting indentation.
-		const panel = body.createDiv("hearth-taskfields-field");
+		const panel = body.createDiv("zerohearth-taskfields-field");
 		panel.toggleClass("is-open", open);
 		const actions = this.panelHead(
 			panel,
@@ -6469,7 +6469,7 @@ export class TaskFieldsModal extends HearthModal {
 		});
 
 		if (!open) return;
-		const detail = panel.createDiv("hearth-taskfields-panelbody");
+		const detail = panel.createDiv("zerohearth-taskfields-panelbody");
 
 		new Setting(detail)
 			.setName(labels.fieldName)
@@ -6518,7 +6518,7 @@ export class TaskFieldsModal extends HearthModal {
 		if (ambientTaken) {
 			const ignored = isAmbientStyle(fieldStyle(field));
 			detail.createDiv({
-				cls: `hearth-taskfields-hint${ignored ? " is-warning" : ""}`,
+				cls: `zerohearth-taskfields-hint${ignored ? " is-warning" : ""}`,
 				text: ignored
 					? labels.fieldAmbientIgnored(ownerName)
 					: labels.fieldAmbientTaken(ownerName),
@@ -6551,13 +6551,13 @@ export class TaskFieldsModal extends HearthModal {
 
 		// The keys are the substance of a field, so they get a section of their own
 		// rather than another settings row that happens to have rows under it.
-		const section = detail.createDiv("hearth-taskfields-section");
-		const sectionHead = section.createDiv("hearth-taskfields-sectionhead");
-		sectionHead.createDiv({ cls: "hearth-taskfields-sectiontitle", text: labels.fieldKeys });
-		sectionHead.createDiv({ cls: "hearth-taskfields-sectiondesc", text: labels.fieldKeysDesc });
+		const section = detail.createDiv("zerohearth-taskfields-section");
+		const sectionHead = section.createDiv("zerohearth-taskfields-sectionhead");
+		sectionHead.createDiv({ cls: "zerohearth-taskfields-sectiontitle", text: labels.fieldKeys });
+		sectionHead.createDiv({ cls: "zerohearth-taskfields-sectiondesc", text: labels.fieldKeysDesc });
 		field.keys.forEach((key, keyIndex) => this.renderKey(section, field, key, keyIndex));
 		if (!field.keys.length) {
-			section.createDiv({ cls: "hearth-taskfields-empty", text: labels.fieldKeysEmpty });
+			section.createDiv({ cls: "zerohearth-taskfields-empty", text: labels.fieldKeysEmpty });
 		}
 		this.renderAddKey(section, field);
 	}
@@ -6579,7 +6579,7 @@ export class TaskFieldsModal extends HearthModal {
 		const mapped = (key.values ?? []).length;
 		const open = mappable && this.isExpanded(openKey);
 
-		const panel = section.createDiv("hearth-taskfields-key");
+		const panel = section.createDiv("zerohearth-taskfields-key");
 		panel.toggleClass("is-open", open);
 		const actions = this.panelHead(
 			panel,
@@ -6613,7 +6613,7 @@ export class TaskFieldsModal extends HearthModal {
 		});
 
 		if (!open) return;
-		const host = panel.createDiv("hearth-taskfields-panelbody");
+		const host = panel.createDiv("zerohearth-taskfields-panelbody");
 		// A frontmatter property could hold anything; only the user knows whether
 		// this one is a date. The built-in date sources are not up for debate.
 		if (!isDateSource(key.source)) {
@@ -6645,7 +6645,7 @@ export class TaskFieldsModal extends HearthModal {
 	 */
 	private renderDateRelations(host: HTMLElement, key: TaskFieldKey): void {
 		const labels = t().editors.tasks;
-		host.createDiv({ cls: "hearth-taskfields-hint", text: labels.fieldDateHint });
+		host.createDiv({ cls: "zerohearth-taskfields-hint", text: labels.fieldDateHint });
 
 		const values = (key.values ??= []);
 		const table = this.valueTable(host, labels.fieldWhenColumn);
@@ -6658,9 +6658,9 @@ export class TaskFieldsModal extends HearthModal {
 				values.push(mapping);
 			}
 			const entry = mapping;
-			const row = table.createDiv("hearth-taskfields-trow");
+			const row = table.createDiv("zerohearth-taskfields-trow");
 			row.createDiv({
-				cls: "hearth-taskfields-cell is-fixed",
+				cls: "zerohearth-taskfields-cell is-fixed",
 				text: labels.dateRelations[relation],
 			});
 			this.textCell(row, labels.fieldDateLabelPlaceholder, entry.label ?? "", (v) => {
@@ -6669,7 +6669,7 @@ export class TaskFieldsModal extends HearthModal {
 			this.colorCell(row, entry);
 			// The three relations are the whole set: nothing to add, nothing to
 			// remove. The empty cell keeps the columns lined up with the value table.
-			row.createDiv("hearth-taskfields-cell is-actions");
+			row.createDiv("zerohearth-taskfields-cell is-actions");
 		}
 	}
 
@@ -6680,12 +6680,12 @@ export class TaskFieldsModal extends HearthModal {
 	 * item with an empty name and its controls crowded to the right. */
 	private valueTable(host: HTMLElement, firstColumn: string): HTMLElement {
 		const labels = t().editors.tasks;
-		const table = host.createDiv("hearth-taskfields-table");
-		const head = table.createDiv("hearth-taskfields-trow hearth-taskfields-thead");
-		head.createDiv({ cls: "hearth-taskfields-cell", text: firstColumn });
-		head.createDiv({ cls: "hearth-taskfields-cell", text: labels.fieldShownColumn });
-		head.createDiv({ cls: "hearth-taskfields-cell", text: labels.fieldColorColumn });
-		head.createDiv("hearth-taskfields-cell");
+		const table = host.createDiv("zerohearth-taskfields-table");
+		const head = table.createDiv("zerohearth-taskfields-trow zerohearth-taskfields-thead");
+		head.createDiv({ cls: "zerohearth-taskfields-cell", text: firstColumn });
+		head.createDiv({ cls: "zerohearth-taskfields-cell", text: labels.fieldShownColumn });
+		head.createDiv({ cls: "zerohearth-taskfields-cell", text: labels.fieldColorColumn });
+		head.createDiv("zerohearth-taskfields-cell");
 		return table;
 	}
 
@@ -6696,7 +6696,7 @@ export class TaskFieldsModal extends HearthModal {
 		value: string,
 		onChange: (value: string) => void,
 	): HTMLInputElement {
-		const cell = row.createDiv("hearth-taskfields-cell");
+		const cell = row.createDiv("zerohearth-taskfields-cell");
 		const text = new TextComponent(cell);
 		text.setPlaceholder(placeholder).setValue(value).onChange(onChange);
 		return text.inputEl;
@@ -6710,13 +6710,13 @@ export class TaskFieldsModal extends HearthModal {
 	 */
 	private colorCell(row: HTMLElement, mapping: TaskValueMap): void {
 		const labels = t().editors.tasks;
-		const cell = row.createDiv("hearth-taskfields-cell is-color");
+		const cell = row.createDiv("zerohearth-taskfields-cell is-color");
 		// Deliberately not a <button>: Obsidian's and a theme's button rules set a
 		// background at a specificity a plugin class can't reliably beat, which
 		// left every swatch grey however it was coloured. A div with the button
 		// role has nothing to fight and the same keyboard behaviour.
 		const swatch = cell.createDiv({
-			cls: "hearth-taskfields-swatch",
+			cls: "zerohearth-taskfields-swatch",
 			attr: {
 				role: "button",
 				tabindex: "0",
@@ -6725,7 +6725,7 @@ export class TaskFieldsModal extends HearthModal {
 			},
 		});
 		const picker = cell.createEl("input", {
-			cls: "hearth-taskfields-picker",
+			cls: "zerohearth-taskfields-picker",
 			attr: {
 				type: "color",
 				"aria-label": labels.fieldColorCustom,
@@ -6745,7 +6745,7 @@ export class TaskFieldsModal extends HearthModal {
 		};
 		show();
 		const openPalette = () => {
-			const menu = hearthMenu();
+			const menu = zerohearthMenu();
 			for (const preset of TASK_COLOR_PRESETS) {
 				const value = presetColor(preset);
 				menu.addItem((item) =>
@@ -6787,12 +6787,12 @@ export class TaskFieldsModal extends HearthModal {
 
 	private renderMappings(host: HTMLElement, key: TaskFieldKey): void {
 		const labels = t().editors.tasks;
-		host.createDiv({ cls: "hearth-taskfields-hint", text: labels.fieldMapHint });
+		host.createDiv({ cls: "zerohearth-taskfields-hint", text: labels.fieldMapHint });
 
 		const values = (key.values ??= []);
 		const table = this.valueTable(host, labels.fieldValueColumn);
 		values.forEach((mapping, index) => {
-			const row = table.createDiv("hearth-taskfields-trow");
+			const row = table.createDiv("zerohearth-taskfields-trow");
 			const match = this.textCell(row, labels.fieldMatchPlaceholder, mapping.match, (v) => {
 				mapping.match = v;
 			});
@@ -6800,7 +6800,7 @@ export class TaskFieldsModal extends HearthModal {
 				mapping.label = v.trim() || undefined;
 			});
 			this.colorCell(row, mapping);
-			const actions = row.createDiv("hearth-taskfields-cell is-actions");
+			const actions = row.createDiv("zerohearth-taskfields-cell is-actions");
 			this.iconButton(actions, "trash-2", labels.fieldRemoveMapping, false, () => {
 				values.splice(index, 1);
 				this.renderBody();
@@ -6813,7 +6813,7 @@ export class TaskFieldsModal extends HearthModal {
 			}
 		});
 		if (!values.length) {
-			table.createDiv({ cls: "hearth-taskfields-empty", text: labels.fieldMapEmpty });
+			table.createDiv({ cls: "zerohearth-taskfields-empty", text: labels.fieldMapEmpty });
 		}
 
 		// Values this key actually takes in the vault, minus the ones already
@@ -6822,7 +6822,7 @@ export class TaskFieldsModal extends HearthModal {
 		const suggestions = (this.discovery.values.get(key.source) ?? []).filter(
 			(v) => !mapped.has(v.trim().toLowerCase()),
 		);
-		const foot = host.createDiv("hearth-taskfields-foot");
+		const foot = host.createDiv("zerohearth-taskfields-foot");
 		new ButtonComponent(foot)
 			.setIcon("plus")
 			.setButtonText(labels.fieldAddMapping)
@@ -6836,7 +6836,7 @@ export class TaskFieldsModal extends HearthModal {
 				.setButtonText(labels.fieldValuesFound(suggestions.length))
 				.setTooltip(labels.fieldPickValue)
 				.onClick((e) => {
-					const menu = hearthMenu();
+					const menu = zerohearthMenu();
 					for (const value of suggestions) {
 						menu.addItem((item) =>
 							item.setTitle(value).onClick(() => {
@@ -6852,7 +6852,7 @@ export class TaskFieldsModal extends HearthModal {
 
 	/**
 	 * Add a key to a field. Two buttons, each opening the list it belongs to:
-	 * what Hearth reads itself, and the frontmatter properties your notes
+	 * what ZeroHearth reads itself, and the frontmatter properties your notes
 	 * actually use (with typing a name by hand at the end of that list, for a
 	 * property no task carries yet). One button per source of truth beats a text
 	 * box flanked by icons that have to be hovered to find out what they do.
@@ -6873,13 +6873,13 @@ export class TaskFieldsModal extends HearthModal {
 		};
 		const used = new Set(field.keys.map((k) => k.source));
 
-		const foot = section.createDiv("hearth-taskfields-foot");
+		const foot = section.createDiv("zerohearth-taskfields-foot");
 		new ButtonComponent(foot)
 			.setIcon("sparkles")
 			.setButtonText(labels.fieldAddBuiltin)
 			.setTooltip(labels.fieldPickBuiltin)
 			.onClick((e) => {
-				const menu = hearthMenu();
+				const menu = zerohearthMenu();
 				// Only what this card can show: the TaskNotes status has no
 				// meaning on a checkbox card, a board column none off a board.
 				for (const id of builtinSourcesFor(this.fieldSource())) {
@@ -6897,7 +6897,7 @@ export class TaskFieldsModal extends HearthModal {
 			.setButtonText(labels.fieldAddProperty)
 			.setTooltip(labels.fieldPickProperty)
 			.onClick((e) => {
-				const menu = hearthMenu();
+				const menu = zerohearthMenu();
 				for (const property of available) {
 					menu.addItem((item) =>
 						item.setTitle(property).onClick(() => add(frontmatterSource(property))),
@@ -6917,7 +6917,7 @@ export class TaskFieldsModal extends HearthModal {
 				menu.showAtMouseEvent(e);
 			});
 
-		foot.createDiv({ cls: "hearth-taskfields-footnote", text: labels.fieldAddKeyDesc });
+		foot.createDiv({ cls: "zerohearth-taskfields-footnote", text: labels.fieldAddKeyDesc });
 	}
 
 	private move(from: number, to: number): void {
@@ -6948,7 +6948,7 @@ export class TaskFieldsModal extends HearthModal {
 
 	private renderFooter(parent: HTMLElement): void {
 		new Setting(parent)
-			.setClass("hearth-taskfields-footer")
+			.setClass("zerohearth-taskfields-footer")
 			.addButton((b) =>
 				b
 					.setButtonText(t().editors.tasks.fieldsApplyClose)
@@ -7003,7 +7003,7 @@ export function tasksEditor(ctx: CardEditorContext, containerEl: HTMLElement): v
 		});
 
 	// Tasks-plugin source: where the plugin's own create dialog puts new tasks.
-	// Filtering, sorting and fields are Hearth's own, over the tasks the
+	// Filtering, sorting and fields are ZeroHearth's own, over the tasks the
 	// plugin says exist — so the rest of the editor below applies as usual.
 	if (isTasksPlugin) {
 		const daily = cfg.tasksPluginDailyNote === true || !(cfg.tasksPluginNote?.trim());
@@ -7178,12 +7178,12 @@ export function tasksEditor(ctx: CardEditorContext, containerEl: HTMLElement): v
 						ctx.opts.save();
 					});
 				ta.inputEl.rows = 4;
-				ta.inputEl.addClass("hearth-tasks-statuses-input");
+				ta.inputEl.addClass("zerohearth-tasks-statuses-input");
 			});
 	}
 
 	// TaskNotes source: which status values count as complete. Empty uses the
-	// single global done value (Settings → Hearth); listing values here (e.g.
+	// single global done value (Settings → ZeroHearth); listing values here (e.g.
 	// "done" and "canceled") treats each as complete.
 	if (cfg.source === "tasknotes") {
 		new Setting(containerEl)
@@ -7201,7 +7201,7 @@ export function tasksEditor(ctx: CardEditorContext, containerEl: HTMLElement): v
 						ctx.opts.save();
 					});
 				ta.inputEl.rows = 3;
-				ta.inputEl.addClass("hearth-tasks-statuses-input");
+				ta.inputEl.addClass("zerohearth-tasks-statuses-input");
 			});
 	}
 
@@ -7294,7 +7294,7 @@ export function tasksEditor(ctx: CardEditorContext, containerEl: HTMLElement): v
 			);
 	}
 
-	// List, Kanban board or matrix — Hearth's own grouping. The Tasks-plugin
+	// List, Kanban board or matrix — ZeroHearth's own grouping. The Tasks-plugin
 	// board and matrix group by the plugin's statuses and priorities but stay
 	// read-only (no dragging between statuses, no priority rewrites that would
 	// convert the vault's task format), so the layout picker stays for this
@@ -7529,7 +7529,7 @@ export function tasksEditor(ctx: CardEditorContext, containerEl: HTMLElement): v
 	}
 
 	// Which metadata each task shows, in what order and how. TaskNotes cards
-	// follow the vault-wide list (Settings → Hearth → Integrations) unless the
+	// follow the vault-wide list (Settings → ZeroHearth → Integrations) unless the
 	// card opts out with its own; every other source configures its own fields
 	// on the card, independently of that setting. The field-name mapping in
 	// those same settings is a different thing — it says where to read a value
@@ -7640,7 +7640,7 @@ export function tasksEditor(ctx: CardEditorContext, containerEl: HTMLElement): v
 			ctx.opts.save();
 		});
 		t.inputEl.type = "number";
-		t.inputEl.addClass("hearth-count-input");
+		t.inputEl.addClass("zerohearth-count-input");
 	});
 	addResetButton(ctx, maxTasks, t().settings.resetField, () => {
 		cfg.count = undefined;
@@ -7688,12 +7688,12 @@ function matrixEditor(ctx: CardEditorContext, containerEl: HTMLElement, cfg: Tas
 	const source = matrixSource(cfg);
 	const options = matrixPriorityOptions(ctx.app, cfg);
 	const values = options.map((o) => o.value);
-	const host = containerEl.createDiv("hearth-matrix-editor");
+	const host = containerEl.createDiv("zerohearth-matrix-editor");
 	new Setting(host).setName(te.matrixHeading).setDesc(te.matrixDesc).setHeading();
 	if (!matrixReadsPriorities(cfg)) {
-		host.createDiv({ cls: "setting-item-description hearth-matrix-editor-warn", text: t().cards.empty.matrixNeedsPriorities });
+		host.createDiv({ cls: "setting-item-description zerohearth-matrix-editor-warn", text: t().cards.empty.matrixNeedsPriorities });
 	}
-	const body = host.createDiv("hearth-matrix-editor-body");
+	const body = host.createDiv("zerohearth-matrix-editor-body");
 	// Saves and redraws the board behind the editor; the editor itself is
 	// redrawn in place only where something it shows has changed.
 	// A name being typed is only saved: redrawing either would take the focus
@@ -7722,15 +7722,15 @@ function matrixEditor(ctx: CardEditorContext, containerEl: HTMLElement, cfg: Tas
 
 		// ---- Layout, with a preview of the cross as it will be drawn.
 		new Setting(body).setName(te.matrixLayout).setHeading();
-		const preview = body.createDiv("hearth-matrix-preview");
-		preview.createDiv("hearth-matrix-preview-corner");
-		for (const end of arrangement.across) preview.createDiv({ cls: "hearth-matrix-preview-axis is-top", text: names[end] });
+		const preview = body.createDiv("zerohearth-matrix-preview");
+		preview.createDiv("zerohearth-matrix-preview-corner");
+		for (const end of arrangement.across) preview.createDiv({ cls: "zerohearth-matrix-preview-axis is-top", text: names[end] });
 		arrangement.cells.forEach((id, n) => {
 			if (n % 2 === 0) {
-				preview.createDiv({ cls: "hearth-matrix-preview-axis is-side", text: names[arrangement.down[n / 2]] });
+				preview.createDiv({ cls: "zerohearth-matrix-preview-axis is-side", text: names[arrangement.down[n / 2]] });
 			}
-			const cell = preview.createDiv(`hearth-matrix-preview-q is-${id}`);
-			cell.createSpan("hearth-matrix-q-dot");
+			const cell = preview.createDiv(`zerohearth-matrix-preview-q is-${id}`);
+			cell.createSpan("zerohearth-matrix-q-dot");
 			cell.createSpan({ text: resolved[id].label });
 		});
 
@@ -7788,7 +7788,7 @@ function matrixEditor(ctx: CardEditorContext, containerEl: HTMLElement, cfg: Tas
 		// In the order they sit on the cross, so the list reads like the card.
 		for (const id of arrangement.cells) {
 			const row = new Setting(body).setName(te.matrixQuadrant[id]);
-			row.settingEl.addClass("hearth-matrix-editor-row", `is-${id}`);
+			row.settingEl.addClass("zerohearth-matrix-editor-row", `is-${id}`);
 			const writeValue = matrixWriteValue(resolved, id);
 			row.setDesc(
 				writeValue === undefined
@@ -7797,18 +7797,18 @@ function matrixEditor(ctx: CardEditorContext, containerEl: HTMLElement, cfg: Tas
 							options.find((o) => o.value === (writeValue ?? MATRIX_NO_PRIORITY))?.label ?? String(writeValue),
 						),
 			);
-			row.controlEl.createSpan({ cls: "hearth-matrix-editor-label", text: te.matrixName });
+			row.controlEl.createSpan({ cls: "zerohearth-matrix-editor-label", text: te.matrixName });
 			row.addText((txt) => {
 				txt.setPlaceholder(matrixQuadrantLabels()[id])
 					.setValue(cfg.matrix?.quadrants?.[id]?.label ?? "")
 					.onChange((v) => commit(withQuadrantLabel(cfg.matrix, id, v), false, true));
 				txt.inputEl.setAttribute("aria-label", `${te.matrixName}: ${te.matrixQuadrant[id]}`);
 			});
-			const chips = row.settingEl.createDiv("hearth-matrix-editor-chips");
+			const chips = row.settingEl.createDiv("zerohearth-matrix-editor-chips");
 			for (const option of options) {
 				const on = current[id].includes(option.value);
 				const chip = chips.createEl("button", {
-					cls: "hearth-matrix-editor-chip",
+					cls: "zerohearth-matrix-editor-chip",
 					text: option.label,
 					attr: { type: "button", "aria-pressed": on ? "true" : "false" },
 				});

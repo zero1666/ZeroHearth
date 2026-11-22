@@ -3,7 +3,7 @@ import type { HomeSettings } from "./types";
 /**
  * Keeping UI state on the device instead of in synced files (#392).
  *
- * Two pieces of Hearth state describe what one device is looking at rather
+ * Two pieces of ZeroHearth state describe what one device is looking at rather
  * than how the vault is configured, yet both end up in files a vault synced
  * with Git (or anything else) carries between devices:
  *
@@ -24,7 +24,7 @@ import type { HomeSettings } from "./types";
  */
 
 /** localStorage key for this device's active dashboard. */
-export const ACTIVE_DASHBOARD_KEY = "hearth-active-dashboard";
+export const ACTIVE_DASHBOARD_KEY = "zerohearth-active-dashboard";
 
 /** The id stored in localStorage, if it still names one of `settings`'
  * dashboards. Anything else — absent, junk, a board deleted elsewhere — is

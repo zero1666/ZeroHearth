@@ -1,11 +1,11 @@
 /**
- * What the gallery server says, and how Hearth reads it.
+ * What the gallery server says, and how ZeroHearth reads it.
  *
  * The wire contract is written down in `docs/gallery-api.md`; this module is
  * the client's half of it. Two rules run through the whole file and are the
  * reason it exists rather than a set of `as` casts:
  *
- * - **A gallery is a stranger.** Someone running Hearth points it at a host,
+ * - **A gallery is a stranger.** Someone running ZeroHearth points it at a host,
  *   and everything that comes back is text of unknown provenance — including
  *   the handle and description of a board somebody else uploaded. So every
  *   field is read through a validator that bounds its length and its shape, and
@@ -15,7 +15,7 @@
  * - **A missing field is not an error.** A gallery running a newer or older
  *   build than the plugin should still list. Readers fill in what they can and
  *   leave the rest absent, so one added field on the server does not blank a
- *   listing on every older Hearth.
+ *   listing on every older ZeroHearth.
  */
 
 import { asGalleryCategory, type GalleryCategory } from "./categories";
@@ -60,7 +60,7 @@ export interface GalleryEntrySummary {
 	updatedAt?: string;
 	/** How the reader has voted, when the client is signed in. */
 	myVote: VoteValue;
-	/** The Hearth version that wrote the package. */
+	/** The ZeroHearth version that wrote the package. */
 	pluginVersion?: string;
 	/** True when the package carries its wallpaper, so the row can ask the
 	 * server for the picture. */
@@ -193,7 +193,7 @@ export interface GalleryLimits {
  * so the client can refuse politely instead of failing oddly. */
 export interface GalleryInfo {
 	name: string;
-	/** The API version this host speaks. Hearth requires 1. */
+	/** The API version this host speaks. ZeroHearth requires 1. */
 	api: number;
 	limits: GalleryLimits;
 	/** Where the host's terms live, if it has any. Shown as text, never opened
@@ -415,7 +415,7 @@ export function readProfile(raw: unknown): GalleryProfile | null {
 	};
 }
 
-/** The server's own limits, with Hearth's defaults for anything it left out. */
+/** The server's own limits, with ZeroHearth's defaults for anything it left out. */
 export function readInfo(raw: unknown): GalleryInfo {
 	const src = (raw ?? {}) as Record<string, unknown>;
 	const limits = (src.limits ?? {}) as Record<string, unknown>;

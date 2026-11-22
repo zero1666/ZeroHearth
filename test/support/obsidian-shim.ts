@@ -132,7 +132,7 @@ export const Platform = {
 	// rule, #272) are off unless a test asks for them.
 	isMacOS: false,
 };
-// Set to the newest version any Hearth feature gates on (Operon's Developer
+// Set to the newest version any ZeroHearth feature gates on (Operon's Developer
 // API needs 1.12.2), so a `requireApiVersion` check is satisfied by default and
 // a test that wants the *unsupported* answer says so explicitly — flipping
 // `Platform.isDesktopApp` is the readable way to do it.

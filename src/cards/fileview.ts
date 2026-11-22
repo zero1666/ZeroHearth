@@ -39,10 +39,10 @@ export function renderFileItems(
 	items: FileItem[],
 ): HTMLElement {
 	const tiles = fileViewFor(card) === "tiles";
-	const container = body.createDiv(tiles ? "hearth-favorites" : "hearth-list");
+	const container = body.createDiv(tiles ? "zerohearth-favorites" : "zerohearth-list");
 	const cls = tiles
-		? { item: "hearth-fav-card", icon: "hearth-fav-icon", label: "hearth-fav-name" }
-		: { item: "hearth-list-item", icon: "hearth-list-icon", label: "hearth-list-label" };
+		? { item: "zerohearth-fav-card", icon: "zerohearth-fav-icon", label: "zerohearth-fav-name" }
+		: { item: "zerohearth-list-item", icon: "zerohearth-list-icon", label: "zerohearth-list-label" };
 	const icons = fileIconOptions(view.plugin.settings);
 	// The row's name, once for the whole list: the card's property (#399), else
 	// the title the file explorer shows, else the file name.
@@ -84,11 +84,11 @@ export function fitItemsToBody(body: HTMLElement, container: HTMLElement, compon
 		el.instanceOf(HTMLElement),
 	);
 	if (items.length === 0) return;
-	const isList = container.hasClass("hearth-list");
+	const isList = container.hasClass("zerohearth-list");
 
 	const fit = () => {
 		if (!container.isConnected) return;
-		for (const item of items) item.removeClass("hearth-list-item-clipped", "is-last-unclipped");
+		for (const item of items) item.removeClass("zerohearth-list-item-clipped", "is-last-unclipped");
 		// Items are measured against the viewport, so a body left scrolled would
 		// read the container as starting higher than it does. Nothing is meant to
 		// scroll in this mode anyway — the whole point is that it stops at the
@@ -103,7 +103,7 @@ export function fitItemsToBody(body: HTMLElement, container: HTMLElement, compon
 		const padBottom = parseFloat(getComputedStyle(body).paddingBottom) || 0;
 		const available = body.getBoundingClientRect().bottom - padBottom - first.top;
 		const visible = rowsThatFit(available, first.height, Math.max(0, step - first.height)) * columns;
-		for (let i = visible; i < items.length; i++) items[i].addClass("hearth-list-item-clipped");
+		for (let i = visible; i < items.length; i++) items[i].addClass("zerohearth-list-item-clipped");
 		// The last row still showing closes the group, as the list's last row would.
 		if (isList && visible > 0 && visible < items.length) items[visible - 1].addClass("is-last-unclipped");
 	};

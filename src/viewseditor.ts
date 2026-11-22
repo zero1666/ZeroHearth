@@ -68,14 +68,14 @@ export function renderViewPicker(containerEl: HTMLElement, host: ViewsEditorHost
 	if (!hasViews(host.card)) return;
 	const strings = t().views.editor;
 	const setting = new Setting(containerEl).setName(strings.editing).setDesc(strings.editingDesc);
-	const row = setting.controlEl.createDiv("hearth-view-picker");
+	const row = setting.controlEl.createDiv("zerohearth-view-picker");
 	cardViews(host.card).forEach((view, index) => {
 		const chip = row.createEl("button", {
-			cls: "hearth-view-picker-chip",
+			cls: "zerohearth-view-picker-chip",
 			attr: { type: "button", "aria-pressed": String(index === host.editing()) },
 		});
 		chip.toggleClass("is-active", index === host.editing());
-		setIcon(chip.createSpan("hearth-view-picker-icon"), host.opts.viewIcon(view));
+		setIcon(chip.createSpan("zerohearth-view-picker-icon"), host.opts.viewIcon(view));
 		chip.createSpan({ text: viewName(host, view, index) });
 		chip.addEventListener("click", () => {
 			host.setEditing(index);
@@ -141,8 +141,8 @@ export function renderViewsTab(containerEl: HTMLElement, host: ViewsEditorHost):
 		const row = new Setting(containerEl).setName(viewName(host, view, index));
 		const kind = t().editors.kinds[view.kind];
 		row.setDesc(index === shown && multi ? strings.kindShown(kind) : kind);
-		row.settingEl.addClass("hearth-view-row");
-		const icon = createSpan("hearth-view-row-icon");
+		row.settingEl.addClass("zerohearth-view-row");
+		const icon = createSpan("zerohearth-view-row-icon");
 		setIcon(icon, host.opts.viewIcon(view));
 		row.nameEl.prepend(icon);
 
@@ -214,7 +214,7 @@ export function renderViewsTab(containerEl: HTMLElement, host: ViewsEditorHost):
 						},
 					});
 				});
-			b.extraSettingsEl.addClass("hearth-danger-icon");
+			b.extraSettingsEl.addClass("zerohearth-danger-icon");
 		});
 	});
 
@@ -321,7 +321,7 @@ function renderSwitcherSettings(containerEl: HTMLElement, host: ViewsEditorHost)
 	);
 	if (resolved.placement === "hidden") {
 		const note = new Setting(containerEl).setDesc(strings.hiddenNote);
-		note.settingEl.addClass("hearth-setting-note");
+		note.settingEl.addClass("zerohearth-setting-note");
 	} else {
 		dropdown(
 			strings.style,
@@ -374,7 +374,7 @@ function renderSwitcherSettings(containerEl: HTMLElement, host: ViewsEditorHost)
 			txt.inputEl.type = "number";
 			txt.inputEl.min = "0";
 			txt.inputEl.max = String(VIEW_ROTATE_MAX);
-			txt.inputEl.addClass("hearth-count-input");
+			txt.inputEl.addClass("zerohearth-count-input");
 		});
 
 	new Setting(containerEl)

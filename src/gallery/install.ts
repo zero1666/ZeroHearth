@@ -17,12 +17,12 @@
 
 import type { GalleryClient } from "./client";
 import { GalleryError } from "./client";
-import { type HearthPackage, readPackage } from "../portable";
+import { type ZeroHearthPackage, readPackage } from "../portable";
 
 export interface FetchedEntry {
 	/** The file as served, unmodified — what the signature covers. */
 	json: string;
-	pkg: HearthPackage;
+	pkg: ZeroHearthPackage;
 }
 
 /**

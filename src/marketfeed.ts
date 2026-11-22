@@ -3,7 +3,7 @@
  *
  * Every card on every board shares one cache, keyed by source and symbol, so
  * ten cards watching the same fund make one request per refresh window, and a
- * full re-render (Hearth redraws boards often) never turns into a request. A
+ * full re-render (ZeroHearth redraws boards often) never turns into a request. A
  * failed request is remembered for the same window too, so a source that is
  * down — or, from mainland China, Yahoo — isn't asked again on every redraw;
  * the feed falls through to the next source for the instrument instead (see
@@ -160,7 +160,7 @@ function failedRecently(target: MarketTarget, opts: MarketLoadOptions, now: numb
  * phone is, and says whose.
  */
 const MOBILE_USER_AGENT =
-	"Mozilla/5.0 (compatible; Hearth; Obsidian) AppleWebKit/537.36 (KHTML, like Gecko) Safari/537.36";
+	"Mozilla/5.0 (compatible; ZeroHearth; Obsidian) AppleWebKit/537.36 (KHTML, like Gecko) Safari/537.36";
 
 function requestHeaders(): Record<string, string> | undefined {
 	return Platform.isMobile ? { "User-Agent": MOBILE_USER_AGENT } : undefined;

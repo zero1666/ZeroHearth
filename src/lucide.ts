@@ -6,7 +6,7 @@ import {
 	type FuzzyMatch,
 	type TextComponent,
 } from "obsidian";
-import { HearthFuzzySuggestModal } from "./uidesign";
+import { ZeroHearthFuzzySuggestModal } from "./uidesign";
 import { setIcon } from "./glyphs";
 import { t } from "./i18n";
 
@@ -21,7 +21,7 @@ import { t } from "./i18n";
  *
  * Three shapes of icon id are in circulation and all of them have to work:
  * Obsidian's registered form (`lucide-home`), the bare Lucide name (`home`,
- * which is what plugins normally write and what Hearth stores), and whatever a
+ * which is what plugins normally write and what ZeroHearth stores), and whatever a
  * user typed by hand — which may not name an icon at all. {@link resolveIconId}
  * is the single place that reconciles them, so an unknown id degrades to "no
  * icon" instead of an invisible, blank icon slot.
@@ -66,7 +66,7 @@ export function pickIconId(
 	isKnown: (id: string) => boolean,
 	hasRegistry = true,
 ): string | null {
-	const value = raw?.trim();
+	const value = raw?.trim().replace(/^hearth-crystal(?=-themed$|$)/, "zerohearth-crystal");
 	if (!value) return null;
 	if (!hasRegistry) return value;
 	for (const candidate of [value, `${LUCIDE_PREFIX}${value}`]) {
@@ -76,7 +76,7 @@ export function pickIconId(
 }
 
 /** Strip Obsidian's registration prefix, leaving the bare Lucide name that
- * Hearth stores and that users recognise from lucide.dev. */
+ * ZeroHearth stores and that users recognise from lucide.dev. */
 export function bareIconName(id: string): string {
 	return id.startsWith(LUCIDE_PREFIX) ? id.slice(LUCIDE_PREFIX.length) : id;
 }
@@ -106,7 +106,7 @@ export function renderIcon(
 /**
  * The names offered by the picker: the Lucide set, bare and sorted.
  *
- * Icons registered by plugins (Hearth's own crystal among them) are left out —
+ * Icons registered by plugins (ZeroHearth's own crystal among them) are left out —
  * they are not Lucide, they come and go with whatever plugins are enabled, and
  * a board that referenced one would lose its icon the moment that plugin was
  * disabled. Should Obsidian ever stop prefixing the set, every id is offered
@@ -122,7 +122,7 @@ export function lucideIconNames(): string[] {
 
 /** A fuzzy picker over the Lucide set, each row drawn as the icon beside its
  * name so icons can be recognised rather than recalled. */
-export class LucideIconPickerModal extends HearthFuzzySuggestModal<string> {
+export class LucideIconPickerModal extends ZeroHearthFuzzySuggestModal<string> {
 	private onChoose: (name: string) => void;
 
 	constructor(app: App, onChoose: (name: string) => void) {
@@ -140,9 +140,9 @@ export class LucideIconPickerModal extends HearthFuzzySuggestModal<string> {
 	}
 
 	renderSuggestion(match: FuzzyMatch<string>, el: HTMLElement): void {
-		el.addClass("hearth-icon-suggestion");
-		renderIcon(el.createSpan("hearth-icon-suggestion-icon"), match.item, { real: true });
-		el.createSpan({ cls: "hearth-icon-suggestion-name", text: match.item });
+		el.addClass("zerohearth-icon-suggestion");
+		renderIcon(el.createSpan("zerohearth-icon-suggestion-icon"), match.item, { real: true });
+		el.createSpan({ cls: "zerohearth-icon-suggestion-name", text: match.item });
 	}
 
 	onChooseItem(name: string): void {
@@ -166,7 +166,7 @@ export function addIconPicker(
 	value: string,
 	onChange: (value: string) => void,
 ): Setting {
-	const preview = setting.controlEl.createSpan({ cls: "hearth-icon-preview" });
+	const preview = setting.controlEl.createSpan({ cls: "zerohearth-icon-preview" });
 	let text: TextComponent | undefined;
 
 	const apply = (next: string) => {

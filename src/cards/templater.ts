@@ -67,11 +67,11 @@ export function renderTemplater(view: CardHost, card: DashboardCard, body: HTMLE
 	const { grid, spec } = createTileGrid(view, card, body);
 
 	for (const item of items) {
-		const tile = grid.createDiv("hearth-link-tile");
+		const tile = grid.createDiv("zerohearth-link-tile");
 		applyTileSize(tile, item, spec);
 		applyTileVisual(view, tile, item.icon, "file-plus-2");
 		const label = tileLabel(item);
-		tile.createDiv({ cls: "hearth-link-label", text: label });
+		tile.createDiv({ cls: "zerohearth-link-label", text: label });
 		setTooltip(tile, tileTooltip(item));
 
 		// One note per click. Creating one is asynchronous (Templater may open a
@@ -129,7 +129,7 @@ function tileTooltip(item: TemplaterItem): string {
 /**
  * One tile's click: resolve the template, ask for the `{{prompt}}` value if the
  * pattern wants one, hand the job to Templater, then open the result the way
- * Hearth opens notes.
+ * ZeroHearth opens notes.
  *
  * Every failure is reported as a Notice rather than swallowed — a launcher
  * button that silently does nothing is worse than one that says why.
@@ -174,7 +174,7 @@ export async function runTemplaterItem(view: CardHost, item: TemplaterItem): Pro
 		return;
 	}
 	await openFile(view, file, "newNote");
-	// Templater does this itself when it opens the note; Hearth opened it
+	// Templater does this itself when it opens the note; ZeroHearth opened it
 	// instead (see src/templater.ts), so the cursor jump has to be asked for.
 	await jumpToTemplaterCursor(app, file);
 }
@@ -236,7 +236,7 @@ export function templaterEditor(ctx: CardEditorContext, containerEl: HTMLElement
 
 	items.forEach((item, index) => {
 		const row = new Setting(containerEl)
-			.setClass("hearth-link-setting")
+			.setClass("zerohearth-link-setting")
 			.setName(tileLabel(item))
 			// The destination is the whole point of a tile and the one thing a
 			// row of narrow controls can't show, so it is spelled out in full.

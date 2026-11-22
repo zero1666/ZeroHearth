@@ -1,7 +1,7 @@
 /**
  * Keeping an open board current without rendering the ones nobody is looking at.
  *
- * Hearth re-renders a board whenever the thing it displays changes — the active
+ * ZeroHearth re-renders a board whenever the thing it displays changes — the active
  * dashboard, a synced settings file, a vault write. A full board rebuild is the
  * most expensive thing the plugin does off its own render path, so a board that
  * is open but off screen (a backgrounded tab, a collapsed sidebar) is skipped:
@@ -10,7 +10,7 @@
  * That last half is the part that has to be true. It was not: `refreshViews`
  * skipped a hidden board and left the render to `active-leaf-change`, which does
  * not fire when the revealed leaf was already the active one in its group. So
- * "switch dashboard, then open Hearth" — a Commander macro, a note-toolbar
+ * "switch dashboard, then open ZeroHearth" — a Commander macro, a note-toolbar
  * button, anything chaining the two commands — revealed the *previous*
  * dashboard, while each command on its own looked fine (#286).
  *
